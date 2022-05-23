@@ -1,0 +1,634 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "firstName": "Terry",
+            "lastName": "Medhurst",
+            "age": 50,
+            "gender": "male",
+            "email": "atuny0@sohu.com",
+            "phone": "+63 791 675 8914",
+            "username": "atuny0",
+            "password": "9uQFF1Lh",
+            "birthDate": "2000-12-25",
+            "image": "https://robohash.org/hicveldicta.png?size=50x50&set=set1",
+            "address": {
+                "address": "1745 T Street Southeast",
+                "city": "Washington",
+                "postalCode": "20020",
+                "state": "DC"
+            },
+            "paymentMethods": [
+                {
+                    "cardExpire": "06/22",
+                    "cardNumber": "50380955204220685",
+                    "cardType": "maestro",
+                    "currency": "Peso",
+                    "iban": "NO17 0695 2754 967"
+                }
+            ],
+            "purchaseHistory": [
+                {
+                    "postId": "3",
+                    "name": "A spoon",
+                    "img": "img",
+                    "price": 10.95
+                },
+                {
+                    "postId": "35",
+                    "name": "Fork",
+                    "img": "img",
+                    "price": 32.25
+                },
+                {
+                    "postId": "2",
+                    "name": "Blanket",
+                    "img": "img",
+                    "price": "6.55"
+                }
+            ],
+            "saleHistory": [
+                {
+                    "postId": "33",
+                    "name": "Not a spoon",
+                    "img": "img",
+                    "price": 15.35
+                }
+            ],
+            "forSale": [
+                {
+                    "postId": "445",
+                    "name": "Not Butter",
+                    "img": "img",
+                    "price": 0.45
+                }
+            ],
+            "favorites": [
+                {
+                    "post": {
+                        "postId": "9912",
+                        "name": "Butter",
+                        "img": "img",
+                        "price": 99.99
+                    }
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "firstName": "Sheldon",
+            "lastName": "Quigley",
+            "age": 28,
+            "gender": "male",
+            "email": "hbingley1@plala.or.jp",
+            "phone": "+7 813 117 7139",
+            "username": "hbingley1",
+            "password": "CQutx25i8r",
+            "birthDate": "2003-08-02",
+            "image": "https://robohash.org/doloremquesintcorrupti.png?size=50x50&set=set1",
+            "address": {
+                "address": "6007 Applegate Lane",
+                "city": "Louisville",
+                "postalCode": "40219",
+                "state": "KY"
+            },
+            "paymentMethods": {
+                "cardExpire": "10/23",
+                "cardNumber": "5355920631952404",
+                "cardType": "mastercard",
+                "currency": "Ruble",
+                "iban": "MD63 L6YC 8YH4 QVQB XHIK MTML"
+            },
+            "purchaseHistory": [],
+            "saleHistory": [
+                {
+                    "postId": "33",
+                    "name": "Not a spoon",
+                    "img": "img",
+                    "price": 15.35
+                }
+            ],
+            "forSale": [],
+            "favorites": []
+        },
+        {
+            "id": 3,
+            "firstName": "Terrill",
+            "lastName": "Hills",
+            "age": 38,
+            "gender": "male",
+            "email": "rshawe2@51.la",
+            "phone": "+63 739 292 7942",
+            "username": "rshawe2",
+            "password": "OWsTbMUgFc",
+            "birthDate": "1992-12-30",
+            "image": "https://robohash.org/consequunturautconsequatur.png?size=50x50&set=set1",
+            "address": {
+                "address": "560 Penstock Drive",
+                "city": "Grass Valley",
+                "postalCode": "95945",
+                "state": "CA"
+            },
+            "paymentMethods": {
+                "cardExpire": "10/23",
+                "cardNumber": "3586082982526703",
+                "cardType": "jcb",
+                "currency": "Peso",
+                "iban": "AT24 1095 9625 1434 9703"
+            },
+            "purchaseHistory": [
+                {
+                    "postId": "242423",
+                    "name": "Kitchen Knife",
+                    "img": "img",
+                    "price": 32.25
+                },
+                {
+                    "postId": "1235434",
+                    "name": "Smart TV 50'' ThiccBoii",
+                    "img": "img",
+                    "price": 700.00
+                },
+                {
+                    "postId": "1234123",
+                    "name": "Inalambric Keyboard",
+                    "img": "img",
+                    "price": 423.00
+                }
+            ],
+            "saleHistory": [],
+            "forSale": [],
+            "favorites": [
+                {
+                    "post": {
+                        "postId": "9912",
+                        "name": "Butter",
+                        "img": "img",
+                        "price": 99.99
+                    }
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "firstName": "Miles",
+            "lastName": "Cummerata",
+            "age": 49,
+            "gender": "male",
+            "email": "yraigatt3@nature.com",
+            "phone": "+86 461 145 4186",
+            "username": "yraigatt3",
+            "password": "sRQxjPfdS",
+            "birthDate": "1969-01-16",
+            "image": "https://robohash.org/facilisdignissimosdolore.png?size=50x50&set=set1",
+            "address": {
+                "address": "150 Carter Street",
+                "city": "Manchester",
+                "postalCode": "06040",
+                "state": "CT"
+            },
+            "paymentMethods": {
+                "cardExpire": "07/24",
+                "cardNumber": "3580047879369323",
+                "cardType": "jcb",
+                "currency": "Yuan Renminbi",
+                "iban": "KZ43 658B M6VS TZOU OXSO"
+            },
+            "purchaseHistory": [
+                {
+                    "postId": "34425",
+                    "name": "Twizzers pack x25",
+                    "img": "img",
+                    "price": 95.66
+                },
+                {
+                    "postId": "3453457",
+                    "name": "Vodka 'Why not?'",
+                    "img": "img",
+                    "price": 3.00
+                }
+            ],
+            "saleHistory": [
+                {
+                    "postId": "33",
+                    "name": "Not a spoon",
+                    "img": "img",
+                    "price": 15.35
+                }
+            ],
+            "forSale": [
+                {
+                    "postId": "5532",
+                    "name": "Hileretn't",
+                    "img": "img",
+                    "price": 33.00
+                }
+            ],
+            "favorites": []
+        },
+        {
+            "id": 5,
+            "firstName": "Mavis",
+            "lastName": "Schultz",
+            "age": 38,
+            "gender": "male",
+            "email": "kmeus4@upenn.edu",
+            "phone": "+372 285 771 1911",
+            "username": "kmeus4",
+            "password": "aUTdmmmbH",
+            "birthDate": "1968-11-03",
+            "image": "https://robohash.org/adverovelit.png?size=50x50&set=set1",
+            "address": {
+                "address": "2721 Lindsay Avenue",
+                "city": "Louisville",
+                "postalCode": "40206",
+                "state": "KY"
+            },
+            "paymentMethods": {
+                "cardExpire": "01/24",
+                "cardNumber": "4917245076693618",
+                "cardType": "visa-electron",
+                "currency": "Euro",
+                "iban": "IT41 T114 5127 716J RGYB ZRUX DSJ"
+            },
+            "purchaseHistory": [],
+            "saleHistory": [
+                {
+                    "postId": "2234",
+                    "name": "Table",
+                    "img": "img",
+                    "price": 20.00
+                }
+            ],
+            "forSale": [
+                {
+                    "postId": "445",
+                    "name": "Table",
+                    "img": "img",
+                    "price": 20.00
+                }
+            ],
+            "favorites": []
+        },
+        {
+            "id": 6,
+            "firstName": "Alison",
+            "lastName": "Reichert",
+            "age": 21,
+            "gender": "female",
+            "email": "jtreleven5@nhs.uk",
+            "phone": "+351 527 735 3642",
+            "username": "jtreleven5",
+            "password": "zY1nE46Zm",
+            "birthDate": "1969-07-21",
+            "image": "https://robohash.org/laboriosamfacilisrem.png?size=50x50&set=set1",
+            "address": {
+                "address": "18 Densmore Drive",
+                "city": "Essex",
+                "postalCode": "05452",
+                "state": "VT"
+            },
+            "paymentMethods": {
+                "cardExpire": "03/22",
+                "cardNumber": "345675888286047",
+                "cardType": "americanexpress",
+                "currency": "Euro",
+                "iban": "LB69 1062 QCY5 XS5T VOKU KJFG XP4S"
+            },
+            "purchaseHistory": [
+                {
+                    "postId": "10",
+                    "name": "Phone Charger",
+                    "img": "img",
+                    "price": 10.00
+                },
+                {
+                    "postId": "45",
+                    "name": "Laptop",
+                    "img": "img",
+                    "price": 22.55
+                },
+                {
+                    "postId": "333",
+                    "name": "Blanket",
+                    "img": "img",
+                    "price": "6.55"
+                }
+            ],
+            "saleHistory": [
+                {
+                    "postId": "33",
+                    "name": "Not a spoon",
+                    "img": "img",
+                    "price": 15.35
+                }
+            ],
+            "forSale": [
+                {
+                    "postId": "445",
+                    "name": "Not Butter",
+                    "img": "img",
+                    "price": 0.45
+                }
+            ],
+            "favorites": [
+                {
+                    "post": {
+                        "postId": "9912",
+                        "name": "Butter",
+                        "img": "img",
+                        "price": 99.99
+                    }
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "firstName": "Oleta",
+            "lastName": "Abbott",
+            "age": 31,
+            "gender": "female",
+            "email": "dpettegre6@columbia.edu",
+            "phone": "+62 640 802 7111",
+            "username": "dpettegre6",
+            "password": "YVmhktgYVS",
+            "birthDate": "1982-02-21",
+            "image": "https://robohash.org/cupiditatererumquos.png?size=50x50&set=set1",
+            "address": {
+                "address": "637 Britannia Drive",
+                "city": "Vallejo",
+                "postalCode": "94591",
+                "state": "CA"
+            },
+            "paymentMethods": {
+                "cardExpire": "10/23",
+                "cardNumber": "3589640949470047",
+                "cardType": "jcb",
+                "currency": "Rupiah",
+                "iban": "GI97 IKPF 9DUO X25M FG8D UXY"
+            },
+            "purchaseHistory": [
+                {
+                    "postId": "3",
+                    "name": "A spoon",
+                    "img": "img",
+                    "price": 10.95
+                },
+                {
+                    "postId": "35",
+                    "name": "Fork",
+                    "img": "img",
+                    "price": 32.25
+                },
+                {
+                    "postId": "2",
+                    "name": "Blanket",
+                    "img": "img",
+                    "price": "6.55"
+                }
+            ],
+            "saleHistory": [
+                {
+                    "postId": "33",
+                    "name": "Not a spoon",
+                    "img": "img",
+                    "price": 15.35
+                }
+            ],
+            "forSale": [
+                {
+                    "postId": "445",
+                    "name": "Not Butter",
+                    "img": "img",
+                    "price": 0.45
+                }
+            ],
+            "favorites": [
+                {
+                    "post": {
+                        "postId": "9912",
+                        "name": "Butter",
+                        "img": "img",
+                        "price": 99.99
+                    }
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "firstName": "Ewell",
+            "lastName": "Mueller",
+            "age": 29,
+            "gender": "male",
+            "email": "ggude7@chron.com",
+            "phone": "+86 946 297 2275",
+            "username": "ggude7",
+            "password": "MWwlaeWcOoF6",
+            "birthDate": "1964-08-24",
+            "image": "https://robohash.org/quiaharumsapiente.png?size=50x50&set=set1",
+            "address": {
+                "address": "5601 West Crocus Drive",
+                "city": "Glendale",
+                "postalCode": "85306",
+                "state": "AZ"
+            },
+            "paymentMethods": {
+                "cardExpire": "09/23",
+                "cardNumber": "30549925358905",
+                "cardType": "diners-club-carte-blanche",
+                "currency": "Yuan Renminbi",
+                "iban": "CY02 9914 5346 0PMT G6XW TP0R AWRZ"
+            },
+            "purchaseHistory": [
+                {
+                    "postId": "3",
+                    "name": "A spoon",
+                    "img": "img",
+                    "price": 10.95
+                },
+                {
+                    "postId": "35",
+                    "name": "Fork",
+                    "img": "img",
+                    "price": 32.25
+                },
+                {
+                    "postId": "2",
+                    "name": "Blanket",
+                    "img": "img",
+                    "price": "6.55"
+                }
+            ],
+            "saleHistory": [
+                {
+                    "postId": "33",
+                    "name": "Not a spoon",
+                    "img": "img",
+                    "price": 15.35
+                }
+            ],
+            "forSale": [
+                {
+                    "postId": "445",
+                    "name": "Not Butter",
+                    "img": "img",
+                    "price": 0.45
+                }
+            ],
+            "favorites": [
+                {
+                    "post": {
+                        "postId": "9912",
+                        "name": "Butter",
+                        "img": "img",
+                        "price": 99.99
+                    }
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "firstName": "Demetrius",
+            "lastName": "Corkery",
+            "age": 22,
+            "gender": "male",
+            "email": "nloiterton8@aol.com",
+            "phone": "+86 356 590 9727",
+            "username": "nloiterton8",
+            "password": "HTQxxXV9Bq4",
+            "birthDate": "1971-03-11",
+            "image": "https://robohash.org/excepturiiuremolestiae.png?size=50x50&set=set1",
+            "address": {
+                "address": "5403 Illinois Avenue",
+                "city": "Nashville",
+                "postalCode": "37209",
+                "state": "TN"
+            },
+            "paymentMethods": {
+                "cardExpire": "02/24",
+                "cardNumber": "5372664789004621",
+                "cardType": "mastercard",
+                "currency": "Yuan Renminbi",
+                "iban": "BR68 9829 0581 3669 5088 5533 025N V"
+            },
+            "purchaseHistory": [
+                {
+                    "postId": "3",
+                    "name": "A spoon",
+                    "img": "img",
+                    "price": 10.95
+                },
+                {
+                    "postId": "35",
+                    "name": "Fork",
+                    "img": "img",
+                    "price": 32.25
+                },
+                {
+                    "postId": "2",
+                    "name": "Blanket",
+                    "img": "img",
+                    "price": "6.55"
+                }
+            ],
+            "saleHistory": [
+                {
+                    "postId": "33",
+                    "name": "Not a spoon",
+                    "img": "img",
+                    "price": 15.35
+                }
+            ],
+            "forSale": [
+                {
+                    "postId": "445",
+                    "name": "Not Butter",
+                    "img": "img",
+                    "price": 0.45
+                }
+            ],
+            "favorites": [
+                {
+                    "post": {
+                        "postId": "9912",
+                        "name": "Butter",
+                        "img": "img",
+                        "price": 99.99
+                    }
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "firstName": "Eleanora",
+            "lastName": "Price",
+            "age": 37,
+            "gender": "female",
+            "email": "umcgourty9@jalbum.net",
+            "phone": "+60 184 408 0824",
+            "username": "umcgourty9",
+            "password": "i0xzpX",
+            "birthDate": "1958-08-11",
+            "image": "https://robohash.org/aliquamcumqueiure.png?size=50x50&set=set1",
+            "address": {
+                "address": "8821 West Myrtle Avenue",
+                "city": "Glendale",
+                "postalCode": "85305",
+                "state": "AZ"
+            },
+            "paymentMethods": {
+                "cardExpire": "01/24",
+                "cardNumber": "3557806620295254",
+                "cardType": "jcb",
+                "currency": "Ringgit",
+                "iban": "GT40 DWAD 9UHA VEOZ ZF4J 2Y0F OOFD"
+            },
+            "purchaseHistory": [
+                {
+                    "postId": "3",
+                    "name": "A spoon",
+                    "img": "img",
+                    "price": 10.95
+                },
+                {
+                    "postId": "35",
+                    "name": "Fork",
+                    "img": "img",
+                    "price": 32.25
+                },
+                {
+                    "postId": "2",
+                    "name": "Blanket",
+                    "img": "img",
+                    "price": "6.55"
+                }
+            ],
+            "saleHistory": [
+                {
+                    "postId": "33",
+                    "name": "Not a spoon",
+                    "img": "img",
+                    "price": 15.35
+                }
+            ],
+            "forSale": [
+                {
+                    "postId": "445",
+                    "name": "Not Butter",
+                    "img": "img",
+                    "price": 0.45
+                }
+            ],
+            "favorites": [
+                {
+                    "post": {
+                        "postId": "9912",
+                        "name": "Butter",
+                        "img": "img",
+                        "price": 99.99
+                    }
+                }
+            ]
+        }
+    ]
+}
