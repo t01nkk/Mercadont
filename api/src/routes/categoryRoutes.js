@@ -16,10 +16,7 @@ async function populate() {
 }
 
 router.get("/", async (req, res) => {
-  const cont = await Category.count()
-  if (cont > 0) {
-    populate()
-  }
+  populate()
   try {
     const categories = await Category.findAll({ attributes: ["name", "img"] })
     console.log("categories populated!");
