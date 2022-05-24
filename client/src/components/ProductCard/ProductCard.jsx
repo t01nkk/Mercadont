@@ -1,7 +1,14 @@
-import React from 'react'
-
-export default function ProductCard() {
+import React from "react";
+import "./ProductCard.css";
+export default function ProductCard({ name, price, image, rating }) {
   return (
-    <div>Im the ProductCard</div>
-  )
+    <article className="productCard-container">
+      <img src={`${image}`} />
+      <div className="productCard-info">
+        <p>{name}</p>
+        <p>{price}</p>
+        <p>{rating}</p>
+      </div>
+    </article>
+  );
 }

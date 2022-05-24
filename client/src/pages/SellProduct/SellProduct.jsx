@@ -1,7 +1,10 @@
-import React from 'react'
+import React from "react";
+import SellProductForm from "../../components/SellProductForm/SellProductForm";
 
 export default function SellProduct() {
   return (
-    <div>PAGE SellProduct</div>
-  )
+    <div>
+      <SellProductForm />
+    </div>
+  );
 }

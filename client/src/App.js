@@ -3,6 +3,8 @@ import React from "react";
 import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import CreateUser from "./pages/CreateUser/CreateUser";
+import Home from "./pages/Home/Home";
+import SellProduct from "./pages/SellProduct/SellProduct";
 
 function App() {
   return (
@@ -13,7 +15,7 @@ function App() {
         </Route>
         <Route path="/home" exact>
           <NavBar />
-          {/* Home */}
+          <Home />
         </Route>
         <Route path="/createUser" exact>
           <CreateUser />
@@ -21,7 +23,7 @@ function App() {
         </Route>
         <Route path="/sellProduct" exact>
           <NavBar />
-          {/* SellProduct */}
+          <SellProduct />
         </Route>
         <Route path="/favorites" exact>
           <NavBar />

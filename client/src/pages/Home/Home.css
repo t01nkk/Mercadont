@@ -1,0 +1,7 @@
+.setion-products {
+  width: 100vw;
+    height:30vh;
+    display:flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
