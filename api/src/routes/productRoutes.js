@@ -120,7 +120,7 @@ router.delete("/:id", async (req, res) => {
 })
 
 //Update Product
-//In the update form, LOAD ALL THE DATA FOR CHAGING
+//In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/:id", async (req, res)=>{
   const {id} = req.params
   const {name, price, description, rating, images, stock, categories} = req.body
@@ -138,7 +138,7 @@ router.put("/:id", async (req, res)=>{
       {
         where: {id:id}
       });
-    res.status(202).send(updatedProduct)
+    res.status(202).send("Product Updated")
   }
   catch (err) {
     res.status(400).send(err)
