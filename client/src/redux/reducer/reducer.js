@@ -1,5 +1,5 @@
 import { FETCH_PRODUCTS } from "../actions/actionTypes";
-import DBProducts from "../../posts.json";
+import DBProducts from "../../products.json";
 export const initialState = {
   products: DBProducts,
   state2: "estado state store#2",
