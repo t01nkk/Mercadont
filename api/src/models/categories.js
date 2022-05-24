@@ -2,19 +2,13 @@ const { DataTypes, UUIDV4 } = require('sequelize');
 //
 module.exports = (sequelize) => {
     sequelize.define('category', {
-        id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            incremental: true,
-            primaryKey: true
-        },
         name: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING,
             allowNull: false,
             unique: true
         },
-        subcategories: {
-            type: DataTypes.ARRAY(DataTypes.STRING(20))
+        img: {
+            type: DataTypes.BLOB
         }
     });
 }
