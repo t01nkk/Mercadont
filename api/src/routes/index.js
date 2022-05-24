@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const productRoutes = require("./productRoutes")
 const userRoutes = require("./userRoutes")
+const categoryRoutes = require("./categoryRoutes")
 
 
 // router.use('/', Pokelist);
@@ -12,6 +13,7 @@ const userRoutes = require("./userRoutes")
 
 router.use("/", productRoutes)
 router.use("/", userRoutes)
+router.use("/", categoryRoutes)
 
 
 module.exports = router;

@@ -1,6 +1,5 @@
 const {Product, Category} = require("../db")
 const {Router} = require("express")
-const {where} = require("sequelize/types");
 
 
 const router = Router()
@@ -22,7 +21,7 @@ router.get("/", async (req, res)=>{
   return res.status(200).send(matchingProduct)
 })
 
-//Get Productss by Category
+//Get Products by Category
 router.get("/", async (req, res)=>{
   const {categories} = req.query
   try {
