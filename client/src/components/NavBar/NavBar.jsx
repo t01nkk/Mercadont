@@ -21,7 +21,6 @@ export default function NavBar() {
           <Link to="/cart">Cart</Link>
           <Link to="/logIn">Login</Link>
         </div>
-        {console.log(state.state1, state.state2, state.state3)}
       </header>
     </div>
   );
