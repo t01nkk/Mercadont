@@ -9,7 +9,7 @@ export default function Home() {
   console.log(state.products);
   return (
     <section className="setion-products">
-      <h4>Pablo sos hermoso</h4>
+      <h4>Pablo sos hermosamente idiota</h4>
       {state.products &&
         state.products.map((product) => {
           return (

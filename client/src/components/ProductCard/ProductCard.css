@@ -5,12 +5,10 @@
   height: 23rem;
   border-radius: 20px;
   position: relative;
+  background-color: yellow;
 }
 .productCard-container img {
   height: 80%;
   width: 80%;
   position: absolute;
-}
-.productCard-info{
-    
 }
