@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import { useStore } from "../../context/store.js";
 import { fetchProducts } from "../../redux/actions/actions.js";
@@ -9,23 +9,42 @@ export default function Home() {
 
   const [cart, setCart] = useState(initialCart)
 
-  // useEffect(()=>{
-  //   localStorage.setItem("myCart", JSON.stringify(cart))
-  // }, [cart])
+  useEffect(()=>{
+    localStorage.setItem("myCart", JSON.stringify(cart))
+    // localStorage.clear()
+  }, [cart])
   
 
-  const handleSaveCart = ()=>{
-    alert("Funco como el mejor")
+  const handleSaveCart = (name, price)=>{
+    // alert("Funco como el mejor")
+    let products = {
+      name,
+      price
+    }
+    setCart((cart)=> [...cart, products])
   }
- 
+  //FUNCION PARA VER EL STORAGE, NO BORRAR
+  // const mostra = ()=>{
+  //   let miStorage = window.localStorage;
+  //   console.log(miStorage.myCart)
+  // }
+
   const [state, dispatch] = useStore();
+
+
+
+  //USEEFFECT CARGA DE PRODUCTOS
 
   // useEffect(() => {
   //   fetchProducts(dispatch);
   // }, []);
-  console.log(state.products);
+  // console.log(state.products);
+
+
   return (
     <section className="section-products">
+      {/* <button onClick={()=>mostra()}>mostra storage</button>   */}
+      {/* BOTTON PARA VER EL STORAGE NO BORRAR */}
       {state.products &&
         state.products.map((product) => {
           return (
