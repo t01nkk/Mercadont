@@ -27,7 +27,11 @@ module.exports = (sequelize) => {
             type: DataTypes.FLOAT
         },
         image: {
-            type: DataTypes.BLOB,
+            type: DataTypes.ARRAY(
+                DataTypes.BLOB({
+                    user: DataTypes.STRING,
+                    text: DataTypes.STRING,
+                })),
             allowNull: false
         },
         status: {
