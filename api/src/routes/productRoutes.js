@@ -4,8 +4,13 @@ const {Router} = require("express")
 
 const router = Router()
 
+<<<<<<< Updated upstream
 //Get All Products
 router.get("/", async (req, res)=>{
+=======
+//Get All Productss
+router.get("/", async (req, res) => {
+>>>>>>> Stashed changes
   const products = await Product.findAll()
   return res.status(200).send(products)
 })

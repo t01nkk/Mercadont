@@ -7,6 +7,7 @@ const categoryRoutes = require("./categoryRoutes")
 // router.use('/', Pokelist);
 // router.use('/', pokeTypes);
 
+<<<<<<< Updated upstream
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -14,6 +15,12 @@ const categoryRoutes = require("./categoryRoutes")
 router.use("/", productRoutes)
 router.use("/", userRoutes)
 router.use("/", categoryRoutes)
+=======
+router.use("/product", productRoutes)
+router.use("/user", userRoutes)
+router.use("/categories", categoryRoutes)
+// router.use("/categories", categoryRoutes)
+>>>>>>> Stashed changes
 
 
 module.exports = router;
