@@ -1,0 +1,48 @@
+.createUser {  
+    width: 500px;
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    margin-left: 700px;
+    margin-top: 10rem;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    padding-right: 10px;
+}
+
+.divInputUser {
+    margin-bottom: 15px;
+
+    width: calc(100% / 2 - 20px);
+}
+
+.divInputUser input {
+    height: 45px;
+    width: 400px;
+    outline: none;
+    font-size: 16px;
+    border-radius: 5px;
+    padding-left: 15px;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+.btn input {
+    background-color:black;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+
+}
+
+form .btn input:hover {
+
+    background: gray;
+}
