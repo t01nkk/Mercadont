@@ -1,4 +1,4 @@
-const {Product, User} = require("../db")
+const {Product, Category} = require("../db")
 const {Router} = require("express")
 const {where} = require("sequelize/types");
 
@@ -22,11 +22,26 @@ router.get("/", async (req, res)=>{
   return res.status(200).send(matchingProduct)
 })
 
-//Get Productss by Category (Esperar a que se cree el Objeto)
-/*router.get("/", async (req, res)=>{
+//Get Productss by Category
+router.get("/", async (req, res)=>{
+  const {categories} = req.query
+  try {
+    const products = await Product.findByPk(categories,{
+      include: {
+        model: Category,
+        attributes: ["name"],
+        through: {attributes: []}
+      }
+    })
+    res.status(200).send(products)
+  }
+  catch (err){
+    res.status(404).send(err)
+  }
+})
 
-})*/
 
+//Get Product Details
 router.get("/:id", async (req, res)=>{
   const {id} = req.params
   const product = await Product.findOne({
@@ -39,6 +54,7 @@ router.get("/:id", async (req, res)=>{
   return res.status(200).send(product)
 })
 
+//Get Products By Price
 router.get("/", async (req, res)=>{
   const  {price} = req.query
   const products = await Product.findAll()
@@ -50,6 +66,7 @@ router.get("/", async (req, res)=>{
   return res.status(200).send(orderedByRelevance)
 })
 
+//Create Product
 router.post("/", async (req, res)=>{
   const {name, price, description, rating, images, stock, categories} = req.body
   try{
@@ -65,6 +82,7 @@ router.post("/", async (req, res)=>{
   }
 })
 
+//Delete Product
 router.delete("/:id", async (req, res)=>{
   const {id} = req.params
   try{
@@ -76,6 +94,7 @@ router.delete("/:id", async (req, res)=>{
   }
 })
 
+//Update Product
 router.put("/:id", async (req, res)=>{
   const {id} = req.params
   const {name, price, description, rating, images, stock, categories} = req.body
