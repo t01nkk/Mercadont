@@ -1,7 +1,7 @@
 const { DataTypes, UUIDV4 } = require('sequelize');
 
 module.exports = (sequelize) => {
-    sequelize.define('categorie', {
+    sequelize.define('category', {
         id: {
             type: DataTypes.INTEGER,
             allowNull: false,
