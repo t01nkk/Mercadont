@@ -3,6 +3,23 @@ const { Router } = require("express")
 
 
 const router = Router()
+router.get("/categories", async (req, res) => {
+  try {
+    const {categories} = req.query
+    const filteredCategories = await Product.findByPk(categories, {
+      include: {
+        model: Category,
+        attributes: ["name"],
+        through: {attributes: []}
+      }
+    })
+    return res.status(200).send(filteredCategories)
+  }
+  catch (err){
+    console.log(err)
+  res.status(404).send(err)}
+})
+
 
 //WORKING
 //Get All Products, Filter By Category, Name, Price
@@ -22,8 +39,8 @@ router.get("/", async (req, res) => {
       products = filteredCategories
     }
     if(name) {
-      const matchingName = products.filter(product => product.name.includes(name))
-      if (matchingProduct.length === 0) {
+      const matchingName = products.filter(product => product.name == name.toUpperCase())
+      if (matchingName.length === 0) {
         return res.status(404).send("Matching Product Not Found")
       }
       products = matchingName
@@ -33,7 +50,7 @@ router.get("/", async (req, res) => {
       if (matchingPrice.length === 0) {
         return res.status(404).send("Matching Product Not Found")
       }
-      const orderedByRelevance = matchingPrice.sort((a, b) => a.rating - b.rating)
+      const orderedByRelevance = matchingPrice.sort((a, b) => b.rating - a.rating)
       products = orderedByRelevance
     }
     return res.status(200).send(products)}
