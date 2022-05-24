@@ -3,22 +3,6 @@ const { Router } = require("express")
 
 
 const router = Router()
-router.get("/categories", async (req, res) => {
-  try {
-    const {categories} = req.query
-    const filteredCategories = await Product.findByPk(categories, {
-      include: {
-        model: Category,
-        attributes: ["name"],
-        through: {attributes: []}
-      }
-    })
-    return res.status(200).send(filteredCategories)
-  }
-  catch (err){
-    console.log(err)
-  res.status(404).send(err)}
-})
 
 
 //WORKING
@@ -27,19 +11,26 @@ router.get("/", async (req, res) => {
   try {
     const {name, price, categories} = req.query
 
-    var products = await Product.findAll()
+    let products;
+    products= await Product.findAll({
+      include: {
+        model: Category,
+        attributes: ["name"],
+        through: {attributes: []},
+      }})
+
     if(categories) {
-      const filteredCategories = await Product.findByPk(categories, {
-        include: {
-          model: Category,
-          attributes: ["name"],
-          through: {attributes: []}
+      const matchingCategories = []
+      products.map(product=>{
+        let intersection = product.categories.filter(cat => categories.includes(cat.name))
+        if(intersection.length > 0){
+          matchingCategories.push(product)
         }
       })
-      products = filteredCategories
+      products = matchingCategories
     }
     if(name) {
-      const matchingName = products.filter(product => product.name == name.toUpperCase())
+      const matchingName = products.filter(product => product.name.includes(name.toUpperCase()))
       if (matchingName.length === 0) {
         return res.status(404).send("Matching Product Not Found")
       }
@@ -141,6 +132,13 @@ router.delete("/:id", async (req, res) => {
 router.put("/:id", async (req, res)=>{
   const {id} = req.params
   const {name, price, description, rating, images, stock, categories} = req.body
+  for(let cat of categories){
+    const [category, created] = await Category.findOrCreate({ where: { name: cat } })
+    if (created){
+      Product.findOne({where:{id:id}}).addCategory(category)
+    }
+  }
+
   try {
     await Product.update(
       {
