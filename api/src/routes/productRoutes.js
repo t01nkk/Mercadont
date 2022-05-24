@@ -47,10 +47,37 @@ router.get("/price", async (req, res) => {
 })
 
 //WORKING
-//Get All Productss
+//Get All Products, Filter By Category, Name, Price
 router.get("/", async (req, res) => {
   try {
-    const products = await Product.findAll()
+    const {name, price, categories} = req.query
+
+    var products = await Product.findAll()
+    if(categories) {
+      const filteredCategories = await Product.findByPk(categories, {
+        include: {
+          model: Category,
+          attributes: ["name"],
+          through: {attributes: []}
+        }
+      })
+      products = filteredCategories
+    }
+    if(name) {
+      const matchingName = products.filter(product => product.name.includes(name))
+      if (matchingProduct.length === 0) {
+        return res.status(404).send("Matching Product Not Found")
+      }
+      products = matchingName
+    }
+    if(price) {
+      const matchingPrice = products.filter(product => product.price == price)
+      if (matchingPrice.length === 0) {
+        return res.status(404).send("Matching Product Not Found")
+      }
+      const orderedByRelevance = matchingPrice.sort((a, b) => a.rating - b.rating)
+      products = orderedByRelevance
+    }
     return res.status(200).send(products)}
     catch (err){
       console.log(err)
