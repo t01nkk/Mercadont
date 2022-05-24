@@ -1,40 +1,39 @@
-import React, { useState,useEffect } from "react";
+import React, { useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import { useStore } from "../../context/store.js";
 import { fetchProducts } from "../../redux/actions/actions.js";
 import "./Home.css";
 
 export default function Home() {
-
-  const [state, dispatch] = useStore();
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || []
+
   const [cart, setCart] = useState(initialCart)
 
+  // useEffect(()=>{
+  //   localStorage.setItem("myCart", JSON.stringify(cart))
+  // }, [cart])
+  
 
   const handleSaveCart = ()=>{
-  
-    alert("funco")
+    alert("Funco como el mejor")
   }
+ 
+  const [state, dispatch] = useStore();
 
-  useEffect(() => {
-    localStorage.setItem("myCart",JSON.stringify(cart))
-  }, [cart])
-  
-
-
+  // useEffect(() => {
+  //   fetchProducts(dispatch);
+  // }, []);
   console.log(state.products);
   return (
-    <section className="setion-products">
+    <section className="section-products">
       {state.products &&
         state.products.map((product) => {
           return (
-
             <ProductCard
-              name={product.name}
+              name={product.title}
               key={product.id}
               price={product.price}
               image={product.image}
-              rating={product.rating}
               handleSaveCart={handleSaveCart}
             />
           );
