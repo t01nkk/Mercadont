@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "../../helpers/useForm.js";
+import "./CreateUserForm.css"
 
 export default function CreateUserForm() {
   const initialForm = {
@@ -65,9 +66,10 @@ export default function CreateUserForm() {
   } = useForm(initialForm, validateForm);
 
   return (
-    <div>
-      <h2>Formu</h2>
+    <div className="createUser">
+      <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
+        <div className="divInputUser">
         <input
           type="text"
           name="name"
@@ -79,6 +81,8 @@ export default function CreateUserForm() {
         />
         {error.name && <p>{error.name}</p>}
 
+        </div>
+        <div className="divInputUser">
         <input
           type="text"
           name="surname"
@@ -89,7 +93,9 @@ export default function CreateUserForm() {
           onBlur={handleBlur}
         />
         {error.surname && <p>{error.surname}</p>}
-
+        </div>
+        
+        <div className="divInputUser">
         <input
           type="password"
           name="password"
@@ -101,6 +107,8 @@ export default function CreateUserForm() {
         />
         {error.password && <p>{error.password}</p>}
 
+        </div>
+        <div className="divInputUser">
         <input
           type="password"
           name="passwordVal"
@@ -111,7 +119,9 @@ export default function CreateUserForm() {
           onBlur={handleBlur}
         />
         {error.passwordVal && <p>{error.passwordVal}</p>}
-
+        </div>
+        
+        <div className="divInputUser">
         <input
           type="email"
           name="email"
@@ -123,6 +133,9 @@ export default function CreateUserForm() {
         />
         {error.email && <p>{error.email}</p>}
 
+        </div>
+        
+        <div className="divInputUser">
         <input
           type="text"
           name="address"
@@ -133,7 +146,9 @@ export default function CreateUserForm() {
           onBlur={handleBlur}
         />
         {error.address && <p>{error.address}</p>}
-
+        </div>
+        
+{/* 
         <textarea
           name="description"
           cols="s0"
@@ -142,10 +157,12 @@ export default function CreateUserForm() {
           onChange={handleChange}
           onBlur={handleBlur}
           value={form.description}
-        ></textarea>
-
-        <input type="submit" value="Send" />
+        ></textarea> */}
+          <div className="btn">
+          <input type="submit" value="Send" />
         {errorSend.msg && <p>{errorSend.msg}</p>}
+          </div>
+       
       </form>
     </div>
   );
