@@ -9,6 +9,7 @@ export default function Home() {
   console.log(state.products);
   return (
     <section className="setion-products">
+      <h4>Pablo sos hermoso</h4>
       {state.products &&
         state.products.map((product) => {
           return (
@@ -20,7 +21,9 @@ export default function Home() {
               rating={product.rating}
             />
           );
+
         })}
     </section>
   );
+
 }

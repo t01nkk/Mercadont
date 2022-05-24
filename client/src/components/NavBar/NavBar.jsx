@@ -22,6 +22,7 @@ export default function NavBar() {
           <Link to="/logIn">Login</Link>
         </div>
         {console.log(state.state1, state.state2, state.state3)}
+        <p>Que onda bro?</p>
       </header>
     </div>
   );
