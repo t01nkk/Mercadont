@@ -1,8 +1,16 @@
 import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
+// <<<<<<< Updated upstream
 import NavBar from "./components/NavBar/NavBar";
 import CreateUser from "./pages/CreateUser/CreateUser";
+import Home from "./pages/Home/Home";
+import SellProduct from "./pages/SellProduct/SellProduct";
+// =======
+// import NavBar from "./components/NavBar/NavBar.jsx";
+// import CreateUser from "./pages/CreateUser/CreateUser.jsx";
+// import Home from "./pages/Home/Home.jsx";
+// >>>>>>> Stashed changes
 
 function App() {
   return (
@@ -13,7 +21,7 @@ function App() {
         </Route>
         <Route path="/home" exact>
           <NavBar />
-          {/* Home */}
+          <Home />
         </Route>
         <Route path="/createUser" exact>
           <CreateUser />
@@ -21,7 +29,7 @@ function App() {
         </Route>
         <Route path="/sellProduct" exact>
           <NavBar />
-          {/* SellProduct */}
+          <SellProduct />
         </Route>
         <Route path="/favorites" exact>
           <NavBar />

@@ -1,0 +1,13 @@
+.productCard-container {
+  border: rgba(0, 0, 0, 1) solid 1px;
+  margin: 10px;
+  width: 20rem;
+  height: 23rem;
+  border-radius: 20px;
+  position: relative;
+}
+.productCard-container img {
+  height: 80%;
+  width: 80%;
+  position: absolute;
+}
