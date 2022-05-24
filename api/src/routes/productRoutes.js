@@ -95,21 +95,32 @@ router.delete("/:id", async (req, res) => {
 })
 
 //Update Product
-router.put("/:id", async (req, res) => {
-  const { id } = req.params
-  const { name, price, description, rating, images, stock, categories } = req.body
+//In the update form, LOAD ALL THE DATA FOR CHAGING
+router.put("/:id", async (req, res)=>{
+  const {id} = req.params
+  const {name, price, description, rating, images, stock, categories} = req.body
   try {
-    const updatedProduct = await Product.findOne({ where: { id: id } })
-    await updatedProduct.put({ name, price, description, rating, images, stock, categories })
+    await Product.update(
+      {
+        name: name,  
+        price: price, 
+        description: description, 
+        rating: rating, 
+        images: images, 
+        stock: stock, 
+        categories: categories
+      },
+      {
+        where: {id:id}
+      }
+    );
+
     res.status(202).send(updatedProduct)
   }
   catch (err) {
     res.status(400).send(err)
   }
 })
-
-
-
 
 module.exports = router
 
