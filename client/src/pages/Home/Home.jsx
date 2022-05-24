@@ -6,18 +6,21 @@ import "./Home.css";
 
 export default function Home() {
   const [state, dispatch] = useStore();
+
+  // useEffect(() => {
+  //   fetchProducts(dispatch);
+  // }, []);
   console.log(state.products);
   return (
-    <section className="setion-products">
+    <section className="section-products">
       {state.products &&
         state.products.map((product) => {
           return (
             <ProductCard
-              name={product.name}
+              name={product.title}
               key={product.id}
               price={product.price}
               image={product.image}
-              rating={product.rating}
             />
           );
         })}
