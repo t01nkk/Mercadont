@@ -1,5 +1,7 @@
 import React from "react";
 import "./ProductCard.css";
+import {Link} from "react-router-dom"
+
 
 export default function ProductCard({ name, price, image, rating, handleSaveCart }) {
 
@@ -7,14 +9,23 @@ export default function ProductCard({ name, price, image, rating, handleSaveCart
 
   return (
     // <div></div>
-    <article className="productCard-container">
-      <button onClick={()=>handleSaveCart(name, price)}>agregar carrito</button>
-      <img src={`${image}`} />
-      <div className="productCard-info">
-        <p>{name}</p>
-        <p>{price}</p>
-        <p>{rating}</p>
-      </div>
-    </article>
+    
+    <div>
+        <button onClick={()=>handleSaveCart(name, price)}>agregar carrito</button>
+      <Link to={"/home/:id"}>
+       <article className="card card-style">
+        <div className="img-container">
+            <img src={`${image}`} alt={`${name}`} />
+            <span className="price">{`$${price}`}</span>
+        </div>
+        
+        <div className="productCard-info">
+          <span>{name}</span>        
+          <span>{rating}</span>
+        </div>
+      </article>
+      </Link>
+    </div>
+   
   );
 }

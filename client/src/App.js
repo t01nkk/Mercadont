@@ -7,6 +7,7 @@ import CreateUser from "./pages/CreateUser/CreateUser";
 import Home from "./pages/Home/Home";
 import SellProduct from "./pages/SellProduct/SellProduct";
 import UserCart from "./pages/UserCart/UserCart.jsx"
+import ProductDetails from "./pages/ProductDetails/ProductDetails";
 // =======
 // import NavBar from "./components/NavBar/NavBar.jsx";
 // import CreateUser from "./pages/CreateUser/CreateUser.jsx";
@@ -47,7 +48,7 @@ function App() {
         </Route>
         <Route path="/home/:id" exact>
           <NavBar />
-          {/* ProductDetails */}
+          <ProductDetails />
         </Route>
       </Router>
     </>

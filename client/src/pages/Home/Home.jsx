@@ -13,10 +13,9 @@ export default function Home() {
     localStorage.setItem("myCart", JSON.stringify(cart))
     // localStorage.clear()
   }, [cart])
-  
 
   const handleSaveCart = (name, price)=>{
-    // alert("Funco como el mejor")
+
     let products = {
       name,
       price
@@ -38,8 +37,6 @@ export default function Home() {
   // useEffect(() => {
   //   fetchProducts(dispatch);
   // }, []);
-  // console.log(state.products);
-
 
   return (
     <section className="section-products">

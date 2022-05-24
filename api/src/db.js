@@ -9,6 +9,7 @@ const {
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/ecommerce`, {
     logging: false,
     native: false,
+    timestamps: false
 });
 const basename = path.basename(__filename);
 
@@ -29,8 +30,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 const { User, Product, Category } = sequelize.models;
 
-User.hasMany(Product); //RELACION PARA 
-Product.belongsTo(User);// VENDEDOR
+// User.hasMany(Product); //RELACION PARA 
+// Product.belongsTo(User);// VENDEDOR
 
 Product.belongsToMany(User, { through: 'bought' }); //RELACION PARA 
 User.belongsToMany(Product, { through: 'bought' });// COMPRADOR 
