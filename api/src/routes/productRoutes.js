@@ -4,48 +4,6 @@ const { Router } = require("express")
 
 const router = Router()
 
-
-//Get Products by Category
-router.get("/categories", async (req, res) => {
-  const { categories } = req.query
-  try {
-    const products = await Product.findByPk(categories, {
-      include: {
-        model: Category,
-        attributes: ["name"],
-        through: { attributes: [] }
-      }
-    })
-    res.status(200).send(products)
-  }
-  catch (err) {
-    res.status(404).send(err)
-  }
-})
-
-//Get Products by Name
-router.get("/name", async (req, res) => {
-  const { name } = req.query
-  const products = await Product.findAll()
-  const matchingProduct = products.filter(product => product.includes(name))
-  if (matchingProduct.length === 0) {
-    return res.status(404).send("Matching Product Not Found")
-  }
-  return res.status(200).send(matchingProduct)
-})
-
-//Get Products By Price
-router.get("/price", async (req, res) => {
-  const { price } = req.query
-  const products = await Product.findAll()
-  const matchingProducts = products.filter(product => product.includes(price))
-  if (matchingProducts.length === 0) {
-    return res.status(404).send("Matching Product Not Found")
-  }
-  const orderedByRelevance = matchingProducts.sort((a, b) => a.rating - b.rating)
-  return res.status(200).send(orderedByRelevance)
-})
-
 //WORKING
 //Get All Products, Filter By Category, Name, Price
 router.get("/", async (req, res) => {
@@ -179,12 +137,43 @@ router.put("/:id", async (req, res)=>{
       },
       {
         where: {id:id}
-      }
-    );
-
+      });
     res.status(202).send(updatedProduct)
   }
   catch (err) {
+    res.status(400).send(err)
+  }
+})
+
+//Product Bought
+router.put("/:id/buy", async (req, res)=>{
+  const {id} = req.params
+  const {amount} = req.body
+
+  try {
+    const {stock} = await Product.findOne({where: {id: id}})
+    if (stock - amount === 0) {
+      await Product.update({stock: "0", status: "inactive"}, {where: {id: id}})
+    }
+    await Product.update({stock: (stock - amount)}, {where: {id: id}})
+    return res.status(200).send("Product Bought")
+  }
+  catch (err){
+    res.status(400).send(err)
+  }
+})
+
+//Product Restock
+router.put("/:id/restock", async (req, res)=>{
+  const {id} = req.params
+  const {amount} = req.body
+
+  try {
+    const {stock} = await Product.findOne({where: {id: id}})
+    await Product.update({stock: (stock + amount), status:"active"}, {where: {id: id}})
+    return res.status(200).send("Product Restocked")
+  }
+  catch (err){
     res.status(400).send(err)
   }
 })
