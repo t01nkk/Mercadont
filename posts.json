@@ -1,530 +1,873 @@
 [
     {
-    "id": 1,
-    "name": "Parlante 4000W aguante tu vieja",
-    "price": 3500,
-    "image": "https://images.fravega.com/f500/1cebb72e7c68931d60d46cdb37dbe6fd.jpg",
-    "details": "Muy buen parlante que tiene adklsjlkasdsdalkj",
-    "rating": 3.5,
-    "status": "active",
-    "stock": 10,
-    "reviews": [{}],
-    "qa": [{"Te quedan en stock?": "Sí sí ofertame"}]
-},
-{
-    "id": 2,
-    "name": "Computadora re vieja modelo 98",
-    "price": 1500,
-    "image": "https://static8.depositphotos.com/1361307/902/i/600/depositphotos_9023641-stock-photo-old-pc-set.jpg",
-    "details": "Best compu ever",
-    "rating": 2,
-    "status": "active",
-    "stock": 2,
-    "reviews": [[3, "Puedo jugar al Doom II. 10/10"]],
-    "qa": [{
-        "te quedan en stock?": "Ofertá tranqui."
-    }]
-}, {
-    "id": 3,
-    "name": "Bicicleta sin ruedas",
-    "price": 5500,
-    "image": "https://www.compraensanjuan.com/fotos_articulos/1754556_1.jpg",
-    "details": "Me gusta la bicicleta",
-    "rating": 2,
-    "status": "inactive",
-    "stock": 0,
-    "reviews": [[4, "cumple con lo prometido"], [1, "no puedo usarla"]],
-    "qa": [
-        {"tiene ruedas?": "lee la publicacion"}, 
-        {"se le puede poner ruedas?": "este modelo no lo permite"}]
-}, {
-"id": 4,
-    "name": "Pintura muy antigua",
-    "price": 100,
-    "image": "https://previews.123rf.com/images/cbenjasuwan/cbenjasuwan1203/cbenjasuwan120300181/12877916-la-pittura-murale-antica-del-tempio-buddista-di-wat-phra-sing-un-tempio-famoso-in-chiangmai-provinci.jpg",
-    "details": "Seguro la pinto un gran artista",
-    "rating": 5,
-    "status": "active",
-    "stock": 1,
-    "reviews": [],
-    "qa": [
-        {"se vende por 100?": "JAJAJAJAJAJAJ. Disculpame. JAJAJAJAJAJ"} 
-    ]
-}, {
-    "id": 5,
-    "name": "Alhajas",
-    "price": 134.5,
-    "image": "http://cdn2.dineroenimagen.com/media/dinero/styles/xlarge/public/images/2020/08/alhajas-conviene-empenar.jpg",
-    "details": "Alhajas de Mirtha Legrand",
-    "rating": 5,
-    "status": "active",
-    "stock": 1,
-    "reviews": [[1, "Me robaron las alhajas."]],
-    "qa": [
-        {"En serio son de Mirtha o es mentira": "mira la review y me cuentas"} 
-]}, {
-    "id": 6,
-    "name": "Canasto de bicicleta",
-    "price": 575,
-    "image": "http://d3ugyf2ht6aenh.cloudfront.net/stores/052/201/products/can99005-canasto-para-bicicleta-rodado-26-negro1-53537db0894819127516040071229091-640-0.jpg",
-    "details": "Para llevar las bolsas de verdura",
-    "rating": 5,
-    "status": "active",
-    "stock": 100,
-    "reviews": [[5, "Canasto fuerte, metalico. "], [4, "no tienen fucsia no compro"]],
-    "qa": [
-        {"Ola. Puedo ponerlo en una moto?": "es para bicicleta"}, 
-        {"haces envios al interior": "hago envios"}]
-}, {
-    "id": 7,
-    "name": "Webcam Hitman",
-    "price": 3000,
-    "image": "https://gorilagames.com/img/Public/1019-producto-redragonwebcam1080p-2-system-linq-enumerabletakeiteratord-251.jpg",
-    "details": "Webcam Redragon Hitman alsdkjsaldkjlkdshafjjklhdfskjlhdasfkjdhfa,mnvxc,mxn Muy buena, lente poderoso, sonido stereo.",
-    "rating": 4.7,
-    "status": "active",
-    "stock": 87,
-    "reviews": [[4, "cumple con lo prometido"], [5, "EXCELENTEEEEEEEE"], [4, "excelente relación calidad-precio"]],
-    "qa": [
-        {"puedo hacer streaming?": "Hola. Somos grupo Gar-CA. Sí, podés. Consultanos cualquier cosa."}, 
-        {"sirve para Discord???": "Hola. Somos grupo Gar-CA. Sí, te sirve. Consultanos cualquier cosa."}]
-}, {
-    "id": 8,
-    "name": "Teclado Shiva K512",
-    "price": 3658.99,
-    "image": "https://redragon.es/content/uploads/2021/05/shiva-white.png",
-    "details": "Teclado Shiva K512. No mecánico. Membrana. Lucecitas RGB. Con apoya muñecas",
-    "rating": 4.9,
-    "status": "active",
-    "stock": 13,
-    "reviews": [[4, "exceletne"], [5, "aguante redragon y la pizza de mi mama"]],
-    "qa": [
-        {"hola. Necesito 1000 unidades para mañana": "Pedile a papa noel"}, 
-        {"es gamer?!?": "Sirve para jugar al Candy Crush."}]
-}, {
-    "id": 9,
-    "name": "Clavos 16mm x 2mm",
-    "price": 130,
-    "image": "https://surtiaceros.com/wp-content/uploads/2020/06/clavo-para-madera.jpg",
-    "details": "Clavos para clavar, como Pablito.",
-    "rating": 2.3,
-    "status": "active",
-    "stock": 50000,
-    "reviews": [[3, "son clavos"], [5, "metlaicos y filsoos"], [4, "excelente relación calidad-precio"]],
-    "qa": [
-        {"necesito 10000. haces descuento???.": "no"}]
-}, 
-{"id": 10,
-    "name": "Rueda lamborghini real",
-    "price": 7500,
-    "image": "https://salaguamotors.com/wp-content/uploads/2022/04/1-6.png",
-    "details": "Original, hecha en Italia. No acepte imitaciones",
-    "rating": "",
-    "status": "active",
-    "stock": 1,
-    "reviews": [],
-    "qa": [
-        {"Es derecha o izquierda?": "Es ambidiestra"}, 
-        {"Traes Ferraris por pieza?": "No trabajo con la competencia"}]
-    }, 
-    {"id": 11,
-    "name": "https://static6.depositphotos.com/1020288/546/i/600/depositphotos_5468580-stock-photo-chandelier.jpg",
-    "price": 3000,
-    "image": "fotito.jpg",
-    "details": "Lámpara muy buena que peude sostener un foco.",
-    "rating": 4.7,
-    "status": "active",
-    "stock": 15,
-    "reviews": [[4, "cumple con lo prometido"], [5, "EXCELENTEEEEEEEE"], [4, "excelente relación calidad-precio"], [2, "no me gustan las lamparas"]],
-    "qa": []},
-        {
-            "id": 12,
-    "name": "Desarrolladores front end",
-    "price": 3000,
-    "image": "https://cdni.russiatoday.com/rbthmedia/images/2021.06/original/60b7adbb85600a70b73b095d.jpg",
-    "details": "Rusos expatriados que te diseñan lo que sean. Muy comunistas.",
-    "rating": 3.5,
-    "status": "active",
-    "stock": 3,
-    "reviews": [[4, "In Mother Russia, code bugs you"]],
-    "qa": [
-        {"Son rusos o ucranianos???": "Rusos de Moscú"}
+        "id": 1,
+        "name": "Parlante 4000W aguante tu vieja",
+        "price": 3500,
+        "image": [
+            "https://images.fravega.com/f500/1cebb72e7c68931d60d46cdb37dbe6fd.jpg"
+        ],
+        "description": "Muy buen parlante que tiene adklsjlkasdsdalkj",
+        "rating": 3.5,
+        "status": "active",
+        "stock": 10,
+        "reviews": [
+            {}
+        ],
+        "qa": [
+            {
+                "Te quedan en stock??": "Sí sí ofertame"
+            }
         ]
-    }, {
+    },
+    {
+        "id": 2,
+        "name": "Computadora re vieja modelo 98",
+        "price": 1500,
+        "image": "https://static8.depositphotos.com/1361307/902/i/600/depositphotos_9023641-stock-photo-old-pc-set.jpg",
+        "description": "Best compu ever",
+        "rating": 2,
+        "status": "active",
+        "stock": 2,
+        "reviews": [
+            [
+                3,
+                "Puedo jugar al Doom II. 10/10"
+            ]
+        ],
+        "qa": [
+            {
+                "te quedan en stock?": "Ofertá tranqui."
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Bicicleta sin ruedas",
+        "price": 5500,
+        "image": "https://www.compraensanjuan.com/fotos_articulos/1754556_1.jpg",
+        "description": "Me gusta la bicicleta",
+        "rating": 2,
+        "status": "inactive",
+        "stock": 0,
+        "reviews": [
+            [
+                4,
+                "cumple con lo prometido"
+            ],
+            [
+                1,
+                "no puedo usarla"
+            ]
+        ],
+        "qa": [
+            {
+                "tiene ruedas?": "lee la publicacion"
+            },
+            {
+                "se le puede poner ruedas?": "este modelo no lo permite"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Pintura muy antigua",
+        "price": 100,
+        "image": "https://previews.123rf.com/images/cbenjasuwan/cbenjasuwan1203/cbenjasuwan120300181/12877916-la-pittura-murale-antica-del-tempio-buddista-di-wat-phra-sing-un-tempio-famoso-in-chiangmai-provinci.jpg",
+        "description": "Seguro la pinto un gran artista",
+        "rating": 5,
+        "status": "active",
+        "stock": 1,
+        "reviews": [],
+        "qa": [
+            {
+                "se vende por 100?": "JAJAJAJAJAJAJ. Disculpame. JAJAJAJAJAJ"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Alhajas",
+        "price": 134.5,
+        "image": "http://cdn2.dineroenimagen.com/media/dinero/styles/xlarge/public/images/2020/08/alhajas-conviene-empenar.jpg",
+        "description": "Alhajas de Mirtha Legrand",
+        "rating": 5,
+        "status": "active",
+        "stock": 1,
+        "reviews": [
+            [
+                1,
+                "Me robaron las alhajas."
+            ]
+        ],
+        "qa": [
+            {
+                "En serio son de Mirtha o es mentira": "mira la review y me cuentas"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Canasto de bicicleta",
+        "price": 575,
+        "image": "http://d3ugyf2ht6aenh.cloudfront.net/stores/052/201/products/can99005-canasto-para-bicicleta-rodado-26-negro1-53537db0894819127516040071229091-640-0.jpg",
+        "description": "Para llevar las bolsas de verdura",
+        "rating": 5,
+        "status": "active",
+        "stock": 100,
+        "reviews": [
+            [
+                5,
+                "Canasto fuerte, metalico. "
+            ],
+            [
+                4,
+                "no tienen fucsia no compro"
+            ]
+        ],
+        "qa": [
+            {
+                "Ola. Puedo ponerlo en una moto?": "es para bicicleta"
+            },
+            {
+                "haces envios al interior": "hago envios"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Webcam Hitman",
+        "price": 3000,
+        "image": "https://gorilagames.com/img/Public/1019-producto-redragonwebcam1080p-2-system-linq-enumerabletakeiteratord-251.jpg",
+        "description": "Webcam Redragon Hitman alsdkjsaldkjlkdshafjjklhdfskjlhdasfkjdhfa,mnvxc,mxn Muy buena, lente poderoso, sonido stereo.",
+        "rating": 4.7,
+        "status": "active",
+        "stock": 87,
+        "reviews": [
+            [
+                4,
+                "cumple con lo prometido"
+            ],
+            [
+                5,
+                "EXCELENTEEEEEEEE"
+            ],
+            [
+                4,
+                "excelente relación calidad-precio"
+            ]
+        ],
+        "qa": [
+            {
+                "puedo hacer streaming?": "Hola. Somos grupo Gar-CA. Sí, podés. Consultanos cualquier cosa."
+            },
+            {
+                "sirve para Discord???": "Hola. Somos grupo Gar-CA. Sí, te sirve. Consultanos cualquier cosa."
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Teclado Shiva K512",
+        "price": 3658.99,
+        "image": "https://redragon.es/content/uploads/2021/05/shiva-white.png",
+        "description": "Teclado Shiva K512. No mecánico. Membrana. Lucecitas RGB. Con apoya muñecas",
+        "rating": 4.9,
+        "status": "active",
+        "stock": 13,
+        "reviews": [
+            [
+                4,
+                "exceletne"
+            ],
+            [
+                5,
+                "aguante redragon y la pizza de mi mama"
+            ]
+        ],
+        "qa": [
+            {
+                "hola. Necesito 1000 unidades para mañana": "Pedile a papa noel"
+            },
+            {
+                "es gamer?!?": "Sirve para jugar al Candy Crush."
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Clavos 16mm x 2mm",
+        "price": 130,
+        "image": "https://surtiaceros.com/wp-content/uploads/2020/06/clavo-para-madera.jpg",
+        "description": "Clavos para clavar, como Pablito.",
+        "rating": 2.3,
+        "status": "active",
+        "stock": 50000,
+        "reviews": [
+            [
+                3,
+                "son clavos"
+            ],
+            [
+                5,
+                "metlaicos y filsoos"
+            ],
+            [
+                4,
+                "excelente relación calidad-precio"
+            ]
+        ],
+        "qa": [
+            {
+                "necesito 10000. haces descuento???.": "no"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Rueda lamborghini real",
+        "price": 7500,
+        "image": "https://salaguamotors.com/wp-content/uploads/2022/04/1-6.png",
+        "description": "Original, hecha en Italia. No acepte imitaciones",
+        "rating": "",
+        "status": "active",
+        "stock": 1,
+        "reviews": [],
+        "qa": [
+            {
+                "Es derecha o izquierda?": "Es ambidiestra"
+            },
+            {
+                "Traes Ferraris por pieza?": "No trabajo con la competencia"
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "name": "https://static6.depositphotos.com/1020288/546/i/600/depositphotos_5468580-stock-photo-chandelier.jpg",
+        "price": 3000,
+        "image": "fotito.jpg",
+        "description": "Lámpara muy buena que peude sostener un foco.",
+        "rating": 4.7,
+        "status": "active",
+        "stock": 15,
+        "reviews": [
+            [
+                4,
+                "cumple con lo prometido"
+            ],
+            [
+                5,
+                "EXCELENTEEEEEEEE"
+            ],
+            [
+                4,
+                "excelente relación calidad-precio"
+            ],
+            [
+                2,
+                "no me gustan las lamparas"
+            ]
+        ],
+        "qa": []
+    },
+    {
+        "id": 12,
+        "name": "Desarrolladores front end",
+        "price": 3000,
+        "image": "https://cdni.russiatoday.com/rbthmedia/images/2021.06/original/60b7adbb85600a70b73b095d.jpg",
+        "description": "Rusos expatriados que te diseñan lo que sean. Muy comunistas.",
+        "rating": 3.5,
+        "status": "active",
+        "stock": 3,
+        "reviews": [
+            [
+                4,
+                "In Mother Russia, code bugs you"
+            ]
+        ],
+        "qa": [
+            {
+                "Son rusos o ucranianos???": "Rusos de Moscú"
+            }
+        ]
+    },
+    {
         "id": 13,
-    "name": "Toallón árabe",
-    "price": 15000,
-    "image": "fotito.jpg",
-    "details": "Toallón bordado por árabes de Arabia",
-    "rating": 2.3,
-    "status": "inactive",
-    "stock": 0,
-    "reviews": [[1, "No me gustó"]],
-    "qa": [
-        {"cuando vuelven a traer?": "Cuando invadan otra vez Arabia. Esperá tranquilo"}
-    ]}, {
+        "name": "Toallón árabe",
+        "price": 15000,
+        "image": "fotito.jpg",
+        "description": "Toallón bordado por árabes de Arabia",
+        "rating": 2.3,
+        "status": "inactive",
+        "stock": 0,
+        "reviews": [
+            [
+                1,
+                "No me gustó"
+            ]
+        ],
+        "qa": [
+            {
+                "cuando vuelven a traer?": "Cuando invadan otra vez Arabia. Esperá tranquilo"
+            }
+        ]
+    },
+    {
         "id": 14,
-    "name": "Camita para gatos",
-    "price": 9500,
-    "image": "fotito.jpg",
-    "details": "Hermosa camita funcional para michis",
-    "rating": 2.3,
-    "status": "inactive",
-    "stock": 0,
-    "reviews": [[3, "excelentes camitas funcoinales"]],
-    "qa": [
-        {"tienen stock?": "Todavia no. Esepramos que abran importacion"}
-    ]
-    }, {
-      "id": 15,
-    "name": "Zapatos sin tacón",
-    "price": 475,
-    "image": "fotito.jpg",
-    "details": "Zapatos altos para mujer",
-    "rating": 2.3,
-    "status": "active",
-    "stock": 3,
-    "reviews": [[2.5, "no me llegan los pies al piso"]],
-    "qa": [
-        {
-            "Perdon pero no pueden ser altos sin tacon": "Estas disculpado"
-            }, {
-            "ah me estas cargando": "No, vos sos muy pesado"
-        }
-    ]  
-    }, {
+        "name": "Camita para gatos",
+        "price": 9500,
+        "image": "fotito.jpg",
+        "description": "Hermosa camita funcional para michis",
+        "rating": 2.3,
+        "status": "inactive",
+        "stock": 0,
+        "reviews": [
+            [
+                3,
+                "excelentes camitas funcoinales"
+            ]
+        ],
+        "qa": [
+            {
+                "tienen stock?": "Todavia no. Esepramos que abran importacion"
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "name": "Zapatos sin tacón",
+        "price": 475,
+        "image": "fotito.jpg",
+        "description": "Zapatos altos para mujer",
+        "rating": 2.3,
+        "status": "active",
+        "stock": 3,
+        "reviews": [
+            [
+                2.5,
+                "no me llegan los pies al piso"
+            ]
+        ],
+        "qa": [
+            {
+                "Perdon pero no pueden ser altos sin tacon": "Estas disculpado"
+            },
+            {
+                "ah me estas cargando": "No, vos sos muy pesado"
+            }
+        ]
+    },
+    {
         "id": 16,
-    "name": "Zapatos con tacón mujer talle 36",
-    "price": 4000,
-    "image": "fotito.jpg",
-    "details": "Zapatos altos para mujer. Talle 36. Cuero.",
-    "rating": 4.7,
-    "status": "active",
-    "stock": 15,
-    "reviews": [[4.9, "La mejor calidad genovesa"], [5, "Excelentes. Los usé y me sentí Cenicienta"]],
-    "qa": [
-        {
-            "Tienen stock": "Tenemos stock. "
-            }, {
-            "Mido un metro 95. Me quedaran bien?": "Nuestros zapatos son magicos"
-        }
-    ]  
-    }, {
+        "name": "Zapatos con tacón mujer talle 36",
+        "price": 4000,
+        "image": "fotito.jpg",
+        "description": "Zapatos altos para mujer. Talle 36. Cuero.",
+        "rating": 4.7,
+        "status": "active",
+        "stock": 15,
+        "reviews": [
+            [
+                4.9,
+                "La mejor calidad genovesa"
+            ],
+            [
+                5,
+                "Excelentes. Los usé y me sentí Cenicienta"
+            ]
+        ],
+        "qa": [
+            {
+                "Tienen stock": "Tenemos stock. "
+            },
+            {
+                "Mido un metro 95. Me quedaran bien?": "Nuestros zapatos son magicos"
+            }
+        ]
+    },
+    {
         "id": 17,
-    "name": "Cartuchera Backyardigans Dragon Ball Naruto",
-    "price": 300,
-    "image": "fotito.jpg",
-    "details": "Las mejores cartucheras para la vuelta al cole",
-    "rating": 4.2,
-    "status": "active",
-    "stock": 100,
-    "reviews": [[2.5, "no me llegan los pies al piso"]],
-    "qa": [
-        {
-            "Perdon pero no pueden ser altos sin tacon": "Estas disculpado"
-            }, {
-            "ah me estas cargando": "No, vos sos muy pesado"
-        }
-    ]  
-    }, {
+        "name": "Cartuchera Backyardigans Dragon Ball Naruto",
+        "price": 300,
+        "image": "fotito.jpg",
+        "description": "Las mejores cartucheras para la vuelta al cole",
+        "rating": 4.2,
+        "status": "active",
+        "stock": 100,
+        "reviews": [
+            [
+                2.5,
+                "no me llegan los pies al piso"
+            ]
+        ],
+        "qa": [
+            {
+                "Perdon pero no pueden ser altos sin tacon": "Estas disculpado"
+            },
+            {
+                "ah me estas cargando": "No, vos sos muy pesado"
+            }
+        ]
+    },
+    {
         "id": 18,
-    "name": "Mochila Spiderman Goku Superman El Sapo pepe",
-    "price": 3000,
-    "image": "fotito.jpg",
-    "details": "Ya tenés la cartuchera, ahora agarra la mochila",
-    "rating": 4.2,
-    "status": "active",
-    "stock": 100,
-    "reviews": [[2.5, "no me llegan los pies al piso"]],
-    "qa": [
-        {
-            "Perdon pero no pueden ser altos sin tacon": "Estas disculpado"
-            }, {
-            "ah me estas cargando": "No, vos sos muy pesado"
-        }
-    ] 
-    }, {
+        "name": "Mochila Spiderman Goku Superman El Sapo pepe",
+        "price": 3000,
+        "image": "fotito.jpg",
+        "description": "Ya tenés la cartuchera, ahora agarra la mochila",
+        "rating": 4.2,
+        "status": "active",
+        "stock": 100,
+        "reviews": [
+            [
+                2.5,
+                "no me llegan los pies al piso"
+            ]
+        ],
+        "qa": [
+            {
+                "Perdon pero no pueden ser altos sin tacon": "Estas disculpado"
+            },
+            {
+                "ah me estas cargando": "No, vos sos muy pesado"
+            }
+        ]
+    },
+    {
         "id": 19,
-    "name": "Lapiceras BIC trazo grueso azul blanco negro",
-    "price": 100,
-    "image": "fotito.jpg",
-    "details": "La mejor lapicera del mercado, ahora en tus manos.",
-    "rating": 4.9,
-    "status": "active",
-    "stock": 1687,
-    "reviews": [[5, "escriben muy bien"], [5, "el trazo mas grueso del mercosur"]],
-    "qa": [
-        {
-            "hola podras venderme 2000 unidades?": "No nos queda stock, perdon"
-            }, {
-            "estas cerca de la estacion de tren?": "En la esquina"
-        }
-    ] 
-    }, {
+        "name": "Lapiceras BIC trazo grueso azul blanco negro",
+        "price": 100,
+        "image": "fotito.jpg",
+        "description": "La mejor lapicera del mercado, ahora en tus manos.",
+        "rating": 4.9,
+        "status": "active",
+        "stock": 1687,
+        "reviews": [
+            [
+                5,
+                "escriben muy bien"
+            ],
+            [
+                5,
+                "el trazo mas grueso del mercosur"
+            ]
+        ],
+        "qa": [
+            {
+                "hola podras venderme 2000 unidades?": "No nos queda stock, perdon"
+            },
+            {
+                "estas cerca de la estacion de tren?": "En la esquina"
+            }
+        ]
+    },
+    {
         "id": 20,
-    "name": "Lápiz retractil TOSHIBA",
-    "price": 1500,
-    "image": "fotito.jpg",
-    "details": "Tecnologia nipona al alcance de tu bolsillo",
-    "rating": 3.4,
-    "status": "active",
-    "stock": 750,
-    "reviews": [[2, "Horrible la calidad. Se rompía todo el tiempo."], [5, "Tecnologia de punta 3mm"]],
-    "qa": [
-        {
-            "hola es hecho en japon?": "Si lo hizo akira toriyama"
-            }, {
-            "tenes stock?": "Recien acabamos de reponer"
-        }
-    ] 
-    }, {
-"id": 21,
-    "name": "Televisor TCL 40''",
-    "price": 15000,
-    "image": "fotito.jpg",
-    "details": "Alto tele smart",
-    "rating": 4.2,
-    "status": "active",
-    "stock": 5,
-    "reviews": [[4, "Messirve"], [3, "Esta bueno para el living pero no lo pondria en la habitacion"]],
-    "qa": [
-        {
-            "hola viene con tornillos para colgarlo a la pared?": "Hola buenas tardes. No el kit para colgar es aparte. Somos Grupo-TeKG."
+        "name": "Lápiz retractil TOSHIBA",
+        "price": 1500,
+        "image": "fotito.jpg",
+        "description": "Tecnologia nipona al alcance de tu bolsillo",
+        "rating": 3.4,
+        "status": "active",
+        "stock": 750,
+        "reviews": [
+            [
+                2,
+                "Horrible la calidad. Se rompía todo el tiempo."
+            ],
+            [
+                5,
+                "Tecnologia de punta 3mm"
+            ]
+        ],
+        "qa": [
+            {
+                "hola es hecho en japon?": "Si lo hizo akira toriyama"
+            },
+            {
+                "tenes stock?": "Recien acabamos de reponer"
             }
-    ] 
-    }, {
+        ]
+    },
+    {
+        "id": 21,
+        "name": "Televisor TCL 40''",
+        "price": 15000,
+        "image": "fotito.jpg",
+        "description": "Alto tele smart",
+        "rating": 4.2,
+        "status": "active",
+        "stock": 5,
+        "reviews": [
+            [
+                4,
+                "Messirve"
+            ],
+            [
+                3,
+                "Esta bueno para el living pero no lo pondria en la habitacion"
+            ]
+        ],
+        "qa": [
+            {
+                "hola viene con tornillos para colgarlo a la pared?": "Hola buenas tardes. No el kit para colgar es aparte. Somos Grupo-TeKG."
+            }
+        ]
+    },
+    {
         "id": 22,
-    "name": "Kit para colgar monitor 35-55''",
-    "price": 2750,
-    "image": "fotito.jpg",
-    "details": "Kit universal para colgar el tele de la pared.",
-    "rating": 1.3,
-    "status": "active",
-    "stock": 100,
-    "reviews": [[1, "Malisimo!!! Lo colgamos y el tele se cayo al piso!!!"], [1, "Busquen otra cosa. En serio."], [2, "no sirve para el peso de un televisor pero al menos tengo una nueva maceta en el living de mi casa"]],
-    "qa": [
-        {
-            "de que material es?": "de fierro duro"
-            }, {
-            "tan malo es?": "Todos haters"
-        }
-    ] 
-    }, {
+        "name": "Kit para colgar monitor 35-55''",
+        "price": 2750,
+        "image": "fotito.jpg",
+        "description": "Kit universal para colgar el tele de la pared.",
+        "rating": 1.3,
+        "status": "active",
+        "stock": 100,
+        "reviews": [
+            [
+                1,
+                "Malisimo!!! Lo colgamos y el tele se cayo al piso!!!"
+            ],
+            [
+                1,
+                "Busquen otra cosa. En serio."
+            ],
+            [
+                2,
+                "no sirve para el peso de un televisor pero al menos tengo una nueva maceta en el living de mi casa"
+            ]
+        ],
+        "qa": [
+            {
+                "de que material es?": "de fierro duro"
+            },
+            {
+                "tan malo es?": "Todos haters"
+            }
+        ]
+    },
+    {
         "id": 23,
-    "name": "Detergente CUIL",
-    "price": 159,
-    "image": "fotito.jpg",
-    "details": "Detergente desengrasante el mejor",
-    "rating": 2.8,
-    "status": "active",
-    "stock": 1000,
-    "reviews": [[3, "Saca la grasa pero no tiene olor a nada"], [4, "Tiene rico aroma pero no saca la grasa"]],
-    "qa": [
-        {
-            "tiene olor o no tiene olor?": "Seguramente no tenía olfato porque olor tienen"
+        "name": "Detergente CUIL",
+        "price": 159,
+        "image": "fotito.jpg",
+        "description": "Detergente desengrasante el mejor",
+        "rating": 2.8,
+        "status": "active",
+        "stock": 1000,
+        "reviews": [
+            [
+                3,
+                "Saca la grasa pero no tiene olor a nada"
+            ],
+            [
+                4,
+                "Tiene rico aroma pero no saca la grasa"
+            ]
+        ],
+        "qa": [
+            {
+                "tiene olor o no tiene olor?": "Seguramente no tenía olfato porque olor tienen"
             }
-    ] 
-    }, {
+        ]
+    },
+    {
         "id": 24,
-    "name": "Mopa para piso",
-    "price": 750,
-    "image": "fotito.jpg",
-    "details": "La mejor mopa para fregar tus pisos. Ahora con mango de madera dura",
-    "rating": 4,
-    "status": "active",
-    "stock": 750,
-    "reviews": [[4, "The best"]],
-    "qa": [
-        {
-            "hola se puede pasar a retirar hoy?": "Pasa tranquilo"
-            }, {
-            "hola se puede retirar mañana a las 18:39?": "Cerramos 18:40 así qeu vas a tener que apaurarte"
-        }
-    ] 
-    }, {
+        "name": "Mopa para piso",
+        "price": 750,
+        "image": "fotito.jpg",
+        "description": "La mejor mopa para fregar tus pisos. Ahora con mango de madera dura",
+        "rating": 4,
+        "status": "active",
+        "stock": 750,
+        "reviews": [
+            [
+                4,
+                "The best"
+            ]
+        ],
+        "qa": [
+            {
+                "hola se puede pasar a retirar hoy?": "Pasa tranquilo"
+            },
+            {
+                "hola se puede retirar mañana a las 18:39?": "Cerramos 18:40 así qeu vas a tener que apaurarte"
+            }
+        ]
+    },
+    {
         "id": 25,
-    "name": "Líquido refrigerante",
-    "price": 3499,
-    "image": "fotito.jpg",
-    "details": "El mejor líquido refrigerante para todas tus necesidades de refrigeración líquida",
-    "rating": "",
-    "status": "active",
-    "stock": 373,
-    "reviews": [],
-    "qa": [   ] 
-    }, {
+        "name": "Líquido refrigerante",
+        "price": 3499,
+        "image": "fotito.jpg",
+        "description": "El mejor líquido refrigerante para todas tus necesidades de refrigeración líquida",
+        "rating": "",
+        "status": "active",
+        "stock": 373,
+        "reviews": [],
+        "qa": []
+    },
+    {
         "id": 26,
-    "name": "Billetera de cuero de cocodrilo",
-    "price": 9000,
-    "image": "fotito.jpg",
-    "details": "Auténtica billetera de auténtico cuero de auténtico cocodrilo. Auténtica.",
-    "rating": "",
-    "status": "active",
-    "stock": 1,
-    "reviews": [],
-    "qa": [
-        {
-            "hola tenes un auténtico registro de autenticidad auténtica?": "Como Te Gusta Burlarte De La Gente Que Trabaja"
-            }, {"pero tenes o no tenes el registro?": "Como Te Gusta Boquearla"} 
-    ] 
-    }, {
+        "name": "Billetera de cuero de cocodrilo",
+        "price": 9000,
+        "image": "fotito.jpg",
+        "description": "Auténtica billetera de auténtico cuero de auténtico cocodrilo. Auténtica.",
+        "rating": "",
+        "status": "active",
+        "stock": 1,
+        "reviews": [],
+        "qa": [
+            {
+                "hola tenes un auténtico registro de autenticidad auténtica?": "Como Te Gusta Burlarte De La Gente Que Trabaja"
+            },
+            {
+                "pero tenes o no tenes el registro?": "Como Te Gusta Boquearla"
+            }
+        ]
+    },
+    {
         "id": 27,
-    "name": "Placa de video GeForce 1070 OFERTON",
-    "price": 47000,
-    "image": "fotito.jpg",
-    "details": "SE VENDE YA",
-    "rating": 5,
-    "status": "inactive",
-    "stock": 0,
-    "reviews": [[5, "Cumpplió con lo prometido"]],
-    "qa": [
-        {
-            "hola te sirven 45K? avisame capo": "Me sirve. Te paso mi numero. 0203456"
+        "name": "Placa de video GeForce 1070 OFERTON",
+        "price": 47000,
+        "image": "fotito.jpg",
+        "description": "SE VENDE YA",
+        "rating": 5,
+        "status": "inactive",
+        "stock": 0,
+        "reviews": [
+            [
+                5,
+                "Cumpplió con lo prometido"
+            ]
+        ],
+        "qa": [
+            {
+                "hola te sirven 45K? avisame capo": "Me sirve. Te paso mi numero. 0203456"
             }
-    ] 
-    }, {
+        ]
+    },
+    {
         "id": 28,
-    "name": "Taza estampada",
-    "price": 350,
-    "image": "fotito.jpg",
-    "details": "Varios diseños para elegir. Hacemos personalizado tambien!",
-    "rating": 4.5,
-    "status": "active",
-    "stock": 750,
-    "reviews": [[4, "Buen producto."], [5, "Pedi 7 tazas. Me las trajeron envueltas en papel de diario del '86. Reviví el gol del Diegote a los ingleses. 10/10"], [4, "Excelente taza. Pedi un diseño personalizado y salio hermoso. UwU"]],
-    "qa": [
-        {
-            "hola puede ser cualquier diseño?": "El que quieras. Mandanos la imagen y lo charlamos!"
-            }, {
-            "tenes stock?": "Tenemos stock de tod lo publicado :)"
-        }, {
-            "Hola queria 300 tazas de Goku": "Vamos a necesitar unos dias para concretar el pedido, pero se puede!"
-        }
-    ] 
-    }, {
-"id": 29,
-    "name": "Teclado membrana Logitech ACM1PT",
-    "price": 2500,
-    "image": "fotito.jpg",
-    "details": "El mejor teclado para el guachin de hoy. Streaming, gaming, trolling: lo que necesites, el teclado ACM1PT está a tu disponibilidad",
-    "rating": 5,
-    "status": "active",
-    "stock": 850,
-    "reviews": [[5, "SAPEEEEEEEEEEEEEEE"]],
-    "qa": [
-        {
-            "El peluca sapeeeeeeeeeeee": "Porque el peluca sapeeee"
-            }, {
-            "vendes la muñeca system?": "En esta publicacion: link.a.una.publicacion"
-        }
-    ] 
-    }, {
+        "name": "Taza estampada",
+        "price": 350,
+        "image": "fotito.jpg",
+        "description": "Varios diseños para elegir. Hacemos personalizado tambien!",
+        "rating": 4.5,
+        "status": "active",
+        "stock": 750,
+        "reviews": [
+            [
+                4,
+                "Buen producto."
+            ],
+            [
+                5,
+                "Pedi 7 tazas. Me las trajeron envueltas en papel de diario del '86. Reviví el gol del Diegote a los ingleses. 10/10"
+            ],
+            [
+                4,
+                "Excelente taza. Pedi un diseño personalizado y salio hermoso. UwU"
+            ]
+        ],
+        "qa": [
+            {
+                "hola puede ser cualquier diseño?": "El que quieras. Mandanos la imagen y lo charlamos!"
+            },
+            {
+                "tenes stock?": "Tenemos stock de tod lo publicado :)"
+            },
+            {
+                "Hola queria 300 tazas de Goku": "Vamos a necesitar unos dias para concretar el pedido, pero se puede!"
+            }
+        ]
+    },
+    {
+        "id": 29,
+        "name": "Teclado membrana Logitech ACM1PT",
+        "price": 2500,
+        "image": "fotito.jpg",
+        "description": "El mejor teclado para el guachin de hoy. Streaming, gaming, trolling: lo que necesites, el teclado ACM1PT está a tu disponibilidad",
+        "rating": 5,
+        "status": "active",
+        "stock": 850,
+        "reviews": [
+            [
+                5,
+                "SAPEEEEEEEEEEEEEEE"
+            ]
+        ],
+        "qa": [
+            {
+                "El peluca sapeeeeeeeeeeee": "Porque el peluca sapeeee"
+            },
+            {
+                "vendes la muñeca system?": "En esta publicacion: link.a.una.publicacion"
+            }
+        ]
+    },
+    {
         "id": 30,
-    "name": "Bolsa semillas",
-    "price": 2199,
-    "image": "fotito.jpg",
-    "details": "Tenes frio en los pies? NO MAS. Calentá esta bolsa y vas a ver cómo te calentás, rufián.",
-    "rating": 2,
-    "status": "active",
-    "stock": 15,
-    "reviews": [[2, "La metí al microondas y exploto todo."]],
-    "qa": [
-        {
-            "Y esto es seguro para poner en el microondas?": "Por supuesto"
+        "name": "Bolsa semillas",
+        "price": 2199,
+        "image": "fotito.jpg",
+        "description": "Tenes frio en los pies? NO MAS. Calentá esta bolsa y vas a ver cómo te calentás, rufián.",
+        "rating": 2,
+        "status": "active",
+        "stock": 15,
+        "reviews": [
+            [
+                2,
+                "La metí al microondas y exploto todo."
+            ]
+        ],
+        "qa": [
+            {
+                "Y esto es seguro para poner en el microondas?": "Por supuesto"
             }
-    ] 
-    }, {
+        ]
+    },
+    {
         "id": 31,
-    "name": "Libro medicina Your & Oldwoman",
-    "price": 3750,
-    "image": "fotito.jpg",
-    "details": "Última edición. El mejor libro de medicina en el mercado actualmente.",
-    "rating": 3.4,
-    "status": "active",
-    "stock": 3,
-    "reviews": [[5, "Excelente. Aprobé Anatomía II con este libro. Qué épocas..."]],
-    "qa": [
-        {
-            "haces envios al interior?": "Solo retiro en sucursal"
-            }, {
-            "tenes stock?": "Quedan los últimso 3"
-        }
-    ] 
-    }, {
+        "name": "Libro medicina Your & Oldwoman",
+        "price": 3750,
+        "image": "fotito.jpg",
+        "description": "Última edición. El mejor libro de medicina en el mercado actualmente.",
+        "rating": 3.4,
+        "status": "active",
+        "stock": 3,
+        "reviews": [
+            [
+                5,
+                "Excelente. Aprobé Anatomía II con este libro. Qué épocas..."
+            ]
+        ],
+        "qa": [
+            {
+                "haces envios al interior?": "Solo retiro en sucursal"
+            },
+            {
+                "tenes stock?": "Quedan los últimso 3"
+            }
+        ]
+    },
+    {
         "id": 32,
-    "name": "Fideos El molinete x500 gms",
-    "price": 149,
-    "image": "fotito.jpg",
-    "details": "Fideos de puro trigo candeal. no somos Marolio",
-    "rating": 2.9,
-    "status": "active",
-    "stock": 4000,
-    "reviews": [[3, "Son fideos. lastima que no son moñito"]],
-    "qa": [
-        {
-            "tenes fideo moñito?": "Son fideos tipo fideo"
-            }, {
-            "tenes fideo mostachol?": "Solo fideos tipo fideos"
-        }
-    ] 
-    }, {
+        "name": "Fideos El molinete x500 gms",
+        "price": 149,
+        "image": "fotito.jpg",
+        "description": "Fideos de puro trigo candeal. no somos Marolio",
+        "rating": 2.9,
+        "status": "active",
+        "stock": 4000,
+        "reviews": [
+            [
+                3,
+                "Son fideos. lastima que no son moñito"
+            ]
+        ],
+        "qa": [
+            {
+                "tenes fideo moñito?": "Son fideos tipo fideo"
+            },
+            {
+                "tenes fideo mostachol?": "Solo fideos tipo fideos"
+            }
+        ]
+    },
+    {
         "id": 33,
-    "name": "Mercedes Benz el último que salió",
-    "price": 150000,
-    "image": "fotito.jpg",
-    "details": "Si tengo que decirte los detalles significa que no podes pagarlo. Somos Concesionarias 'VOS SABES QUE SOS POBRE', las mejores de la zona.",
-    "rating": 5,
-    "status": "active",
-    "stock": 2,
-    "reviews": [[5, "El automóvil para gente como uno."], [5, "De alemania con amor. Me gusta esta cultura."]],
-    "qa": [
-        {
-            "Hola viene con una rubia arriba?": "Bloqueado por pobre."
+        "name": "Mercedes Benz el último que salió",
+        "price": 150000,
+        "image": "fotito.jpg",
+        "description": "Si tengo que decirte los detalles significa que no podes pagarlo. Somos Concesionarias 'VOS SABES QUE SOS POBRE', las mejores de la zona.",
+        "rating": 5,
+        "status": "active",
+        "stock": 2,
+        "reviews": [
+            [
+                5,
+                "El automóvil para gente como uno."
+            ],
+            [
+                5,
+                "De alemania con amor. Me gusta esta cultura."
+            ]
+        ],
+        "qa": [
+            {
+                "Hola viene con una rubia arriba?": "Bloqueado por pobre."
             }
-    ] 
-    }, {
+        ]
+    },
+    {
         "id": 34,
-    "name": "Aceite de oliva Natura x1lt",
-    "price": 1750,
-    "image": "fotito.jpg",
-    "details": "Aceite de oliva. Más sano. Más olivoso. Ahora con manijita.",
-    "rating": 4.2,
-    "status": "active",
-    "stock": 75,
-    "reviews": [[4, "Lo uso en la ensalada y queda riqurisima"], [5, "La uso porque la usa el cocinero en la tele"]],
-    "qa": [
-        {
-            "Son olivas en serio o es mezcla?": "Lee el envase. 100% extra virgen, como buen jugador de World of Warcraft"
+        "name": "Aceite de oliva Natura x1lt",
+        "price": 1750,
+        "image": "fotito.jpg",
+        "description": "Aceite de oliva. Más sano. Más olivoso. Ahora con manijita.",
+        "rating": 4.2,
+        "status": "active",
+        "stock": 75,
+        "reviews": [
+            [
+                4,
+                "Lo uso en la ensalada y queda riqurisima"
+            ],
+            [
+                5,
+                "La uso porque la usa el cocinero en la tele"
+            ]
+        ],
+        "qa": [
+            {
+                "Son olivas en serio o es mezcla?": "Lee el envase. 100% extra virgen, como buen jugador de World of Warcraft"
             }
-    ] 
-    }, {
+        ]
+    },
+    {
         "id": 35,
-    "name": "Juego vajilla completo 24 unidades",
-    "price": 14750,
-    "image": "fotito.jpg",
-    "details": "Hermoso juego de vajilla para tu casa. Todas las piezas están testeadas con los más rigurosos tests de calidad del mercado de tests.",
-    "rating": 3.4,
-    "status": "active",
-    "stock": 50,
-    "reviews": [[3, "sirve para ir a comer con la suegra"], [4, "se lo regale a mi suegra y ahora me ama"]],
-    "qa": [
-        {
-            "Es artesanal?": "Tan artesanal como permite que hayan 50 juegos idénticos"
-            }, {
-            "de que material son?": "Fina arcilla calentada a la brasa"
-        }
-    ] 
-    }, {
+        "name": "Juego vajilla completo 24 unidades",
+        "price": 14750,
+        "image": "fotito.jpg",
+        "description": "Hermoso juego de vajilla para tu casa. Todas las piezas están testeadas con los más rigurosos tests de calidad del mercado de tests.",
+        "rating": 3.4,
+        "status": "active",
+        "stock": 50,
+        "reviews": [
+            [
+                3,
+                "sirve para ir a comer con la suegra"
+            ],
+            [
+                4,
+                "se lo regale a mi suegra y ahora me ama"
+            ]
+        ],
+        "qa": [
+            {
+                "Es artesanal?": "Tan artesanal como permite que hayan 50 juegos idénticos"
+            },
+            {
+                "de que material son?": "Fina arcilla calentada a la brasa"
+            }
+        ]
+    },
+    {
         "id": 36,
-    "name": "Silla escritorio",
-    "price": 6570,
-    "image": "fotito.jpg",
-    "details": "Silla ergonómica. Para que no te duela la espalda",
-    "rating": 4.1,
-    "status": "active",
-    "stock": 134,
-    "reviews": [[4, "Buen diseño. Solida construccion. No le doy mas estrellas porque no viene con luces RGB"]],
-    "qa": [
-    ] 
+        "name": "Silla escritorio",
+        "price": 6570,
+        "image": "fotito.jpg",
+        "description": "Silla ergonómica. Para que no te duela la espalda",
+        "rating": 4.1,
+        "status": "active",
+        "stock": 134,
+        "reviews": [
+            [
+                4,
+                "Buen diseño. Solida construccion. No le doy mas estrellas porque no viene con luces RGB"
+            ]
+        ],
+        "qa": []
     }
 ]

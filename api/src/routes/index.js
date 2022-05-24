@@ -1,19 +1,16 @@
 const router = require('express').Router();
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
-// const api_url = "https://employeedetails.free.beeceptor.com/my/api/path";
+const productRoutes = require("./productRoutes")
+const userRoutes = require("./userRoutes")
+const categoryRoutes = require("./categoryRoutes")
 
-
-
-// const pokeTypes = require('./Types');
-// const Pokelist = require('./Pokemons');
 
 // router.use('/', Pokelist);
 // router.use('/', pokeTypes);
 
-
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
+router.use("/product", productRoutes)
+router.use("/user", userRoutes)
+router.use("/categories", categoryRoutes)
+// router.use("/categories", categoryRoutes)
 
 
 module.exports = router;
