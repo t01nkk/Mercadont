@@ -29,8 +29,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 const { User, Product, Category } = sequelize.models;
 
-User.hasMany(Product); //RELACION PARA 
-Product.belongsTo(User);// VENDEDOR
+// User.hasMany(Product); //RELACION PARA 
+// Product.belongsTo(User);// VENDEDOR
 
 Product.belongsToMany(User, { through: 'bought' }); //RELACION PARA 
 User.belongsToMany(Product, { through: 'bought' });// COMPRADOR 

@@ -69,11 +69,17 @@ router.get("/", async (req, res) => {
 //Create Product
 router.post("/", async (req, res) => {
   const { name, price, description, rating, images, stock, categories } = req.body
+
+  // first populate category table
+  for(let cat of categories){
+    await Category.findOrCreate({ where: { name: cat } })
+  }
+
   try {
-    const newProduct = await Product.create({ name, price, description, rating, images, stock, categories })
-    for (let i = 0; i < categories.length; i++) {
-      let category = await Category.findOne({ where: { name: categories[i] } })
-      newProduct.addCategory(category)
+    const newProduct = await Product.create({ name, price, description, rating, images, stock })
+    for (let cat of categories) {
+      let category = await Category.findOne({ where: { name: cat } })
+      await newProduct.addCategory(category)
     }
     res.status(201).send("New Product Created")
   }
