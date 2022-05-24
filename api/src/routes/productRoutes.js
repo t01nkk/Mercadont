@@ -4,6 +4,7 @@ const { Router } = require("express")
 
 const router = Router()
 
+//WORKING
 //Get All Productss
 router.get("/", async (req, res) => {
   const products = await Product.findAll()
@@ -39,7 +40,19 @@ router.get("/", async (req, res) => {
   }
 })
 
+//Get Products By Price
+router.get("/", async (req, res) => {
+  const { price } = req.query
+  const products = await Product.findAll()
+  const matchingProducts = products.filter(product => product.includes(price))
+  if (matchingProducts.length === 0) {
+    return res.status(404).send("Matching Product Not Found")
+  }
+  const orderedByRelevance = matchingProducts.sort((a, b) => a.rating - b.rating)
+  return res.status(200).send(orderedByRelevance)
+})
 
+//WORKING
 //Get Product Details
 router.get("/:id", async (req, res) => {
   const { id } = req.params
@@ -54,18 +67,7 @@ router.get("/:id", async (req, res) => {
   return res.status(200).send(product)
 })
 
-//Get Products By Price
-router.get("/", async (req, res) => {
-  const { price } = req.query
-  const products = await Product.findAll()
-  const matchingProducts = products.filter(product => product.includes(price))
-  if (matchingProducts.length === 0) {
-    return res.status(404).send("Matching Product Not Found")
-  }
-  const orderedByRelevance = matchingProducts.sort((a, b) => a.rating - b.rating)
-  return res.status(200).send(orderedByRelevance)
-})
-
+//WORKING
 //Create Product
 router.post("/", async (req, res) => {
   const { name, price, description, rating, images, stock, categories } = req.body
@@ -88,12 +90,13 @@ router.post("/", async (req, res) => {
   }
 })
 
+//WORKING
 //Delete Product
 router.delete("/:id", async (req, res) => {
   const { id } = req.params
   try {
-    const destroyedProduct = await Product.destroy({ where: { id: id } })
-    res.status(200).send(destroyedProduct)
+    await Product.destroy({ where: { id: id } })
+    res.status(200).send("Product deleted")
   }
   catch (err) {
     res.status(400).send(err)
