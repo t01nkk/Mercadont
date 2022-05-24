@@ -40,9 +40,9 @@ module.exports = (sequelize) => {
             }),
             allowNull: false,
         },
-        description: {
-            type: DataTypes.STRING
-        },
+        // description: {
+        //     type: DataTypes.STRING
+        // },
         image: {
             type: DataTypes.BLOB,
             allowNull: false
