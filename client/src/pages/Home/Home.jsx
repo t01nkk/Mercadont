@@ -10,7 +10,7 @@ export default function Home() {
   // useEffect(() => {
   //   fetchProducts(dispatch);
   // }, []);
-  console.log(state.products);
+
   return (
     <section className="section-products">
       {state.products &&

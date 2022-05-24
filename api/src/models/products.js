@@ -29,7 +29,6 @@ module.exports = (sequelize) => {
                     user: DataTypes.STRING,
                     text: DataTypes.STRING,
                 })),
-            allowNull: false
         },
         status: {
             type: DataTypes.ENUM("active", "inactive"),
@@ -37,7 +36,7 @@ module.exports = (sequelize) => {
         },
         stock: {
             type: DataTypes.INTEGER,
-            allowNull: false
+
         },
         reviews: {
             type: DataTypes.ARRAY(
@@ -53,8 +52,9 @@ module.exports = (sequelize) => {
                     answer: DataTypes.STRING,
                 }))
         },
-    }
-    )
+    },
+    {timestamps: false})
+
 };
 
 // Posts ()
