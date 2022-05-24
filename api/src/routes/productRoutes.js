@@ -1,4 +1,4 @@
-const {Product, Category} = require("../db")
+const {Product, User, Category} = require("../db")
 const {Router} = require("express")
 
 
@@ -57,7 +57,7 @@ router.get("/:id", async (req, res)=>{
 router.get("/", async (req, res)=>{
   const  {price} = req.query
   const products = await Product.findAll()
-  const matchingProducts = products.filter(product => product.includes(name))
+  const matchingProducts = products.filter(product => product.includes(price))
   if (matchingProducts.length === 0){
     return res.status(404).send("Matching Product Not Found")
   }
