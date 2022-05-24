@@ -1,14 +1,29 @@
-.productCard-container {
-  border: rgba(0, 0, 0, 1) solid 1px;
-  margin: 10px;
-  width: 20rem;
-  height: 23rem;
-  border-radius: 20px;
+.card{
+  width: 33%;
+}
+
+.card-style{
+  text-align: center;
+  height: 400px;
+  width: 300px;
+}
+
+.card-style .img-container{
   position: relative;
 }
-.productCard-container{}
-.productCard-container img {
-  height: 80%;
-  width: 80%;
-  
+.card-style .img-container img{
+  height: 300px;
+  width: 260px;
 }
+
+.card-style .img-container .price{
+  position: absolute;
+  top: 10px;
+  left: 1.4rem;
+  font-size: 15px;
+  background: white;
+  padding: 10px;
+}
+
+
+
