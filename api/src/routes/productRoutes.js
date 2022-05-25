@@ -56,7 +56,11 @@ router.get("/", async (req, res) => {
 //Get Product Details
 router.get("/:id", async (req, res) => {
   const { id } = req.params
-  const product = await Product.findOne({
+  const product = await Product.findOne({include: {
+      model: Category,
+      attributes: ["name"],
+      through: {attributes: []},
+    },
     where: {
       id: id
     }
@@ -131,7 +135,7 @@ router.delete("/:id", async (req, res) => {
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/:id", async (req, res)=>{
   const {id} = req.params
-  const {name, price, description, rating, images, stock, categories} = req.body
+  const {name, price, description, rating, image, stock, categories} = req.body
   for(let cat of categories){
     const [category, created] = await Category.findOrCreate({ where: { name: cat } })
     if (created){
