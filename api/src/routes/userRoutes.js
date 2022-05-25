@@ -6,77 +6,74 @@ const { Router } = require("express")
 const bcrypt = require("bcrypt")
 const passport = require('passport');
 const { initialize } = require('../middlewares/middlewares');
-const session = require('express-session');
+// const session = require('express-session');
+
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/login');
+    res.redirect('/user/login2');
 }
 
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        res.redirect('/')
+        res.redirect('/user')
     }
     next()
 }
 
 async function findUser(email) {
-    return await User.findOne({ where: { email: email } })
+    const userEmail = await User.findOne({ where: { email: email } })
+    // console.log(userEmail);
+    return userEmail
 }
 
 async function findById(id) {
-    return await User.findOne({ where: { id: id } });
+    const userId = await User.findOne({ where: { id: id } });
+    // console.log(userId);
+    return userId
 }
 
 initialize(passport, email => findUser(email), id => findById(id))
-
-// router.use(session({
-//     secret: SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false
-// }))
-
-// router.use(passport.initialize())
-// router.use(passport.session())
-
 
 //
 const router = Router()
 
 //Create User
+function getUser(user) {
+    return user
+}
 
 router.get("/login", async (req, res) => {
-    res.send("<h1>hola</h1>\
-    <h2>chau</h2>\
-    ")
+    res.send({ msg: 'Failure to authenticate credentials' })
+})
+router.get("/", async (req, res) => {
+    const user = await getUser(req.user)
+    res.send(user)
 })
 
 router.get("/register", checkNotAuthenticated, async (req, res) => {
-    res.send("<input>hola</input>\
-    <h2>chau</h2>\
-    ")
+    res.send({ msg: 'reg' })
 })
 
 router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/register',
-    // failureFlash: true
-}, function (req, res) {
-    console.log(req)
-}))
+    successRedirect: '/user',
+    failureRedirect: '/user/login',
+    failureFlash: true
+}
+))
+
 
 router.post("/register", checkNotAuthenticated, async (req, res) => {
 
     const { email, password } = req.body;
-    console.log(req.body)
     // const { name, lastname, email, password, address, description, image, payment } = req.body;
     try {
         const hashPass = await bcrypt.hash(password, 10);
         const newUser = await User.create({ email: email, password: hashPass });
         // const newUser = await User.create({ name, lastname, email, hashPass, address, description, image, payment });
-        console.log(newUser)
+        // console.log(newUser)
         res.status(201).send("New User Created")
 
     } catch (error) {
