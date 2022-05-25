@@ -8,15 +8,15 @@ export default function ProductCard({
   price,
   image,
   rating,
+  id,
+  stock,
   handleSaveCart,
 }) {
   return (
-    // <div></div>
-
     <div>
       <button
-        onClick={() => handleSaveCart(name, price)}
         className="shoppingCart-btn"
+        onClick={() => handleSaveCart(name, price, image, id, stock)}
       >
         <img src={shoppingCart} alt="" />
       </button>

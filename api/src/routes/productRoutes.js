@@ -30,7 +30,11 @@ router.get("/", async (req, res) => {
       products = matchingCategories
     }
     if(name){
-      console.log(name)
+      const matchingName = products.filter(product => product.name.toLowerCase().includes(name.toLowerCase()))
+      if (matchingName.length === 0) {
+        return res.status(404).send("Matching Product Not Found")
+      }
+      products = matchingName
     }
     if(price) {
       const matchingPrice = products.filter(product => product.price <= price)
@@ -69,13 +73,13 @@ router.post("/many", async (req, res) => {
   const products =  req.body
   try {
     for (let product of products) {
-      const {name, price, description, rating, images, stock, categories} = product
+      const {name, price, description, rating, image, stock, categories} = product
 
       for(let cat of categories){
         await Category.findOrCreate({ where: { name: cat } })
       }
       // first populate category table
-      const newProduct = await Product.create({name, price, description, rating, images, stock})
+      const newProduct = await Product.create({name, price, description, rating, image, stock})
       for (let cat of categories) {
         let category = await Category.findOne({ where: { name: cat } })
         await newProduct.addCategory(category)
@@ -90,7 +94,7 @@ router.post("/many", async (req, res) => {
 
 //Create Product
 router.post("/", async (req, res) => {
-  const { name, price, description, rating, images, stock, categories } = req.body
+  const { name, price, description, rating, image, stock, categories } = req.body
 
   // first populate category table
   for(let cat of categories){
@@ -98,7 +102,7 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const newProduct = await Product.create({ name, price, description, rating, images, stock })
+    const newProduct = await Product.create({ name, price, description, rating, image, stock })
     for (let cat of categories) {
       let category = await Category.findOne({ where: { name: cat } })
       await newProduct.addCategory(category)
@@ -142,7 +146,7 @@ router.put("/:id", async (req, res)=>{
         price: price, 
         description: description, 
         rating: rating, 
-        images: images, 
+        image: image, 
         stock: stock, 
         categories: categories
       },

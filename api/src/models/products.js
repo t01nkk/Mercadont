@@ -24,11 +24,10 @@ module.exports = (sequelize) => {
             type: DataTypes.FLOAT
         },
         image: {
-            type: DataTypes.ARRAY(
-                DataTypes.BLOB({
-                    user: DataTypes.STRING,
-                    text: DataTypes.STRING,
-                })),
+            // type: DataTypes.BLOB,
+            type: DataTypes.STRING,
+            // type: DataTypes.ARRAY(
+            //     DataTypes.BLOB),
         },
         status: {
             type: DataTypes.ENUM("active", "inactive"),
