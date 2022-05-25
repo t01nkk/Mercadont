@@ -1,14 +1,38 @@
 import React from "react";
 import "./ProductCard.css";
-export default function ProductCard({ name, price, image, rating }) {
+import { Link } from "react-router-dom";
+import shoppingCart from "../../media/shoppingCart.png";
+
+export default function ProductCard({
+  name,
+  price,
+  image,
+  rating,
+  id,
+  stock,
+  handleSaveCart,
+}) {
   return (
-    <article className="productCard-container">
-      <img src={`${image}`} />
-      <div className="productCard-info">
-        <p>{name}</p>
-        <p>{price}</p>
-        <p>{rating}</p>
-      </div>
-    </article>
+    <div>
+      <button
+        className="shoppingCart-btn"
+        onClick={() => handleSaveCart(name, price, image, id, stock)}
+      >
+        <img src={shoppingCart} alt="" />
+      </button>
+      <Link to={"/home/:id"}>
+        <article className="card card-style">
+          <div className="img-container">
+            <img src={`${image}`} alt={`${name}`} />
+            <span className="price">{`$${price}`}</span>
+          </div>
+
+          <div className="productCard-info">
+            <span>{name}</span>
+            <span>{rating}</span>
+          </div>
+        </article>
+      </Link>
+    </div>
   );
 }
