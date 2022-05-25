@@ -48,9 +48,15 @@ function getUser(user) {
 router.get("/login", async (req, res) => {
     res.send({ msg: 'Failure to authenticate credentials' })
 })
+
 router.get("/", async (req, res) => {
     const user = await getUser(req.user)
-    res.send(user)
+    if (user) {
+
+        res.status(300).send(user)
+    } else {
+        return res.status(401).send({ msg: "you need to log in" })
+    }
 })
 
 router.get("/register", checkNotAuthenticated, async (req, res) => {
@@ -64,23 +70,32 @@ router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
 }
 ))
 
-router.post('/logout', function(req, res, next) {
-    req.logout(function(err) {
+
+router.post('/logout', function (req, res, next) {
+    req.logout(function (err) {
         if (err) { return next(err); }
         res.redirect('/user');
     });
 });
 
 router.post("/register", checkNotAuthenticated, async (req, res) => {
-
-    const { email, password } = req.body;
-    // const { name, lastname, email, password, address, description, image, payment } = req.body;
+    if (req.user) {
+        return res.status(400).send({ message: "You can't register right now, you're already logged in!" })
+    }
+    // const { email, password } = req.body;
+    const { name, lastname, email, password, address, description, image, payment } = req.body;
+    const exists = await User.findOne({ where: { email: email } });
     try {
-        const hashPass = await bcrypt.hash(password, 10);
-        const newUser = await User.create({ email: email, password: hashPass });
-        // const newUser = await User.create({ name, lastname, email, hashPass, address, description, image, payment });
-        // console.log(newUser)
-        res.status(201).send("New User Created")
+        if (!exists) {
+            const hashPass = await bcrypt.hash(password, 10);
+            // const newUser = await User.create({ email: email, password: hashPass });
+            const newUser = await User.create({ name, lastname, email, password: hashPass, address, description, image, payment });
+            // console.log(newUser)
+            res.status(201).send("New User Created")
+
+        } else {
+            res.status(400).send({ msg: "This user already exists" });
+        }
 
     } catch (error) {
         res.status(401).send(error)
