@@ -1,51 +1,32 @@
-import React from 'react'
-import { useForm } from "../../helpers/useForm.js";
-import "./LoginForm.css"
+import React, { useState } from "react";
+import "./LoginForm.css";
+import axios from "axios";
 
 export default function LogInForm() {
-  const initialForm = {
+  const [data, setData] = useState({
     password: "",
     email: "",
+  });
+
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
   };
-  const validateForm = (form) => {
-    let error = {};
-
-    if (
-      !/(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{6,8}$/.test(form.password) &&
-      form.password !== ""
-    ) {
-      error.password =
-        "La contraseña debe tener entre 6 y 8 caracteres y no permite caracteres especiales";
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = data;
+    try {
+      await axios.post("http://localhost:3001/user/login", {
+        email: email,
+        password: password,
+      });
+    } catch (err) {
+      alert(err.response.data.error);
     }
-
-    if (
-      !/^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/.test(form.email) &&
-      form.email !== ""
-    ) {
-      error.email = "Verifica el email";
-    }
-
-
-    return error;
   };
-
-  const {
-    form,
-    error,
-    loading,
-    errorSend,
-    response,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-  } = useForm(initialForm, validateForm);
-
   return (
-    <div className='loginCard'>
+    <div className="loginCard">
       <h2>Sign In</h2>
-      <form onSubmit={handleSubmit}>   
-
-
+      <form onSubmit={handleSubmit}>
         <div className="divInputUser">
           <input
             type="email"
@@ -53,11 +34,8 @@ export default function LogInForm() {
             placeholder="Email ..."
             onChange={handleChange}
             required
-            value={form.email}
-            onBlur={handleBlur}
+            value={data.email}
           />
-          {error.email && <p>{error.email}</p>}
-
         </div>
         <div className="divInputUser">
           <input
@@ -66,19 +44,13 @@ export default function LogInForm() {
             placeholder="Password..."
             onChange={handleChange}
             required
-            value={form.password}
-            onBlur={handleBlur}
+            value={data.password}
           />
-          {error.password && <p>{error.password}</p>}
-
         </div>
         <div className="btn">
           <input type="submit" value="Send" />
-          {errorSend.msg && <p>{errorSend.msg}</p>}
         </div>
-
       </form>
     </div>
-
-  )
+  );
 }
