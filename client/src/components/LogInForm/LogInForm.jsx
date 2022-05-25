@@ -50,7 +50,7 @@ export default function LogInForm() {
           <input
             type="email"
             name="email"
-            placeholder="Email..."
+            placeholder="Email ..."
             onChange={handleChange}
             required
             value={form.email}
@@ -72,10 +72,6 @@ export default function LogInForm() {
           {error.password && <p>{error.password}</p>}
 
         </div>
-
-
-
-
         <div className="btn">
           <input type="submit" value="Send" />
           {errorSend.msg && <p>{errorSend.msg}</p>}
