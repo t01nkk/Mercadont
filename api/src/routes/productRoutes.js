@@ -30,7 +30,11 @@ router.get("/", async (req, res) => {
       products = matchingCategories
     }
     if(name){
-      console.log(name)
+      const matchingName = products.filter(product => product.name.toLowerCase().includes(name.toLowerCase()))
+      if (matchingName.length === 0) {
+        return res.status(404).send("Matching Product Not Found")
+      }
+      products = matchingName
     }
     if(price) {
       const matchingPrice = products.filter(product => product.price <= price)
