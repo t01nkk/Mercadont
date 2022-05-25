@@ -37,6 +37,24 @@
   }
 }
 
-*{
-  text-decoration: none;
+* {
+  margin: 0;
+  left: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+body {
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  overflow-x: hidden;
+}
+body button{
+  font-family: "Montserrat", sans-serif;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+/* body {
+  font-family: "Lato", sans-serif;
+} */

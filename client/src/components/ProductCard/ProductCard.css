@@ -1,22 +1,25 @@
-.card{
+.card {
   width: 33%;
 }
 
-.card-style{
+.card-style {
   text-align: center;
   height: 400px;
   width: 300px;
 }
 
-.card-style .img-container{
+.card-style .img-container {
   position: relative;
 }
-.card-style .img-container img{
+.card-style .img-container img {
   height: 300px;
   width: 260px;
 }
-
-.card-style .img-container .price{
+.shoppingCart-btn img {
+  height: 30px;
+  background-color: #fff;
+}
+.card-style .img-container .price {
   position: absolute;
   top: 10px;
   left: 1.4rem;
@@ -24,6 +27,3 @@
   background: white;
   padding: 10px;
 }
-
-
-

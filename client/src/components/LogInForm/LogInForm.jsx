@@ -23,6 +23,7 @@ export default function LogInForm() {
       alert(err.response.data.error);
     }
   };
+  console.log(data);
   return (
     <div className="loginCard">
       <h2>Sign In</h2>
