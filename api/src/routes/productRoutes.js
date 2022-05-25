@@ -136,12 +136,21 @@ router.delete("/:id", async (req, res) => {
 router.put("/:id", async (req, res)=>{
   const {id} = req.params
   const {name, price, description, rating, image, stock, categories} = req.body
-  for(let cat of categories){
-    const [category, created] = await Category.findOrCreate({ where: { name: cat } })
-    if (created){
-      Product.findOne({where:{id:id}}).addCategory(category)
+
+  if(categories){
+    let product = await Product.findOne({where:{id:id}})
+    console.log(await product.countCategories())
+    product.setCategories([])
+
+    for(let cat of categories) {
+      await Category.findOrCreate({where: {name: cat}})
     }
-  }
+    for(let cat of categories){
+      const category= await Category.findOne({ where: { name: cat } })
+      product.addCategory(category)
+
+      }
+    }
 
   try {
     await Product.update(
@@ -151,8 +160,7 @@ router.put("/:id", async (req, res)=>{
         description: description, 
         rating: rating, 
         image: image, 
-        stock: stock, 
-        categories: categories
+        stock: stock,
       },
       {
         where: {id:id}
