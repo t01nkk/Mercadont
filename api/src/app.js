@@ -3,6 +3,11 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
+const passport = require('passport')
+const session = require('express-session');
+const {
+    SESSION_SECRET
+} = process.env;
 
 require("./db.js");
 
@@ -24,6 +29,16 @@ server.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
     next();
 });
+
+
+server.use(session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}))
+server.use(passport.initialize())
+server.use(passport.session())
+
 
 server.use("/", routes);
 

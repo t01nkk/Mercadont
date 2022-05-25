@@ -1,15 +1,79 @@
+const {
+    SESSION_SECRET
+} = process.env;
 const { Product, User } = require("../db")
 const { Router } = require("express")
+const bcrypt = require("bcrypt")
+const passport = require('passport');
+const { initialize } = require('../middlewares/middlewares');
+// const session = require('express-session');
+
+
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/user/login2');
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        res.redirect('/user')
+    }
+    next()
+}
+
+async function findUser(email) {
+    const userEmail = await User.findOne({ where: { email: email } })
+    // console.log(userEmail);
+    return userEmail
+}
+
+async function findById(id) {
+    const userId = await User.findOne({ where: { id: id } });
+    // console.log(userId);
+    return userId
+}
+
+initialize(passport, email => findUser(email), id => findById(id))
 
 //
 const router = Router()
 
 //Create User
-router.post("/", async (req, res) => {
-    const {name, lastname, email, password, address, description, image, payment} = req.body;
+function getUser(user) {
+    return user
+}
 
+router.get("/login", async (req, res) => {
+    res.send({ msg: 'Failure to authenticate credentials' })
+})
+router.get("/", async (req, res) => {
+    const user = await getUser(req.user)
+    res.send(user)
+})
+
+router.get("/register", checkNotAuthenticated, async (req, res) => {
+    res.send({ msg: 'reg' })
+})
+
+router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
+    successRedirect: '/user',
+    failureRedirect: '/user/login',
+    failureFlash: true
+}
+))
+
+
+router.post("/register", checkNotAuthenticated, async (req, res) => {
+
+    const { email, password } = req.body;
+    // const { name, lastname, email, password, address, description, image, payment } = req.body;
     try {
-        const newUser = await User.create({name, lastname, email, password, address, description, image, payment});
+        const hashPass = await bcrypt.hash(password, 10);
+        const newUser = await User.create({ email: email, password: hashPass });
+        // const newUser = await User.create({ name, lastname, email, hashPass, address, description, image, payment });
+        // console.log(newUser)
         res.status(201).send("New User Created")
 
     } catch (error) {
@@ -18,14 +82,14 @@ router.post("/", async (req, res) => {
 });
 
 //Get User
-router.get("/:id", async (req, res) =>{
-    const {id} = req.params
+router.get("/:id", checkAuthenticated, async (req, res) => {
+    const { id } = req.params
 
     try {
         const user = await Product.findOne({
-            where: {id:id}
+            where: { id: id }
         });
-        if(!user){
+        if (!user) {
             return res.status(404).send("User Not Found")
         }
         return res.status(200).send(user)
@@ -37,21 +101,21 @@ router.get("/:id", async (req, res) =>{
 
 //Update User
 router.put("/:id", async (req, res) => {
-    const {id} = req.params
-    const {name, lastname, email, password, address, image, payment} = req.body;
+    const { id } = req.params
+    const { name, lastname, email, password, address, image, payment } = req.body;
 
     try {
         const updatedUser = await User.update(
             {
-                name: name, 
-                lastname: lastname, 
-                email: email, 
-                password: password, 
-                address: address, 
-                image: image, 
+                name: name,
+                lastname: lastname,
+                email: email,
+                password: password,
+                address: address,
+                image: image,
                 payment: payment,
             },
-            {where: {id:id}}
+            { where: { id: id } }
         );
         res.status(202).send(updatedUser)
 
@@ -61,10 +125,10 @@ router.put("/:id", async (req, res) => {
 });
 
 //Delete User
-router.delete("/:id", async (req,res) => {
-    const {id} = req.params;
+router.delete("/:id", async (req, res) => {
+    const { id } = req.params;
     try {
-        const destroyedUser = await User.destroy({where: {id:id}});
+        const destroyedUser = await User.destroy({ where: { id: id } });
         res.status(200).send(destroyedUser)
     } catch (error) {
         res.status(400).send(error)
