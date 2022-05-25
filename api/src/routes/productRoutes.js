@@ -4,36 +4,40 @@ const { Router } = require("express")
 
 const router = Router()
 
+
 //WORKING
 //Get All Products, Filter By Category, Name, Price
 router.get("/", async (req, res) => {
   try {
-    const {name, price, categories} = req.query
+    const {name, price, categories,} = req.query
 
-    var products = await Product.findAll()
+    let products;
+    products= await Product.findAll({
+      include: {
+        model: Category,
+        attributes: ["name"],
+        through: {attributes: []},
+      }})
+
     if(categories) {
-      const filteredCategories = await Product.findByPk(categories, {
-        include: {
-          model: Category,
-          attributes: ["name"],
-          through: {attributes: []}
+      const matchingCategories = []
+      products.map(product=>{
+        let intersection = product.categories.filter(cat => categories.includes(cat.name))
+        if(intersection.length > 0){
+          matchingCategories.push(product)
         }
       })
-      products = filteredCategories
+      products = matchingCategories
     }
-    if(name) {
-      const matchingName = products.filter(product => product.name.includes(name))
-      if (matchingProduct.length === 0) {
-        return res.status(404).send("Matching Product Not Found")
-      }
-      products = matchingName
+    if(name){
+      console.log(name)
     }
     if(price) {
-      const matchingPrice = products.filter(product => product.price == price)
+      const matchingPrice = products.filter(product => product.price <= price)
       if (matchingPrice.length === 0) {
         return res.status(404).send("Matching Product Not Found")
       }
-      const orderedByRelevance = matchingPrice.sort((a, b) => a.rating - b.rating)
+      const orderedByRelevance = matchingPrice.sort((a, b) => b.rating - a.rating)
       products = orderedByRelevance
     }
     return res.status(200).send(products)}
@@ -124,6 +128,13 @@ router.delete("/:id", async (req, res) => {
 router.put("/:id", async (req, res)=>{
   const {id} = req.params
   const {name, price, description, rating, images, stock, categories} = req.body
+  for(let cat of categories){
+    const [category, created] = await Category.findOrCreate({ where: { name: cat } })
+    if (created){
+      Product.findOne({where:{id:id}}).addCategory(category)
+    }
+  }
+
   try {
     await Product.update(
       {
