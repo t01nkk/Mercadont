@@ -56,7 +56,11 @@ router.get("/", async (req, res) => {
 //Get Product Details
 router.get("/:id", async (req, res) => {
   const { id } = req.params
-  const product = await Product.findOne({
+  const product = await Product.findOne({include: {
+      model: Category,
+      attributes: ["name"],
+      through: {attributes: []},
+    },
     where: {
       id: id
     }
