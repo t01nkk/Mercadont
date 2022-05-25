@@ -11,12 +11,16 @@ export default function SearchBar() {
         </button>
       </form> */}
 
-      <form onsubmit="event.preventDefault();" role="search" className="searchBar-container">
+      <form
+       
+        role="search"
+        className="searchBar-container"
+      >
         <input
           id="search"
           type="text"
           placeholder="Search..."
-          autofocus
+          autoFocus
           required
         />
         <button type="submit">
