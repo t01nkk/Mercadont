@@ -16,9 +16,9 @@ export default function Home() {
   }, [cart])
 
   const handleSaveCart = (name, price,image, id, stock)=>{
-    let products = {name, price,image, id, stock}
-    console.log(products)
-    // console.log(state)
+    let amount = 0
+    let products = {name, price,image, id, stock, amount}
+    // console.log(products)
     setCart((cart)=> [...cart, products])
   }
   //FUNCION PARA VER EL STORAGE, NO BORRAR

@@ -26,30 +26,49 @@ export const Cart = () => {
     // setStorageCart(yourStorage)
   }
 
-
+  //Funcion para ver detalle del producto por id
   const viewProduct = (id)=>{
     history.push(`/home/${id}`)
   }
 
-  const oneMore = (stock)=>{
+  //Funcion para sumar un producto al carrito
+  const oneMore = (stock, name)=>{
+    console.log(storageCart)
     setCount(count+1)
-
     if(count >= 1) setPermitLess(true)
     if(count === stock -1) setPermitMore(false)
-    console.log(count, "Suma")
+    changeAmount(count,name)
   }
   
-  const oneLess = (stock)=>{
+  //Funcion para restar producto al carro
+  const oneLess = (stock, name)=>{
     console.log(count)
     setCount(count-1)
     if(count <= 2) setPermitLess(false)
     if(count <= stock) setPermitMore(true)
   }
+  
+  
+  let changeAmount = (num, name)=>{
+    let articleStogare = yourStorage.find(e => e.name === name)
+    articleStogare.amount = num
+    setStorageCart(yourStorage)
+    localStorage.setItem("myCart", JSON.stringify(yourStorage))
+    console.log(articleStogare)
+    
+    // let index = yourStorage.filter(e => e.name === name)
+  }
 
 
+  //Funcion para limpiar carro
+  const clearCart = ()=>{
+    localStorage.clear()
+    setStorageCart([])
+  }
   return (
     <div>
       <button onClick={()=>mostra()}>mostra storage</button>
+      <button onClick={()=>clearCart()}>Clear Cart</button>
       <section>
         <h2>Welcome your Cart</h2>
         <div>
@@ -66,20 +85,20 @@ export const Cart = () => {
                 <tbody>
                     {storageCart && storageCart.length > 0
                         ?(storageCart.map(el=><tr key={el.id}>
-                                                <td><img src={el.image} alt={el.name}/></td>
-                                                <td>{el.name}</td>
-                                                <td>{el.price}</td>
                                                 <td>
                                                     {/* <button onClick={()=>setDataToEdit(el)}>Editar</button> */}
-                                                    {permitMore && <button onClick={()=>oneMore(el.stock)}>+</button>}
+                                                    {permitMore && <button onClick={()=>oneMore(el.stock, el.name)}>+</button>}
                                                     
-                                                    {permitLess && <button onClick={()=>oneLess(el.stock)}>-</button>}
+                                                    {permitLess && <button onClick={()=>oneLess(el.stock, el.name)}>-</button>}
                                                     <span>{count}</span>
                                                  
                                                     <button onClick={()=>deleteDatatoStorage(el.name)}>Eliminar</button>
                                                     <button onClick={()=>viewProduct(el.id)}>Ver</button>
                                                   
                                                 </td>
+                                                <td><img src={el.image} alt={el.name}/></td>
+                                                <td>{el.name}</td>
+                                                <td>{el.price}</td>
                                               </tr>
                                               
                              ))
