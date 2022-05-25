@@ -35,7 +35,6 @@ export default function Home() {
 
   useEffect(() => {
     const carga = async ()=>{
-      await postManyProducts(dispatch)
       await fetchProducts(dispatch);
     }
     carga()
