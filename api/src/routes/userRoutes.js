@@ -1,7 +1,7 @@
 const {
     SESSION_SECRET
 } = process.env;
-const { Product, User } = require("../db")
+const { User } = require("../db")
 const { Router } = require("express")
 const bcrypt = require("bcrypt")
 const passport = require('passport');
@@ -13,7 +13,7 @@ function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/user/login2');
+    res.redirect('/user/login');
 }
 
 function checkNotAuthenticated(req, res, next) {
@@ -64,6 +64,12 @@ router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
 }
 ))
 
+router.post('/logout', function(req, res, next) {
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/user');
+    });
+});
 
 router.post("/register", checkNotAuthenticated, async (req, res) => {
 
@@ -86,7 +92,7 @@ router.get("/:id", checkAuthenticated, async (req, res) => {
     const { id } = req.params
 
     try {
-        const user = await Product.findOne({
+        const user = await User.findOne({
             where: { id: id }
         });
         if (!user) {
