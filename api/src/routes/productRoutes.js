@@ -9,7 +9,7 @@ const router = Router()
 //Get All Products, Filter By Category, Name, Price
 router.get("/", async (req, res) => {
   try {
-    const {name, price, categories} = req.query
+    const {name, price, categories,} = req.query
 
     let products;
     products= await Product.findAll({
@@ -29,15 +29,11 @@ router.get("/", async (req, res) => {
       })
       products = matchingCategories
     }
-    if(name) {
-      const matchingName = products.filter(product => product.name.includes(name.toUpperCase()))
-      if (matchingName.length === 0) {
-        return res.status(404).send("Matching Product Not Found")
-      }
-      products = matchingName
+    if(name){
+      console.log(name)
     }
     if(price) {
-      const matchingPrice = products.filter(product => product.price == price)
+      const matchingPrice = products.filter(product => product.price <= price)
       if (matchingPrice.length === 0) {
         return res.status(404).send("Matching Product Not Found")
       }
