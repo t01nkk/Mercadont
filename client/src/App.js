@@ -8,6 +8,7 @@ import Home from "./pages/Home/Home";
 import SellProduct from "./pages/SellProduct/SellProduct";
 import UserCart from "./pages/UserCart/UserCart.jsx"
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import LogInForm from "./components/LogInForm/LogInForm";
 // =======
 // import NavBar from "./components/NavBar/NavBar.jsx";
 // import CreateUser from "./pages/CreateUser/CreateUser.jsx";
@@ -43,7 +44,8 @@ function App() {
           {/* Cart */}
         </Route>
         <Route path="/logIn" exact>
-          <NavBar />
+          
+          <LogInForm/>
           {/* LogIn */}
         </Route>
         <Route path="/home/:id" exact>
