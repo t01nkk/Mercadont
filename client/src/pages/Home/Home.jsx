@@ -1,26 +1,28 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import { useStore } from "../../context/store.js";
-import { fetchProducts, postManyProducts } from "../../redux/actions/actions.js";
+import {
+  fetchProducts,
+  postManyProducts,
+} from "../../redux/actions/actions.js";
 import "./Home.css";
 
 export default function Home() {
-  let initialCart = JSON.parse(localStorage.getItem("myCart")) || []
+  let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
 
-  const [cart, setCart] = useState(initialCart)
+  const [cart, setCart] = useState(initialCart);
 
-
-  useEffect(()=>{
-    localStorage.setItem("myCart", JSON.stringify(cart))
+  useEffect(() => {
+    localStorage.setItem("myCart", JSON.stringify(cart));
     // localStorage.clear()
-  }, [cart])
+  }, [cart]);
 
-  const handleSaveCart = (name, price,image, id, stock)=>{
-    let products = {name, price,image, id, stock}
-    console.log(products)
+  const handleSaveCart = (name, price, image, id, stock) => {
+    let products = { name, price, image, id, stock };
+    console.log(products);
     // console.log(state)
-    setCart((cart)=> [...cart, products])
-  }
+    setCart((cart) => [...cart, products]);
+  };
   //FUNCION PARA VER EL STORAGE, NO BORRAR
   // const mostra = ()=>{
   //   let miStorage = window.localStorage;
@@ -29,15 +31,13 @@ export default function Home() {
 
   const [state, dispatch] = useStore();
 
-
-
   //USEEFFECT CARGA DE PRODUCTOS
 
   useEffect(() => {
-    const carga = async ()=>{
+    const carga = async () => {
       await fetchProducts(dispatch);
-    }
-    carga()
+    };
+    carga();
   }, []);
 
   return (
@@ -45,21 +45,21 @@ export default function Home() {
       {/* <button onClick={()=>mostra()}>mostra storage</button>   */}
       {/* BOTTON PARA VER EL STORAGE NO BORRAR */}
       {state.products &&
-        React.Children.toArray(state.products.map((product) => {
-          return (
-            <ProductCard
-              id={product.id}
-              name={product.name}
-              stock={product.stock}
-              // key={product.id}
-              price={product.price}
-              image={product.image}
-              handleSaveCart={handleSaveCart}
-            />
-          );
-        }))
-        
-        }
+        React.Children.toArray(
+          state.products.map((product) => {
+            return (
+              <ProductCard
+                id={product.id}
+                name={product.name}
+                stock={product.stock}
+                // key={product.id}
+                price={product.price}
+                image={product.image}
+                handleSaveCart={handleSaveCart}
+              />
+            );
+          })
+        )}
     </section>
   );
 }
