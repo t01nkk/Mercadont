@@ -1,12 +1,12 @@
 [
-    {
+    { 
       "name": "BASIC BOMBER JACKET",
       "price": "109.95",
       "description": "Jacket with ribbed collar. Long sleeves. Welt pockets at hip. Interior pocket. Elastic hem. Front zip closure.",
       "categories": ["men's clothing","jackets"],
       "image": "https://static.zara.net/photos///2022/V/0/2/p/4302/410/800/2/w/850/4302410800_6_1_1.jpg?ts=1643101938806",
       "rating": "1",
-      "stock": "1"
+      "stock": "5"
     },
     {
       "name": "BASIC TECHNICAL JACKET",
@@ -15,7 +15,7 @@
       "categories": ["men's clothing","jackets"],
       "image": "https://static.zara.net/photos///2022/V/0/2/p/3918/350/505/2/w/850/3918350505_6_1_1.jpg?ts=1638265260644",
       "rating": "4.1",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "X RHUIGI TECHNICAL SWEATSHIRT",
@@ -24,7 +24,7 @@
       "categories": ["men's, clothing","jackets"],
       "image": "https://static.zara.net/photos///2022/I/0/2/p/4391/340/711/2/w/850/4391340711_6_1_1.jpg?ts=1652095565722",
       "rating": "4.7",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "FAUX LEATHER BIKER JACKET",
@@ -33,7 +33,7 @@
       "categories": ["men's clothing","jackets"],
       "image": "https://static.zara.net/photos///2022/V/0/2/p/3427/444/800/2/w/850/3427444800_6_1_1.jpg?ts=1641899833087",
       "rating":"2.1",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "COMBINATION LINK BRACELET",
@@ -42,7 +42,7 @@
       "categories": ["accessories","jewelery"],
       "image": "https://static.zara.net/photos///2022/V/0/2/p/8435/407/303/2/w/850/8435407303_6_1_1.jpg?ts=1639674941621",
       "rating":"4.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "SCORPION PLATE BRACELET",
@@ -51,7 +51,7 @@
       "categories": ["accessories","jewelery"],
       "image": "https://static.zara.net/photos///2022/V/0/2/p/1124/300/303/2/w/850/1124300303_6_1_1.jpg?ts=1652265369685",
       "rating": "3.9",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "CHAIN WITH INITIAL CHARM",
@@ -60,7 +60,7 @@
       "categories": ["accessories","jewelery"],
       "image": "https://static.zara.net/photos///2022/V/0/2/p/8435/412/808/2/w/850/8435412808_6_1_1.jpg?ts=1639674980175",
       "rating": "3",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "COMBINATION LINK BRACELET",
@@ -69,7 +69,7 @@
       "categories": ["accessories","jewelery"],
       "image": "https://static.zara.net/photos///2022/V/0/2/p/8435/416/808/2/w/850/8435416808_6_1_1.jpg?ts=1639674912195",
       "rating":"1.9",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "X RHUIGI DENIM SHORTS",
@@ -78,7 +78,7 @@
       "categories": ["men's clothing","shorts"],
       "image": "https://static.zara.net/photos///2022/I/0/2/p/6688/333/427/2/w/850/6688333427_6_1_1.jpg?ts=1652095518946",
       "rating": "3.3",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "X RHUIGI CARGO SHORTS",
@@ -87,7 +87,7 @@
       "categories": ["men's clothing","shorts"],
       "image": "https://static.zara.net/photos///2022/I/0/2/p/1538/325/822/2/w/850/1538325822_6_1_1.jpg?ts=1652095605164",
       "rating": "2.9",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "PRINTED SHIRT DRESS",
@@ -96,7 +96,7 @@
       "categories": ["women's clothing","dresses"],
       "image": "https://static.zara.net/photos///2022/I/0/1/p/7786/855/903/2/w/850/7786855903_6_1_1.jpg?ts=1653043270555",
       "rating": "4.8",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "JACQUARD KNIT SKIRT",
@@ -105,7 +105,7 @@
       "categories": ["women's clothing","skirts"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/4331/065/630/2/w/850/4331065630_6_1_1.jpg?ts=1652716673831",
       "rating": "4.8",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "WRAP DENIM SKIRT",
@@ -114,7 +114,7 @@
       "categories": ["women's clothing","skirts"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/6164/162/712/2/w/850/6164162712_6_1_1.jpg?ts=1653291397101",
       "rating": "2.9",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "LINEN BLEND STRETCH SKIRT",
@@ -123,7 +123,7 @@
       "categories": ["women's clothing","skirts"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/3353/660/800/2/w/850/3353660800_6_1_1.jpg?ts=1649070225942",
       "rating": "2.9",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "BELTED PRINTED KIMONO",
@@ -132,7 +132,7 @@
       "categories": ["women's clothing","dresses"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/7521/054/401/2/w/850/7521054401_6_1_1.jpg?ts=1650990281745",
       "rating": "3.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "WIDE LAPEL KNIT COAT",
@@ -141,7 +141,7 @@
       "categories": ["women's clothing","coats"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/5802/012/700/2/w/850/5802012700_6_1_1.jpg?ts=1639743599029",
       "rating": "2.9",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "OVERSIZED TRENCH LIMITED EDITION",
@@ -150,7 +150,7 @@
       "categories": ["women's clothing","coats"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/2583/960/710/2/w/850/2583960710_6_1_1.jpg?ts=1649143246379",
       "rating": "3.8",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "FAUX LEATHER PUFFER JACKET",
@@ -159,7 +159,7 @@
       "categories": ["women's clothing","jackets"],
       "image": "https://static.zara.net/photos///2021/I/0/1/p/3427/753/800/2/w/850/3427753800_6_1_1.jpg?ts=1631802167368",
       "rating": "4.7",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "CHENILLE CROCHETED SWEATSHIRT",
@@ -168,7 +168,7 @@
       "categories": ["women's clothing","sweatshirts"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/7901/508/067/2/w/850/7901508067_6_1_1.jpg?ts=1644512013997",
       "rating": "2.9",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "CROCHET SWEATER",
@@ -177,7 +177,7 @@
       "categories": ["women's clothing","sweatshirts"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/7901/586/635/2/w/850/7901586635_6_1_1.jpg?ts=1646382352267",
       "rating": "3.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "JEWEL TRIM SOFT SWEATER",
@@ -186,7 +186,7 @@
       "categories": ["women's clothing","sweatshirts"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/5644/037/251/2/w/850/5644037251_6_1_1.jpg?ts=1644570713593",
       "rating": "2.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "PRINTED SWEATSHIRT",
@@ -195,7 +195,7 @@
       "categories": ["women's clothing","sweatshirts"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/1131/306/070/2/w/850/1131306070_6_1_1.jpg?ts=1642755434027",
       "rating": "3.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "TAILORED SHORT WAISTCOAT",
@@ -204,7 +204,7 @@
       "categories": ["women's clothing","coats"],
       "image": "https://static.zara.net/photos///2022/I/0/1/p/7547/730/250/2/w/850/7547730250_6_1_1.jpg?ts=1652970091835",
       "rating":  "3.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "PRINTED CUFF LINEN BLEND BLAZER",
@@ -213,7 +213,7 @@
       "categories": ["women's clothing","blazers"],
       "image": "https://static.zara.net/photos///2022/I/0/1/p/2753/230/052/2/w/850/2753230052_6_1_1.jpg?ts=1652960692401",
       "rating": "3.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "BUTTONED TEXTURED WEAVE BLAZER",
@@ -222,7 +222,7 @@
       "image": "https://static.zara.net/photos///2022/I/0/1/p/3666/469/630/2/w/850/3666469630_6_1_1.jpg?ts=1652947090784",
       "categories": ["women's clotthing", "blazers"],
       "rating": "3.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "LACE BODYSUIT",
@@ -231,7 +231,7 @@
       "categories": ["women's clothing","bodysuits"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/2712/323/712/2/w/850/2712323712_6_1_1.jpg?ts=1651765991634",
       "rating": "3.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "RUFFLED ASYMMETRICAL BODYSUIT",
@@ -240,7 +240,7 @@
       "categories": ["women's clothing","bodysuits"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/1660/305/800/2/w/850/1660305800_6_1_1.jpg?ts=1652371438791",
       "rating": "3.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "PRINTED HALTER NECK BODYSUIT",
@@ -249,7 +249,7 @@
       "categories": ["women's clothing","bodysuits"],
       "image": "https://static.zara.net/photos///2022/V/0/1/p/0085/399/119/2/w/850/0085399119_6_1_1.jpg?ts=1652356123211",
       "rating": "3.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "BUCKLED CROSS STRAP FLAT SANDALS",
@@ -258,7 +258,7 @@
       "categories": ["women's clothing","shoes"],
       "image": "https://static.zara.net/photos///2022/I/1/1/p/3606/010/032/2/w/850/3606010032_6_2_1.jpg?ts=1652960304164",
       "rating": "3.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "X RHUIGI PRINTED POLO",
@@ -267,7 +267,7 @@
       "categories": ["men's clothing","polo shirts"],
       "image": "https://static.zara.net/photos///2022/I/0/2/p/6224/360/251/2/w/850/6224360251_6_1_1.jpg?ts=1652442060902",
       "rating": "3.7",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "PIQUÉ TEXTURED POLO SHIRT",
@@ -276,7 +276,7 @@
       "categories": ["men's clothing","polo shirts"],
       "image": "https://static.zara.net/photos///2022/V/0/2/p/9240/455/800/2/w/850/9240455800_6_1_1.jpg?ts=1644491775271",
       "rating":"1.1",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "PIQUÉ TEXTURED POLO SHIRT SLEEVES",
@@ -285,7 +285,7 @@
       "categories": ["men's clothing","polo shirts"],
       "image": "https://static.zara.net/photos///2022/V/0/2/p/0761/417/677/2/w/850/0761417677_6_1_1.jpg?ts=1649341906810",
       "rating": "4.5",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "BASIC HOODIE SWEATSHIRT",
@@ -294,7 +294,7 @@
       "categories": ["men's clothing","sweatshirts"],
       "image": "https://static.zara.net/photos///2022/I/0/2/p/0761/300/707/2/w/850/0761300707_6_1_1.jpg?ts=1652426751388",
       "rating": "1.3",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "ZIPPERED STRIPE SWEATSHIRT",
@@ -303,7 +303,7 @@
       "categories": ["men's clothing","sweatshirts"],
       "image": "https://static.zara.net/photos///2022/I/0/2/p/5372/302/250/2/w/850/5372302250_6_1_1.jpg?ts=1652426816212",
       "rating": "1.4",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "TECHNICAL COLORBLOCK JACKET",
@@ -312,7 +312,7 @@
       "categories": ["men's clothing","sweatshirts"],
       "image": "https://static.zara.net/photos///2022/V/0/2/p/4391/421/330/2/w/850/4391421330_6_1_1.jpg?ts=1646916384932",
       "rating": "3.6",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "JOGGING PANTS WITH BAND",
@@ -321,7 +321,7 @@
       "categories": ["men's clothing","pants"],
       "image": "https://static.zara.net/photos///2022/I/0/2/p/5372/301/800/2/w/850/5372301800_6_1_1.jpg?ts=1652426753385",
       "rating": "3.8",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "BASIC JOGGING PANTS",
@@ -330,7 +330,7 @@
       "categories": ["men's clothing","pants"],
       "image": "https://static.zara.net/photos///2022/I/0/2/p/0761/301/615/2/w/850/0761301615_6_1_1.jpg?ts=1652426791667",
       "rating": "5",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "COLOR BLOCK JOGGERS",
@@ -339,7 +339,7 @@
       "categories": ["men's clothing","pants"],
       "image": "https://static.zara.net/photos///2022/V/0/2/p/0761/344/088/2/w/850/0761344088_6_1_1.jpg?ts=1645548044519",
       "rating": "4.1",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "FLAT LEATHER SANDAL WITH BUCKLE",
@@ -348,7 +348,7 @@
       "categories": ["women's clothing","shoes"],
       "image": "https://static.zara.net/photos///2022/V/1/1/p/1603/910/002/2/w/850/1603910002_6_2_1.jpg?ts=1646752660390",
       "rating": "2.7",
-      "stock": "1"
+      "stock": "20"
     },
     {
       "name": "HEELED PLATFORM SHOES",
@@ -357,6 +357,6 @@
       "categories": ["women's clothing","shoes"],
       "image": "https://static.zara.net/photos///2022/V/1/1/p/1275/910/040/2/w/850/1275910040_6_2_1.jpg?ts=1644497134245",
       "rating": "1",
-      "stock": "1"
+      "stock": "20"
     }
   ]

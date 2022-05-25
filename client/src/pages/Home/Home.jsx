@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import { useStore } from "../../context/store.js";
-import { fetchProducts } from "../../redux/actions/actions.js";
+import { fetchProducts, postManyProducts } from "../../redux/actions/actions.js";
 import "./Home.css";
 
 export default function Home() {
@@ -9,17 +9,16 @@ export default function Home() {
 
   const [cart, setCart] = useState(initialCart)
 
+
   useEffect(()=>{
     localStorage.setItem("myCart", JSON.stringify(cart))
     // localStorage.clear()
   }, [cart])
 
-  const handleSaveCart = (name, price)=>{
-
-    let products = {
-      name,
-      price
-    }
+  const handleSaveCart = (name, price,image, id, stock)=>{
+    let products = {name, price,image, id, stock}
+    console.log(products)
+    // console.log(state)
     setCart((cart)=> [...cart, products])
   }
   //FUNCION PARA VER EL STORAGE, NO BORRAR
@@ -34,26 +33,34 @@ export default function Home() {
 
   //USEEFFECT CARGA DE PRODUCTOS
 
-  // useEffect(() => {
-  //   fetchProducts(dispatch);
-  // }, []);
+  useEffect(() => {
+    const carga = async ()=>{
+      await postManyProducts(dispatch)
+      await fetchProducts(dispatch);
+    }
+    carga()
+  }, []);
 
   return (
     <section className="section-products">
       {/* <button onClick={()=>mostra()}>mostra storage</button>   */}
       {/* BOTTON PARA VER EL STORAGE NO BORRAR */}
       {state.products &&
-        state.products.map((product) => {
+        React.Children.toArray(state.products.map((product) => {
           return (
             <ProductCard
-              name={product.title}
-              key={product.id}
+              id={product.id}
+              name={product.name}
+              stock={product.stock}
+              // key={product.id}
               price={product.price}
               image={product.image}
               handleSaveCart={handleSaveCart}
             />
           );
-        })}
+        }))
+        
+        }
     </section>
   );
 }
