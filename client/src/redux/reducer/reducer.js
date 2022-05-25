@@ -5,6 +5,8 @@ export const initialState = {
   products: [],
   state2: "estado state store#2",
   state3: "estado state store#3",
+  state4: "estado state store#3",
+  state5: "estado state store#3",
 };
 
 export function reducer(state = initialState, action) {
