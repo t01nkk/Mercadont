@@ -18,7 +18,7 @@ export default function Home() {
   }, [cart]);
 
   const handleSaveCart = (name, price,image, id, stock)=>{
-    let amount = 0
+    let amount = 1
     let products = {name, price,image, id, stock, amount}
     // console.log(products)
     setCart((cart)=> [...cart, products])
@@ -36,9 +36,11 @@ export default function Home() {
   useEffect(() => {
     const carga = async () => {
       await fetchProducts(dispatch);
+      // await postManyProducts(dispatch)
     };
     carga();
   }, []);
+
 
   return (
     <section className="section-products">
