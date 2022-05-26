@@ -5,7 +5,7 @@ const { User } = require("../db")
 const { Router } = require("express")
 const bcrypt = require("bcrypt")
 const passport = require('passport');
-const { initialize } = require('../middlewares/middlewares');
+const { initialize, validateInputUser } = require('../middlewares/middlewares');
 // const session = require('express-session');
 
 
@@ -25,13 +25,11 @@ function checkNotAuthenticated(req, res, next) {
 
 async function findUser(email) {
     const userEmail = await User.findOne({ where: { email: email } })
-    // console.log(userEmail);
     return userEmail
 }
 
 async function findById(id) {
     const userId = await User.findOne({ where: { id: id } });
-    // console.log(userId);
     return userId
 }
 
@@ -45,24 +43,27 @@ function getUser(user) {
     return user
 }
 
+//Redundant?
 router.get("/login", async (req, res) => {
     res.send({ msg: 'Failure to authenticate credentials' })
 })
 
+//Checked logged-in status
 router.get("/", async (req, res) => {
     const user = await getUser(req.user)
     if (user) {
-
         res.status(300).send(user)
     } else {
         return res.status(401).send({ msg: "you need to log in" })
     }
 })
 
+//??
 router.get("/register", checkNotAuthenticated, async (req, res) => {
     res.send({ msg: 'reg' })
 })
 
+//Log in with valid user
 router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/user',
     failureRedirect: '/user/login',
@@ -70,7 +71,7 @@ router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
 }
 ))
 
-
+//Log out from valid user
 router.post('/logout', function (req, res, next) {
     req.logout(function (err) {
         if (err) { return next(err); }
@@ -78,21 +79,23 @@ router.post('/logout', function (req, res, next) {
     });
 });
 
+//Register a new user
 router.post("/register", checkNotAuthenticated, async (req, res) => {
     if (req.user) {
         return res.status(400).send({ message: "You can't register right now, you're already logged in!" })
     }
-    // const { email, password } = req.body;
-    const { name, lastname, email, password, address, description, image, payment } = req.body;
+    const { name, lastname, email, password, address, image, payment } = req.body;
+
+    let errors = validateInputUser(name,lastname,email,password)
+    if(errors.length) return res.status(400).send({ msg: errors});
+
     const exists = await User.findOne({ where: { email: email } });
+
     try {
         if (!exists) {
             const hashPass = await bcrypt.hash(password, 10);
-            // const newUser = await User.create({ email: email, password: hashPass });
-            const newUser = await User.create({ name, lastname, email, password: hashPass, address, description, image, payment });
-            // console.log(newUser)
+            await User.create({ name, lastname, email, password: hashPass, address, image, payment });
             res.status(201).send("New User Created")
-
         } else {
             res.status(400).send({ msg: "This user already exists" });
         }
@@ -125,6 +128,9 @@ router.put("/:id", async (req, res) => {
     const { id } = req.params
     const { name, lastname, email, password, address, image, payment } = req.body;
 
+    let errors = validateInputUser(name,lastname,email,password)
+    if(errors.length) return res.status(400).send({ msg: errors});
+
     try {
         const updatedUser = await User.update(
             {
@@ -138,21 +144,44 @@ router.put("/:id", async (req, res) => {
             },
             { where: { id: id } }
         );
-        res.status(202).send(updatedUser)
+        return res.status(202).send(updatedUser)
 
     } catch (error) {
         res.status(400).send(error)
     }
 });
 
-//Delete User
-router.delete("/:id", async (req, res) => {
-    const { id } = req.params;
+
+//Get Banned Users
+router.get("/ban/", async (req, res) => {
+
     try {
-        const destroyedUser = await User.destroy({ where: { id: id } });
-        res.status(200).send(destroyedUser)
+        const user = await User.findAll({
+            where: { banned: true }
+        });
+        if (!user) {
+            return res.status(404).send("There aren't any banned users yet")
+        }
+        return res.status(200).send(user)
+
     } catch (error) {
-        res.status(400).send(error)
+        res.status(404).send(error)
+    }
+});
+
+//Ban User
+router.put("/ban/:id", async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    try {
+        const bannedUser = await User.update(
+            {
+                banned: status
+            },
+            { where: { id: id } });
+        res.status(200).send(bannedUser)
+    } catch (error) {
+        res.status(400).send("Not a valid status. Please choose a valid one (default, suspended, banned)")
     }
 });
 module.exports = router
