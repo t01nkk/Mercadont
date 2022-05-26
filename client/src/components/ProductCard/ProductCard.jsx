@@ -20,7 +20,7 @@ export default function ProductCard({
       >
         <img src={shoppingCart} alt="" />
       </button>
-      <Link to={"/home/:id"}>
+      <Link to={`/home/${id}`}>
         <article className="card card-style">
           <div className="img-container">
             <img src={`${image}`} alt={`${name}`} />
