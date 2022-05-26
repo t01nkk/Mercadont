@@ -77,13 +77,13 @@ router.post("/many", async (req, res) => {
   const products =  req.body
   try {
     for (let product of products) {
-      const {name, price, description, rating, image, stock, categories} = product
+      const {name, price, description, image, stock, categories} = product
 
       for(let cat of categories){
         await Category.findOrCreate({ where: { name: cat } })
       }
       // first populate category table
-      const newProduct = await Product.create({name, price, description, rating, image, stock})
+      const newProduct = await Product.create({name, price, description, image, stock})
       for (let cat of categories) {
         let category = await Category.findOne({ where: { name: cat } })
         await newProduct.addCategory(category)
@@ -98,7 +98,7 @@ router.post("/many", async (req, res) => {
 
 //Create Product
 router.post("/", async (req, res) => {
-  const { name, price, description, rating, image, stock, categories } = req.body
+  const { name, price, description, image, stock, categories } = req.body
 
   // first populate category table
   for(let cat of categories){
@@ -106,7 +106,7 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const newProduct = await Product.create({ name, price, description, rating, image, stock })
+    const newProduct = await Product.create({ name, price, description, image, stock })
     for (let cat of categories) {
       let category = await Category.findOne({ where: { name: cat } })
       await newProduct.addCategory(category)
@@ -135,11 +135,10 @@ router.delete("/:id", async (req, res) => {
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/:id", async (req, res)=>{
   const {id} = req.params
-  const {name, price, description, rating, image, stock, categories} = req.body
+  const {name, price, description, image, stock, categories} = req.body
 
   if(categories){
     let product = await Product.findOne({where:{id:id}})
-    console.log(await product.countCategories())
     product.setCategories([])
 
     for(let cat of categories) {
@@ -148,7 +147,6 @@ router.put("/:id", async (req, res)=>{
     for(let cat of categories){
       const category= await Category.findOne({ where: { name: cat } })
       product.addCategory(category)
-
       }
     }
 
@@ -157,8 +155,7 @@ router.put("/:id", async (req, res)=>{
       {
         name: name,  
         price: price, 
-        description: description, 
-        rating: rating, 
+        description: description,
         image: image, 
         stock: stock,
       },
@@ -204,6 +201,48 @@ router.put("/:id/restock", async (req, res)=>{
     res.status(400).send(err)
   }
 })
+
+
+//Add Review to Product
+router.put("/:id/review", async (req, res)=>{
+  const {id} = req.params
+  const {rating, review} = req.body
+
+  try{
+    const product = await Product.findOne({where:{id:id}})
+    console.log(product.rating)
+    const allRatings = product.rating.each
+    let sum = 0
+    for (let i = 0; i<allRatings.length;i++){
+      sum += allRatings[i]
+    }
+    sum += rating
+    const average = sum/(allRatings.length + 1)
+    allRatings.push(rating)
+
+    const reviews = product.reviews
+    reviews.push(review)
+
+    await Product.update({
+      rating:{
+        average: average,
+        each: allRatings
+        },
+      reviews
+      },{where:{id:id}}
+    )
+    res.status(200).send("Review Added")
+
+  }
+  catch (err){
+    console.log(err)
+    return res.status(400).send(err)
+  }
+
+
+})
+
+
 
 module.exports = router
 

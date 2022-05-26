@@ -21,7 +21,18 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         rating: {
-            type: DataTypes.FLOAT
+            type: DataTypes.JSON({
+                average:{
+                    type: DataTypes.FLOAT,
+                },
+                each:{
+                    type:DataTypes.ARRAY(DataTypes.FLOAT),
+                }
+            }),
+            defaultValue:{
+                average: null,
+                each:[]
+            }
         },
         image: {
             // type: DataTypes.BLOB,
@@ -41,8 +52,9 @@ module.exports = (sequelize) => {
             type: DataTypes.ARRAY(
                 DataTypes.JSON({
                     user: DataTypes.STRING,
-                    text: DataTypes.STRING,
-                }))
+                    text: DataTypes.TEXT,
+                })),
+            defaultValue:[]
         },
         qua: {
             type: DataTypes.ARRAY(
