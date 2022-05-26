@@ -1,29 +1,44 @@
 const { Category } = require("../db")
 const { Router } = require("express")
 const router = Router()
-const cat = require("../../../categories.json")
-
-async function populate() {
-  const catArr = cat.categories;
-  try {
-
-    await Category.bulkCreate(catArr)
-    console.log("created!")
-  } catch (err) {
-    console.log(err.message);
-  }
-
-}
 
 router.get("/", async (req, res) => {
-  populate()
   try {
-    const categories = await Category.findAll({ attributes: ["name", "img"] })
-    console.log("categories populated!");
+    const categories = await Category.findAll()
     return res.status(200).send(categories)
   } catch (err) {
     console.log({ msg: err.message });
   }
 })
+
+
+router.post("/", async (req, res)=>{
+  const {name, image} = req.body
+  try{
+    const category = await Category.create({
+      name,
+      image
+    })
+    return res.status(200).send(category)
+  }
+  catch (err){
+    return res.status(400).send(err)
+  }
+})
+
+router.put("/", async (req, res)=>{
+  const {name, image} = req.body
+  try{
+    const category = await Category.update({
+      name,
+      image
+    })
+    return res.status(200).send(category)
+  }
+  catch (err){
+    return res.status(400).send(err)
+  }
+})
+
 
 module.exports = router

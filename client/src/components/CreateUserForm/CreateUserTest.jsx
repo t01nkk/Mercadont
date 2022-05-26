@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./LoginForm.css";
 import axios from "axios";
 
 export default function LogInForm() {
@@ -15,7 +14,7 @@ export default function LogInForm() {
     e.preventDefault();
     const { email, password } = data;
     try {
-      await axios.post("http://localhost:3001/user/login", {
+      await axios.post("http://localhost:3001/user/register", {
         email: email,
         password: password,
       });

@@ -10,11 +10,11 @@ module.exports = (sequelize) => {
         },
         name: {
             type: DataTypes.STRING(30),
-            allowNull: false
+            // allowNull: false
         },
         lastname: {
             type: DataTypes.STRING(30),
-            allowNull: false
+            // allowNull: false
         },
         email: {
             type: DataTypes.STRING(30),
@@ -34,14 +34,14 @@ module.exports = (sequelize) => {
                 street: DataTypes.STRING,
                 postalCode: DataTypes.STRING,
             }),
-            allowNull: false,
+            // allowNull: false,
         },
         // description: {
         //     type: DataTypes.STRING
         // },
         image: {
             type: DataTypes.BLOB,
-            allowNull: false
+            // allowNull: false
         },
         payment: {
             type: DataTypes.ARRAY(
@@ -51,5 +51,5 @@ module.exports = (sequelize) => {
                 }))
         },
     },
-    )
+        { timestamps: false })
 };

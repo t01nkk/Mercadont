@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "../../helpers/useForm.js";
+import "./CreateUserForm.css";
 
 export default function CreateUserForm() {
   const initialForm = {
@@ -65,75 +66,86 @@ export default function CreateUserForm() {
   } = useForm(initialForm, validateForm);
 
   return (
-    <div>
-      <h2>Formu</h2>
+    <div className="createUser">
+      <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name..."
-          onChange={handleChange}
-          required
-          value={form.name}
-          onBlur={handleBlur}
-        />
-        {error.name && <p>{error.name}</p>}
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="name"
+            placeholder="Name..."
+            onChange={handleChange}
+            required
+            value={form.name}
+            onBlur={handleBlur}
+          />
+          {error.name && <p>{error.name}</p>}
+        </div>
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="surname"
+            placeholder="surname..."
+            onChange={handleChange}
+            required
+            value={form.surname}
+            onBlur={handleBlur}
+          />
+          {error.surname && <p>{error.surname}</p>}
+        </div>
 
-        <input
-          type="text"
-          name="surname"
-          placeholder="surname..."
-          onChange={handleChange}
-          required
-          value={form.surname}
-          onBlur={handleBlur}
-        />
-        {error.surname && <p>{error.surname}</p>}
+        <div className="divInputUser">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password..."
+            onChange={handleChange}
+            required
+            value={form.password}
+            onBlur={handleBlur}
+          />
+          {error.password && <p>{error.password}</p>}
+        </div>
+        <div className="divInputUser">
+          <input
+            type="password"
+            name="passwordVal"
+            placeholder="Repeat password..."
+            onChange={handleChange}
+            required
+            value={form.passwordVal}
+            onBlur={handleBlur}
+          />
+          {error.passwordVal && <p>{error.passwordVal}</p>}
+        </div>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password..."
-          onChange={handleChange}
-          required
-          value={form.password}
-          onBlur={handleBlur}
-        />
-        {error.password && <p>{error.password}</p>}
+        <div className="divInputUser">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email..."
+            onChange={handleChange}
+            required
+            value={form.email}
+            onBlur={handleBlur}
+          />
+          {error.email && <p>{error.email}</p>}
+        </div>
 
-        <input
-          type="password"
-          name="passwordVal"
-          placeholder="Repeat password..."
-          onChange={handleChange}
-          required
-          value={form.passwordVal}
-          onBlur={handleBlur}
-        />
-        {error.passwordVal && <p>{error.passwordVal}</p>}
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="address"
+            placeholder="Address..."
+            onChange={handleChange}
+            required
+            value={form.address}
+            onBlur={handleBlur}
+          />
+          {error.address && <p>{error.address}</p>}
+        </div>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email..."
-          onChange={handleChange}
-          required
-          value={form.email}
-          onBlur={handleBlur}
-        />
-        {error.email && <p>{error.email}</p>}
-
-        <input
-          type="text"
-          name="address"
-          placeholder="Address..."
-          onChange={handleChange}
-          required
-          value={form.address}
-          onBlur={handleBlur}
-        />
-        {error.address && <p>{error.address}</p>}
-
+        {/* 
         <textarea
           name="description"
           cols="s0"
@@ -142,10 +154,11 @@ export default function CreateUserForm() {
           onChange={handleChange}
           onBlur={handleBlur}
           value={form.description}
-        ></textarea>
-
-        <input type="submit" value="Send" />
-        {errorSend.msg && <p>{errorSend.msg}</p>}
+        ></textarea> */}
+        <div className="btn">
+          <input type="submit" value="Send" />
+          {errorSend.msg && <p>{errorSend.msg}</p>}
+        </div>
       </form>
     </div>
   );

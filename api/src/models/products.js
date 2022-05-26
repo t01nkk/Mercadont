@@ -24,12 +24,10 @@ module.exports = (sequelize) => {
             type: DataTypes.FLOAT
         },
         image: {
-            type: DataTypes.ARRAY(
-                DataTypes.BLOB({
-                    user: DataTypes.STRING,
-                    text: DataTypes.STRING,
-                })),
-            allowNull: false
+            // type: DataTypes.BLOB,
+            type: DataTypes.STRING,
+            // type: DataTypes.ARRAY(
+            //     DataTypes.BLOB),
         },
         status: {
             type: DataTypes.ENUM("active", "inactive"),
@@ -37,7 +35,7 @@ module.exports = (sequelize) => {
         },
         stock: {
             type: DataTypes.INTEGER,
-            allowNull: false
+
         },
         reviews: {
             type: DataTypes.ARRAY(
@@ -53,8 +51,9 @@ module.exports = (sequelize) => {
                     answer: DataTypes.STRING,
                 }))
         },
-    }
-    )
+    },
+    {timestamps: false})
+
 };
 
 // Posts ()

@@ -2,10 +2,15 @@ import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
 // <<<<<<< Updated upstream
-import NavBar from "./components/NavBar/NavBar";
-import CreateUser from "./pages/CreateUser/CreateUser";
-import Home from "./pages/Home/Home";
-import SellProduct from "./pages/SellProduct/SellProduct";
+import NavBar from "./components/NavBar/NavBar.jsx";
+import CreateUser from "./pages/CreateUser/CreateUser.jsx";
+import Home from "./pages/Home/Home.jsx";
+import SellProduct from "./pages/SellProduct/SellProduct.jsx";
+import UserCart from "./pages/UserCart/UserCart.jsx";
+import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx";
+import LogInForm from "./components/LogInForm/LogInForm.jsx";
+import EditProduct from "./pages/EditProduct/EditProduct.jsx";
+import SearchedProducts from "./pages/SearchedProducts/SearchedProducts";
 // =======
 // import NavBar from "./components/NavBar/NavBar.jsx";
 // import CreateUser from "./pages/CreateUser/CreateUser.jsx";
@@ -25,7 +30,6 @@ function App() {
         </Route>
         <Route path="/createUser" exact>
           <CreateUser />
-          {/* Createuser */}
         </Route>
         <Route path="/sellProduct" exact>
           <NavBar />
@@ -37,15 +41,22 @@ function App() {
         </Route>
         <Route path="/cart" exact>
           <NavBar />
-          {/* Cart */}
+          <UserCart />
+        </Route>
+        <Route path="/search" exact>
+          <NavBar />
+          <SearchedProducts />
         </Route>
         <Route path="/logIn" exact>
-          <NavBar />
-          {/* LogIn */}
+          <LogInForm />
         </Route>
         <Route path="/home/:id" exact>
           <NavBar />
-          {/* ProductDetails */}
+          <ProductDetails />
+        </Route>
+        <Route path="/edit/:id" exact>
+          <NavBar />
+          <EditProduct />
         </Route>
       </Router>
     </>
