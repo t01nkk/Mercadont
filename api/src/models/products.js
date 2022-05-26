@@ -17,17 +17,29 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         description: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         rating: {
-            type: DataTypes.FLOAT
+            type: DataTypes.JSON({
+                average:{
+                    type: DataTypes.FLOAT,
+                },
+                each:{
+                    type:DataTypes.ARRAY(DataTypes.FLOAT),
+                }
+            }),
+            defaultValue:{
+                average: null,
+                each:[]
+            }
         },
         image: {
             // type: DataTypes.BLOB,
             type: DataTypes.STRING,
             // type: DataTypes.ARRAY(
             //     DataTypes.BLOB),
+            allowNull: false
         },
         status: {
             type: DataTypes.ENUM("active", "inactive"),
@@ -35,21 +47,23 @@ module.exports = (sequelize) => {
         },
         stock: {
             type: DataTypes.INTEGER,
-
+            allowNull: false
         },
         reviews: {
             type: DataTypes.ARRAY(
                 DataTypes.JSON({
                     user: DataTypes.STRING,
-                    text: DataTypes.STRING,
-                }))
+                    text: DataTypes.TEXT,
+                })),
+            defaultValue:[]
         },
-        qua: {
+        questionsAndAnswers: {
             type: DataTypes.ARRAY(
                 DataTypes.JSON({
                     question: DataTypes.STRING,
                     answer: DataTypes.STRING,
-                }))
+                })),
+            defaultValue:[]
         },
     },
     {timestamps: false})
