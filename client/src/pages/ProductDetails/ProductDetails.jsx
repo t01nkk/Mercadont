@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductDetailsInfo from "../../components/ProductDetailsInfo/ProductDetailsInfo";
 import axios from "axios";
-import "./ProductDetails.css"
+import "./ProductDetails.css";
 export default function ProductDetails() {
   let { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -29,6 +29,7 @@ export default function ProductDetails() {
           name={product.name}
           description={product.description}
           stock={product.stock}
+          price={product.price}
           rating={product.rating}
           categories={product.categories}
           reviews={product.reviews}

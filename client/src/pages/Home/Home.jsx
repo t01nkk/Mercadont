@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import { useStore } from "../../context/store.js";
-import {
-  fetchProducts,
-  postManyProducts,
-} from "../../redux/actions/actions.js";
+import { fetchProducts } from "../../redux/actions/actions.js";
 import "./Home.css";
 
 export default function Home() {
