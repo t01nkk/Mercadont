@@ -56,12 +56,13 @@ module.exports = (sequelize) => {
                 })),
             defaultValue:[]
         },
-        qua: {
+        questionsAndAnswers: {
             type: DataTypes.ARRAY(
                 DataTypes.JSON({
                     question: DataTypes.STRING,
                     answer: DataTypes.STRING,
-                }))
+                })),
+            defaultValue:[]
         },
     },
     {timestamps: false})
