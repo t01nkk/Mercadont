@@ -23,7 +23,6 @@ function initialize(passport, getUserByEmail, getUserById) {
 
 function validateInputUser(name, lastname, email, password){
     let errors = [];
-
     if (!/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) errors.push("Email address is not valid");
     if(!name || name.length > 30) errors.push("Name is not valid");
     if(!lastname || lastname.length > 30) errors.push("Last name is not valid");
@@ -32,8 +31,15 @@ function validateInputUser(name, lastname, email, password){
     return errors;
 }
 
-function validateInputProduct(){
-
+function validateInputProduct(name,price,description,image,stock,categories){
+    let errors = [];
+    if(!name || name.length > 60) errors.push("Name is not valid");
+    if(!price || price < 1) errors.push("Price is not valid");
+    if(!description) errors.push("Description is not valid");
+    if(!image) errors.push("Please, add at least one image of the product");
+    if(!stock || stock < 1) errors.push("Stock is not valid");
+    if(!categories.length) errors.push("Please, add at least one category that the product belongs to");
+    return errors;
 }
 
 // passport.use(new Strategy(

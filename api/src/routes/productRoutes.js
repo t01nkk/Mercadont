@@ -1,6 +1,6 @@
-const { Product, User, Category } = require("../db")
+const { Product, Category } = require("../db")
 const { Router } = require("express")
-
+const { validateInputProduct } = require('../middlewares/middlewares');
 
 const router = Router()
 
@@ -51,7 +51,6 @@ router.get("/", async (req, res) => {
   }
 })
 
-
 //WORKING
 //Get Product Details
 router.get("/:id", async (req, res) => {
@@ -100,7 +99,9 @@ router.post("/many", async (req, res) => {
 router.post("/", async (req, res) => {
   const { name, price, description, rating, image, stock, categories } = req.body
 
-  // first populate category table
+  let errors = validateInputProduct(name,price,description,image,stock,categories);
+  if(errors.length) return res.status(400).send({ msg: errors});
+
   for(let cat of categories){
     await Category.findOrCreate({ where: { name: cat } })
   }
@@ -135,7 +136,10 @@ router.delete("/:id", async (req, res) => {
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/:id", async (req, res)=>{
   const {id} = req.params
-  const {name, price, description, rating, image, stock, categories} = req.body
+  const {name, price, description, rating, image, stock, categories} = req.body;
+
+  let errors = validateInputProduct(name,price,description,image,stock,categories);
+  if(errors.length) return res.status(400).send({ msg: errors});
 
   if(categories){
     let product = await Product.findOne({where:{id:id}})
