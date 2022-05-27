@@ -21,11 +21,11 @@ export default function LogInForm() {
     try {
       await axios.post("http://localhost:3001/user/register", {
         name: name,
-        lastName: lastName,
+        lastname: lastName,
         email: email,
         password: password,
       });
-      alert("se envio la peticion")
+      alert("se envio la peticion");
     } catch (err) {
       alert(err);
     }

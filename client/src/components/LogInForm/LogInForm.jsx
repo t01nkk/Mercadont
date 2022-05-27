@@ -1,33 +1,38 @@
 import React, { useState } from "react";
 import "./LoginForm.css";
 import axios from "axios";
-
+import loginService from "../Services/login";
 export default function LogInForm() {
   const [data, setData] = useState({
-    password: "",
     email: "",
+    password: "",
   });
+  const [userLogged, setUserLogged] = useState(null);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const { email, password } = data;
     try {
-      await axios.post("http://localhost:3001/user/login", {
-        email: email,
-        password: password,
-      });
+      console.log("entre en el try");
+      const user = await axios.post("http://localhost:3001/user/login", data);
+
+      setUserLogged(user);
     } catch (err) {
-      alert(err.response.data.error);
+      alert(err);
     }
   };
   console.log(data);
   return (
     <div className="loginCard">
       <h2>Sign In</h2>
-      <form onSubmit={handleSubmit}>
+
+      {console.log(data, "soy data")}
+      {console.log(userLogged, " Soy user")}
+
+      <form onSubmit={handleLogin}>
         <div className="divInputUser">
           <input
             type="email"
