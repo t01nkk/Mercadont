@@ -1,4 +1,4 @@
-const { Product, User, Category, Qa } = require("../db")
+const { Product, User, Category, Qa, Review } = require("../db")
 const { Router } = require("express")
 
 
@@ -17,7 +17,18 @@ router.get("/", async (req, res) => {
         model: Category,
         attributes: ["name"],
         through: {attributes: []},
-      }})
+      },
+      include:{
+        model: Qa,
+        attributes: ["question", "answer","resolved"],
+          through:{attributes:[]},
+      },
+      include:{
+        model: Review,
+        attributes: ["rating","text"],
+        through:{attributes:[]},
+      }
+    })
 
     if(categories) {
       const matchingCategories = []
@@ -213,39 +224,31 @@ router.put("/:id/restock", async (req, res)=>{
 
 
 //Add Review to Product
-router.put("/:id/review", async (req, res)=>{
+router.post("/:id/review", async (req, res)=>{
   const {id} = req.params
-  const {rating, review} = req.body
+  const {rating, text, userId} = req.body
 
   try{
-    const product = await Product.findOne({where:{id:id}})
-    console.log(product.rating)
-    const allRatings = product.rating.each
-    let sum = 0
-    for (let i = 0; i<allRatings.length;i++){
-      sum += allRatings[i]
-    }
-    sum += rating
-    const average = sum/(allRatings.length + 1)
-    allRatings.push(rating)
-
-    const reviews = product.reviews
-    for (let r of reviews){
-      if(r.user == review.user){
-        return res.status(402).send("User has already left a review")
+    const product = await Product.findOne({
+      include:{
+        model: Review,
+        attributes: ["rating","text"],
+        through: {attributes:[]}
       }
-    }
-    reviews.push(review)
-
-    await Product.update({
-      rating:{
-        average: average,
-        each: allRatings
         },
-      reviews
-      },{where:{id:id}}
-    )
-    res.status(200).send("Review Added")
+        {where:{id:id}})
+    const user = await User.findOne({where:{id: userId}})
+    for (let review of product.reviews){
+      if (user.hasReview(review)) return res.status(400).send("User Already reviewed product," +
+          " please update your review if your wish to leave feedback")
+    }
+    const fullReview = await Review.create({
+      rating,
+      text
+    })
+    product.addReview(fullReview)
+    user.addReview(fullReview)
+    return res.status(200).send("Review Added")
   }
   catch (err){
     console.log(err)
@@ -254,41 +257,19 @@ router.put("/:id/review", async (req, res)=>{
 })
 
 //Update Review
-router.put("/:id/updateReview", async (req, res)=>{
-  const {id} = req.params
-  const {rating, review} = req.body
+router.put("/:reviewId/updateReview", async (req, res)=>{
+  const {reviewId} = req.params
+  const {rating, text, userId} = req.body
 
-  try{
-    const product = await Product.findOne({where:{id:id}})
-    console.log(product)
-    let index;
-    const reviews = product.reviews
-    for (let i = 0; i<reviews.length; i++){
-      if(reviews[i].user === review.user){
-        index = i
-        break
-      }
-    }
-    reviews[index] = review
+  try {
+    const review = Review.findOne({where:{id:reviewId}})
+    const user = User.findOne({where:{id:userId}})
 
-    const allRatings = product.rating.each
-    allRatings[index] = rating
-    let sum = 0
-    for (let i = 0; i<allRatings.length;i++){
-      sum += allRatings[i]
-    }
-    const average = sum/allRatings.length
-
-
-    await Product.update({
-          rating:{
-            average: average,
-            each: allRatings
-          },
-          reviews
-        },{where:{id:id}}
-    )
-    res.status(200).send("Review Updated")
+    Review.update({
+      rating,
+      text
+    },{where:{id:reviewId}})
+    return res.status(200).send("Review Updated")
   }
   catch (err){
     console.log(err)
@@ -297,16 +278,21 @@ router.put("/:id/updateReview", async (req, res)=>{
 })
 
 //Add Questions
-router.put("/:id/question", async (req, res)=>{
+router.post("/:id/question", async (req, res)=>{
   const{id} = req.params
-  const {question} = req.body
+  const {question, userId} = req.body
 
   if (!question || question.length<1) return res.status(400).send("Questions can't be empty")
 
   try{
     const product = await Product.findOne({where:{id:id}})
-    const q = await Question.create(question)
+    const q = await Qa.create({
+      question
+    })
     product.addQa(q)
+
+    const user = await User.findOne({where:{id:userId}})
+    user.addQa(q)
     return res.status(200).send("Question Added")
   }
   catch (err){
@@ -321,7 +307,7 @@ router.put("/:questionId/answer", async (req, res)=>{
   const {answer} = req.body
 
   if(!answer || answer.length<1){
-    return res.status(404).send("Anser must not be empty")
+    return res.status(404).send("Answer must not be empty")
   }
 
   try {
@@ -337,12 +323,11 @@ router.put("/:questionId/answer", async (req, res)=>{
   }
 })
 
-router.put("/:questionId/answer", async (req, res)=>{
+router.put("/:questionId/resolved", async (req, res)=>{
   const {questionId} = req.params
-  const {resolved} = req.body
   try {
     await Qa.update({
-      resolved,
+      resolved: true,
     }, {where: {id:questionId}})
 
     return res.status(200).send("Answer Resolved")
