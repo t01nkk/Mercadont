@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
         rating: {
             type: DataTypes.FLOAT
         },
-        image: {
+        image: { //DEBERÍA SER UN ARRAY, PUEDE HABER MAS DE UNA FOTO POR PRODUCTO
             // type: DataTypes.BLOB,
             type: DataTypes.STRING,
             // type: DataTypes.ARRAY(
@@ -37,22 +37,26 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
 
         },
-        reviews: {
+        reviews: { //REVISAR, NUEVA TABLA
             type: DataTypes.ARRAY(
                 DataTypes.JSON({
                     user: DataTypes.STRING,
                     text: DataTypes.STRING,
                 }))
         },
-        qua: {
+        qua: { //REVISAR SI METEMOS NUEVA TABLA
             type: DataTypes.ARRAY(
                 DataTypes.JSON({
                     question: DataTypes.STRING,
                     answer: DataTypes.STRING,
                 }))
         },
+        created: { //esto va a ser deleteado cuando de deployee la cuestion.
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
     },
-    {timestamps: false})
+        { timestamps: false })
 
 };
 
