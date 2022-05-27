@@ -1,4 +1,4 @@
-const { Product, User, Category } = require("../db")
+const { Product, User, Category, Qa } = require("../db")
 const { Router } = require("express")
 
 
@@ -303,19 +303,10 @@ router.put("/:id/question", async (req, res)=>{
 
   if (!question || question.length<1) return res.status(400).send("Questions can't be empty")
 
-  const qna = {
-    question: question,
-    answer:""}
   try{
     const product = await Product.findOne({where:{id:id}})
-    const questionsAndAnswers = product.questionsAndAnswers
-    questionsAndAnswers.push(qna)
-    console.log(questionsAndAnswers)
-    await Product.update({
-      questionsAndAnswers
-        },
-        {where:{id:id}}
-    )
+    const q = await Question.create(question)
+    product.addQa(q)
     return res.status(200).send("Question Added")
   }
   catch (err){
@@ -325,9 +316,8 @@ router.put("/:id/question", async (req, res)=>{
 })
 
 //Answer Question / Add Answer
-router.put("/:id/answer", async (req, res)=>{
-  const {id} = req.params
-  const {questionId} = req.query
+router.put("/:questionId/answer", async (req, res)=>{
+  const {questionId} = req.params
   const {answer} = req.body
 
   if(!answer || answer.length<1){
@@ -335,16 +325,27 @@ router.put("/:id/answer", async (req, res)=>{
   }
 
   try {
-    const product = await Product.findOne({where: {id: id}})
-    const questionsAndAnswers = product.questionsAndAnswers
-    questionsAndAnswers[questionId].answer = answer
-    console.log(questionsAndAnswers)
+    await Qa.update({
+        answer,
+      }, {where: {id:questionId}})
 
-    await Product.update({
-      questionsAndAnswers
-    },
-        {where:{id:id}})
     return res.status(200).send("Answer Added")
+  }
+  catch (err){
+    console.log(err)
+    res.status(400).send(err)
+  }
+})
+
+router.put("/:questionId/answer", async (req, res)=>{
+  const {questionId} = req.params
+  const {resolved} = req.body
+  try {
+    await Qa.update({
+      resolved,
+    }, {where: {id:questionId}})
+
+    return res.status(200).send("Answer Resolved")
   }
   catch (err){
     console.log(err)
