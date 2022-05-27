@@ -14,44 +14,58 @@ export default function EditProduct() {
     price: "",
     stock: "",
     image: "",
-    categories: [""],
+    categories: [],
     status: "",
   });
-
+  const handleDeleteCat = (name, event) => {
+    event.preventDefault();
+    const filterCat = product.categories.filter((cat) => cat !== name);
+    setProduct({ ...product, categories: filterCat });
+  };
+  const handleChangeCat = (e) => {
+    const { value } = e.target;
+    if (!product.categories.includes(value)) {
+      setProduct({
+        ...product,
+        categories: [...product.categories, value],
+      });
+    }
+  };
   let { id } = useParams();
 
   const fetchProductById = async () => {
-    const fetchedProduct = await axios.get(
-      `http://localhost:3001/product/${id}`
-    );
-
+    let fetchedProduct = await axios.get(`http://localhost:3001/product/${id}`);
+    const destructuringCats = [];
+    const { categories } = fetchedProduct.data;
+    for (const cats of categories) {
+      const { name } = cats;
+      destructuringCats.push(name);
+    }
+    console.log(destructuringCats, "soy el array");
+    fetchedProduct.data.categories = destructuringCats;
     setProduct(fetchedProduct.data);
+    console.log(fetchedProduct.data.categories, "soy el fetch");
   };
+
   useEffect(() => {
     fetchProductById();
     fetchCategories(dispatch);
   }, []);
-  const getName = (value) => {
-    console.log(value, "soy value");
-    setProduct({
-      ...product,
-      categories: product.categories.concat(value),
-    });
-  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, description, price, stock, image, categories, status } =
       product;
     try {
-      // const res = await axios.put(`http://localhost:3001/product/${id}`, {
-      //   name,
-      //   description,
-      //   price,
-      //   stock,
-      //   image,
-      //   status,
-      //   categories,
-      // });
+      const res = await axios.put(`http://localhost:3001/product/${id}`, {
+        name,
+        description,
+        price,
+        stock,
+        image,
+        status,
+        categories,
+      });
       console.log(product);
     } catch (err) {
       console.log(err);
@@ -70,6 +84,7 @@ export default function EditProduct() {
   };
   return (
     <div>
+      {console.log(product.categories.length)}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -89,20 +104,31 @@ export default function EditProduct() {
           value={product.stock}
           onChange={handleChange}
         />
-        <select name="status" onChange={handleChange} value={product.status}>
+        <select name="status" onChange={handleChange}>
           Status:
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
         </select>
-        {state.categories &&
-          state.categories.map((category) => (
-            <CheckboxCategories
-              name={category.name}
-              id={category.id}
-              key={category.id}
-              getName={getName}
-              filter={product.categories}
-            />
+        <select onChange={handleChangeCat}>
+          <option value="" hidden>
+            Categories
+          </option>
+          {state.categories?.length &&
+            state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
+            state.categories.map((category) => (
+              <option key={category.id} value={category.name || category}>
+                {category.name}
+              </option>
+            ))}
+        </select>
+        {product.categories.length &&
+          product.categories?.map((category, i) => (
+            <div key={i}>
+              <p>{category.name || category}</p>
+              <button onClick={(event) => handleDeleteCat(category, event)}>
+                x
+              </button>
+            </div>
           ))}
         <textarea
           name="description"

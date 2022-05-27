@@ -3,10 +3,12 @@ import "./SellProductForm.css";
 import axios from "axios";
 import { fetchCategories } from "../../redux/actions/actions";
 import { useStore } from "../../context/store";
-import CheckboxCategories from "./CheckboxCategories/CheckboxCategories";
+import Multiselect from "multiselect-react-dropdown";
 
 export default function SellProductForm() {
   const [state, dispatch] = useStore();
+  const [selected, setSelected] = useState([]);
+
   const [data, setData] = useState({
     name: "",
     price: "",
@@ -16,6 +18,15 @@ export default function SellProductForm() {
     stock: "",
     categories: [],
   });
+  const handleDeleteCat = (name, event) => {
+    event.preventDefault();
+    const filterCat = data.categories.filter((cat) => cat !== name);
+    setData({ ...data, categories: filterCat });
+  };
+  const handleChangeCat = (e) => {
+    const { value } = e.target;
+    setData({ ...data, categories: [...data.categories, value] });
+  };
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -24,16 +35,16 @@ export default function SellProductForm() {
     e.preventDefault();
     const { name, price, description, image, status, stock, categories } = data;
     try {
-      // await axios.post("http://localhost:3001/product/", {
-      //   name: name,
-      //   price: price,
-      //   description: description,
-      //   image: image,
-      //   status: status,
-      //   stock: stock,
-      //   categories: categories,
-      // });
-      console.log(data);
+      await axios.post("http://localhost:3001/product/", {
+        name: name,
+        price: price,
+        description: description,
+        image: image,
+        status: status,
+        stock: stock,
+        categories: categories,
+      });
+
       alert("se envio la peticion");
     } catch (err) {
       console.log(err);
@@ -44,7 +55,9 @@ export default function SellProductForm() {
   }, []);
   return (
     <div className="loginCard">
+      {console.log(data.categories)}
       <h2>Post Product</h2>
+
       <form onSubmit={handleSubmit}>
         <div className="divInputUser">
           <input
@@ -56,18 +69,7 @@ export default function SellProductForm() {
             value={data.name}
           />
         </div>
-        <div className="divInputUser">
-          {state.categories &&
-            state.categories.map((category) => (
-              <CheckboxCategories
-                name={category.name}
-                id={category.id}
-                key={category.id}
-                setData={setData}
-                data={data}
-              />
-            ))}
-        </div>
+
         <div className="divInputUser">
           <input
             type="number"
@@ -90,7 +92,26 @@ export default function SellProductForm() {
             value={data.description}
           ></textarea>
         </div>
-
+        <select onChange={handleChangeCat}>
+          <option value="" hidden>
+            Categories
+          </option>
+          {state.categories?.length &&
+            state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
+            state.categories.map((category) => (
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
+            ))}
+        </select>
+        {data.categories?.map((category, i) => (
+          <div key={i}>
+            <p>{category}</p>
+            <button onClick={(event) => handleDeleteCat(category, event)}>
+              x
+            </button>
+          </div>
+        ))}
         <div>
           <input
             type="text"

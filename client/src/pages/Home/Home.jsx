@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <section className="section-products">
-      {console.log(state.categories)}
+      {console.log(state.products)}
       {/* <button onClick={()=>mostra()}>mostra storage</button>   */}
       {/* BOTTON PARA VER EL STORAGE NO BORRAR */}
       {state.products &&
