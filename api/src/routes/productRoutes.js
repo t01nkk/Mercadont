@@ -261,7 +261,7 @@ router.put("/:id/updateReview", async (req, res)=>{
   try{
     const product = await Product.findOne({where:{id:id}})
     console.log(product)
-    var index;
+    let index;
     const reviews = product.reviews
     for (let i = 0; i<reviews.length; i++){
       if(reviews[i].user === review.user){
