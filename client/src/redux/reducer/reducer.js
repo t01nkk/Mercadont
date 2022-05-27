@@ -1,9 +1,15 @@
-import { FETCH_PRODUCTS, SEARCH_PRODUCT,SORT_BY_PRICE } from "../actions/actionTypes";
+
+import {
+  FETCH_PRODUCTS,
+  SEARCH_PRODUCT,
+  FETCH_CATEGORIES,
+  SORT_BY_PRICE 
+} from "../actions/actionTypes";
 
 export const initialState = {
   products: [],
   searchedProducts: [],
-  state3: "estado state store#3",
+  categories: [],
   state4: "estado state store#3",
   state5: "estado state store#3",
 };
@@ -49,8 +55,13 @@ export function reducer(state = initialState, action) {
         }); 
       }
       return { ...state, searchedProducts: order 
-  };
+  } }
       
+    case FETCH_CATEGORIES: {
+      return {
+        ...state,
+        categories: action.payload,
+      };
     }
 
     default:

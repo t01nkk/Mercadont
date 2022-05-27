@@ -29,6 +29,7 @@ function App() {
           <Home />
         </Route>
         <Route path="/createUser" exact>
+          <NavBar />
           <CreateUser />
         </Route>
         <Route path="/sellProduct" exact>
