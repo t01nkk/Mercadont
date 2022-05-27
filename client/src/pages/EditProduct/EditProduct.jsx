@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "../../helpers/useForm.js";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useStore } from "../../context/store.js";
+import { fetchCategories } from "../../redux/actions/actions.js";
+import CheckboxCategories from "./CheckboxCategoriesEdit/CheckboxCategoriesEdit.jsx";
+
 export default function EditProduct() {
+  const [state, dispatch] = useStore();
   const [product, setProduct] = useState({
     name: "",
     description: "",
@@ -10,6 +15,7 @@ export default function EditProduct() {
     stock: "",
     image: "",
     categories: [""],
+    status: "",
   });
 
   let { id } = useParams();
@@ -23,19 +29,30 @@ export default function EditProduct() {
   };
   useEffect(() => {
     fetchProductById();
+    fetchCategories(dispatch);
   }, []);
-
+  const getName = (value) => {
+    console.log(value, "soy value");
+    setProduct({
+      ...product,
+      categories: product.categories.concat(value),
+    });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, description, price, stock, image, categories } = product;
+    const { name, description, price, stock, image, categories, status } =
+      product;
     try {
-      await axios.put(`http://localhost:3001/product/${id}`, {
-        name,
-        description,
-        price,
-        stock,
-        image,
-      });
+      // const res = await axios.put(`http://localhost:3001/product/${id}`, {
+      //   name,
+      //   description,
+      //   price,
+      //   stock,
+      //   image,
+      //   status,
+      //   categories,
+      // });
+      console.log(product);
     } catch (err) {
       console.log(err);
     }
@@ -72,19 +89,21 @@ export default function EditProduct() {
           value={product.stock}
           onChange={handleChange}
         />
-        <select name="status" onChange={handleChange}>
+        <select name="status" onChange={handleChange} value={product.status}>
           Status:
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
         </select>
-        {/* {product.categories.map((category) => (
-          <input
-            type="text"
-            name={category.name}
-            value={[category.name]}
-            onChange={handleChange}
-          />
-        ))} */}
+        {state.categories &&
+          state.categories.map((category) => (
+            <CheckboxCategories
+              name={category.name}
+              id={category.id}
+              key={category.id}
+              getName={getName}
+              filter={product.categories}
+            />
+          ))}
         <textarea
           name="description"
           cols="30"

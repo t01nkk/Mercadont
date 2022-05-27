@@ -77,13 +77,14 @@ router.post("/many", async (req, res) => {
   const products =  req.body
   try {
     for (let product of products) {
-      const {name, price, description, rating, image, stock, categories} = product
+      const {name, price, description, rating, image, stock, categories,status} = product
 
       for(let cat of categories){
         await Category.findOrCreate({ where: { name: cat } })
       }
       // first populate category table
-      const newProduct = await Product.create({name, price, description, rating, image, stock})
+      //AGREGUE STATUS PARA QUE EN EL BULK ME TOME LOS STATUS
+      const newProduct = await Product.create({name, price, description, rating, image, stock,status})
       for (let cat of categories) {
         let category = await Category.findOne({ where: { name: cat } })
         await newProduct.addCategory(category)
@@ -97,8 +98,9 @@ router.post("/many", async (req, res) => {
 })
 
 //Create Product
+//CAMBIE RATING POR STATUS PARA QUE FUNCIONE ATR Y ME CAMBIE EL STATUS
 router.post("/", async (req, res) => {
-  const { name, price, description, rating, image, stock, categories } = req.body
+  const { name, price, description, status, image, stock, categories } = req.body
 
   // first populate category table
   for(let cat of categories){
@@ -106,7 +108,7 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const newProduct = await Product.create({ name, price, description, rating, image, stock })
+    const newProduct = await Product.create({ name, price, description, status, image, stock })
     for (let cat of categories) {
       let category = await Category.findOne({ where: { name: cat } })
       await newProduct.addCategory(category)

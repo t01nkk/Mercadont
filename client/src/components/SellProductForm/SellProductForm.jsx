@@ -1,174 +1,125 @@
-import React from "react";
-import "./SellProductForm.css"
-import { useForm } from "../../helpers/useForm.js";
+import React, { useEffect, useState } from "react";
+import "./SellProductForm.css";
+import axios from "axios";
+import { fetchCategories } from "../../redux/actions/actions";
+import { useStore } from "../../context/store";
+import CheckboxCategories from "./CheckboxCategories/CheckboxCategories";
 
 export default function SellProductForm() {
-  const initialFormProduc = {
-    productName: "",
+  const [state, dispatch] = useStore();
+  const [data, setData] = useState({
+    name: "",
     price: "",
-    status: "",
-    condition: "",
-    imgProducts: "",
-    stocks: "",
-    shipment: "",
     description: "",
+    image: "https://www.clarin.com/img/2019/02/18/Kc0iayYpn_340x340__1.jpg",
+    status: "inactive",
+    stock: "",
+    categories: [],
+  });
+
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
   };
-
-  const validateForm = (form) => {
-    let error = {};
-    if (!/^[A-Za-z0-9\s]+$/.test(form.productName) && form.productName !== "") {
-      error.productName = "Only letters and numbers";
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { name, price, description, image, status, stock, categories } = data;
+    try {
+      // await axios.post("http://localhost:3001/product/", {
+      //   name: name,
+      //   price: price,
+      //   description: description,
+      //   image: image,
+      //   status: status,
+      //   stock: stock,
+      //   categories: categories,
+      // });
+      console.log(data);
+      alert("se envio la peticion");
+    } catch (err) {
+      console.log(err);
     }
-    if (form.price < 0) {
-      error.price = "Only positive numbers";
-    }
-    if (!form.imgProducts && form.imgProducts !== "") {
-      error.imgProducts = "iI not can be empty";
-    }
-    if (form.stocks < 0) {
-      error.stocks = "Only positive numbers";
-    }
-    if (/^.{0,255}$/.test(form.description) && form.description !== "") {
-      error.description = "Max 255 characters";
-    }
-
-    return error;
   };
-
-  const {
-    form,
-    error,
-    errorSend,
-    loading,
-    response,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-  } = useForm(initialFormProduc, validateForm);
-
-  //name (solo tenga numeros y letras)
-  //price (solo numero mayor a 0)
-  //image (que no esta vacia)
-  //details (tenga menos de 255 caracteres)
-  //status (no hace falta validar)
-  //stock (numero mayor a 0)
+  useEffect(() => {
+    fetchCategories(dispatch);
+  }, []);
   return (
-    <div className="sell">
-        <div className="title">New product</div> 
-    <div className="content">
-    <form onSubmit={handleSubmit}>
-        <div className="details">
-        <div className="divInput">
+    <div className="loginCard">
+      <h2>Post Product</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="divInputUser">
           <input
             type="text"
-            name="productName"
-            placeholder="Product name"
+            name="name"
+            placeholder="Product Name ..."
             onChange={handleChange}
-            onBlur={handleBlur}
-            value={form.productName}
             required
+            value={data.name}
           />
-          {error.productName && <p>{error.productName}</p>}
-
         </div>
-        <div className="divInput">
+        <div className="divInputUser">
+          {state.categories &&
+            state.categories.map((category) => (
+              <CheckboxCategories
+                name={category.name}
+                id={category.id}
+                key={category.id}
+                setData={setData}
+                data={data}
+              />
+            ))}
+        </div>
+        <div className="divInputUser">
           <input
             type="number"
             name="price"
-            placeholder="Price"
+            placeholder="Price ..."
             onChange={handleChange}
-            onBlur={handleBlur}
-            value={form.price}
             required
+            value={data.price}
           />
-          {error.price && <p>{error.price}</p>}
+        </div>
+        <div className="divInputUser">
+          <textarea
+            cols="30"
+            rows="15"
+            type="textarea"
+            name="description"
+            placeholder="Product Description ..."
+            onChange={handleChange}
+            required
+            value={data.description}
+          ></textarea>
         </div>
 
-        {/* <div className="divInput">
-          <select
-            name="status"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={form.status}
-          >
-            <option value="active">active</option>
-            <option value="inactive">inactive</option>
-          </select>
-        </div> */}
-
-        
-
-        <div className="file">
+        <div>
           <input
-            type="file"
-            name="imgProducts"
+            type="text"
+            name="image"
+            placeholder="Image..."
             onChange={handleChange}
-            onBlur={handleBlur}
-            value={form.imgProducts}
-            
-            required
+            value={data.image}
           />
-         
-          {error.imgProducts && error.imgProducts}
-
         </div>
-        <div className="divInput">
+        <div className="divInputUser">
+          <label>Product status:</label>
+          <select name="status" value={data.status} onChange={handleChange}>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div className="divInputUser">
           <input
             type="number"
-            name="stocks"
-            placeholder="Stocks"
+            name="stock"
+            placeholder="Stock..."
             onChange={handleChange}
-            onBlur={handleBlur}
-            value={form.stocks}
-            required
+            value={data.stock}
           />
-          {error.stocks && <p>{error.stocks}</p>}
-
         </div>
-        <div className="divInput">
-          <select
-            name="shipment"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={form.status}
-          >
-            <option value="pickUp">pickUp</option>
-            <option value="courier">courier</option>
-          </select>
+        <div className="btn">
+          <input type="submit" value="Send" />
         </div>
-        <div className="divInput">
-          <select
-            name="condition"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={form.status}
-          >
-            <option value="used">used</option>
-            <option value="new">new</option>
-          </select>
-        </div>
-        <div className="divInput">
-          <textarea
-            name="description"
-            cols="20"
-            rows="5"
-            placeholder="Descriptions"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={form.description}
-          ></textarea>
-          {error.description && <p>{error.description}</p>}
-
-        </div>
-
-          <div className="button">
-          <input type="submit" value="Cargar Producto" />
-        {errorSend.msg && <p>{errorSend.msg}</p>}
-          </div>
-        </div>
-       
       </form>
-    </div>
     </div>
   );
 }
