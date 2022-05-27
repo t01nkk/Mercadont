@@ -4,38 +4,44 @@ import axios from "axios";
 
 export default function LogInForm() {
   const [data, setData] = useState({
-    password: "",
+    // password: "",
     email: "",
   });
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [user, setUser] = useState(null)
 
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
+
+  // const handleChange = (e) => {
+  //   setData({ ...data, [e.target.name]: e.target.value });
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password } = data;
     try {
-      await axios.post("http://localhost:3001/user/login", {
-        email: email,
-        password: password,
+      const usere=  await axios.post("http://localhost:3001/user/login", {
+        email,
+        password
       });
+      console.log(usere, "SOY USERE")
+      setUser(usere)
+      // console.log(user)
     } catch (err) {
-      alert(err.response.data.error);
+      console.log(err)
+      alert(err.response.data.error,);
     }
   };
-  console.log(data);
   return (
     <div className="loginCard">
-      <h2>Sign In</h2>
+      <h2 onClick={()=>console.log(user)}>Sign In</h2>
       <form onSubmit={handleSubmit}>
         <div className="divInputUser">
           <input
             type="email"
             name="email"
             placeholder="Email ..."
-            onChange={handleChange}
+            onChange={(e)=>setEmail(e.target.value)}
             required
-            value={data.email}
+            value={email}
           />
         </div>
         <div className="divInputUser">
@@ -43,9 +49,9 @@ export default function LogInForm() {
             type="password"
             name="password"
             placeholder="Password..."
-            onChange={handleChange}
+            onChange={(e)=>setPassword(e.target.value)}
             required
-            value={data.password}
+            value={password}
           />
         </div>
         <div className="btn">

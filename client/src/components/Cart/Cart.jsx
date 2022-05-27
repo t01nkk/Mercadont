@@ -45,6 +45,11 @@ export const Cart = () => {
     setPriceTotal(total)
   }
 
+  const makePurchase = ()=>{
+    let local = JSON.parse(localStorage.getItem("myCart"))
+    console.log(local, priceTotal)
+  }
+
   return (
     <div>
       
@@ -74,6 +79,7 @@ export const Cart = () => {
                         }
            
         </div>
+        <button onClick={makePurchase}>Buy</button>
       </section>
     </div>
     

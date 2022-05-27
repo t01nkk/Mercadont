@@ -51,8 +51,10 @@ router.get("/login", async (req, res) => {
 //Checked logged-in status
 router.get("/", async (req, res) => {
     const user = await getUser(req.user)
+    console.log(req)
+    // console.log(user)
     if (user) {
-        res.status(300).send(user)
+        res.status(200).send(user)
     } else {
         return res.status(401).send({ msg: "you need to log in" })
     }
@@ -65,11 +67,21 @@ router.get("/register", checkNotAuthenticated, async (req, res) => {
 
 //Log in with valid user
 router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/user',
-    failureRedirect: '/user/login',
+    // successRedirect: '/user',
+    // failureRedirect: '/user/login',
     failureFlash: true
+})
+, async(req,res)=>{
+    const user = await getUser(req.user)
+    console.log(req)
+    // console.log(user)
+    if (user) {
+        res.status(200).send(user.dataValues)
+    } else {
+        return res.status(401).send({ msg: "you need to log in" })
+    }
 }
-))
+)
 
 //Log out from valid user
 router.post('/logout', function (req, res, next) {
@@ -86,8 +98,8 @@ router.post("/register", checkNotAuthenticated, async (req, res) => {
     }
     const { name, lastname, email, password, address, image, payment } = req.body;
 
-    let errors = validateInputUser(name,lastname,email,password)
-    if(errors.length) return res.status(400).send({ msg: errors});
+    // let errors = validateInputUser(name,lastname,email,password)
+    // if(errors.length) return res.status(400).send({ msg: errors});
 
     const exists = await User.findOne({ where: { email: email } });
 

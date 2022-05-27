@@ -51,7 +51,7 @@ export default function Home() {
   return (
     <section className="section-products">
       <button onClick={()=>mostra()}>mostra storage</button>  
-      {inCart && <p>Ya esta en carro pa</p>}
+      {/* {inCart && <p>Ya esta en carro pa</p>} */}
       {/* BOTTON PARA VER EL STORAGE NO BORRAR */}
       {state.products &&
         React.Children.toArray(

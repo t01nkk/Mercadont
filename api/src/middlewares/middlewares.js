@@ -9,12 +9,16 @@ const { Op } = require("sequelize");
 function initialize(passport, getUserByEmail, getUserById) {
     const authenticateUser = async (email, password, done) => {
         const user = await getUserByEmail(email)
+        // console.log(user.dataValues.email, "SOY EL EMAIL")
         if (user === null) {
+            // console.log("Hola no existo")
             return done(null, false, { msg: 'No user with that email' });
+            
         }
         try {
             // console.log(user.dataValues.password);
             if (await bcrypt.compare(password, user.dataValues.password)) {
+                console.log(user.dataValues.password, "SOY EL PASS")
                 return done(null, user);
             }
         } catch (err) {

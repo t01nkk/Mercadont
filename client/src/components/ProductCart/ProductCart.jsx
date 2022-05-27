@@ -56,7 +56,8 @@ const oneMore = (stock, name,price)=>{
         {/* <button onClick={()=>setDataToEdit(el)}>Editar</button> */}
         {/* {permitMore && <button onClick={()=>oneMore(stock, name, pos)}>+</button>}*/}
         {/* <p>{price * count}</p> */}
-        {count!==stock?<button onClick={()=>oneMore(stock, name, price)}>+</button>:console.log("hola")}                        
+        {count!==stock?<button onClick={()=>oneMore(stock, name, price)}>+</button>:console.log("hola")}                      
+        {/* {<button onClick={()=>oneMore(stock, name, price)}>+</button>}                         */}
         
         {/* {permitLess && <button onClick={()=>oneLess(stock, name)}>-</button>} */}
         {count !==1?<button onClick={()=>oneLess(stock, name,price)}>-</button>:console.log("chau")}
