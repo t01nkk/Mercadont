@@ -133,7 +133,7 @@ router.delete("/:id", async (req, res) => {
 
 //Update Product
 //In the update form, LOAD ALL THE DATA FOR CHANGING
-router.put("/:id", async (req, res)=>{
+router.put("/update/:id", async (req, res)=>{
   const {id} = req.params
   const {name, price, description, image, stock, categories} = req.body
 
@@ -170,22 +170,31 @@ router.put("/:id", async (req, res)=>{
 })
 
 //Product Bought
-router.put("/:id/buy", async (req, res)=>{
-  const {id} = req.params
-  const {amount} = req.body
+router.put("/buy", async (req, res) => {
+  const cart = req.body
 
   try {
-    const {stock} = await Product.findOne({where: {id: id}})
-    if (stock - amount === 0) {
-      await Product.update({stock: "0", status: "inactive"}, {where: {id: id}})
+    for (let product of cart) {
+      const {id} = product
+      const {stock} = await Product.findOne({where: {id: id}})
+
+      if(stock - product.amount < 0) return res.status(400).send("Not enough stock for purchase")
+
+      if (stock - product.amount === 0) {
+        await Product.update({stock: "0", status: "inactive"}, {where: {id: id}})
+        return res.status(200).send("Product Bought, no more stock left")
+      }
+      await Product.update({stock: (stock - product.amount)}, {where: {id: id}})
     }
-    await Product.update({stock: (stock - amount)}, {where: {id: id}})
-    return res.status(200).send("Product Bought")
+      return res.status(200).send("Product Bought")
   }
-  catch (err){
+  catch (err) {
+    console.log(err)
     res.status(400).send(err)
   }
 })
+
+
 
 //Product Restock
 router.put("/:id/restock", async (req, res)=>{
