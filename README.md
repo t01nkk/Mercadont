@@ -9,7 +9,6 @@ Pablo Marrero
 Ignacio Williams
 Tatiana Pachon
 Mateo Miniati
-Gabriel Revelo 
 
 OBJECTIVE: Developing a web platform for buying/selling items and managing stock.
 
