@@ -230,6 +230,11 @@ router.put("/:id/review", async (req, res)=>{
     allRatings.push(rating)
 
     const reviews = product.reviews
+    for (let r of reviews){
+      if(r.user == review.user){
+        return res.status(402).send("User has already left a review")
+      }
+    }
     reviews.push(review)
 
     await Product.update({
@@ -241,6 +246,49 @@ router.put("/:id/review", async (req, res)=>{
       },{where:{id:id}}
     )
     res.status(200).send("Review Added")
+  }
+  catch (err){
+    console.log(err)
+    return res.status(400).send(err)
+  }
+})
+
+//Update Review
+router.put("/:id/updateReview", async (req, res)=>{
+  const {id} = req.params
+  const {rating, review} = req.body
+
+  try{
+    const product = await Product.findOne({where:{id:id}})
+    console.log(product)
+    var index;
+    const reviews = product.reviews
+    for (let i = 0; i<reviews.length; i++){
+      if(reviews[i].user === review.user){
+        index = i
+        break
+      }
+    }
+    reviews[index] = review
+
+    const allRatings = product.rating.each
+    allRatings[index] = rating
+    let sum = 0
+    for (let i = 0; i<allRatings.length;i++){
+      sum += allRatings[i]
+    }
+    const average = sum/allRatings.length
+
+
+    await Product.update({
+          rating:{
+            average: average,
+            each: allRatings
+          },
+          reviews
+        },{where:{id:id}}
+    )
+    res.status(200).send("Review Updated")
   }
   catch (err){
     console.log(err)
