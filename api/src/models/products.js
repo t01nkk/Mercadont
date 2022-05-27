@@ -49,22 +49,22 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        reviews: { //REVISAR, NUEVA TABLA
-            type: DataTypes.ARRAY(
-                DataTypes.JSON({
-                    user: DataTypes.STRING,
-                    text: DataTypes.TEXT,
-                })),
-            defaultValue: []
-        },
-        questionsAndAnswers: {
-            type: DataTypes.ARRAY(
-                DataTypes.JSON({
-                    question: DataTypes.STRING,
-                    answer: DataTypes.STRING,
-                })),
-            defaultValue: []
-        },
+        // reviews: { //REVISAR, NUEVA TABLA
+        //     type: DataTypes.ARRAY(
+        //         DataTypes.JSON({
+        //             user: DataTypes.STRING,
+        //             text: DataTypes.TEXT,
+        //         })),
+        //     defaultValue: []
+        // },
+        // questionsAndAnswers: {
+        //     type: DataTypes.ARRAY(
+        //         DataTypes.JSON({
+        //             question: DataTypes.STRING,
+        //             answer: DataTypes.STRING,
+        //         })),
+        //     defaultValue: []
+        // },
         created: { //esto va a ser deleteado cuando de deployee la cuestion.
             type: DataTypes.BOOLEAN,
             defaultValue: false

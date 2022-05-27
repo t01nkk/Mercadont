@@ -9,11 +9,6 @@ const { Op } = require("sequelize");
 function initialize(passport, getUserByEmail, getUserById) {
     const authenticateUser = async (email, password, done) => {
         const user = await getUserByEmail(email)
-        // console.log("user:", user.dataValues);
-        // console.log("banned:", user.dataValues.banned);
-        // console.log("updatedAt:", user.dataValues.updatedAt);
-        // let banningTime = user.dataValues.updatedAt;
-        // console.log("banningTime:", banningTime);
 
         if (user === null) {
             return done(null, false, { msg: 'No user with that email' });
@@ -57,23 +52,6 @@ function validateInputProduct(name, price, description, image, stock, categories
     return errors;
 }
 
-// passport.use(new Strategy(
-//     function(username, password, done) {
-//       db.users.findByUsername(username)
-//         .then((user) => {
-//           if(!user) {
-//             return done(null, false);
-//           }
-//           if(user.password != password) {
-//             return done(null, false);
-//           }
-//           return done(null, user);
-//         })
-//       .catch(err => {
-//         return done(err);
-//       })
-//     }));
-
 async function getProducts() {
     const findCreated = await Product.findAll({ where: { created: true } })
     let count = await Product.count();
@@ -106,14 +84,6 @@ async function getProducts() {
 
     } else return { msg: "Failed" };
 
-    // const allProd = await Product.findAll({
-    //     include: {
-    //         model: Category,
-    //         attributes: ["name"],
-    //         through: { attributes: [] },
-    //     }
-    // })
-    // return allProd;
     return { msg: "Data base loaded succesfully!" };
 }
 module.exports = {

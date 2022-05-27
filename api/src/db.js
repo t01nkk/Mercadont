@@ -28,19 +28,26 @@ let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].s
 sequelize.models = Object.fromEntries(capsEntries);
 
 
-const { User, Product, Category } = sequelize.models;
-
-// User.hasMany(Product); //RELACION PARA 
-// Product.belongsTo(User);// VENDEDOR
+const { User, Product, Category, Review, Qa} = sequelize.models;
 
 Product.belongsToMany(User, { through: 'bought' }); //RELACION PARA 
 User.belongsToMany(Product, { through: 'bought' });// COMPRADOR 
 
-Category.belongsToMany(Product, { through: 'productCategories' })
-Product.belongsToMany(Category, { through: 'productCategories' })
+Category.belongsToMany(Product, { through: 'productCategories' }); //Relation for
+Product.belongsToMany(Category, { through: 'productCategories' }); //categories
 
-// Product.belongsToMany(User, { through: 'Bought' }); 
-// User.belongsToMany(Product, { through: 'Bought' });
+Product.belongsToMany(Qa, { through: 'productQAs' }); //Relation for questions and answers
+Qa.belongsTo(Product);  
+
+Product.belongsToMany(Review, { through: 'productReviews' }); //Relation for reviews
+Review.belongsTo(Product);  
+
+User.belongsToMany(Qa, {through: 'userQAs'});
+Qa.belongsTo(User);
+
+User.belongsToMany(Review, {through: 'userReviews'});
+Review.belongsTo(User);
+
 
 
 module.exports = {
