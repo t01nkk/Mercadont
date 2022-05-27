@@ -1,4 +1,4 @@
-import { FETCH_PRODUCTS, SEARCH_PRODUCT } from "../actions/actionTypes";
+import { FETCH_PRODUCTS, SEARCH_PRODUCT,SORT_BY_PRICE } from "../actions/actionTypes";
 
 export const initialState = {
   products: [],
@@ -21,6 +21,36 @@ export function reducer(state = initialState, action) {
         ...state,
         searchedProducts: action.payload,
       };
+    }
+    case SORT_BY_PRICE:{
+      console.log(action.payload)
+      let order;
+                
+      if (action.payload === "ASCENDING") {
+        order = state.searchedProducts.sort(function (a, b) {
+          if (a.price > b.price) {
+            return 1;
+          }
+          if (a.price < b.price) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+      if (action.payload === "DESCENDING") {
+        order = state.searchedProducts.sort(function (a, b) {
+          if (a.price > b.price) {
+            return -1;
+          }
+          if (a.price < b.price) {
+            return 1;
+          }
+          return 0;
+        }); 
+      }
+      return { ...state, searchedProducts: order 
+  };
+      
     }
 
     default:
