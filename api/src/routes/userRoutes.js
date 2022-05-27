@@ -45,14 +45,14 @@ function getUser(user) {
 
 //
 router.get("/login", async (req, res) => {
-    res.send({ msg: 'Failure to authenticate credentials' })
+    return res.send({ msg: 'Failure to authenticate credentials' })
 })
 
 //Checked logged-in status
 router.get("/", async (req, res) => {
     const user = await getUser(req.user)
     if (user) {
-        res.status(300).send(user)
+        return res.status(300).send(user)
     } else {
         return res.status(401).send({ msg: "you need to log in" })
     }
