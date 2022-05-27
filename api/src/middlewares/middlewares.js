@@ -4,9 +4,19 @@ const bcrypt = require('bcrypt');
 function initialize(passport, getUserByEmail, getUserById) {
     const authenticateUser = async (email, password, done) => {
         const user = await getUserByEmail(email)
+        // console.log("user:", user.dataValues);
+        // console.log("banned:", user.dataValues.banned);
+        // console.log("updatedAt:", user.dataValues.updatedAt);
+        // let banningTime = user.dataValues.updatedAt;
+        // console.log("banningTime:", banningTime);
+
         if (user === null) {
             return done(null, false, { msg: 'No user with that email' });
         }
+        if(user?.dataValues.banned){
+            return done(null, false, { msg: 'Your account has been banned. Please, get in contact with the Admin.'});
+        }
+    
         try {
             // console.log(user.dataValues.password);
             if (await bcrypt.compare(password, user.dataValues.password)) {

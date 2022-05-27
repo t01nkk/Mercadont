@@ -43,7 +43,7 @@ function getUser(user) {
     return user
 }
 
-//Redundant?
+//
 router.get("/login", async (req, res) => {
     res.send({ msg: 'Failure to authenticate credentials' })
 })
@@ -172,16 +172,33 @@ router.get("/ban/", async (req, res) => {
 //Ban User
 router.put("/ban/:id", async (req, res) => {
     const { id } = req.params;
-    const { status } = req.body;
+
     try {
         const bannedUser = await User.update(
             {
-                banned: status
+                banned: true
             },
             { where: { id: id } });
-        res.status(200).send(bannedUser)
+        res.status(200).send(bannedUser);
     } catch (error) {
-        res.status(400).send("Not a valid status. Please choose a valid one (default, suspended, banned)")
+        res.status(400).send(error);
+    }
+});
+
+//Set Admin credencials
+router.put("/admin/:id", async (req, res) => {
+    const { id } = req.params;
+    const {status} = req.body;
+
+    try {
+        const setAdmin = await User.update(
+            {
+                isAdmin: status
+            },
+            { where: { id: id } });
+        res.status(200).send(setAdmin);
+    } catch (error) {
+        res.status(400).send(error);
     }
 });
 module.exports = router
