@@ -1,6 +1,6 @@
-const { Product, User, Category } = require("../db")
+const { Product, Category } = require("../db")
 const { Router } = require("express")
-const { getProducts } = require("../middlewares/middlewares");
+const { getProducts, validateInputProduct } = require("../middlewares/middlewares");
 const sheison = require('../../productsCats.json');
 
 
@@ -61,7 +61,6 @@ router.get("/", async (req, res) => {
     res.status(404).send(err)
   }
 })
-
 
 //WORKING
 //Get Product Details
@@ -161,11 +160,14 @@ router.delete("/:id", async (req, res) => {
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/:id", async (req, res) => {
   const { id } = req.params
-  const { name, price, description, rating, image, stock, categories } = req.body
+
+  const { name, price, description, rating, image, stock, categories } = req.body;
+
+  let errors = validateInputProduct(name, price, description, image, stock, categories);
+  if (errors.length) return res.status(400).send({ msg: errors });
 
   if (categories) {
     let product = await Product.findOne({ where: { id: id } })
-    console.log(await product.countCategories())
     product.setCategories([])
 
     for (let cat of categories) {
@@ -174,7 +176,6 @@ router.put("/:id", async (req, res) => {
     for (let cat of categories) {
       const category = await Category.findOne({ where: { name: cat } })
       product.addCategory(category)
-
     }
   }
 
@@ -184,7 +185,6 @@ router.put("/:id", async (req, res) => {
         name: name,
         price: price,
         description: description,
-        rating: rating,
         image: image,
         stock: stock,
       },
@@ -230,6 +230,100 @@ router.put("/:id/restock", async (req, res) => {
     return res.status(200).send("Product Restocked")
   }
   catch (err) {
+    res.status(400).send(err)
+  }
+})
+
+
+//Add Review to Product
+router.put("/:id/review", async (req, res) => {
+  const { id } = req.params
+  const { rating, review } = req.body
+
+  try {
+    const product = await Product.findOne({ where: { id: id } })
+    console.log(product.rating)
+    const allRatings = product.rating.each
+    let sum = 0
+    for (let i = 0; i < allRatings.length; i++) {
+      sum += allRatings[i]
+    }
+    sum += rating
+    const average = sum / (allRatings.length + 1)
+    allRatings.push(rating)
+
+    const reviews = product.reviews
+    reviews.push(review)
+
+    await Product.update({
+      rating: {
+        average: average,
+        each: allRatings
+      },
+      reviews
+    }, { where: { id: id } }
+    )
+    res.status(200).send("Review Added")
+  }
+  catch (err) {
+    console.log(err)
+    return res.status(400).send(err)
+  }
+})
+
+//Add Questions
+router.put("/:id/question", async (req, res) => {
+  const { id } = req.params
+  const { question } = req.body
+
+  if (!question || question.length < 1) return res.status(400).send("Questions can't be empty")
+
+  const qna = {
+    question: question,
+    answer: ""
+  }
+  try {
+    const product = await Product.findOne({ where: { id: id } })
+    const questionsAndAnswers = product.questionsAndAnswers
+    questionsAndAnswers.push(qna)
+    console.log(questionsAndAnswers)
+    await Product.update({
+      questionsAndAnswers
+    },
+      { where: { id: id } }
+    )
+    return res.status(200).send("Question Added")
+  }
+  catch (err) {
+    console.log(err)
+    return res.status(400).send(err)
+  }
+})
+
+//Answer Question / Add Answer
+router.put("/:id/answer", async (req, res) => {
+  const { id } = req.params
+  const { questionId } = req.query
+  const { answer } = req.body
+
+  if (!answer || answer.length < 1) {
+    return res.status(404).send("Anser must not be empty")
+  }
+
+  try {
+    const product = await Product.findOne({ where: { id: id } })
+    const questionsAndAnswers = product.questionsAndAnswers
+    questionsAndAnswers[questionId].answer = answer
+    console.log(questionsAndAnswers)
+
+    await Product.update({
+      questionsAndAnswers
+    },
+      { where: { id: id } })
+    return res.status(200).send("Answer Added")
+  }
+  catch (err) {
+    console.log(err)
     res.status(400).send(err)
   }
 })
