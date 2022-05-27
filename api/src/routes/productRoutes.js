@@ -94,6 +94,7 @@ router.get("/:id", async (req, res) => {
 // })
 
 //Create Product
+//CAMBIE RATING POR STATUS PARA QUE FUNCIONE ATR Y ME CAMBIE EL STATUS
 router.post("/", async (req, res) => {
   if (await Category.count()) {
 

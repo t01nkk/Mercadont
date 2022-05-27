@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import { useStore } from "../../context/store.js";
-import { fetchProducts } from "../../redux/actions/actions.js";
+import { fetchCategories, fetchProducts } from "../../redux/actions/actions.js";
 import "./Home.css";
 
 export default function Home() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
-
   const [cart, setCart] = useState(initialCart);
-
-  useEffect(() => {
-    localStorage.setItem("myCart", JSON.stringify(cart));
-    // localStorage.clear()
-  }, [cart]);
+  const [state, dispatch] = useStore();
 
   const handleSaveCart = (name, price,image, id, stock)=>{
     let amount = 1
@@ -26,10 +21,6 @@ export default function Home() {
   //   console.log(miStorage.myCart)
   // }
 
-  const [state, dispatch] = useStore();
-
-  //USEEFFECT CARGA DE PRODUCTOS
-
   useEffect(() => {
     const carga = async () => {
       await fetchProducts(dispatch);
@@ -41,6 +32,7 @@ export default function Home() {
 
   return (
     <section className="section-products">
+      {console.log(state.products)}
       {/* <button onClick={()=>mostra()}>mostra storage</button>   */}
       {/* BOTTON PARA VER EL STORAGE NO BORRAR */}
       {state.products &&
