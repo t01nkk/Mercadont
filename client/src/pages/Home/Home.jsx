@@ -9,12 +9,12 @@ export default function Home() {
   const [cart, setCart] = useState(initialCart);
   const [state, dispatch] = useStore();
 
-  const handleSaveCart = (name, price, image, id, stock) => {
-    let products = { name, price, image, id, stock };
-
-    setCart((cart) => [...cart, products]);
-  };
-
+  const handleSaveCart = (name, price,image, id, stock)=>{
+    let amount = 1
+    let products = {name, price,image, id, stock, amount}
+    // console.log(products)
+    setCart((cart)=> [...cart, products])
+  }
   //FUNCION PARA VER EL STORAGE, NO BORRAR
   // const mostra = ()=>{
   //   let miStorage = window.localStorage;
@@ -22,14 +22,13 @@ export default function Home() {
   // }
 
   useEffect(() => {
-    localStorage.setItem("myCart", JSON.stringify(cart));
-    // localStorage.clear()
-  }, [cart]);
-  //USEEFFECT CARGA DE PRODUCTOS
-  useEffect(() => {
-    fetchProducts(dispatch);
-    fetchCategories(dispatch);
+    const carga = async () => {
+      await fetchProducts(dispatch);
+      // await postManyProducts(dispatch)
+    };
+    carga();
   }, []);
+
 
   return (
     <section className="section-products">
