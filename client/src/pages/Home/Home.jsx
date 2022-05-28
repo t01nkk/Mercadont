@@ -24,13 +24,8 @@ export default function Home() {
     }
   };
 
-  //USEEFFECT CARGA DE PRODUCTOS
-
   useEffect(() => {
-    const carga = async () => {
-      await fetchProducts(dispatch);
-    };
-    carga();
+    fetchProducts(dispatch);
   }, []);
 
   useEffect(() => {
