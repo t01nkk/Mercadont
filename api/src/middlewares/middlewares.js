@@ -51,23 +51,6 @@ function validateInputProduct(name, price, description, image, stock, categories
     return errors;
 }
 
-// passport.use(new Strategy(
-//     function(username, password, done) {
-//       db.users.findByUsername(username)
-//         .then((user) => {
-//           if(!user) {
-//             return done(null, false);
-//           }
-//           if(user.password != password) {
-//             return done(null, false);
-//           }
-//           return done(null, user);
-//         })
-//       .catch(err => {
-//         return done(err);
-//       })
-//     }));
-
 async function getProducts() {
     const findCreated = await Product.findAll({ where: { created: true } })
     let count = await Product.count();
@@ -98,6 +81,7 @@ async function getProducts() {
         }
 
     } else return { msg: "Failed" };
+
     return { msg: "Data base loaded succesfully!" };
 }
 module.exports = {

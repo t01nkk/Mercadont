@@ -1,7 +1,5 @@
-const { Product, Category } = require("../db")
+const { Product, User, Category, Qa, Review } = require("../db")
 const { Router } = require("express")
-const { getProducts, validateInputProduct } = require("../middlewares/middlewares");
-const sheison = require('../../productsCats.json');
 
 
 const router = Router()
@@ -59,6 +57,7 @@ router.get('/categoryFilter', async (req, res) => {
 
 
 // CHECK
+//WORKING
 //Get Product Details
 router.get("/:id", async (req, res) => {
   const { id } = req.params
@@ -80,52 +79,60 @@ router.get("/:id", async (req, res) => {
 
 
 //Create Product
-//CAMBIE RATING POR STATUS PARA QUE FUNCIONE ATR Y ME CAMBIE EL STATUS
 router.post("/", async (req, res) => {
-  if (await Category.count()) {
 
-    const { name, price, description, status, image, stock, categories } = req.body
+  const { name, price, description, status, image, stock, categories } = req.body
 
-    let exists = await Product.findOne({ where: { name: name } });
+  let exists = await Product.findOne({ where: { name: name } });
 
-    if (!exists) {
+  if (!exists) {
 
-      // if (!name) return res.status(400).send({ msg: "Please pick a name for you product" });
+    // if (!name) return res.status(400).send({ msg: "Please pick a name for you product" });
 
-      // if (!image) return res.status(400).send({ msg: "Please choose the picture for you product" });
+    // if (!image) return res.status(400).send({ msg: "Please choose the picture for you product" });
 
-      // if (!description) return res.status(400).send({ msg: "Please send a description of your product" });
+    // if (!description) return res.status(400).send({ msg: "Please send a description of your product" });
 
-      if (stock < 0) {
-        return res.status(400).send({ msg: "The stock can't be a negative numbre, you dummy" })
+    if (stock < 0) {
+      return res.status(400).send({ msg: "The stock can't be a negative numbre, you dummy" })
 
-      } else if (stock === 0) status = "inactive";
+    } else if (stock === 0) status = "inactive";
 
-      if (price < 0) return res.status(400).send({ msg: "The price can't be a negative number" })
+    if (price < 0) return res.status(400).send({ msg: "The price can't be a negative number" })
 
-      if (!categories) return res.status(400).send({ msg: "You need to choose at least one category." })
+    if (!categories) return res.status(400).send({ msg: "You need to choose at least one category." })
 
-      try {
-        const newProduct = await Product.create({
-          name, price, description, status, image, stock, created: true
-        })
-        for (var i = 0; i < categories.length; i++) {
+    try {
+      const newProduct = await Product.create({
+        name, price, description, status, image, stock, created: true
+      })
+      for (var i = 0; i < categories.length; i++) {
 
-          let category = await Category.findOne({ where: { name: categories[i] } })
-          console.log(category)
-          if (!category) {
-            return res.status(400).send({ msg: "This isn't a valid category, you might have misspeled it or you can choose to create a new one" })
+        let category = await Category.findOne({ where: { name: categories[i] } })
+        console.log(category)
+        if (!category) {
+          return res.status(400).send({ msg: "This isn't a valid category, you might have misspeled it or you can choose to create a new one" })
 
-          } else await newProduct.addCategory(category)
-        }
-
-        res.status(201).send("New Product Created")
+        } else await newProduct.addCategory(category)
       }
 
-      catch (err) {
-        res.status(401).send(err)
-      }
+      res.status(201).send("New Product Created")
+    }
 
+    catch (err) {
+      res.status(401).send(err)
+    }
+
+    try {
+      const newProduct = await Product.create({ name, price, description, image, stock })
+      for (let cat of categories) {
+        let category = await Category.findOne({ where: { name: cat } })
+        await newProduct.addCategory(category)
+      }
+      res.status(201).send("New Product Created")
+    }
+    catch (err) {
+      res.status(401).send(err)
     }
   }
 })
@@ -147,13 +154,9 @@ router.delete("/:id", async (req, res) => {
 //FUNCIONA 
 
 //In the update form, LOAD ALL THE DATA FOR CHANGING
-router.put("/:id", async (req, res) => {
+router.put("/update/:id", async (req, res) => {
   const { id } = req.params
-
-  const { name, price, description, rating, image, stock, categories } = req.body;
-
-  let errors = validateInputProduct(name, price, description, image, stock, categories);
-  if (errors.length) return res.status(400).send({ msg: errors });
+  const { name, price, description, image, stock, categories } = req.body
 
   if (categories) {
     let product = await Product.findOne({ where: { id: id } })
@@ -212,6 +215,8 @@ router.put("/:id", async (req, res) => {
 
 ////CHECKEAR ESTO
 
+
+
 //Product Restock
 router.put("/:id/restock", async (req, res) => {
   const { id } = req.params
@@ -230,34 +235,52 @@ router.put("/:id/restock", async (req, res) => {
 
 
 //Add Review to Product
-router.put("/:id/review", async (req, res) => {
+router.post("/:id/review", async (req, res) => {
   const { id } = req.params
-  const { rating, review } = req.body
+  const { rating, text, userId } = req.body
 
   try {
-    const product = await Product.findOne({ where: { id: id } })
-    console.log(product.rating)
-    const allRatings = product.rating.each
-    let sum = 0
-    for (let i = 0; i < allRatings.length; i++) {
-      sum += allRatings[i]
+    const product = await Product.findOne({
+      include: {
+        model: Review,
+        attributes: ["rating", "text"],
+        through: { attributes: [] }
+      }
+    },
+      { where: { id: id } })
+    const user = await User.findOne({ where: { id: userId } })
+    for (let review of product.reviews) {
+      if (user.hasReview(review)) return res.status(400).send("User Already reviewed product," +
+        " please update your review if your wish to leave feedback")
     }
-    sum += rating
-    const average = sum / (allRatings.length + 1)
-    allRatings.push(rating)
+    const fullReview = await Review.create({
+      rating,
+      text
+    })
+    product.addReview(fullReview)
+    user.addReview(fullReview)
+    return res.status(200).send("Review Added")
+  }
+  catch (err) {
+    console.log(err)
+    return res.status(400).send(err)
+  }
+})
 
-    const reviews = product.reviews
-    reviews.push(review)
+//Update Review
+router.put("/:reviewId/updateReview", async (req, res) => {
+  const { reviewId } = req.params
+  const { rating, text, userId } = req.body
 
-    await Product.update({
-      rating: {
-        average: average,
-        each: allRatings
-      },
-      reviews
-    }, { where: { id: id } }
-    )
-    res.status(200).send("Review Added")
+  try {
+    const review = Review.findOne({ where: { id: reviewId } })
+    const user = User.findOne({ where: { id: userId } })
+
+    Review.update({
+      rating,
+      text
+    }, { where: { id: reviewId } })
+    return res.status(200).send("Review Updated")
   }
   catch (err) {
     console.log(err)
@@ -266,26 +289,21 @@ router.put("/:id/review", async (req, res) => {
 })
 
 //Add Questions
-router.put("/:id/question", async (req, res) => {
+router.post("/:id/question", async (req, res) => {
   const { id } = req.params
-  const { question } = req.body
+  const { question, userId } = req.body
 
   if (!question || question.length < 1) return res.status(400).send("Questions can't be empty")
 
-  const qna = {
-    question: question,
-    answer: ""
-  }
   try {
     const product = await Product.findOne({ where: { id: id } })
-    const questionsAndAnswers = product.questionsAndAnswers
-    questionsAndAnswers.push(qna)
-    console.log(questionsAndAnswers)
-    await Product.update({
-      questionsAndAnswers
-    },
-      { where: { id: id } }
-    )
+    const q = await Qa.create({
+      question
+    })
+    product.addQa(q)
+
+    const user = await User.findOne({ where: { id: userId } })
+    user.addQa(q)
     return res.status(200).send("Question Added")
   }
   catch (err) {
@@ -295,25 +313,19 @@ router.put("/:id/question", async (req, res) => {
 })
 
 //Answer Question / Add Answer
-router.put("/:id/answer", async (req, res) => {
-  const { id } = req.params
-  const { questionId } = req.query
+router.put("/:questionId/answer", async (req, res) => {
+  const { questionId } = req.params
   const { answer } = req.body
 
   if (!answer || answer.length < 1) {
-    return res.status(404).send("Anser must not be empty")
+    return res.status(404).send("Answer must not be empty")
   }
 
   try {
-    const product = await Product.findOne({ where: { id: id } })
-    const questionsAndAnswers = product.questionsAndAnswers
-    questionsAndAnswers[questionId].answer = answer
-    console.log(questionsAndAnswers)
+    await Qa.update({
+      answer,
+    }, { where: { id: questionId } })
 
-    await Product.update({
-      questionsAndAnswers
-    },
-      { where: { id: id } })
     return res.status(200).send("Answer Added")
   }
   catch (err) {
@@ -321,6 +333,23 @@ router.put("/:id/answer", async (req, res) => {
     res.status(400).send(err)
   }
 })
+
+router.put("/:questionId/resolved", async (req, res) => {
+  const { questionId } = req.params
+  try {
+    await Qa.update({
+      resolved: true,
+    }, { where: { id: questionId } })
+
+    return res.status(200).send("Answer Resolved")
+  }
+  catch (err) {
+    console.log(err)
+    res.status(400).send(err)
+  }
+})
+
+
 
 module.exports = router
 
