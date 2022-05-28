@@ -1,5 +1,9 @@
 import React from "react";
 
 export default function LogOut() {
-  return <div>LogOut</div>;
+  const logoutSesion= ()=>{
+    localStorage.clear()
+  }
+
+  return <div onClick={logoutSesion}>LogOut</div>;
 }

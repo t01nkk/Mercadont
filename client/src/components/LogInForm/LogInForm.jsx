@@ -3,7 +3,11 @@ import "./LoginForm.css";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 // import loginService from "../Services/login";
+
+
 export default function LogInForm() {
+  let loggedUser = JSON.parse(localStorage.getItem("myUser")) || {};
+
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -38,9 +42,14 @@ export default function LogInForm() {
     }
   };
 
+  useEffect(()=>{
+    console.log(userLogged)
+    localStorage.setItem("myUser", JSON.stringify(userLogged));
+  },[userLogged])
+
   return (
     <div className="loginCard">
-      {redirect ? <Redirect push to="/home" /> : null}
+      {/* {redirect ? <Redirect push to="/home" /> : null} */}
       <h2>Sign In</h2>
 
       <form

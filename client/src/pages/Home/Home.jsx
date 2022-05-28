@@ -24,6 +24,8 @@ export default function Home() {
     }
   };
 
+
+
   //USEEFFECT CARGA DE PRODUCTOS
 
   useEffect(() => {
