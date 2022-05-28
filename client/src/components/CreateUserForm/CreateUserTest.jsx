@@ -3,8 +3,13 @@ import axios from "axios";
 
 export default function LogInForm() {
   const [data, setData] = useState({
-    password: "",
+    name: "",
+    lastName: "",
     email: "",
+    password: "",
+    address: "",
+    payment: "",
+    profilePic: "",
   });
 
   const handleChange = (e) => {
@@ -12,14 +17,15 @@ export default function LogInForm() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password } = data;
+    const { name, lastName, email, password } = data;
     try {
       await axios.post("http://localhost:3001/user/register", {
         email: email,
         password: password,
       });
+      alert("se envio la peticion");
     } catch (err) {
-      alert(err.response.data.error);
+      alert(err);
     }
   };
   console.log(data);
@@ -27,6 +33,26 @@ export default function LogInForm() {
     <div className="loginCard">
       <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="name"
+            placeholder="First Name ..."
+            onChange={handleChange}
+            
+            value={data.name}
+          />
+        </div>
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name ..."
+            onChange={handleChange}
+            
+            value={data.lastName}
+          />
+        </div>
         <div className="divInputUser">
           <input
             type="email"
@@ -45,6 +71,33 @@ export default function LogInForm() {
             onChange={handleChange}
             required
             value={data.password}
+          />
+        </div>
+        <div>
+          <input
+            type="file"
+            name="profileImg"
+            placeholder="Address..."
+            onChange={handleChange}
+            value={data.profilePic}
+          />
+        </div>
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="address"
+            placeholder="Address..."
+            onChange={handleChange}
+            value={data.address}
+          />
+        </div>
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="payment"
+            placeholder="Payment..."
+            onChange={handleChange}
+            value={data.payment}
           />
         </div>
         <div className="btn">

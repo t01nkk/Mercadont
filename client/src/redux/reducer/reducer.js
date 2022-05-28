@@ -1,9 +1,13 @@
-import { FETCH_PRODUCTS, SEARCH_PRODUCT } from "../actions/actionTypes";
+import {
+  FETCH_PRODUCTS,
+  SEARCH_PRODUCT,
+  FETCH_CATEGORIES,
+} from "../actions/actionTypes";
 
 export const initialState = {
   products: [],
   searchedProducts: [],
-  state3: "estado state store#3",
+  categories: [],
   state4: "estado state store#3",
   state5: "estado state store#3",
 };
@@ -20,6 +24,12 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         searchedProducts: action.payload,
+      };
+    }
+    case FETCH_CATEGORIES: {
+      return {
+        ...state,
+        categories: action.payload,
       };
     }
 

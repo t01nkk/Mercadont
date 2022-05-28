@@ -1,73 +1,61 @@
 import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
-import Axios from "axios";
-
+import axios from "axios";
+import { Redirect } from "react-router-dom";
+// import loginService from "../Services/login";
 export default function LogInForm() {
   const [data, setData] = useState({
-    // password: "",
     email: "",
+    password: "",
   });
-  let yourStorageUser = JSON.parse(localStorage.getItem("myUser")) || {};
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [user, setUser] = useState(yourStorageUser)
 
+  const [userLogged, setUserLogged] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
-
-  // const handleChange = (e) => {
-  //   setData({ ...data, [e.target.name]: e.target.value });
-  // };
-  const handleSubmit = async (e) => {
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const handleLogin = async (e) => {
     e.preventDefault();
-      // const register = () => {
-        await Axios({
-          method: "POST",
-          data: {
-            username: email,
-            password: password,
-          },
-          withCredentials: true,
-          url: "http://localhost:3001/user/login",
-        }).then((res) => console.log(res));
+    try {
+      console.log("entre en el try");
+      const user = await axios({
+        method: "POST",
+        data: {
+          email: data.email,
+          password: data.password,
+        },
+        withCredentials: true,
+        url: "http://localhost:3001/user/login",
+      });
+      console.log("SOY EL USER DATA", user.data);
+      if (user.data === "You are authenticated") {
+        setUserLogged(data.email);
+        setRedirect(true);
       }
-
-      // const usere=  await axios.post("http://localhost:3001/user/login",
-  //  {
-       
-  //       data: {email,
-  //       password}
-  //     });
-  //     console.log(usere, "SOY USERE")
-  //     setUser(usere.data)
-  //     // console.log(user)
-  //   } catch (err) {
-  //     console.log(err)
-  //     alert(err.response.data.error,);
-  //   }
-  // };
-
-  const mostra = ()=>{
-    let miStorage = JSON.parse(localStorage.getItem("myUser"))
-    console.log(miStorage)
-  }
-
-  useEffect(()=>{
-    localStorage.setItem("myUser", JSON.stringify(user));
-  }, [user])
+    } catch (err) {
+      alert(err);
+    }
+  };
 
   return (
     <div className="loginCard">
-      <button onClick={()=>mostra()}>mostra storage</button> 
+      {redirect ? <Redirect push to="/home" /> : null}
       <h2>Sign In</h2>
-      <form onSubmit={handleSubmit}>
+
+      <form
+        onSubmit={handleLogin}
+        method="POST"
+        action="http://localhost:3001/user/login"
+      >
         <div className="divInputUser">
           <input
             type="email"
             name="email"
-            placeholder="Email ..."
-            onChange={(e)=>setEmail(e.target.value)}
+            placeholder="email ..."
+            onChange={handleChange}
             required
-            value={email}
+            value={data.email}
           />
         </div>
         <div className="divInputUser">
@@ -75,13 +63,13 @@ export default function LogInForm() {
             type="password"
             name="password"
             placeholder="Password..."
-            onChange={(e)=>setPassword(e.target.value)}
+            onChange={handleChange}
             required
-            value={password}
+            value={data.password}
           />
         </div>
         <div className="btn">
-          <input type="submit" value="Send" />
+          <input type="submit" value="Submit" />
         </div>
       </form>
     </div>
