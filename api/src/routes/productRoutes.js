@@ -9,9 +9,11 @@ const router = Router()
 router.get('/categoryFilter', async (req, res) => {
 
   if (req.body.categories) {
+
     const { categories } = req.body;
     const setCat = new Set(categories)
     const setOfCat = Array.from(setCat);
+
     let filteredProducts = []
     try {
       for (var i = 0; i < setOfCat.length; i++) {
@@ -87,11 +89,11 @@ router.post("/", async (req, res) => {
 
   if (!exists) {
 
-    // if (!name) return res.status(400).send({ msg: "Please pick a name for you product" });
+    if (!name) return res.status(400).send({ msg: "Please pick a name for you product" });
 
-    // if (!image) return res.status(400).send({ msg: "Please choose the picture for you product" });
+    if (!image) return res.status(400).send({ msg: "Please choose the picture for you product" });
 
-    // if (!description) return res.status(400).send({ msg: "Please send a description of your product" });
+    if (!description) return res.status(400).send({ msg: "Please send a description of your product" });
 
     if (stock < 0) {
       return res.status(400).send({ msg: "The stock can't be a negative numbre, you dummy" })
@@ -221,121 +223,8 @@ router.put("/:id/restock", async (req, res) => {
 })
 
 
-
-//Add Review to Product
-router.post("/:id/review", async (req, res) => {
-  const { id } = req.params
-  const { rating, text, userId } = req.body
-
-  try {
-    const product = await Product.findOne({
-      include: {
-        model: Review,
-        attributes: ["rating", "text"],
-        through: { attributes: [] }
-      }
-    },
-      { where: { id: id } })
-    const user = await User.findOne({ where: { id: userId } })
-    for (let review of product.reviews) {
-      if (user.hasReview(review)) return res.status(400).send("User Already reviewed product," +
-        " please update your review if your wish to leave feedback")
-    }
-    const fullReview = await Review.create({
-      rating,
-      text
-    })
-    product.addReview(fullReview)
-    user.addReview(fullReview)
-    return res.status(200).send("Review Added")
-  }
-  catch (err) {
-    console.log(err)
-    return res.status(400).send(err)
-  }
-})
-
-//Update Review
-router.put("/:reviewId/updateReview", async (req, res) => {
-  const { reviewId } = req.params
-  const { rating, text, userId } = req.body
-
-  try {
-    const review = Review.findOne({ where: { id: reviewId } })
-    const user = User.findOne({ where: { id: userId } })
-
-    Review.update({
-      rating,
-      text
-    }, { where: { id: reviewId } })
-    return res.status(200).send("Review Updated")
-  }
-  catch (err) {
-    console.log(err)
-    return res.status(400).send(err)
-  }
-})
-
 //Add Questions
-router.post("/:id/question", async (req, res) => {
-  const { id } = req.params
-  const { question, userId } = req.body
 
-  if (!question || question.length < 1) return res.status(400).send("Questions can't be empty")
-
-  try {
-    const product = await Product.findOne({ where: { id: id } })
-    const q = await Qa.create({
-      question
-    })
-    product.addQa(q)
-
-    const user = await User.findOne({ where: { id: userId } })
-    user.addQa(q)
-    return res.status(200).send("Question Added")
-  }
-  catch (err) {
-    console.log(err)
-    return res.status(400).send(err)
-  }
-})
-
-//Answer Question / Add Answer
-router.put("/:questionId/answer", async (req, res) => {
-  const { questionId } = req.params
-  const { answer } = req.body
-
-  if (!answer || answer.length < 1) {
-    return res.status(404).send("Answer must not be empty")
-  }
-
-  try {
-    await Qa.update({
-      answer,
-    }, { where: { id: questionId } })
-
-    return res.status(200).send("Answer Added")
-  }
-  catch (err) {
-    console.log(err)
-    res.status(400).send(err)
-  }
-})
-
-router.put("/:questionId/resolved", async (req, res) => {
-  const { questionId } = req.params
-  try {
-    await Qa.update({
-      resolved: true,
-    }, { where: { id: questionId } })
-
-    return res.status(200).send("Answer Resolved")
-  }
-  catch (err) {
-    console.log(err)
-    res.status(400).send(err)
-  }
-})
 
 
 
