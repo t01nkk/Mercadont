@@ -75,16 +75,16 @@ router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
     // failureRedirect: '/user/login',
     failureFlash: true
 })
-, async(req,res)=>{
-    const user = await getUser(req.user)
-    console.log(req)
-    // console.log(user)
-    if (user) {
-        res.status(200).send(user.dataValues)
-    } else {
-        return res.status(401).send({ msg: "you need to log in" })
+    , async (req, res) => {
+        const user = await getUser(req.user)
+        console.log(req)
+        // console.log(user)
+        if (user) {
+            res.status(200).send(user.dataValues)
+        } else {
+            return res.status(401).send({ msg: "you need to log in" })
+        }
     }
-}
 )
 
 //Log out from valid user

@@ -5,30 +5,30 @@ const { Product, User, Category } = require("../db")
 const { Op } = require("sequelize");
 
 
-function initialize(passport, getUserByEmail, getUserById) {//
-    const authenticateUser = async (email, password, done) => {
-        const user = await getUserByEmail(email)
-        // console.log(user?.dataValues, "acá está el dataValues");
-        if (user === null) {
-            // console.log("Hola no existo")
-            return done(null, false, { msg: 'No user with that email' });
-            
-        }
-        try {
-            // console.log(user.dataValues.password);
-            if (await bcrypt.compare(password, user.dataValues.password)) {
-                console.log(user.dataValues.password, "SOY EL PASS")
-                return done(null, user);
-            }
-        } catch (err) {
-            return done(err)
-        }
-    }
+// function initialize(passport, getUserByEmail, getUserById) {//
+//     const authenticateUser = async (email, password, done) => {
+//         const user = await getUserByEmail(email)
+//         // console.log(user?.dataValues, "acá está el dataValues");
+//         if (user === null) {
+//             // console.log("Hola no existo")
+//             return done(null, false, { msg: 'No user with that email' });
 
-    passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
-    passport.serializeUser((user, done) => done(null, user.dataValues.name))
-    passport.deserializeUser((name, done) => done(null, getUserById(name)))
-}
+//         }
+//         try {
+//             // console.log(user.dataValues.password);
+//             if (await bcrypt.compare(password, user.dataValues.password)) {
+//                 console.log(user.dataValues.password, "SOY EL PASS")
+//                 return done(null, user);
+//             }
+//         } catch (err) {
+//             return done(err)
+//         }
+//     }
+
+//     passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
+//     passport.serializeUser((user, done) => done(null, user.dataValues.name))
+//     passport.deserializeUser((name, done) => done(null, getUserById(name)))
+// }
 
 function validateInputUser(name, lastname, email, password) {
     let errors = [];
@@ -96,22 +96,12 @@ async function getProducts() {
                 }
             }
         }
-        // console.log("productos[i].name")
 
     } else return { msg: "Failed" };
-
-    // const allProd = await Product.findAll({
-    //     include: {
-    //         model: Category,
-    //         attributes: ["name"],
-    //         through: { attributes: [] },
-    //     }
-    // })
-    // return allProd;
     return { msg: "Data base loaded succesfully!" };
 }
 module.exports = {
-    initialize,
+    // initialize,
     getProducts,
     validateInputUser,
     validateInputProduct

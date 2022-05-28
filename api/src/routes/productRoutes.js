@@ -6,63 +6,59 @@ const sheison = require('../../productsCats.json');
 
 const router = Router()
 
-// TABLAS
-// catgories 
-// products 
-// User
-// reviews
-// orden
-// shopping cart
-// Q%A
+// Get all products Filter By Category
 
-//WORKING
-//Get All Products, Filter By Category, Name, Price
-router.get("/", async (req, res) => {
+router.get('/categoryFilter', async (req, res) => {
+
+  if (req.body.categories) {
+    const { categories } = req.body;
+    const setCat = new Set(categories)
+    const setOfCat = Array.from(setCat);
+    let filteredProducts = []
+    try {
+      for (var i = 0; i < setOfCat.length; i++) {
+        filteredProducts.push(await Product.findAll({
+          include: {
+            model: Category,
+            attributes: ['name'],
+            through: {
+              attributes: []
+            },
+            where: {
+              name: setOfCat[i]
+            }
+          }
+        }))
+      }
+      res.send(filteredProducts);
+
+    } catch (err) {
+      console.log({ msg: err.message });
+    }
+  }
   try {
-    const { name, price, categories, } = req.query
-
-    let products = await Product.findAll({
+    const allProducts = await Product.findAll({
       include: {
         model: Category,
-        attributes: ["name"],
-        through: { attributes: [] },
+        attributes: ['name'],
+        through: {
+          attributes: []
+        }
       }
     })
-
-    if (categories) {
-      const matchingCategories = []
-      products.map(product => {
-        let intersection = product.categories.filter(cat => categories.includes(cat.name))
-        if (intersection.length > 0) {
-          matchingCategories.push(product)
-        }
-      })
-      products = matchingCategories
-    }
-    if (name) {
-      const matchingName = products.filter(product => product.name.toLowerCase().includes(name.toLowerCase()))
-      if (matchingName.length === 0) {
-        return res.status(404).send("Matching Product Not Found")
-      }
-      products = matchingName
-    }
-    if (price) {
-      const matchingPrice = products.filter(product => product.price <= price)
-      if (matchingPrice.length === 0) {
-        return res.status(404).send("Matching Product Not Found")
-      }
-      const orderedByRelevance = matchingPrice.sort((a, b) => b.rating - a.rating)
-      products = orderedByRelevance
-    }
-    return res.status(200).send(products)
+    console.log(allProducts)
+    res.send(allProducts)
   }
   catch (err) {
-    console.log(err)
-    res.status(404).send(err)
+    res.status(400).send({ msg: err.message });
   }
+
 })
 
-//WORKING
+
+
+
+// CHECK
 //Get Product Details
 router.get("/:id", async (req, res) => {
   const { id } = req.params
@@ -82,16 +78,6 @@ router.get("/:id", async (req, res) => {
   return res.status(200).send(product)
 })
 
-//Loads data base with productsCats.json
-
-// router.get("/load/db", async (req, res) => {
-//   const prod = await getProducts();
-//   try {
-//     res.send(prod);
-//   } catch (err) {
-//     console.log({ msg: error.message })
-//   }
-// })
 
 //Create Product
 //CAMBIE RATING POR STATUS PARA QUE FUNCIONE ATR Y ME CAMBIE EL STATUS
@@ -104,11 +90,11 @@ router.post("/", async (req, res) => {
 
     if (!exists) {
 
-      if (!name) return res.status(400).send({ msg: "Please pick a name for you product" });
+      // if (!name) return res.status(400).send({ msg: "Please pick a name for you product" });
 
-      if (!image) return res.status(400).send({ msg: "Please choose the picture for you product" });
+      // if (!image) return res.status(400).send({ msg: "Please choose the picture for you product" });
 
-      if (!description) return res.status(400).send({ msg: "Please send a description of your product" });
+      // if (!description) return res.status(400).send({ msg: "Please send a description of your product" });
 
       if (stock < 0) {
         return res.status(400).send({ msg: "The stock can't be a negative numbre, you dummy" })
@@ -144,7 +130,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-//WORKING
+// CHECK
 //Delete Product
 router.delete("/:id", async (req, res) => {
   const { id } = req.params
@@ -157,7 +143,9 @@ router.delete("/:id", async (req, res) => {
   }
 })
 
-//Update Product
+
+//FUNCIONA 
+
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/:id", async (req, res) => {
   const { id } = req.params
@@ -203,22 +191,26 @@ router.put("/:id", async (req, res) => {
 //Product Bought 
 //////////////  VA A LLEGAR EL CARRITO ENTERO /////////////////////
 
-router.put("/:id/buy", async (req, res) => {
-  const { id } = req.params
-  const { amount } = req.body
 
-  try {
-    const { stock } = await Product.findOne({ where: { id: id } })
-    if (stock - amount === 0) {
-      await Product.update({ stock: "0", status: "inactive" }, { where: { id: id } })
-    }
-    await Product.update({ stock: (stock - amount) }, { where: { id: id } })
-    return res.status(200).send("Product Bought")
-  }
-  catch (err) {
-    res.status(400).send(err)
-  }
-})
+
+// router.put("/:id/buy", async (req, res) => {
+//   const { id } = req.params
+//   const { amount } = req.body
+
+//   try {
+//     const { stock } = await Product.findOne({ where: { id: id } })
+//     if (stock - amount === 0) {
+//       await Product.update({ stock: "0", status: "inactive" }, { where: { id: id } })
+//     }
+//     await Product.update({ stock: (stock - amount) }, { where: { id: id } })
+//     return res.status(200).send("Product Bought")
+//   }
+//   catch (err) {
+//     res.status(400).send(err)
+//   }
+// })
+
+////CHECKEAR ESTO
 
 //Product Restock
 router.put("/:id/restock", async (req, res) => {
@@ -234,6 +226,7 @@ router.put("/:id/restock", async (req, res) => {
     res.status(400).send(err)
   }
 })
+
 
 
 //Add Review to Product

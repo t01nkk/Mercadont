@@ -27,6 +27,13 @@ const { User } = require("../db");
 //     res.status(200).send('<h1>Home</h1><p>Please <a href="/SignIn">register</a></p>');
 // })
 
+router.get('/findUser', async (req, res) => {
+  const { name } = req.body;
+  let find = await User.findOne({ where: { name: name } })
+  if (find) res.send(find);
+  else res.status(404).send({ msg: "This user doesn't exist" });
+})
+
 router.post("/register", async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -68,9 +75,16 @@ router.post(
   })
 );
 
-router.get("/logout", auth, (req, res, next) => {
-  req.logout();
-  res.redirect("/login");
+// router.get("/logout", auth, (req, res, next) => {
+//   req.logout();
+//   res.redirect("/login");
+// });
+
+router.post('/logout', function (req, res, next) {
+  req.logout(function (err) {
+    if (err) { return next(err); }
+    res.redirect('/user');
+  });
 });
 
 router.get("/findAll", async (req, res) => {
