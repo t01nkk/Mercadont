@@ -122,18 +122,6 @@ router.post("/", async (req, res) => {
     catch (err) {
       res.status(401).send(err)
     }
-
-    try {
-      const newProduct = await Product.create({ name, price, description, image, stock })
-      for (let cat of categories) {
-        let category = await Category.findOne({ where: { name: cat } })
-        await newProduct.addCategory(category)
-      }
-      res.status(201).send("New Product Created")
-    }
-    catch (err) {
-      res.status(401).send(err)
-    }
   }
 })
 
