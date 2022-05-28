@@ -1,38 +1,57 @@
 import React, { useState } from "react";
 import "./LoginForm.css";
 import axios from "axios";
-
+import { Redirect } from "react-router-dom";
+// import loginService from "../Services/login";
 export default function LogInForm() {
   const [data, setData] = useState({
-    password: "",
     email: "",
+    password: "",
   });
+  const [userLogged, setUserLogged] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const { email, password } = data;
     try {
-      await axios.post("http://localhost:3001/user/login", {
-        email: email,
-        password: password,
+      console.log("entre en el try");
+      const user = await axios({
+        method: "POST",
+        data: {
+          email: data.email,
+          password: data.password,
+        },
+        withCredentials: true,
+        url: "http://localhost:3001/user/login",
       });
+      console.log("SOY EL USER DATA", user.data);
+      if (user.data === "You are authenticated") {
+        setUserLogged(data.email);
+        setRedirect(true);
+      }
     } catch (err) {
-      alert(err.response.data.error);
+      alert(err);
     }
   };
-  console.log(data);
+
   return (
     <div className="loginCard">
+      {redirect ? <Redirect push to="/home" /> : null}
       <h2>Sign In</h2>
-      <form onSubmit={handleSubmit}>
+
+      <form
+        onSubmit={handleLogin}
+        method="POST"
+        action="http://localhost:3001/user/login"
+      >
         <div className="divInputUser">
           <input
             type="email"
             name="email"
-            placeholder="Email ..."
+            placeholder="email ..."
             onChange={handleChange}
             required
             value={data.email}
@@ -49,7 +68,7 @@ export default function LogInForm() {
           />
         </div>
         <div className="btn">
-          <input type="submit" value="Send" />
+          <input type="submit" value="Submit" />
         </div>
       </form>
     </div>

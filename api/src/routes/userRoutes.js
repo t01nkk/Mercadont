@@ -9,6 +9,7 @@ const { initialize, validateInputUser } = require('../middlewares/middlewares');
 // const session = require('express-session');
 
 
+
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
@@ -24,16 +25,18 @@ function checkNotAuthenticated(req, res, next) {
 }
 
 async function findUser(email) {
+    // console.log(email,)
     const userEmail = await User.findOne({ where: { email: email } })
+    // console.log(userEmail)
     return userEmail
 }
 
-async function findById(id) {
-    const userId = await User.findOne({ where: { id: id } });
+async function findById(name) {
+    const userId = await User.findOne({ where: { name: name } });
     return userId
 }
 
-initialize(passport, email => findUser(email), id => findById(id))
+initialize(passport, email => findUser(email), name => findById(name))
 
 //
 const router = Router()
@@ -48,13 +51,16 @@ router.get("/login", async (req, res) => {
     res.send({ msg: 'Failure to authenticate credentials' })
 })
 
-//Checked logged-in status
+//Checked logged-in statussss
 router.get("/", async (req, res) => {
-    const user = await getUser(req.user)
-    if (user) {
-        res.status(300).send(user)
-    } else {
-        return res.status(401).send({ msg: "you need to log in" })
+    console.log(req,)
+    const users = await getUser(req.user);
+    if (users) { return res.status(200).send(users) }
+    try {
+        res.send({ msg: "Logged In" });
+
+    } catch (err) {
+        console.log({ msg: err.message });
     }
 })
 
@@ -65,11 +71,21 @@ router.get("/register", checkNotAuthenticated, async (req, res) => {
 
 //Log in with valid user
 router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/user',
-    failureRedirect: '/user/login',
+    // successRedirect: '/user',
+    // failureRedirect: '/user/login',
     failureFlash: true
+})
+, async(req,res)=>{
+    const user = await getUser(req.user)
+    console.log(req)
+    // console.log(user)
+    if (user) {
+        res.status(200).send(user.dataValues)
+    } else {
+        return res.status(401).send({ msg: "you need to log in" })
+    }
 }
-))
+)
 
 //Log out from valid user
 router.post('/logout', function (req, res, next) {
@@ -86,8 +102,8 @@ router.post("/register", checkNotAuthenticated, async (req, res) => {
     }
     const { name, lastname, email, password, address, image, payment } = req.body;
 
-    let errors = validateInputUser(name,lastname,email,password)
-    if(errors.length) return res.status(400).send({ msg: errors});
+    let errors = validateInputUser(name, lastname, email, password)
+    if (errors.length) return res.status(400).send({ msg: errors });
 
     const exists = await User.findOne({ where: { email: email } });
 
@@ -128,8 +144,8 @@ router.put("/:id", async (req, res) => {
     const { id } = req.params
     const { name, lastname, email, password, address, image, payment } = req.body;
 
-    let errors = validateInputUser(name,lastname,email,password)
-    if(errors.length) return res.status(400).send({ msg: errors});
+    let errors = validateInputUser(name, lastname, email, password)
+    if (errors.length) return res.status(400).send({ msg: errors });
 
     try {
         const updatedUser = await User.update(
