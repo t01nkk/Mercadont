@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 import "./LoginForm.css";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 // import loginService from "../Services/login";
 export default function LogInForm() {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-  // const [userLogged, setUserLogged] = useState("");
+  const [userLogged, setUserLogged] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const { email, password } = data;
     try {
       console.log("entre en el try");
-      axios({
+      const user = await axios({
         method: "POST",
         data: {
           email: data.email,
@@ -25,7 +27,12 @@ export default function LogInForm() {
         },
         withCredentials: true,
         url: "http://localhost:3001/user/login",
-      }).then((res) => console.log(res));
+      });
+      console.log("SOY EL USER DATA", user.data);
+      if (user.data === "You are authenticated") {
+        setUserLogged(data.email);
+        setRedirect(true);
+      }
     } catch (err) {
       alert(err);
     }
@@ -33,9 +40,8 @@ export default function LogInForm() {
 
   return (
     <div className="loginCard">
+      {redirect ? <Redirect push to="/home" /> : null}
       <h2>Sign In</h2>
-
-      {console.log("soy el estado USERLOGGED", data)}
 
       <form
         onSubmit={handleLogin}

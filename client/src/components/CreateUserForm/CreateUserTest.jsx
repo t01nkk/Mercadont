@@ -20,8 +20,6 @@ export default function LogInForm() {
     const { name, lastName, email, password } = data;
     try {
       await axios.post("http://localhost:3001/user/register", {
-        name: name,
-        lastname: lastName,
         email: email,
         password: password,
       });
@@ -41,7 +39,7 @@ export default function LogInForm() {
             name="name"
             placeholder="First Name ..."
             onChange={handleChange}
-            required
+            
             value={data.name}
           />
         </div>
@@ -51,7 +49,7 @@ export default function LogInForm() {
             name="lastName"
             placeholder="Last Name ..."
             onChange={handleChange}
-            required
+            
             value={data.lastName}
           />
         </div>
