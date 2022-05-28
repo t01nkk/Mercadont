@@ -7,37 +7,46 @@ export default function LogInForm() {
     email: "",
     password: "",
   });
-  const [userLogged, setUserLogged] = useState(null);
+  // const [userLogged, setUserLogged] = useState("");
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     const { email, password } = data;
     try {
       console.log("entre en el try");
-      const user = await axios.post("http://localhost:3001/user/login", data);
-
-      setUserLogged(user);
+      axios({
+        method: "POST",
+        data: {
+          email: data.email,
+          password: data.password,
+        },
+        withCredentials: true,
+        url: "http://localhost:3001/user/login",
+      }).then((res) => console.log(res));
     } catch (err) {
       alert(err);
     }
   };
-  console.log(data);
+
   return (
     <div className="loginCard">
       <h2>Sign In</h2>
 
-      {console.log(data, "soy data")}
-      {console.log(userLogged, " Soy user")}
+      {console.log("soy el estado USERLOGGED", data)}
 
-      <form onSubmit={handleLogin}>
+      <form
+        onSubmit={handleLogin}
+        method="POST"
+        action="http://localhost:3001/user/login"
+      >
         <div className="divInputUser">
           <input
             type="email"
             name="email"
-            placeholder="Email ..."
+            placeholder="email ..."
             onChange={handleChange}
             required
             value={data.email}
@@ -54,7 +63,7 @@ export default function LogInForm() {
           />
         </div>
         <div className="btn">
-          <input type="submit" value="submit" />
+          <input type="submit" value="Submit" />
         </div>
       </form>
     </div>

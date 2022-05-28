@@ -1,9 +1,9 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = Router();
-const passport = require('passport');
-const { auth } = require('../middlewares/PasswordUtils');
-const { genPassword } = require('../middlewares/PasswordUtils');
-const { User } = require('../db');
+const passport = require("passport");
+const { auth } = require("../middlewares/PasswordUtils");
+const { genPassword } = require("../middlewares/PasswordUtils");
+const { User } = require("../db");
 // const axios = require('axios');
 
 // router.get('/SignIn', (req, res, next)=>{
@@ -27,65 +27,64 @@ const { User } = require('../db');
 //     res.status(200).send('<h1>Home</h1><p>Please <a href="/SignIn">register</a></p>');
 // })
 
+router.post("/register", async (req, res, next) => {
+  const { email, password } = req.body;
 
-router.post('/register', async (req, res, next) => {
+  try {
+    const userExist = await User.findOne({ where: { email: email } });
+    console.log(userExist ? userExist : null, "HERE BE USER");
+    if (!userExist) {
+      await User.create({ email: email, password: genPassword(password) });
 
-    const { email, password } = req.body;
-
-    try {
-        const userExist = await User.findOne({ where: { email: email } });
-        console.log(userExist ? userExist : null, "HERE BE USER")
-        if (!userExist) {
-
-            await User.create({ email: email, password: genPassword(password) })
-
-            res.send({ msg: "User Registered" })
-
-        } else {
-            res.status(401).send('Username is already taken');
-        }
-    } catch (err) {
-        next(err)
+      res.send({ msg: "User Registered" });
+    } else {
+      res.status(401).send("Username is already taken");
     }
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.get('/Profile/auth', auth, (req, res, next) => { //Create auth
+router.get("/Profile/auth", auth, (req, res, next) => {
+  //Create auth
 
-    res.send('You are authenticated');
-})
-
-router.get('/fail', (req, res) => {
-    try {
-        return res.send({ msg: "Something went wrong" });
-
-    } catch (err) {
-        console.log(err)
-    }
-})
-
-router.post('/login', (req, res) => { console.log(req.body) }, passport.authenticate('local', {
-    failureRedirect: '/user/fail',
-    successRedirect: '/user/Profile/auth'
-}));
-
-router.get('/logout', auth, (req, res, next) => {
-    req.logout();
-    res.redirect('/login');
+  res.send("You are authenticated");
 });
 
-router.get('/findAll', async (req, res) => {
-    const all = await User.findAll();
-    try {
+router.get("/fail", (req, res) => {
+  try {
+    return res.send({ msg: "Something went wrong" });
+  } catch (err) {
+    console.log(err);
+  }
+});
 
-        return res.send(all);
-    } catch (err) {
-        console.log(err);
-    }
-})
+router.post(
+  "/login",
+  //   (req, res) => {
+  //     console.log(req.body,"SOY EL LOGIN");
+  //   },
+  passport.authenticate("local", {
+    failureRedirect: "/user/fail",
+    successRedirect: "/user/Profile/auth",
+  })
+);
+
+router.get("/logout", auth, (req, res, next) => {
+  req.logout();
+  res.redirect("/login");
+});
+
+router.get("/findAll", async (req, res) => {
+  const all = await User.findAll();
+  try {
+    return res.send(all);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 /*-------------------------------------------------------------- */
 /*-------------------------Emails------------------------------- */
-
-
 
 module.exports = router;
