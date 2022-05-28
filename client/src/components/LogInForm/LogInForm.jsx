@@ -16,7 +16,6 @@ export default function LogInForm() {
   };
   const handleLogin = async (e) => {
     e.preventDefault();
-    const { email, password } = data;
     try {
       console.log("entre en el try");
       const user = await axios({

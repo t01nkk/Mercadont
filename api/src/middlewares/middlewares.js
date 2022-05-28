@@ -10,11 +10,14 @@ function initialize(passport, getUserByEmail, getUserById) {//
         const user = await getUserByEmail(email)
         // console.log(user?.dataValues, "acá está el dataValues");
         if (user === null) {
+            // console.log("Hola no existo")
             return done(null, false, { msg: 'No user with that email' });
+            
         }
         try {
             // console.log(user.dataValues.password);
             if (await bcrypt.compare(password, user.dataValues.password)) {
+                console.log(user.dataValues.password, "SOY EL PASS")
                 return done(null, user);
             }
         } catch (err) {
@@ -33,7 +36,7 @@ function validateInputUser(name, lastname, email, password) {
     // if (!name || name.length > 30) errors.push("Name is not valid");
     // if (!lastname || lastname.length > 30) errors.push("Last name is not valid");
     // if (!/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/.test(password)) errors.push("Password must have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long");
-    //VALIDATE PAYMENT AND ADDRESS??????????? 
+    //VALIDATE PAYMENT AND ADDRESS???????????
     return errors;
 }
 

@@ -1,76 +1,92 @@
-import React,{useEffect, useState} from 'react'
+import React, { useEffect, useState } from "react";
+import "./ProductCart.css";
+export const ProductCart = ({
+  name,
+  stock,
+  price,
+  id,
+  image,
+  deleteDatatoStorage,
+  viewProduct,
+  pos,
+  totalPrice,
+}) => {
+  let yourStorage = JSON.parse(localStorage.getItem("myCart"));
+  const [storageCart, setStorageCart] = useState(yourStorage);
+  const [permitLess, setPermitLess] = useState(false);
+  const [permitMore, setPermitMore] = useState(true);
+  const [count, setCount] = useState(storageCart[pos].amount);
 
-export const ProductCart = ({name,stock,price,id,image,deleteDatatoStorage,viewProduct,pos,setTotalPrice}) => {
-  let yourStorage = JSON.parse(localStorage.getItem("myCart"))
-  const [storageCart, setStorageCart] = useState(yourStorage)
-  const [permitLess, setPermitLess] = useState(false)
-  const [permitMore, setPermitMore] = useState(true)
-  const [count, setCount] = useState(storageCart[pos].amount)
+  useEffect(() => {
+    totalPrice();
+  }, [count]);
 
-//Funcion para sumar un producto al carrito
-// useEffect(()=>{
-//     setTotalPrice(price)
-// },[])
+  const oneMore = (stock, name, price) => {
+    setCount(count + 1);
+    if (count + 1 > 1) setPermitLess(true);
+    if (count + 1 === stock) setPermitMore(false);
+    changeAmount(count, name, 1, price);
+  };
 
-
-const oneMore = (stock, name,pos)=>{
-    setCount(count+1)
-    if(count + 1 > 1) setPermitLess(true)
-    if(count + 1 === stock) setPermitMore(false)
-    changeAmount(count,name, 1,pos)
-  }
-  
   //Funcion para restar producto al carro
-  const oneLess = (stock, name)=>{
-      console.log(count)
-      setCount(count-1)
-      if(count -1 < 2) setPermitLess(false)
-      if(count -1 < stock) setPermitMore(true)
-      changeAmount(count,name, -1)
-    }
-  
-  
-  let changeAmount = (num, name, SoR)=>{
-    let articleStogare = yourStorage.find(e => e.name === name)
-    // console.log(num, "soy el num")
-    articleStogare.amount = num + (SoR)
-    setStorageCart(yourStorage)
-    localStorage.setItem("myCart", JSON.stringify(yourStorage))
-    console.log(count * price, count , price)
-    setTotalPrice(price * (count + SoR))
-    // console.log(storageCart[pos].amount, "soy el amount")
-    // setRenderCount(yourStorage)
-  }
+  const oneLess = (stock, name, price) => {
+    console.log(count);
+    setCount(count - 1);
+    if (count - 1 < 2) setPermitLess(false);
+    if (count - 1 < stock) setPermitMore(true);
+    changeAmount(count, name, -1, price);
+  };
 
-    //FUNCION PARA VER EL STORAGE, NO BORRAR
-  const mostra = ()=>{
+  let changeAmount = (num, name, SoR, price) => {
+    let articleStogare = yourStorage.find((e) => e.name === name);
+    articleStogare.amount = num + SoR;
+    articleStogare.totalPrice = Math.round(price * (count + SoR));
+    setStorageCart(yourStorage);
+    localStorage.setItem("myCart", JSON.stringify(yourStorage));
+
+    // priceTotal(price * (count + SoR))
+    // setPriceTotal(price * (count + SoR))
+    // localStorage.setItem("myCart", JSON.stringify(priceTotal))
+  };
+
+  //FUNCION PARA VER EL STORAGE, NO BORRAR
+
+  const mostra = () => {
     let miStorage = window.localStorage;
-    console.log(yourStorage)
-  }
-
-
+    console.log(yourStorage);
+  };
 
   return (
     <article>
-        <button onClick={()=>mostra()}>mostra storage</button>
-        <div>
+      <button onClick={() => mostra()}>mostra storage</button>
+      <div>
         {/* <button onClick={()=>setDataToEdit(el)}>Editar</button> */}
         {/* {permitMore && <button onClick={()=>oneMore(stock, name, pos)}>+</button>}*/}
         {/* <p>{price * count}</p> */}
-        {count!==stock?<button onClick={()=>oneMore(stock, name, pos)}>+</button>:console.log("hola")}                        
-        
-        {/* {permitLess && <button onClick={()=>oneLess(stock, name)}>-</button>} */}
-        {count !==1?<button onClick={()=>oneLess(stock, name)}>-</button>:console.log("chau")}
-        <span>{storageCart[pos].amount}</span>
+        {count !== stock ? (
+          <button onClick={() => oneMore(stock, name, price)}>+</button>
+        ) : (
+          console.log("hola")
+        )}
+        {/* {<button onClick={()=>oneMore(stock, name, price)}>+</button>}                         */}
 
-        <button onClick={()=>deleteDatatoStorage(name)}>Eliminar</button>
-        <button onClick={()=>viewProduct(id)}>Ver</button>
-            <picture>
-                <img src={image} alt={name}/>
-            </picture>
-            <p>{name}</p>
-            <p>{price}</p>
-        </div>
+        {/* {permitLess && <button onClick={()=>oneLess(stock, name)}>-</button>} */}
+        {count !== 1 ? (
+          <button onClick={() => oneLess(stock, name, price)}>-</button>
+        ) : (
+          console.log("chau")
+        )}
+        <span>{storageCart[pos].amount}</span>
+        <p>{price * count}</p>
+
+        <button onClick={() => deleteDatatoStorage(name)}>Eliminar</button>
+        <button onClick={() => viewProduct(id)}>Ver</button>
+        <picture>
+          <img src={image} alt={name} className={"DOWNSIZE"} />
+        </picture>
+        <p>{name}</p>
+        <p>{price}</p>
+      </div>
     </article>
-  )
-}
+  );
+};
