@@ -36,7 +36,11 @@ server.use(session({
     resave: false,
     saveUninitialized: false
 }))
+
+require('./middlewares/AUTH');
+
 server.use(passport.initialize())
+
 server.use(passport.session())
 
 

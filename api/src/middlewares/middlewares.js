@@ -5,10 +5,10 @@ const { Product, User, Category } = require("../db")
 const { Op } = require("sequelize");
 
 
-
-function initialize(passport, getUserByEmail, getUserById) {
+function initialize(passport, getUserByEmail, getUserById) {//
     const authenticateUser = async (email, password, done) => {
         const user = await getUserByEmail(email)
+        // console.log(user?.dataValues, "acá está el dataValues");
         if (user === null) {
             return done(null, false, { msg: 'No user with that email' });
         }
@@ -21,17 +21,18 @@ function initialize(passport, getUserByEmail, getUserById) {
             return done(err)
         }
     }
+
     passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
-    passport.serializeUser((user, done) => done(null, user.dataValues.id))
-    passport.deserializeUser((id, done) => done(null, getUserById(id)))
+    passport.serializeUser((user, done) => done(null, user.dataValues.name))
+    passport.deserializeUser((name, done) => done(null, getUserById(name)))
 }
 
 function validateInputUser(name, lastname, email, password) {
     let errors = [];
-    if (!/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) errors.push("Email address is not valid");
-    if (!name || name.length > 30) errors.push("Name is not valid");
-    if (!lastname || lastname.length > 30) errors.push("Last name is not valid");
-    if (!/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/.test(password)) errors.push("Password must have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long");
+    // if (!/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) errors.push("Email address is not valid");
+    // if (!name || name.length > 30) errors.push("Name is not valid");
+    // if (!lastname || lastname.length > 30) errors.push("Last name is not valid");
+    // if (!/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/.test(password)) errors.push("Password must have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long");
     //VALIDATE PAYMENT AND ADDRESS??????????? 
     return errors;
 }

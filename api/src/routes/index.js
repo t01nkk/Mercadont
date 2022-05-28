@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const productRoutes = require("./productRoutes")
-const userRoutes = require("./userRoutes")
+// const userRoutes = require("./userRoutes")
+const userRoutes = require("./userRoutesTryal")
 const categoryRoutes = require("./categoryRoutes")
 
 

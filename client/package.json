@@ -7,7 +7,6 @@
     "@testing-library/react": "^11.2.1",
     "@testing-library/user-event": "^12.2.2",
     "axios": "^0.27.2",
-    "multiselect-react-dropdown": "^2.0.22",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^7.30.0",
@@ -17,7 +16,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts  start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

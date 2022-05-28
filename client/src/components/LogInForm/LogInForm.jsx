@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./LoginForm.css";
 import axios from "axios";
-import loginService from "../Services/login";
+// import loginService from "../Services/login";
 export default function LogInForm() {
   const [data, setData] = useState({
     email: "",
@@ -54,7 +54,7 @@ export default function LogInForm() {
           />
         </div>
         <div className="btn">
-          <input type="submit" value="Send" />
+          <input type="submit" value="submit" />
         </div>
       </form>
     </div>
