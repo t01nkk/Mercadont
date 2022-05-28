@@ -28,8 +28,8 @@ const { User } = require("../db");
 // })
 
 router.get('/findUser', async (req, res) => {
-  const { name } = req.body;
-  let find = await User.findOne({ where: { name: name } })
+  const { email } = req.body;
+  let find = await User.findOne({ where: { email: email } })
   if (find) res.send(find);
   else res.status(404).send({ msg: "This user doesn't exist" });
 })
