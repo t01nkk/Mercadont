@@ -44,8 +44,12 @@ export default function Home() {
   }, [cart]);
 
   const mostra = ()=>{
-    // let miStorage = JSON.parse(localStorage.getItem("myCart")
+    // let miStorage = JSON.parse(localStorage.getItem("myUser"))
     // console.log(miStorage)
+    localStorage.clear()
+    setCart([])
+    // setStorageCart([])
+
   }
 
   return (

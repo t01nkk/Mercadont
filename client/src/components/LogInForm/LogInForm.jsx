@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
-import axios from "axios";
+import Axios from "axios";
 
 export default function LogInForm() {
   const [data, setData] = useState({
     // password: "",
     email: "",
   });
+  let yourStorageUser = JSON.parse(localStorage.getItem("myUser")) || {};
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(yourStorageUser)
+
 
 
   // const handleChange = (e) => {
@@ -17,22 +19,46 @@ export default function LogInForm() {
   // };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const usere=  await axios.post("http://localhost:3001/user/login", {
-        email,
-        password
-      });
-      console.log(usere, "SOY USERE")
-      setUser(usere)
-      // console.log(user)
-    } catch (err) {
-      console.log(err)
-      alert(err.response.data.error,);
-    }
-  };
+      // const register = () => {
+        await Axios({
+          method: "POST",
+          data: {
+            username: email,
+            password: password,
+          },
+          withCredentials: true,
+          url: "http://localhost:3001/user/login",
+        }).then((res) => console.log(res));
+      }
+
+      // const usere=  await axios.post("http://localhost:3001/user/login",
+  //  {
+       
+  //       data: {email,
+  //       password}
+  //     });
+  //     console.log(usere, "SOY USERE")
+  //     setUser(usere.data)
+  //     // console.log(user)
+  //   } catch (err) {
+  //     console.log(err)
+  //     alert(err.response.data.error,);
+  //   }
+  // };
+
+  const mostra = ()=>{
+    let miStorage = JSON.parse(localStorage.getItem("myUser"))
+    console.log(miStorage)
+  }
+
+  useEffect(()=>{
+    localStorage.setItem("myUser", JSON.stringify(user));
+  }, [user])
+
   return (
     <div className="loginCard">
-      <h2 onClick={()=>console.log(user)}>Sign In</h2>
+      <button onClick={()=>mostra()}>mostra storage</button> 
+      <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
         <div className="divInputUser">
           <input

@@ -35,10 +35,6 @@ const oneMore = (stock, name,price)=>{
     articleStogare.totalPrice = Math.round(price * (count + SoR))
     setStorageCart(yourStorage)
     localStorage.setItem("myCart", JSON.stringify(yourStorage))
-    
-    // priceTotal(price * (count + SoR))
-    // setPriceTotal(price * (count + SoR))
-    // localStorage.setItem("myCart", JSON.stringify(priceTotal))
   }
 
     //FUNCION PARA VER EL STORAGE, NO BORRAR
