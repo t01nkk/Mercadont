@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 // import loginService from "../Services/login";
+
 export default function LogInForm() {
+  let loggedUser = JSON.parse(localStorage.getItem("myUser")) || {};
+
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-  const [userLogged, setUserLogged] = useState("");
+
   const [redirect, setRedirect] = useState(false);
 
   const handleChange = (e) => {
@@ -27,9 +30,8 @@ export default function LogInForm() {
         withCredentials: true,
         url: "http://localhost:3001/user/login",
       });
-      console.log("SOY EL USER DATA", user.data);
-      if (user.data === "You are authenticated") {
-        setUserLogged(data.email);
+      if (user.data.passport.user) {
+        localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
         setRedirect(true);
       }
     } catch (err) {

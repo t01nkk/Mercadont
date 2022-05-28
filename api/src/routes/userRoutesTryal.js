@@ -48,7 +48,7 @@ router.post("/register", async (req, res, next) => {
 router.get("/Profile/auth", auth, (req, res, next) => {
   //Create auth
 
-  res.send("You are authenticated");
+  res.send(req.session);
 });
 
 router.get("/fail", (req, res) => {

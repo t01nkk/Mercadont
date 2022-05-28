@@ -1,7 +1,6 @@
 import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
-// <<<<<<< Updated upstream
 import NavBar from "./components/NavBar/NavBar.jsx";
 import CreateUser from "./pages/CreateUser/CreateUser.jsx";
 import Home from "./pages/Home/Home.jsx";
@@ -11,53 +10,65 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx";
 import LogInForm from "./components/LogInForm/LogInForm.jsx";
 import EditProduct from "./pages/EditProduct/EditProduct.jsx";
 import SearchedProducts from "./pages/SearchedProducts/SearchedProducts";
-// =======
-// import NavBar from "./components/NavBar/NavBar.jsx";
-// import CreateUser from "./pages/CreateUser/CreateUser.jsx";
-// import Home from "./pages/Home/Home.jsx";
-// >>>>>>> Stashed changes
-
+import AccountDetails from "./pages/AccountDetails/AccountDetails";
+//
+//
+// APP ROUTING  //
 function App() {
   return (
     <>
       <Router>
         <Route exact path="/">
+          {/* REDIRECT ROUTE (CAN USE TO FORCE UPDATE OF COMPONENTS) */}
           <Redirect to="/home" />
         </Route>
         <Route path="/home" exact>
+          {/* ADMIN/USER HOME  */}
           <NavBar />
           <Home />
         </Route>
-        <Route path="/createUser" exact>
+        <Route path="/home/:id" exact>
+          {/* ADMIN/USER DETAILS PRODUCT */}
           <NavBar />
-          <CreateUser />
+          <ProductDetails />
+        </Route>
+        <Route path="/edit/:id" exact>
+          {/* ADMIN/USER NAV BAR */}
+          <NavBar />
+          <EditProduct />
+        </Route>
+        <Route path="/search" exact>
+          {/* ADMIN/USER SEARCHED PRODUCTS */}
+          <NavBar />
+          <SearchedProducts />
         </Route>
         <Route path="/sellProduct" exact>
+          {/* ADMIN SELL PRODUCT FORM  */}
           <NavBar />
           <SellProduct />
         </Route>
         <Route path="/favorites" exact>
           <NavBar />
-          {/* Favorites */}
+          {/* USER FAVORITE PRODUCTS */}
         </Route>
         <Route path="/cart" exact>
+          {/* USER CART */}
           <NavBar />
           <UserCart />
         </Route>
-        <Route path="/search" exact>
-          <NavBar />
-          <SearchedProducts />
-        </Route>
         <Route path="/logIn" exact>
+          {/* USER LOGIN  */}
           <LogInForm />
         </Route>
-        <Route path="/home/:id" exact>
+        <Route path="/createUser" exact>
+          {/* USER CREATE USER FORM */}
           <NavBar />
-          <ProductDetails />
+          <CreateUser />
         </Route>
-        <Route path="/edit/:id" exact>
+        <Route path="/accountDetails" exact>
+          {/* USER ACCOUNT DETAIL FORM */}
           <NavBar />
-          <EditProduct />
+          <AccountDetails />
         </Route>
       </Router>
     </>
