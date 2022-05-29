@@ -1,12 +1,10 @@
 const { Product, User, Category, Qa, Review } = require("../db")
 const { Router } = require("express")
 const {validateInputProduct} = require("../middlewares/middlewares");
-// const { Op } = require("sequelize/types");
-
-
 const router = Router()
 
-
+// Working
+// Get all products
 router.get('/', async (req, res) =>{
   try {
     const allProducts = await Product.findAll({
@@ -34,15 +32,13 @@ router.get('/', async (req, res) =>{
   }
 });
 
-// Working - BUT ASK FRONTS WHAT THEY PREFER/WANT - DATE: 28/05 - 23:30 - NACHO Y MATEO - NACHO_BRANCH 
+// Working
 // Get all products Filter By Category
 router.get('/filter', async (req, res) => {
-
   if (req.body.categories) {
     const { categories } = req.body;
     const setCat = new Set(categories)
     const setOfCat = Array.from(setCat);
-
     // let filteredProducts = []
     // try {
     //   // for (var i = 0; i < setOfCat.length; i++) {
@@ -90,14 +86,7 @@ router.get('/filter', async (req, res) => {
             }
           ],
         })
-        // products.map(product=>{
-        //   for (let category of setOfCat) {
-        //     intersection = product.categories?.filter(cat => cat.name === category)
-        //     if(intersection?.length > 0){
-        //       filteredProducts.push(product)
-        //     }
-        //   }
-        // })
+
         for (let category of setOfCat) {
           products.map(product=>{
             let intersection = product.categories?.filter(cat => cat.name === category)
@@ -105,13 +94,10 @@ router.get('/filter', async (req, res) => {
               filteredProducts.push(product)
             }
           })
-          // console.log("filteredProducts:", filteredProducts.length)
-          products = Array.from(filteredProducts);
+          // products = Array.from(filteredProducts);
+          products = [...filteredProducts];
           filteredProducts = []
-          // console.log("products:", products.length)
         }
-        // products = new Set(filteredProducts)
-        // products = Array.from(products)
       if(!products.length) return res.send({ msg: "There aren't any products that match all these categories" });
       return res.send(products);
     } catch (err) {
@@ -120,7 +106,7 @@ router.get('/filter', async (req, res) => {
   }
 })
 
-// Working / DATE: 28/05 - 23:30 - NACHO Y MATEO - NACHO_BRANCH
+// Working
 //Get Product Details
 router.get("/:id", async (req, res) => {
   const { id } = req.params
@@ -152,7 +138,7 @@ router.get("/:id", async (req, res) => {
   return res.status(200).send(product)
 })
 
-// Working / DATE: 28/05 - 21:40 - NACHO Y MATEO - NACHO_BRANCH
+// Working
 //Create Product
 router.post("/create", async (req, res) => {
 
@@ -185,7 +171,7 @@ router.post("/create", async (req, res) => {
   }
 })
 
-// Working / DATE: 28/05 - 21:00 - NACHO Y MATEO - NACHO_BRANCH
+// Working
 //Delete Product
 router.delete("/delete/:id", async (req, res) => {
   const { id } = req.params
@@ -198,7 +184,7 @@ router.delete("/delete/:id", async (req, res) => {
   }
 })
 
-// Working / DATE: 28/05 - 21:00 - NACHO Y MATEO - NACHO_BRANCH
+// Working
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params
@@ -242,7 +228,7 @@ router.put("/update/:id", async (req, res) => {
   }
 })
 
-///////////////REEEEVVVVIIIISSSSAAAAARRRRRRRR///////
+///////////////REVISAR ANTES DE USAR///////
 //Product Bought 
 //////////////  VA A LLEGAR EL CARRITO ENTERO /////////////////////
 // router.put("/:id/buy", async (req, res) => {
