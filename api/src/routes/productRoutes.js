@@ -90,16 +90,29 @@ router.get('/filter', async (req, res) => {
             }
           ],
         })
-        products.map(product=>{
-          for (let category of setOfCat) {
-            let intersection = product.categories.filter(cat => cat.name === category)
-            if(intersection.length > 0){
+        // products.map(product=>{
+        //   for (let category of setOfCat) {
+        //     intersection = product.categories?.filter(cat => cat.name === category)
+        //     if(intersection?.length > 0){
+        //       filteredProducts.push(product)
+        //     }
+        //   }
+        // })
+        for (let category of setOfCat) {
+          products.map(product=>{
+            let intersection = product.categories?.filter(cat => cat.name === category)
+            if(intersection?.length > 0){
               filteredProducts.push(product)
             }
-          }
-        })
-        products = new Set(filteredProducts)
-        products = Array.from(products)
+          })
+          // console.log("filteredProducts:", filteredProducts.length)
+          products = Array.from(filteredProducts);
+          filteredProducts = []
+          // console.log("products:", products.length)
+        }
+        // products = new Set(filteredProducts)
+        // products = Array.from(products)
+      if(!products.length) return res.send({ msg: "There aren't any products that match all these categories" });
       return res.send(products);
     } catch (err) {
       return res.status(400).send({ msg: err.message });
