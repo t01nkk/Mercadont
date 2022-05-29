@@ -11,6 +11,7 @@ import LogInForm from "./components/LogInForm/LogInForm.jsx";
 import EditProduct from "./pages/EditProduct/EditProduct.jsx";
 import SearchedProducts from "./pages/SearchedProducts/SearchedProducts";
 import AccountDetails from "./pages/AccountDetails/AccountDetails";
+import AccountDetailsForm from "./components/AccountDetailsForm/AccountDetailsForm";
 //
 //
 // APP ROUTING  //
@@ -69,6 +70,11 @@ function App() {
           {/* USER ACCOUNT DETAIL FORM */}
           <NavBar />
           <AccountDetails />
+        </Route>
+        <Route path="/accountDetails/editProfile" exact>
+          {/* USER ACCOUNT DETAIL FORM */}
+          <NavBar />
+          <AccountDetailsForm />
         </Route>
       </Router>
     </>

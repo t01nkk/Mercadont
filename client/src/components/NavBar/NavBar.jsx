@@ -5,7 +5,9 @@ import SearchBar from "../SearchBar/SearchBar";
 import "./navBar.css";
 import logo from "../../media/header_logo.png";
 import { checkSession } from "../../redux/actions/actions";
-import LogOut from "../LogOut/LogOut";
+
+import LoggedNavBar from "./LoggedNavBar/LoggedNavBar.jsx";
+import GuestNavBar from "./GuestNavBar/GuestNavBar";
 export default function NavBar() {
   const [state, dispatch] = useStore();
 
@@ -14,22 +16,11 @@ export default function NavBar() {
   }, [state.session]);
   return (
     <div>
-      {console.log(state.user, state.session, "SOY LOS ESTADOS DE USUARIO")}
       <header className="header">
         <div className="header-logo">
           <img src={logo} alt="" />
         </div>
-        <div className="header-nav">
-          <Link to="/home">Home</Link>
-          <Link to="/createUser">Create User</Link>
-          <Link to="/sellProduct">Sell</Link>
-          <SearchBar />
-          <Link to="/favorites">Favorites</Link>
-          <Link to="/cart">Cart</Link>
-          <Link to="/accountDetails">Account Details</Link>
-
-          {state.session ? <LogOut /> : <Link to="/logIn">Login</Link>}
-        </div>
+        {state.session ? <LoggedNavBar /> : <GuestNavBar />}
       </header>
     </div>
   );

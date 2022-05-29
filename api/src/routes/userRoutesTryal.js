@@ -73,6 +73,13 @@ router.get("/logout", auth, (req, res, next) => {
   res.redirect("/login");
 });
 
+router.post("/findUser", async (req, res) => {
+  const { id } = req.body;
+  let userInfo = await User.findOne({ where: { id: id } });
+  if (userInfo) res.send(userInfo);
+  else res.status(404).send({ msg: "This user doesn't exist" });
+});
+
 router.get("/findAll", async (req, res) => {
   const all = await User.findAll();
   try {

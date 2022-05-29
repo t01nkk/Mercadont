@@ -39,7 +39,6 @@ export default function LogInForm() {
             name="name"
             placeholder="First Name ..."
             onChange={handleChange}
-            
             value={data.name}
           />
         </div>
@@ -49,7 +48,6 @@ export default function LogInForm() {
             name="lastName"
             placeholder="Last Name ..."
             onChange={handleChange}
-            
             value={data.lastName}
           />
         </div>

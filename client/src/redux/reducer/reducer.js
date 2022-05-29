@@ -2,14 +2,14 @@ import {
   FETCH_PRODUCTS,
   SEARCH_PRODUCT,
   FETCH_CATEGORIES,
-  USER_SESSION
+  USER_SESSION,
 } from "../actions/actionTypes";
 
 export const initialState = {
   products: [],
   searchedProducts: [],
   categories: [],
-  user: [],
+  user: "",
   session: false,
 };
 

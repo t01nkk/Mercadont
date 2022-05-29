@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 // import loginService from "../Services/login";
 
 export default function LogInForm() {
-  let loggedUser = JSON.parse(localStorage.getItem("myUser")) || {};
-
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -73,6 +71,12 @@ export default function LogInForm() {
           <input type="submit" value="Submit" />
         </div>
       </form>
+      <div>
+        Not a user yet?
+        <div className="btn">
+          <Link to="/createUser">Create User</Link>
+        </div>
+      </div>
     </div>
   );
 }
