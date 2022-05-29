@@ -46,8 +46,24 @@ router.post("/register", checkNotAuthenticated, async (req, res) => {
     }
 });
 
-//Get User
-router.get("users/:id", checkAuthenticated, async (req, res) => {
+// Working / DATE: 29/05 - 00:00 - NACHO Y MATEO - NACHO_BRANCH
+//Get all Users
+router.get("/users", checkAuthenticated, async (req, res) => {
+    try {
+        const user = await User.findAll();
+        if (!user) {
+            return res.status(404).send("Users Not Found")
+        }
+        return res.status(200).send(user)
+
+    } catch (error) {
+        res.status(404).send(error)
+    }
+});
+
+// Working / DATE: 29/05 - 00:00 - NACHO Y MATEO - NACHO_BRANCH
+//Get User details
+router.get("/users/:id", checkAuthenticated, async (req, res) => {
     const { id } = req.params
 
     try {
@@ -64,13 +80,13 @@ router.get("users/:id", checkAuthenticated, async (req, res) => {
     }
 });
 
+
 //Get Banned Users
-router.get("/users", checkAuthenticated, async (req, res) => {
-    const {flag} = req.query
+router.get("/bannedUsers", checkAuthenticated, async (req, res) => {
 
     try {
         const user = await User.findAll({
-            where: { flag}
+            where: { banned : true}
         });
         if (!user) {
             return res.status(404).send("There aren't any banned users yet")
@@ -83,9 +99,11 @@ router.get("/users", checkAuthenticated, async (req, res) => {
 });
 
 //Give user Admin credencials OR Ban user
-router.put("/users/:id", checkAuthenticated, async (req, res) => {
+router.put("/set/:id", checkAuthenticated, async (req, res) => {
     const { id } = req.params;
     const {setAdmin, setBan} = req.body
+    console.log("isAdmin:", isAdmin)
+    console.log("banned:", banned)
 
     if(setAdmin){
         try {
@@ -96,6 +114,7 @@ router.put("/users/:id", checkAuthenticated, async (req, res) => {
                 { where: { id: id } });
             return res.status(200).send(isAdmin);
         } catch (error) {
+            console.log("error:", error)
             return res.status(400).send(error);
         }
     }

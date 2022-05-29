@@ -6,7 +6,7 @@ const {validateInputProduct} = require("../middlewares/middlewares");
 
 const router = Router()
 
-// Working / DATE: 28/05 - 23:30 - NACHO Y MATEO - NACHO_BRANCH
+
 router.get('/', async (req, res) =>{
   try {
     const allProducts = await Product.findAll({
@@ -36,27 +36,47 @@ router.get('/', async (req, res) =>{
 
 // Working - BUT ASK FRONTS WHAT THEY PREFER/WANT - DATE: 28/05 - 23:30 - NACHO Y MATEO - NACHO_BRANCH 
 // Get all products Filter By Category
-router.get('/categoryFilter', async (req, res) => {
+router.get('/filter', async (req, res) => {
 
   if (req.body.categories) {
     const { categories } = req.body;
     const setCat = new Set(categories)
     const setOfCat = Array.from(setCat);
 
-    console.log("setOfCat", setOfCat)
-    console.log("setOfCat", setOfCat[0])
+    // let filteredProducts = []
+    // try {
+    //   // for (var i = 0; i < setOfCat.length; i++) {
+    //     filteredProducts.push(await Product.findAll({
+    //       include: [
+    //         {
+    //           model: Category,
+    //           attributes: ['name'],
+    //           through: { attributes: [] },
+    //           where: {
+    //             name: setOfCat
+    //           }
+    //         },
+    //         {
+    //           model: Qa,
+    //           attributes: ["question", "answer","resolved"],
+    //             through:{attributes:[]},
+    //         },
+    //         {
+    //           model: Review,
+    //           attributes: ["rating","text"],
+    //           through:{attributes:[]},
+    //         }
+    //       ],
+    //     }))
+    let products = []
     let filteredProducts = []
     try {
-      // for (var i = 0; i < setOfCat.length; i++) {
-        filteredProducts.push(await Product.findAll({
+      products = await Product.findAll({
           include: [
             {
               model: Category,
               attributes: ['name'],
               through: { attributes: [] },
-              where: {
-                name: setOfCat
-              }
             },
             {
               model: Qa,
@@ -69,47 +89,24 @@ router.get('/categoryFilter', async (req, res) => {
               through:{attributes:[]},
             }
           ],
-            // where: {
-            //   name: setOfCat[i]
-            // }
-        }))
-        // }
-      return res.send(filteredProducts);
-
+        })
+        products.map(product=>{
+          for (let category of setOfCat) {
+            let intersection = product.categories.filter(cat => cat.name === category)
+            if(intersection.length > 0){
+              filteredProducts.push(product)
+            }
+          }
+        })
+        products = new Set(filteredProducts)
+        products = Array.from(products)
+      return res.send(products);
     } catch (err) {
-      console.log({ msg: err.message });
-      res.status(400).send({ msg: err.message });
-
+      return res.status(400).send({ msg: err.message });
     }
   }
-  try {
-    const allProducts = await Product.findAll({
-      include: [
-        {
-          model: Category,
-          attributes: ['name'],
-          through: { attributes: [] }
-        },
-        {
-          model: Qa,
-          attributes: ["question", "answer","resolved"],
-            through:{attributes:[]},
-        },
-        {
-          model: Review,
-          attributes: ["rating","text"],
-          through:{attributes:[]},
-        }
-      ]
-    })
-    console.log(allProducts)
-    res.send(allProducts)
-  }
-  catch (err) {
-    res.status(400).send({ msg: err.message });
-  }
-
 })
+
 // Working / DATE: 28/05 - 23:30 - NACHO Y MATEO - NACHO_BRANCH
 //Get Product Details
 router.get("/:id", async (req, res) => {
