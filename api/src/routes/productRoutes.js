@@ -1,10 +1,7 @@
-const { Product, User, Category, Qa, Review } = require("../db")
-const { Router } = require("express")
+const { Product, User, Category, Qa, Review } = require("../db");
+const { Router } = require("express");
 
-
-const router = Router()
-
-// Get all products Filter By Category
+const router = Router();
 
 router.get('/', async (req, res) => {
   try {
@@ -59,6 +56,41 @@ router.get('/filter', async (req, res) => {
 
 })
 
+// Get all products Filter By Category
+router.get("/filter", async (req, res) => {
+  const categories = req.body;
+  const setCat = new Set(categories);
+  const setOfCat = Array.from(setCat);
+  let products = [];
+  let filteredProducts = [];
+  try {
+    products = await Product.findAll({
+      include: [
+        {
+          model: Category,
+          attributes: ["name"],
+          through: { attributes: [] },
+        },
+      ],
+    });
+    console.log("acá!");
+    products.map((product) => {
+      for (let category of setOfCat) {
+        let intersection = product.categories.filter(
+          (cat) => cat.name === category
+        );
+        if (intersection.length > 0) {
+          filteredProducts.push(product);
+        }
+      }
+    });
+    products = new Set(filteredProducts);
+    products = Array.from(products);
+    return res.send(products);
+  } catch (err) {
+    return res.status(400).send({ msg: err.message });
+  }
+});
 
 
 
@@ -66,7 +98,7 @@ router.get('/filter', async (req, res) => {
 //WORKING
 //Get Product Details
 router.get("/:id", async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
   const product = await Product.findOne({
     include: {
       model: Category,
@@ -74,14 +106,14 @@ router.get("/:id", async (req, res) => {
       through: { attributes: [] },
     },
     where: {
-      id: id
-    }
-  })
+      id: id,
+    },
+  });
   if (!product) {
-    return res.status(404).send("Product Not Found")
+    return res.status(404).send("Product Not Found");
   }
-  return res.status(200).send(product)
-})
+  return res.status(200).send(product);
+});
 
 
 //Create Product
@@ -133,15 +165,14 @@ router.post("/", async (req, res) => {
 // CHECK
 //Delete Product
 router.delete("/:id", async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
   try {
-    await Product.destroy({ where: { id: id } })
-    res.status(200).send("Product deleted")
+    await Product.destroy({ where: { id: id } });
+    res.status(200).send("Product deleted");
+  } catch (err) {
+    res.status(400).send(err);
   }
-  catch (err) {
-    res.status(400).send(err)
-  }
-})
+});
 
 
 //FUNCIONA 
@@ -177,11 +208,10 @@ router.put("/update/:id", async (req, res) => {
         where: { id: id }
       });
     res.status(202).send("Product Updated")
+  } catch (err) {
+    res.status(400).send({ msg: err.message })
   }
-  catch (err) {
-    res.status(400).send(err)
-  }
-})
+});
 
 ///////////////REEEEVVVVIIIISSSSAAAAARRRRRRRR///////
 //Product Bought 
@@ -233,3 +263,4 @@ router.put("/:id/restock", async (req, res) => {
 
 module.exports = router
 
+module.exports = router;

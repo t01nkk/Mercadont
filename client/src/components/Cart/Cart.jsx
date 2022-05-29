@@ -17,6 +17,7 @@ export const Cart = () => {
     setStorageCart(newLocalStorage)
     console.log(newLocalStorage)
     localStorage.setItem("myCart", JSON.stringify(newLocalStorage))
+    totalPrice()
   }
 
   //Funcion para ver detalle del producto por id
@@ -32,7 +33,7 @@ export const Cart = () => {
 
   //Funcion para limpiar carro
   const clearCart = ()=>{
-    localStorage.clear()
+    localStorage.removeItem("myCart")
     setStorageCart([])
   }
 
