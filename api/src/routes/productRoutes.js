@@ -6,51 +6,55 @@ const router = Router()
 
 // Get all products Filter By Category
 
-router.get('/categoryFilter', async (req, res) => {
-
-  if (req.body.categories) {
-
-    const { categories } = req.body;
-    const setCat = new Set(categories)
-    const setOfCat = Array.from(setCat);
-
-    let filteredProducts = []
-    try {
-      for (var i = 0; i < setOfCat.length; i++) {
-        filteredProducts.push(await Product.findAll({
-          include: {
-            model: Category,
-            attributes: ['name'],
-            through: {
-              attributes: []
-            },
-            where: {
-              name: setOfCat[i]
-            }
-          }
-        }))
-      }
-      res.send(filteredProducts);
-
-    } catch (err) {
-      console.log({ msg: err.message });
-    }
-  }
+router.get('/', async (req, res) => {
   try {
     const allProducts = await Product.findAll({
-      include: {
-        model: Category,
-        attributes: ['name'],
-        through: {
-          attributes: []
+      include: [
+        {
+          model: Category,
+          attributes: ['name'],
+          through: { attributes: [] }
+        }
+      ]
+    })
+    res.status(200).send(allProducts);
+  } catch (err) {
+    res.status(400).send({ msg: err.message });
+  }
+});
+
+// Get all products Filter By Category
+router.get('/filter', async (req, res) => {
+
+  const categories = req.body;
+  const setCat = new Set(categories)
+  const setOfCat = Array.from(setCat);
+  let products = []
+  let filteredProducts = []
+  try {
+    products = await Product.findAll({
+      include: [
+        {
+          model: Category,
+          attributes: ['name'],
+          through: { attributes: [] },
+        }
+      ],
+    })
+    console.log("acá!")
+    products.map(product => {
+      for (let category of setOfCat) {
+        let intersection = product.categories.filter(cat => cat.name === category)
+        if (intersection.length > 0) {
+          filteredProducts.push(product)
         }
       }
     })
-    console.log(allProducts)
-    res.send(allProducts)
-  }
-  catch (err) {
-    res.status(400).send({ msg: err.message });
+    products = new Set(filteredProducts)
+    products = Array.from(products)
+    return res.send(products);
+  } catch (err) {
+    return res.status(400).send({ msg: err.message });
   }
 
 })
@@ -111,7 +115,6 @@ router.post("/", async (req, res) => {
       for (var i = 0; i < categories.length; i++) {
 
         let category = await Category.findOne({ where: { name: categories[i] } })
-        console.log(category)
         if (!category) {
           return res.status(400).send({ msg: "This isn't a valid category, you might have misspeled it or you can choose to create a new one" })
 
