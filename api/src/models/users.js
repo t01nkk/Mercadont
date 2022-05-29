@@ -48,10 +48,15 @@ module.exports = (sequelize) => {
                 }))
         },
         banned: {
-            type: DataTypes.ENUM("default","suspended","banned"),
-            defaultValue: "default",
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
         },
-        
+        isAdmin: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        }, 
     },
-        { timestamps: false })
+    
+    { timestamps: false, })
+
 };
