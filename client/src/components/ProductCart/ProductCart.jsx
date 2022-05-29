@@ -47,7 +47,6 @@ export const ProductCart = ({
   }
 
   //FUNCION PARA VER EL STORAGE, NO BORRAR
-
   const mostra = () => {
     let miStorage = window.localStorage;
     console.log(yourStorage);
