@@ -43,11 +43,11 @@ function validateInputUser(name, lastname, email, password) {
 function validateInputProduct(name, price, description, image, stock, categories) {
     let errors = [];
     if (!name || name.length > 60) errors.push("Name is not valid");
-    if (!price || price < 1) errors.push("Price is not valid");
-    if (!description) errors.push("Description is not valid");
     if (!image) errors.push("Please, add at least one image of the product");
-    if (!stock || stock < 1) errors.push("Stock is not valid");
-    if (!categories.length) errors.push("Please, add at least one category that the product belongs to");
+    if (!description) errors.push("Description is not valid");
+    if (typeof stock !== "number" || stock < 0) errors.push("Stock is not valid");
+    if (typeof price !== "number" || price <= 0) errors.push("Price is not valid");
+    if (!categories?.length) errors.push("Please, add at least one category that the product belongs to");
     return errors;
 }
 
