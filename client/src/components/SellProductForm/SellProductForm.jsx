@@ -3,7 +3,7 @@ import "./SellProductForm.css";
 import axios from "axios";
 import { fetchCategories } from "../../redux/actions/actions";
 import { useStore } from "../../context/store";
-import Multiselect from "multiselect-react-dropdown";
+// import Multiselect from "multiselect-react-dropdown";
 
 export default function SellProductForm() {
   const [state, dispatch] = useStore();

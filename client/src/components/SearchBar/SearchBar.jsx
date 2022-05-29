@@ -34,7 +34,6 @@ export default function SearchBar() {
   }, []);
   return (
     <div>
-      {console.log(redirect, state.searchedProducts)}
       {redirect ? <Redirect push to="/search" /> : null}
       <form
         role="search"

@@ -2,14 +2,15 @@ import {
   FETCH_PRODUCTS,
   SEARCH_PRODUCT,
   FETCH_CATEGORIES,
+  USER_SESSION,
 } from "../actions/actionTypes";
 
 export const initialState = {
   products: [],
   searchedProducts: [],
   categories: [],
-  state4: "estado state store#3",
-  state5: "estado state store#3",
+  user: "",
+  session: false,
 };
 
 export function reducer(state = initialState, action) {
@@ -30,6 +31,13 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         categories: action.payload,
+      };
+    }
+    case USER_SESSION: {
+      return {
+        ...state,
+        user: action.payload.data,
+        session: action.payload.session,
       };
     }
 
