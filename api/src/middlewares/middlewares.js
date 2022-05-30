@@ -5,30 +5,30 @@ const { Product, User, Category } = require("../db")
 const { Op } = require("sequelize");
 
 
-function initialize(passport, getUserByEmail, getUserById) {//
-    const authenticateUser = async (email, password, done) => {
-        const user = await getUserByEmail(email)
-        // console.log(user?.dataValues, "acá está el dataValues");
-        if (user === null) {
-            // console.log("Hola no existo")
-            return done(null, false, { msg: 'No user with that email' });
-            
-        }
-        try {
-            // console.log(user.dataValues.password);
-            if (await bcrypt.compare(password, user.dataValues.password)) {
-                console.log(user.dataValues.password, "SOY EL PASS")
-                return done(null, user);
-            }
-        } catch (err) {
-            return done(err)
-        }
-    }
+// function initialize(passport, getUserByEmail, getUserById) {//
+//     const authenticateUser = async (email, password, done) => {
+//         const user = await getUserByEmail(email)
+//         // console.log(user?.dataValues, "acá está el dataValues");
+//         if (user === null) {
+//             // console.log("Hola no existo")
+//             return done(null, false, { msg: 'No user with that email' });
 
-    passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
-    passport.serializeUser((user, done) => done(null, user.dataValues.name))
-    passport.deserializeUser((name, done) => done(null, getUserById(name)))
-}
+//         }
+//         try {
+//             // console.log(user.dataValues.password);
+//             if (await bcrypt.compare(password, user.dataValues.password)) {
+//                 console.log(user.dataValues.password, "SOY EL PASS")
+//                 return done(null, user);
+//             }
+//         } catch (err) {
+//             return done(err)
+//         }
+//     }
+
+//     passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
+//     passport.serializeUser((user, done) => done(null, user.dataValues.name))
+//     passport.deserializeUser((name, done) => done(null, getUserById(name)))
+// }
 
 function validateInputUser(name, lastname, email, password) {
     let errors = [];
@@ -43,30 +43,13 @@ function validateInputUser(name, lastname, email, password) {
 function validateInputProduct(name, price, description, image, stock, categories) {
     let errors = [];
     if (!name || name.length > 60) errors.push("Name is not valid");
-    if (!price || price < 1) errors.push("Price is not valid");
-    if (!description) errors.push("Description is not valid");
     if (!image) errors.push("Please, add at least one image of the product");
-    if (!stock || stock < 1) errors.push("Stock is not valid");
-    if (!categories.length) errors.push("Please, add at least one category that the product belongs to");
+    if (!description) errors.push("Description is not valid");
+    if (typeof stock !== "number" || stock < 0) errors.push("Stock is not valid");
+    if (typeof price !== "number" || price <= 0) errors.push("Price is not valid");
+    if (!categories?.length) errors.push("Please, add at least one category that the product belongs to");
     return errors;
 }
-
-// passport.use(new Strategy(
-//     function(username, password, done) {
-//       db.users.findByUsername(username)
-//         .then((user) => {
-//           if(!user) {
-//             return done(null, false);
-//           }
-//           if(user.password != password) {
-//             return done(null, false);
-//           }
-//           return done(null, user);
-//         })
-//       .catch(err => {
-//         return done(err);
-//       })
-//     }));
 
 async function getProducts() {
     const findCreated = await Product.findAll({ where: { created: true } })
@@ -96,22 +79,13 @@ async function getProducts() {
                 }
             }
         }
-        // console.log("productos[i].name")
 
     } else return { msg: "Failed" };
 
-    // const allProd = await Product.findAll({
-    //     include: {
-    //         model: Category,
-    //         attributes: ["name"],
-    //         through: { attributes: [] },
-    //     }
-    // })
-    // return allProd;
     return { msg: "Data base loaded succesfully!" };
 }
 module.exports = {
-    initialize,
+    // initialize,
     getProducts,
     validateInputUser,
     validateInputProduct
