@@ -7,12 +7,7 @@ function genPassword(password) {
 /*-------------------------------------------------- */
 /*------Authorizacion de usuarios------------------ */
 function auth(req, res, next) {
-  // return req.isAuthenticated()? next() : res.redirect('/login')
-  // console.log(req.session);
-  console.log(req.isAuthenticated(), "soy el AUTHENTICATOR");
-  return req.isAuthenticated()
-    ? next()
-    : res.send({ msg: "You're not authenticated" });
+  return req.isAuthenticated() ? next() : res.send(req.user);
 }
 module.exports = {
   genPassword,

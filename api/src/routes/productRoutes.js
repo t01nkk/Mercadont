@@ -1,11 +1,11 @@
 const { Product, User, Category, Qa, Review } = require("../db")
 const { Router } = require("express")
-const {validateInputProduct} = require("../middlewares/middlewares");
+const { validateInputProduct } = require("../middlewares/middlewares");
 const router = Router()
 
 // Working
 // Get all products
-router.get('/', async (req, res) =>{
+router.get('/', async (req, res) => {
   try {
     const allProducts = await Product.findAll({
       include: [
@@ -16,13 +16,13 @@ router.get('/', async (req, res) =>{
         },
         {
           model: Qa,
-          attributes: ["question", "answer","resolved"],
-            through:{attributes:[]},
+          attributes: ["question", "answer", "resolved"],
+          through: { attributes: [] },
         },
         {
           model: Review,
-          attributes: ["rating","text"],
-          through:{attributes:[]},
+          attributes: ["rating", "text"],
+          through: { attributes: [] },
         }
       ]
     })
@@ -39,66 +39,41 @@ router.get('/filter', async (req, res) => {
     const { categories } = req.body;
     const setCat = new Set(categories)
     const setOfCat = Array.from(setCat);
-    // let filteredProducts = []
-    // try {
-    //   // for (var i = 0; i < setOfCat.length; i++) {
-    //     filteredProducts.push(await Product.findAll({
-    //       include: [
-    //         {
-    //           model: Category,
-    //           attributes: ['name'],
-    //           through: { attributes: [] },
-    //           where: {
-    //             name: setOfCat
-    //           }
-    //         },
-    //         {
-    //           model: Qa,
-    //           attributes: ["question", "answer","resolved"],
-    //             through:{attributes:[]},
-    //         },
-    //         {
-    //           model: Review,
-    //           attributes: ["rating","text"],
-    //           through:{attributes:[]},
-    //         }
-    //       ],
-    //     }))
     let products = []
     let filteredProducts = []
     try {
       products = await Product.findAll({
-          include: [
-            {
-              model: Category,
-              attributes: ['name'],
-              through: { attributes: [] },
-            },
-            {
-              model: Qa,
-              attributes: ["question", "answer","resolved"],
-                through:{attributes:[]},
-            },
-            {
-              model: Review,
-              attributes: ["rating","text"],
-              through:{attributes:[]},
-            }
-          ],
-        })
+        include: [
+          {
+            model: Category,
+            attributes: ['name'],
+            through: { attributes: [] },
+          },
+          {
+            model: Qa,
+            attributes: ["question", "answer", "resolved"],
+            through: { attributes: [] },
+          },
+          {
+            model: Review,
+            attributes: ["rating", "text"],
+            through: { attributes: [] },
+          }
+        ],
+      })
 
-        for (let category of setOfCat) {
-          products.map(product=>{
-            let intersection = product.categories?.filter(cat => cat.name === category)
-            if(intersection?.length > 0){
-              filteredProducts.push(product)
-            }
-          })
-          // products = Array.from(filteredProducts);
-          products = [...filteredProducts];
-          filteredProducts = []
-        }
-      if(!products.length) return res.send({ msg: "There aren't any products that match all these categories" });
+      for (let category of setOfCat) {
+        products.map(product => {
+          let intersection = product.categories?.filter(cat => cat.name === category)
+          if (intersection?.length > 0) {
+            filteredProducts.push(product)
+          }
+        })
+        // products = Array.from(filteredProducts);
+        products = [...filteredProducts];
+        filteredProducts = []
+      }
+      if (!products.length) return res.send({ msg: "There aren't any products that match all these categories" });
       return res.send(products);
     } catch (err) {
       return res.status(400).send({ msg: err.message });
@@ -111,23 +86,23 @@ router.get('/filter', async (req, res) => {
 router.get("/:id", async (req, res) => {
   const { id } = req.params
   const product = await Product.findOne({
-          include: [
-        {
-          model: Category,
-          attributes: ['name'],
-          through: { attributes: [] }
-        },
-        {
-          model: Qa,
-          attributes: ["question", "answer","resolved"],
-            through:{attributes:[]},
-        },
-        {
-          model: Review,
-          attributes: ["rating","text"],
-          through:{attributes:[]},
-        }
-      ],
+    include: [
+      {
+        model: Category,
+        attributes: ['name'],
+        through: { attributes: [] }
+      },
+      {
+        model: Qa,
+        attributes: ["question", "answer", "resolved"],
+        through: { attributes: [] },
+      },
+      {
+        model: Review,
+        attributes: ["rating", "text"],
+        through: { attributes: [] },
+      }
+    ],
     where: {
       id: id
     }
@@ -148,7 +123,7 @@ router.post("/create", async (req, res) => {
   if (exists) return res.status(401).send("There is another product with the exact same name.")
   const errors = validateInputProduct(name, price, description, image, stock, categories)
 
-  if(errors.length) return res.status(400).send(errors)
+  if (errors.length) return res.status(400).send(errors)
   if (stock === 0) status = "inactive";
 
   try {
@@ -191,7 +166,7 @@ router.put("/update/:id", async (req, res) => {
   const { name, price, description, image, stock, categories } = req.body
 
   const errors = validateInputProduct(name, price, description, image, stock, categories)
-  if(errors.length){
+  if (errors.length) {
     return res.status(400).send(errors)
   }
 
@@ -199,7 +174,6 @@ router.put("/update/:id", async (req, res) => {
     if (categories) {
       let product = await Product.findOne({ where: { id: id } })
       product.setCategories([])
-  
       for (let cat of categories) {
         await Category.findOrCreate({ where: { name: cat } })
       }
@@ -264,4 +238,3 @@ router.put("/update/:id", async (req, res) => {
 // })
 
 module.exports = router
-
