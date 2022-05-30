@@ -6,6 +6,7 @@ import {
   SORT_BY_PRICE,
   FILTER,
   FILTER2,
+  CATEGORIES_PRODUCT
  
 } from "../actions/actionTypes";
 
@@ -32,6 +33,13 @@ export function reducer(state = initialState, action) {
         ...state,
         searchedProducts: action.payload,
         filter: action.payload
+      };
+    }
+    case CATEGORIES_PRODUCT: {
+      return {
+        ...state,
+       products: action.payload,
+       
       };
     }
 

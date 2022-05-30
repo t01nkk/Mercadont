@@ -9,8 +9,12 @@ import SellProduct from "./pages/SellProduct/SellProduct.jsx";
 import UserCart from "./pages/UserCart/UserCart.jsx";
 import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx";
 import LogInForm from "./components/LogInForm/LogInForm.jsx";
+import Categories from "./components/Categories/Categories.jsx";
+import AddCategories from "./components/AddCategories/AddCategories.jsx";
 import EditProduct from "./pages/EditProduct/EditProduct.jsx";
 import SearchedProducts from "./pages/SearchedProducts/SearchedProducts";
+import CategoriesCards from "./components/AddCategories/CategoriesCards";
+import CreateCategory from "./components/AddCategories/CreateCategory.jsx";
 // =======
 // import NavBar from "./components/NavBar/NavBar.jsx";
 // import CreateUser from "./pages/CreateUser/CreateUser.jsx";
@@ -43,10 +47,22 @@ function App() {
         <Route path="/cart" exact>
           <NavBar />
           <UserCart />
-        </Route>
-        <Route path="/search" exact>
+        </Route>        
+        <Route path="/categories" exact>
           <NavBar />
-          <SearchedProducts />
+         <Categories /> 
+        </Route>
+        <Route path="/addCategories" exact>
+          <NavBar />
+         <CategoriesCards/> 
+        </Route>
+        <Route path="/editCategories/:id" exact>
+          <NavBar />
+         <AddCategories/> 
+        </Route>
+        <Route path="/createCategory" exact>
+          <NavBar />
+         <CreateCategory/> 
         </Route>
         <Route path="/logIn" exact>
           <LogInForm />

@@ -46,10 +46,7 @@ export default function SearchedProducts() {
     setMax(e.target.value);
     setError("")
   };
-  const handleChange2 = (e) => {
-    setMin(e.target.value);
-    setError("")
-  };
+
   const handleSearch = async (e) => {
     e.preventDefault();
     let Filter;  
@@ -60,7 +57,7 @@ export default function SearchedProducts() {
     } else if (max && !min) {
       Filter = state.filter.filter(product => product.price <= max)
      
-    } else if(min<max && max>min){
+    } else if(min>max && max<min){
       Filter = state.filter.filter(product => product.price >= min && product.price <= max )
       
     } else{   
@@ -73,7 +70,10 @@ export default function SearchedProducts() {
     });
     
   };
- 
+  const handleChange2 = (e) => {
+    setMin(e.target.value);
+    setError("")
+  };
  
  
 

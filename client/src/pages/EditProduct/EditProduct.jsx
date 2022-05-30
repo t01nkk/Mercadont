@@ -85,6 +85,7 @@ export default function EditProduct() {
   return (
     <div>
       {console.log(product.categories.length)}
+
       <form onSubmit={handleSubmit}>
         <input
           type="text"
