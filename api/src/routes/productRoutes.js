@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const { Product, User, Category, Qa, Review } = require("../db");
 const { Router } = require("express");
 const Stripe = require("stripe")
@@ -10,167 +11,233 @@ const stripe = new Stripe("sk_test_51L4snIL7xpNkb3eJIsYUyZ8SYO4cHXX3GyMVVgp1lJ56
 //WORKING
 //Get All Products, Filter By Category, Name, Price
 router.get("/", async (req, res) => {
+=======
+const { Product, User, Category, Qa, Review } = require("../db")
+const { Router } = require("express")
+const { validateInputProduct } = require("../middlewares/middlewares");
+const { Op } = require("sequelize");
+const router = Router()
+
+// Working
+// Get all products
+router.get('/', async (req, res) => {
+>>>>>>> d5e6a877f377be17e50d6c515885987e4aa85118
   try {
     const allProducts = await Product.findAll({
       include: [
         {
           model: Category,
-          attributes: ["name"],
+          attributes: ['name'],
+          through: { attributes: [] }
+        },
+        {
+          model: Qa,
+          attributes: ["question", "answer", "resolved"],
           through: { attributes: [] },
         },
-      ],
-    });
+        {
+          model: Review,
+          attributes: ["rating", "text"],
+          through: { attributes: [] },
+        }
+      ]
+    })
     res.status(200).send(allProducts);
   } catch (err) {
     res.status(400).send({ msg: err.message });
   }
 });
 
-// Get all products Filter By Category
-router.get("/filter", async (req, res) => {
-  const categories = req.body;
-  const setCat = new Set(categories);
-  const setOfCat = Array.from(setCat);
-  let products = [];
-  let filteredProducts = [];
+// Get all products
+router.get('/search', async (req, res) => {
+  const {name} = req.query;
+  console.log("name:", name)
   try {
-    products = await Product.findAll({
+    const allProducts = await Product.findAll({
       include: [
         {
           model: Category,
-          attributes: ["name"],
+          attributes: ['name'],
+          through: { attributes: [] }
+        },
+        {
+          model: Qa,
+          attributes: ["question", "answer", "resolved"],
           through: { attributes: [] },
         },
+        {
+          model: Review,
+          attributes: ["rating", "text"],
+          through: { attributes: [] },
+        }
       ],
-    });
-    console.log("acá!");
-    products.map((product) => {
-      for (let category of setOfCat) {
-        let intersection = product.categories.filter(
-          (cat) => cat.name === category
-        );
-        if (intersection.length > 0) {
-          filteredProducts.push(product);
+      where: {
+        name: {
+          [Op.iLike] : `%${name}%`
         }
       }
-    });
-    products = new Set(filteredProducts);
-    products = Array.from(products);
-    return res.send(products);
+    })
+    res.status(200).send(allProducts);
   } catch (err) {
-    return res.status(400).send({ msg: err.message });
+    res.status(400).send({ msg: err.message });
   }
 });
 
-//WORKING
+// Working
+// Get all products Filter By Category
+router.post('/filter', async (req, res) => {
+  if (req.body.categories) {
+    const { categories } = req.body;
+    const setCat = new Set(categories)
+    const setOfCat = Array.from(setCat);
+    let products = []
+    let filteredProducts = []
+    try {
+      products = await Product.findAll({
+        include: [
+          {
+            model: Category,
+            attributes: ['name'],
+            through: { attributes: [] },
+          },
+          {
+            model: Qa,
+            attributes: ["question", "answer", "resolved"],
+            through: { attributes: [] },
+          },
+          {
+            model: Review,
+            attributes: ["rating", "text"],
+            through: { attributes: [] },
+          }
+        ],
+      })
+
+      for (let category of setOfCat) {
+        products.map(product => {
+          let intersection = product.categories?.filter(cat => cat.name === category)
+          if (intersection?.length > 0) {
+            filteredProducts.push(product)
+          }
+        })
+        // products = Array.from(filteredProducts);
+        products = [...filteredProducts];
+        filteredProducts = []
+      }
+      if (!products.length) return res.send({ msg: "There aren't any products that match all these categories" });
+      return res.send(products);
+    } catch (err) {
+      return res.status(400).send({ msg: err.message });
+    }
+  }
+})
+
+// Working
 //Get Product Details
 router.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  const product = await Product.findOne({
-    include: {
-      model: Category,
-      attributes: ["name"],
-      through: { attributes: [] },
-    },
-    where: {
-      id: id,
-    },
-  });
-  if (!product) {
-    return res.status(404).send("Product Not Found");
-  }
-  return res.status(200).send(product);
-});
-
-//WORKING
-//Create Product
-router.post("/many", async (req, res) => {
-  const products = req.body;
+  const { id } = req.params
   try {
-    for (let product of products) {
-      const { name, price, description, image, stock, categories } = product;
-
-      for (let cat of categories) {
-        await Category.findOrCreate({ where: { name: cat } });
+    const product = await Product.findOne({
+      include: [
+        {
+          model: Category,
+          attributes: ['name'],
+          through: { attributes: [] }
+        },
+        {
+          model: Qa,
+          attributes: ["question", "answer", "resolved"],
+          through: { attributes: [] },
+        },
+        {
+          model: Review,
+          attributes: ["rating", "text"],
+          through: { attributes: [] },
+        }
+      ],
+      where: {
+        id: id
       }
-      // first populate category table
-      const newProduct = await Product.create({
-        name,
-        price,
-        description,
-        image,
-        stock,
-      });
-      for (let cat of categories) {
-        let category = await Category.findOne({ where: { name: cat } });
-        await newProduct.addCategory(category);
-      }
+    })
+    console.log("product:", product)
+    if (!product) {
+      return res.status(404).send("Product Not Found")
     }
-    return res.status(200).send("All Products Added");
-  } catch (err) {
-    return res.status(400).send(err);
+    return res.status(200).send(product)
+  } catch (error) {
+    return res.status(400).send({ msg: err.message });
   }
-});
+})
 
+// Working
 //Create Product
-router.post("/", async (req, res) => {
-  const { name, price, description, image, stock, categories } = req.body;
+router.post("/create", async (req, res) => {
+  let { name, price, description, status, image, stock, categories } = req.body
+  let exists = await Product.findOne({ where: { name: name } });
 
-  // first populate category table
-  for (let cat of categories) {
-    await Category.findOrCreate({ where: { name: cat } });
-  }
+  if (exists) return res.status(401).send("There is another product with the exact same name.")
+  const errors = validateInputProduct(name, price, description, image, stock, categories)
+
+  if (errors.length) return res.status(400).send(errors)
+  if (stock === 0) status = "inactive";
 
   try {
     const newProduct = await Product.create({
-      name,
-      price,
-      description,
-      image,
-      stock,
-    });
-    for (let cat of categories) {
-      let category = await Category.findOne({ where: { name: cat } });
-      await newProduct.addCategory(category);
+      name, price, description, status, image, stock, created: true
+    })
+    for (var i = 0; i < categories.length; i++) {
+
+      let category = await Category.findOne({ where: { name: categories[i] } })
+      console.log(category)
+      if (!category) {
+        return res.status(401).send({ msg: "This isn't a valid category, you might have misspeled it or you can choose to create a new one" })
+
+      } else await newProduct.addCategory(category)
     }
-    res.status(201).send("New Product Created");
-  } catch (err) {
-    res.status(401).send(err);
+    return res.status(201).send("New Product Created")
   }
-});
+  catch (err) {
+    return res.status(401).send(err)
+  }
+})
 
-//WORKING
+// Working
 //Delete Product
-router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
+router.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params
   try {
-    await Product.destroy({ where: { id: id } });
-    res.status(200).send("Product deleted");
-  } catch (err) {
-    res.status(400).send(err);
+    await Product.destroy({ where: { id: id } })
+    res.status(200).send("Product deleted")
   }
-});
+  catch (err) {
+    res.status(400).send(err)
+  }
+})
 
-//Update Product
+// Working
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/update/:id", async (req, res) => {
-  const { id } = req.params;
-  const { name, price, description, image, stock, categories } = req.body;
+  const { id } = req.params
+  const { name, price, description, image, stock, categories } = req.body
 
-  if (categories) {
-    let product = await Product.findOne({ where: { id: id } });
-    product.setCategories([]);
-
-    for (let cat of categories) {
-      await Category.findOrCreate({ where: { name: cat } });
-    }
-    for (let cat of categories) {
-      const category = await Category.findOne({ where: { name: cat } });
-      product.addCategory(category);
-    }
+  const errors = validateInputProduct(name, price, description, image, stock, categories)
+  if (errors.length) {
+    return res.status(400).send(errors)
   }
 
   try {
+    if (categories) {
+      let product = await Product.findOne({ where: { id: id } })
+      product.setCategories([])
+      for (let cat of categories) {
+        await Category.findOrCreate({ where: { name: cat } })
+      }
+      for (let cat of categories) {
+        const category = await Category.findOne({ where: { name: cat } })
+        product.addCategory(category)
+      }
+    }
+
     await Product.update(
       {
         name: name,
@@ -180,190 +247,37 @@ router.put("/update/:id", async (req, res) => {
         stock: stock,
       },
       {
-        where: { id: id },
-      }
-    );
-    res.status(202).send("Product Updated");
-  } catch (err) {
-    res.status(400).send(err);
+        where: { id: id }
+      });
+    return res.status(202).send("Product Updated")
   }
-});
-
-//Product Bought
-router.put("/buy", async (req, res) => {
-  const cart = req.body;
-
-  try {
-    for (let product of cart) {
-      const { id } = product;
-      const { stock } = await Product.findOne({ where: { id: id } });
-
-      if (stock - product.amount < 0)
-        return res.status(400).send("Not enough stock for purchase");
-
-      if (stock - product.amount === 0) {
-        await Product.update(
-          { stock: "0", status: "inactive" },
-          { where: { id: id } }
-        );
-        return res.status(200).send("Product Bought, no more stock left");
-      }
-      await Product.update(
-        { stock: stock - product.amount },
-        { where: { id: id } }
-      );
-    }
-    return res.status(200).send("Product Bought");
-  } catch (err) {
-    console.log(err);
-    res.status(400).send(err);
+  catch (err) {
+    console.log("error:", err)
+    return res.status(400).send(err)
   }
-});
+})
+
+///////////////REVISAR ANTES DE USAR///////
+//Product Bought 
+//////////////  VA A LLEGAR EL CARRITO ENTERO /////////////////////
+// router.put("/:id/buy", async (req, res) => {
+//   const { id } = req.params
+//   const { amount } = req.body
+
+//   try {
+//     const { stock } = await Product.findOne({ where: { id: id } })
+//     if (stock - amount === 0) {
+//       await Product.update({ stock: "0", status: "inactive" }, { where: { id: id } })
+//     }
+//     await Product.update({ stock: (stock - amount) }, { where: { id: id } })
+//     return res.status(200).send("Product Bought")
+//   }
+//   catch (err) {
+//     res.status(400).send(err)
+//   }
+// })
 
 //Product Restock
-router.put("/:id/restock", async (req, res) => {
-  const { id } = req.params;
-  const { amount } = req.body;
-
-  try {
-    const { stock } = await Product.findOne({ where: { id: id } });
-    await Product.update(
-      { stock: stock + amount, status: "active" },
-      { where: { id: id } }
-    );
-    return res.status(200).send("Product Restocked");
-  } catch (err) {
-    res.status(400).send(err);
-  }
-});
-
-//Add Review to Product
-router.post("/:id/review", async (req, res) => {
-  const { id } = req.params;
-  const { rating, text, userId } = req.body;
-
-  try {
-    const product = await Product.findOne(
-      {
-        include: {
-          model: Review,
-          attributes: ["rating", "text"],
-          through: { attributes: [] },
-        },
-      },
-      { where: { id: id } }
-    );
-    const user = await User.findOne({ where: { id: userId } });
-    for (let review of product.reviews) {
-      if (user.hasReview(review))
-        return res
-          .status(400)
-          .send(
-            "User Already reviewed product," +
-              " please update your review if your wish to leave feedback"
-          );
-    }
-    const fullReview = await Review.create({
-      rating,
-      text,
-    });
-    product.addReview(fullReview);
-    user.addReview(fullReview);
-    return res.status(200).send("Review Added");
-  } catch (err) {
-    console.log(err);
-    return res.status(400).send(err);
-  }
-});
-
-//Update Review
-router.put("/:reviewId/updateReview", async (req, res) => {
-  const { reviewId } = req.params;
-  const { rating, text, userId } = req.body;
-
-  try {
-    const review = Review.findOne({ where: { id: reviewId } });
-    const user = User.findOne({ where: { id: userId } });
-
-    Review.update(
-      {
-        rating,
-        text,
-      },
-      { where: { id: reviewId } }
-    );
-    return res.status(200).send("Review Updated");
-  } catch (err) {
-    console.log(err);
-    return res.status(400).send(err);
-  }
-});
-
-//Add Questions
-router.post("/:id/question", async (req, res) => {
-  const { id } = req.params;
-  const { question, userId } = req.body;
-
-  if (!question || question.length < 1)
-    return res.status(400).send("Questions can't be empty");
-
-  try {
-    const product = await Product.findOne({ where: { id: id } });
-    const q = await Qa.create({
-      question,
-    });
-    product.addQa(q);
-
-    const user = await User.findOne({ where: { id: userId } });
-    user.addQa(q);
-    return res.status(200).send("Question Added");
-  } catch (err) {
-    console.log(err);
-    return res.status(400).send(err);
-  }
-});
-
-//Answer Question / Add Answer
-router.put("/:questionId/answer", async (req, res) => {
-  const { questionId } = req.params;
-  const { answer } = req.body;
-
-  if (!answer || answer.length < 1) {
-    return res.status(404).send("Answer must not be empty");
-  }
-
-  try {
-    await Qa.update(
-      {
-        answer,
-      },
-      { where: { id: questionId } }
-    );
-
-    return res.status(200).send("Answer Added");
-  } catch (err) {
-    console.log(err);
-    res.status(400).send(err);
-  }
-});
-
-router.put("/:questionId/resolved", async (req, res) => {
-  const { questionId } = req.params;
-  try {
-    await Qa.update(
-      {
-        resolved: true,
-      },
-      { where: { id: questionId } }
-    );
-
-    return res.status(200).send("Answer Resolved");
-  } catch (err) {
-    console.log(err);
-    res.status(400).send(err);
-  }
-});
-
 router.post("/buys", async (req,res)=>{
   try {
     const {id,amount,local} = req.body
@@ -384,5 +298,18 @@ router.post("/buys", async (req,res)=>{
     res.send(error)
   }
 })
+// router.put("/:id/restock", async (req, res) => {
+//   const { id } = req.params
+//   const { amount } = req.body
 
-module.exports = router;
+//   try {
+//     const { stock } = await Product.findOne({ where: { id: id } })
+//     await Product.update({ stock: (stock + amount), status: "active" }, { where: { id: id } })
+//     return res.status(200).send("Product Restocked")
+//   }
+//   catch (err) {
+//     res.status(400).send(err)
+//   }
+// })
+
+module.exports = router

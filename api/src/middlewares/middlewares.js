@@ -24,32 +24,43 @@ const modifyStock =  async (local) =>{
     }
 }
 
-function initialize(passport, getUserByEmail, getUserById) {//
-    const authenticateUser = async (email, password, done) => {
-        const user = await getUserByEmail(email)
-        if (user === null) {
-            // console.log("Hola no existo")
-            return done(null, false, { msg: 'No user with that email' });
-            
-        }
-        if(user?.dataValues.banned){
-            return done(null, false, { msg: 'Your account has been banned. Please, get in contact with the Admin.'});
-        }
-    
-        try {
-            // console.log(user.dataValues.password);
-            if (await bcrypt.compare(password, user.dataValues.password)) {
-                console.log(user.dataValues.password, "SOY EL PASS")
-                return done(null, user);
-            }
-        } catch (err) {
-            return done(err)
-        }
-    }
+// function initialize(passport, getUserByEmail, getUserById) {//
+//     const authenticateUser = async (email, password, done) => {
+//         const user = await getUserByEmail(email)
+//         // console.log(user?.dataValues, "acá está el dataValues");
+//         if (user === null) {
+//             // console.log("Hola no existo")
+//             return done(null, false, { msg: 'No user with that email' });
 
-    passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
-    passport.serializeUser((user, done) => done(null, user.dataValues.name))
-    passport.deserializeUser((name, done) => done(null, getUserById(name)))
+//         }
+//         try {
+//             // console.log(user.dataValues.password);
+//             if (await bcrypt.compare(password, user.dataValues.password)) {
+//                 console.log(user.dataValues.password, "SOY EL PASS")
+//                 return done(null, user);
+//             }
+//         } catch (err) {
+//             return done(err)
+//         }
+//     }
+
+//     passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
+//     passport.serializeUser((user, done) => done(null, user.dataValues.name))
+//     passport.deserializeUser((name, done) => done(null, getUserById(name)))
+// }
+
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/user/login');
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        res.redirect('/user')
+    }
+    next()
 }
 
 function validateInputUser(name, lastname, email, password) {
@@ -65,11 +76,11 @@ function validateInputUser(name, lastname, email, password) {
 function validateInputProduct(name, price, description, image, stock, categories) {
     let errors = [];
     if (!name || name.length > 60) errors.push("Name is not valid");
-    if (!price || price < 1) errors.push("Price is not valid");
-    if (!description) errors.push("Description is not valid");
     if (!image) errors.push("Please, add at least one image of the product");
-    if (!stock || stock < 1) errors.push("Stock is not valid");
-    if (!categories.length) errors.push("Please, add at least one category that the product belongs to");
+    if (!description) errors.push("Description is not valid");
+    if (typeof stock !== "number" || stock < 0) errors.push("Stock is not valid");
+    if (typeof price !== "number" || price <= 0) errors.push("Price is not valid");
+    if (!categories?.length) errors.push("Please, add at least one category that the product belongs to");
     return errors;
 }
 
@@ -101,16 +112,17 @@ async function getProducts() {
                 }
             }
         }
-        // console.log("productos[i].name")
 
     } else return { msg: "Failed" };
 
     return { msg: "Data base loaded succesfully!" };
 }
 module.exports = {
-    initialize,
+    // initialize,
     getProducts,
     validateInputUser,
     validateInputProduct,
-    modifyStock
+    modifyStock,
+    checkAuthenticated,
+    checkNotAuthenticated
 }
