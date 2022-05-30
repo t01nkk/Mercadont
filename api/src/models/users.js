@@ -36,6 +36,10 @@ module.exports = (sequelize) => {
             }),
             // allowNull: false,
         },
+        image: {
+            type: DataTypes.STRING,
+            // allowNull: false
+        },
         payment: {
             type: DataTypes.ARRAY(
                 DataTypes.JSON({
@@ -51,6 +55,10 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         },
+        userCreated: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
     },
 
         { timestamps: false, })

@@ -72,6 +72,8 @@ async function getProducts() {
     let count = await Product.count();
     if (findCreated.length === count) {
         for (let i = 0; i < productos.length; i++) {
+            console.log(i)
+            console.log(productos[i])
             const newProduct = await Product.create({
                 name: productos[i].name,
                 price: productos[i].price,
@@ -102,44 +104,30 @@ async function getProducts() {
 }
 
 async function getUsers() {
-    const findCreated = await User.findAll({ where: { created: true } })
+    const findCreated = await User.findAll({ where: { userCreated: true } })
     const count = await User.count();
-    if (count === findCreated.length) {
+    console.log(users.length)
+    if (findCreated?.length === count) {
         for (let i = 0; i < users.length; i++) {
+            console.log(i)
+            console.log(users[i]);
             let password = genPassword(users[i].password)
-            const jsonUsers = await User.create({
+            await User.create({
                 email: users[i].email,
                 password: password,
                 name: users[i].name,
                 lastname: users[i].lastname,
                 address: users[i].address,
                 image: users[i].image,
-                adress: users[i].adress,
                 banned: users[i].banned,
                 isAdmin: users[i].isAdmin
             })
         }
     }
-
-
-}
-
-async function modifyStock(local) {
-    for (let i = 0; i < local.length; i++) {
-        const findProduct = await Product.findByPk(local[i].id);
-        if (findProduct.stock - local[i].amount > 0) {
-            await Product.update({ stock: findProduct.stock - local[i].amount })
-        } else if (findProduct.stock - local[i].amount === 0) {
-            await Product.update({ stock: findProduct.stock - local[i].amount, status: "inactive" })
-        } else {
-            throw new Error({ msg: "There's not enough products to fulfill this purchase" });
-        }
-    }
-    return { msg: "Purchase Successful" };
 }
 
 module.exports = {
-    // initialize,
+    getUsers,
     getProducts,
     validateInputUser,
     validateInputProduct,
