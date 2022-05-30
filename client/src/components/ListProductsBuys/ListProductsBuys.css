@@ -1,0 +1,19 @@
+.articleBuys{
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+
+.articleBuys h3{width: 35%;
+}
+
+.articleBuys div{
+    width: 65%;    
+    display: flex;
+    justify-content: space-evenly;
+    text-align: start;
+}
+
+.cardElement{
+    width: 100%;
+}
