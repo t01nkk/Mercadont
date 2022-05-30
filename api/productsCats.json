@@ -1,362 +1,362 @@
 [
-    {
-      "name": "BASIC BOMBER JACKET",
-      "price": "109.95",
-      "description": "Jacket with ribbed collar. Long sleeves. Welt pockets at hip. Interior pocket. Elastic hem. Front zip closure.",
-      "categories": ["men's clothing","jackets"],
-      "image": "https://static.zara.net/photos///2022/V/0/2/p/4302/410/800/2/w/850/4302410800_6_1_1.jpg?ts=1643101938806",
-      "rating": "1",
-      "stock": "1"
-    },
-    {
-      "name": "BASIC TECHNICAL JACKET",
-      "price": "22.3",
-      "description": "Lightweight jacket with rib trim at collar and cuffs. Zip pockets at hip. Elastic hem. Front zip closure.",
-      "categories": ["men's clothing","jackets"],
-      "image": "https://static.zara.net/photos///2022/V/0/2/p/3918/350/505/2/w/850/3918350505_6_1_1.jpg?ts=1638265260644",
-      "rating": "4.1",
-      "stock": "1"
-    },
-    {
-      "name": "X RHUIGI TECHNICAL SWEATSHIRT",
-      "price": "55.99",
-      "description": "Technical sweatshirt with high collar and front zip closure. Long sleeves with elastic cuffs. Front and back x Rhuigi logo print. Adjustable hem with side elastics.",
-      "categories": ["men's, clothing","jackets"],
-      "image": "https://static.zara.net/photos///2022/I/0/2/p/4391/340/711/2/w/850/4391340711_6_1_1.jpg?ts=1652095565722",
-      "rating": "4.7",
-      "stock": "1"
-    },
-    {
-      "name": "FAUX LEATHER BIKER JACKET",
-      "price": "15.99",
-      "description": "Jacket with lapel collar and snap button details. Long sleeves with zip cuffs. Front zip pockets at chest and hip. Interior pocket. Asymmetric front closure with metal zipper.",
-      "categories": ["men's clothing","jackets"],
-      "image": "https://static.zara.net/photos///2022/V/0/2/p/3427/444/800/2/w/850/3427444800_6_1_1.jpg?ts=1641899833087",
-      "rating":"2.1",
-      "stock": "1"
-    },
-    {
-      "name": "COMBINATION LINK BRACELET",
-      "price": "695",
-      "description": "Bracelet made of metal links. Lobster clasp closure.",
-      "categories": ["accessories","jewelery"],
-      "image": "https://static.zara.net/photos///2022/V/0/2/p/8435/407/303/2/w/850/8435407303_6_1_1.jpg?ts=1639674941621",
-      "rating":"4.6",
-      "stock": "1"
-    },
-    {
-      "name": "SCORPION PLATE BRACELET",
-      "price": "168",
-      "description": "Bracelet made of metal links and embossed plating. Lobster clasp closure.",
-      "categories": ["accessories","jewelery"],
-      "image": "https://static.zara.net/photos///2022/V/0/2/p/1124/300/303/2/w/850/1124300303_6_1_1.jpg?ts=1652265369685",
-      "rating": "3.9",
-      "stock": "1"
-    },
-    {
-      "name": "CHAIN WITH INITIAL CHARM",
-      "price": "9.99",
-      "description": "Metal chain necklace with tonal embossed charm. Lobster clasp closure.",
-      "categories": ["accessories","jewelery"],
-      "image": "https://static.zara.net/photos///2022/V/0/2/p/8435/412/808/2/w/850/8435412808_6_1_1.jpg?ts=1639674980175",
-      "rating": "3",
-      "stock": "1"
-    },
-    {
-      "name": "COMBINATION LINK BRACELET",
-      "price": "10.99",
-      "description": "Bracelet made of combination metal links. Lobster clasp closure.",
-      "categories": ["accessories","jewelery"],
-      "image": "https://static.zara.net/photos///2022/V/0/2/p/8435/416/808/2/w/850/8435416808_6_1_1.jpg?ts=1639674912195",
-      "rating":"1.9",
-      "stock": "1"
-    },
-    {
-      "name": "X RHUIGI DENIM SHORTS",
-      "price": "64",
-      "description": "Cropped shorts. Five pockets. Embroidered x Rhuigi logo at front and back. Washed effect. Front button closure. ",
-      "categories": ["men's clothing","shorts"],
-      "image": "https://static.zara.net/photos///2022/I/0/2/p/6688/333/427/2/w/850/6688333427_6_1_1.jpg?ts=1652095518946",
-      "rating": "3.3",
-      "stock": "1"
-    },
-    {
-      "name": "X RHUIGI CARGO SHORTS",
-      "price": "109",
-      "description": "Shorts made of technical fabric. Adjustable elastic drawstring waistband. Side pockets and back welt pocket. Flap patch pocket at leg. Contrast x Rhuigi logo print at leg.",
-      "categories": ["men's clothing","shorts"],
-      "image": "https://static.zara.net/photos///2022/I/0/2/p/1538/325/822/2/w/850/1538325822_6_1_1.jpg?ts=1652095605164",
-      "rating": "2.9",
-      "stock": "1"
-    },
-    {
-      "name": "PRINTED SHIRT DRESS",
-      "price": "109",
-      "description": "Mini dress with lapel collar and long sleeves. Tonal matching belt. Flounced hem. Front button closure.",
-      "categories": ["women's clothing","dresses"],
-      "image": "https://static.zara.net/photos///2022/I/0/1/p/7786/855/903/2/w/850/7786855903_6_1_1.jpg?ts=1653043270555",
-      "rating": "4.8",
-      "stock": "1"
-    },
-    {
-      "name": "JACQUARD KNIT SKIRT",
-      "price": "114",
-      "description": "High-waisted midi skirt with elastic waistband. A-line silhouette.",
-      "categories": ["women's clothing","skirts"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/4331/065/630/2/w/850/4331065630_6_1_1.jpg?ts=1652716673831",
-      "rating": "4.8",
-      "stock": "1"
-    },
-    {
-      "name": "WRAP DENIM SKIRT",
-      "price": "599",
-      "description": "High waist skort. False back welt pockets. Front wrap closure with button and hidden zipper.",
-      "categories": ["women's clothing","skirts"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/6164/162/712/2/w/850/6164162712_6_1_1.jpg?ts=1653291397101",
-      "rating": "2.9",
-      "stock": "1"
-    },
-    {
-      "name": "LINEN BLEND STRETCH SKIRT",
-      "price": "999.99",
-      "description": "High-waisted skirt made of stretch linen blend fabric. Front slit at hem. Front knot detail. Side hidden in-seam zip closure.",
-      "categories": ["women's clothing","skirts"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/3353/660/800/2/w/850/3353660800_6_1_1.jpg?ts=1649070225942",
-      "rating": "2.9",
-      "stock": "1"
-    },
-    {
-      "name": "BELTED PRINTED KIMONO",
-      "price": "56.99",
-      "description": "Printed kimono with long balloon sleeves with elastic cuffs. Tied self belt. Combination tonal beading appliqué. Side vents at hem.",
-      "categories": ["women's clothing","dresses"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/7521/054/401/2/w/850/7521054401_6_1_1.jpg?ts=1650990281745",
-      "rating": "3.6",
-      "stock": "1"
-    },
-    {
-      "name": "WIDE LAPEL KNIT COAT",
-      "price": "29.95",
-      "description": "Open coat with wide lapel collar and long sleeves. Front welt pockets.",
-      "categories": ["women's clothing","coats"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/5802/012/700/2/w/850/5802012700_6_1_1.jpg?ts=1639743599029",
-      "rating": "2.9",
-      "stock": "1"
-    },
-    {
-      "name": "OVERSIZED TRENCH LIMITED EDITION",
-      "price": "39.99",
-      "description": "Full cut trench coat with lapel collar, and adjustable button tab long sleeves. Front pockets. Tied self belt. Pronounced topstitching detail. Front hidden button closure.",
-      "categories": ["women's clothing","coats"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/2583/960/710/2/w/850/2583960710_6_1_1.jpg?ts=1649143246379",
-      "rating": "3.8",
-      "stock": "1"
-    },
-    {
-      "name": "FAUX LEATHER PUFFER JACKET",
-      "price": "9.85",
-      "description": "Puffer jacket with high collar and long sleeves. Side pockets. Adjustable elastic drawcord hem with toggles. Front zip and snap button closure.",
-      "categories": ["women's clothing","jackets"],
-      "image": "https://static.zara.net/photos///2021/I/0/1/p/3427/753/800/2/w/850/3427753800_6_1_1.jpg?ts=1631802167368",
-      "rating": "4.7",
-      "stock": "1"
-    },
-    {
-      "name": "CHENILLE CROCHETED SWEATSHIRT",
-      "price": "7.95",
-      "description": "Round neck sweatshirt with long sleeves. Soft feel fabric with contrasting crochet detail at front.",
-      "categories": ["women's clothing","sweatshirts"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/7901/508/067/2/w/850/7901508067_6_1_1.jpg?ts=1644512013997",
-      "rating": "2.9",
-      "stock": "1"
-    },
-    {
-      "name": "CROCHET SWEATER",
-      "price": "12.99",
-      "description": "Round neck long sleeve sweater.",
-      "categories": ["women's clothing","sweatshirts"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/7901/586/635/2/w/850/7901586635_6_1_1.jpg?ts=1646382352267",
-      "rating": "3.6",
-      "stock": "1"
-    },
-    {
-      "name": "JEWEL TRIM SOFT SWEATER",
-      "price": "12.99",
-      "description": "Round neck long sleeve sweater. Jewel appliqué detail.",
-      "categories": ["women's clothing","sweatshirts"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/5644/037/251/2/w/850/5644037251_6_1_1.jpg?ts=1644570713593",
-      "rating": "2.6",
-      "stock": "1"
-    },
-    {
-      "name": "PRINTED SWEATSHIRT",
-      "price": "12.99",
-      "description": "Round neck sweatshirt with long sleeves. Rib trim.",
-      "categories": ["women's clothing","sweatshirts"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/1131/306/070/2/w/850/1131306070_6_1_1.jpg?ts=1642755434027",
-      "rating": "3.6",
-      "stock": "1"
-    },
-    {
-      "name": "TAILORED SHORT WAISTCOAT",
-      "price": "12.99",
-      "description": "V-neck vest. False welt pockets. Front button closure.",
-      "categories": ["women's clothing","coats"],
-      "image": "https://static.zara.net/photos///2022/I/0/1/p/7547/730/250/2/w/850/7547730250_6_1_1.jpg?ts=1652970091835",
-      "rating":  "3.6",
-      "stock": "1"
-    },
-    {
-      "name": "PRINTED CUFF LINEN BLEND BLAZER",
-      "price": "12.99",
-      "description": "Open front blazer made of linen blend fabric. Lapel collar and long sleeves with printed turned-up cuffs and shoulder pads. Front flap pockets.",
-      "categories": ["women's clothing","blazers"],
-      "image": "https://static.zara.net/photos///2022/I/0/1/p/2753/230/052/2/w/850/2753230052_6_1_1.jpg?ts=1652960692401",
-      "rating": "3.6",
-      "stock": "1"
-    },
-    {
-      "name": "BUTTONED TEXTURED WEAVE BLAZER",
-      "price": "12.99",
-      "description": "Blazer with lapel collar, long sleeves, and turned-up buttoned cuffs. Buttoned flap pockets. Tonal matching inner lining. Front embossed metal button closure.",
-      "image": "https://static.zara.net/photos///2022/I/0/1/p/3666/469/630/2/w/850/3666469630_6_1_1.jpg?ts=1652947090784",
-      "categories": ["women's clotthing", "blazers"],
-      "rating": "3.6",
-      "stock": "1"
-    },
-    {
-      "name": "LACE BODYSUIT",
-      "price": "12.99",
-      "description": "V-neck bodysuit with spaghetti straps. Bottom snap button closure.",
-      "categories": ["women's clothing","bodysuits"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/2712/323/712/2/w/850/2712323712_6_1_1.jpg?ts=1651765991634",
-      "rating": "3.6",
-      "stock": "1"
-    },
-    {
-      "name": "RUFFLED ASYMMETRICAL BODYSUIT",
-      "price": "12.99",
-      "description": "Bodysuit with asymmetrical neckline and combination poplin ruffles. Bottom snap button closure.",
-      "categories": ["women's clothing","bodysuits"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/1660/305/800/2/w/850/1660305800_6_1_1.jpg?ts=1652371438791",
-      "rating": "3.6",
-      "stock": "1"
-    },
-    {
-      "name": "PRINTED HALTER NECK BODYSUIT",
-      "price": "12.99",
-      "description": "Bodysuit with tied halter neck. Bottom snap button closure.",
-      "categories": ["women's clothing","bodysuits"],
-      "image": "https://static.zara.net/photos///2022/V/0/1/p/0085/399/119/2/w/850/0085399119_6_1_1.jpg?ts=1652356123211",
-      "rating": "3.6",
-      "stock": "1"
-    },
-    {
-      "name": "BUCKLED CROSS STRAP FLAT SANDALS",
-      "price": "12.99",
-      "description": "Flat sandals with crossed straps. Buckle closure at ankle. ",
-      "categories": ["women's clothing","shoes"],
-      "image": "https://static.zara.net/photos///2022/I/1/1/p/3606/010/032/2/w/850/3606010032_6_2_1.jpg?ts=1652960304164",
-      "rating": "3.6",
-      "stock": "1"
-    },
-    {
-      "name": "X RHUIGI PRINTED POLO",
-      "price": "12.99",
-      "description": "Polo shirt made of technical fabric. Lapel collar with contrasting jacquard detail and front vent. Long sleeves with rib cuffs. Front and back contrast x Rhuigi logo prints. Side vents at hem.",
-      "categories": ["men's clothing","polo shirts"],
-      "image": "https://static.zara.net/photos///2022/I/0/2/p/6224/360/251/2/w/850/6224360251_6_1_1.jpg?ts=1652442060902",
-      "rating": "3.7",
-      "stock": "1"
-    },
-    {
-      "name": "PIQUÉ TEXTURED POLO SHIRT",
-      "price": "12.99",
-      "description": "Polo made of cotton fabric with piqué texture. Band collar and front closure with buttons. Short sleeves with rib trim. Side vents at hem.",
-      "categories": ["men's clothing","polo shirts"],
-      "image": "https://static.zara.net/photos///2022/V/0/2/p/9240/455/800/2/w/850/9240455800_6_1_1.jpg?ts=1644491775271",
-      "rating":"1.1",
-      "stock": "1"
-    },
-    {
-      "name": "PIQUÉ TEXTURED POLO SHIRT SLEEVES",
-      "price": "12.99",
-      "description": "Lapel collar polo with front button closure. Long sleeves with rib cuffs. Side vents at hem.",
-      "categories": ["men's clothing","polo shirts"],
-      "image": "https://static.zara.net/photos///2022/V/0/2/p/0761/417/677/2/w/850/0761417677_6_1_1.jpg?ts=1649341906810",
-      "rating": "4.5",
-      "stock": "1"
-    },
-    {
-      "name": "BASIC HOODIE SWEATSHIRT",
-      "price": "12.99",
-      "description": "Loose fit sweatshirt with adjustable hooded collar and long sleeves. Front pouch pocket. Rib trim.",
-      "categories": ["men's clothing","sweatshirts"],
-      "image": "https://static.zara.net/photos///2022/I/0/2/p/0761/300/707/2/w/850/0761300707_6_1_1.jpg?ts=1652426751388",
-      "rating": "1.3",
-      "stock": "1"
-    },
-    {
-      "name": "ZIPPERED STRIPE SWEATSHIRT",
-      "price": "12.99",
-      "description": "Roomy sweatshirt high collar, long sleeves, and contrasting stripe. Welt pockets at hip. Rib trim. Front zip closure.",
-      "categories": ["men's clothing","sweatshirts"],
-      "image": "https://static.zara.net/photos///2022/I/0/2/p/5372/302/250/2/w/850/5372302250_6_1_1.jpg?ts=1652426816212",
-      "rating": "1.4",
-      "stock": "1"
-    },
-    {
-      "name": "TECHNICAL COLORBLOCK JACKET",
-      "price": "12.99",
-      "description": "Jacket made of lightweight technical fabric. High collar with adjustable hood and long sleeves with elastic cuffs. Mesh lined interior. Zip pockets at hip. Elastic hem. Front zip closure.",
-      "categories": ["men's clothing","sweatshirts"],
-      "image": "https://static.zara.net/photos///2022/V/0/2/p/4391/421/330/2/w/850/4391421330_6_1_1.jpg?ts=1646916384932",
-      "rating": "3.6",
-      "stock": "1"
-    },
-    {
-      "name": "JOGGING PANTS WITH BAND",
-      "price": "12.99",
-      "description": "Pants with adjustable elastic drawstring waistband. Front pockets and back welt pocket. Contrasting side band at legs. Elastic cuffs.",
-      "categories": ["men's clothing","pants"],
-      "image": "https://static.zara.net/photos///2022/I/0/2/p/5372/301/800/2/w/850/5372301800_6_1_1.jpg?ts=1652426753385",
-      "rating": "3.8",
-      "stock": "1"
-    },
-    {
-      "name": "BASIC JOGGING PANTS",
-      "price": "12.99",
-      "description": "Pants with adjustable elastic drawstring waistband. Front pockets and back patch pocket. Rib cuffs.",
-      "categories": ["men's clothing","pants"],
-      "image": "https://static.zara.net/photos///2022/I/0/2/p/0761/301/615/2/w/850/0761301615_6_1_1.jpg?ts=1652426791667",
-      "rating": "5",
-      "stock": "1"
-    },
-    {
-      "name": "COLOR BLOCK JOGGERS",
-      "price": "12.99",
-      "description": "Slim fit jogger pants with elastic waistband and adjustable drawstring. Front pockets. Rib cuffs.- Interior flatlock seams which minimize chafing.- Reflective logo at front.",
-      "categories": ["men's clothing","pants"],
-      "image": "https://static.zara.net/photos///2022/V/0/2/p/0761/344/088/2/w/850/0761344088_6_1_1.jpg?ts=1645548044519",
-      "rating": "4.1",
-      "stock": "1"
-    },
-    {
-      "name": "FLAT LEATHER SANDAL WITH BUCKLE",
-      "price": "12.99",
-      "description": "Flat sandals with front strap. Rubber soles. Buckle closure at ankle.AIRFIT®. Technical flexible latex foam insole designed to offer increased comfort.",
-      "categories": ["women's clothing","shoes"],
-      "image": "https://static.zara.net/photos///2022/V/1/1/p/1603/910/002/2/w/850/1603910002_6_2_1.jpg?ts=1646752660390",
-      "rating": "2.7",
-      "stock": "1"
-    },
-    {
-      "name": "HEELED PLATFORM SHOES",
-      "price": "12.99",
-      "description": "Heeled platform shoes with satin effect fabric. Block heels. Squared toe. Ankle strap with buckle closure. ",
-      "categories": ["women's clothing","shoes"],
-      "image": "https://static.zara.net/photos///2022/V/1/1/p/1275/910/040/2/w/850/1275910040_6_2_1.jpg?ts=1644497134245",
-      "rating": "1",
-      "stock": "1"
-    }
-  ]
+  {
+    "name": "BASIC BOMBER JACKET",
+    "price": "109.95",
+    "description": "Jacket with ribbed collar. Long sleeves. Welt pockets at hip. Interior pocket. Elastic hem. Front zip closure.",
+    "categories": ["men's clothing", "jackets"],
+    "image": "https://static.zara.net/photos///2022/V/0/2/p/4302/410/800/2/w/850/4302410800_6_1_1.jpg?ts=1643101938806",
+    "rating": "1",
+    "stock": "5"
+  },
+  {
+    "name": "BASIC TECHNICAL JACKET",
+    "price": "22.3",
+    "description": "Lightweight jacket with rib trim at collar and cuffs. Zip pockets at hip. Elastic hem. Front zip closure.",
+    "categories": ["men's clothing", "jackets"],
+    "image": "https://static.zara.net/photos///2022/V/0/2/p/3918/350/505/2/w/850/3918350505_6_1_1.jpg?ts=1638265260644",
+    "rating": "4.1",
+    "stock": "34"
+  },
+  {
+    "name": "X RHUIGI TECHNICAL SWEATSHIRT",
+    "price": "55.99",
+    "description": "Technical sweatshirt with high collar and front zip closure. Long sleeves with elastic cuffs. Front and back x Rhuigi logo print. Adjustable hem with side elastics.",
+    "categories": ["men's clothing", "jackets"],
+    "image": "https://static.zara.net/photos///2022/I/0/2/p/4391/340/711/2/w/850/4391340711_6_1_1.jpg?ts=1652095565722",
+    "rating": "4.7",
+    "stock": "11"
+  },
+  {
+    "name": "FAUX LEATHER BIKER JACKET",
+    "price": "15.99",
+    "description": "Jacket with lapel collar and snap button details. Long sleeves with zip cuffs. Front zip pockets at chest and hip. Interior pocket. Asymmetric front closure with metal zipper.",
+    "categories": ["men's clothing", "jackets"],
+    "image": "https://static.zara.net/photos///2022/V/0/2/p/3427/444/800/2/w/850/3427444800_6_1_1.jpg?ts=1641899833087",
+    "rating": "2.1",
+    "stock": "42"
+  },
+  {
+    "name": "COMBINATION LINK BRACELET",
+    "price": "695",
+    "description": "Bracelet made of metal links. Lobster clasp closure.",
+    "categories": ["accessories", "jewelery"],
+    "image": "https://static.zara.net/photos///2022/V/0/2/p/8435/407/303/2/w/850/8435407303_6_1_1.jpg?ts=1639674941621",
+    "rating": "4.6",
+    "stock": "7"
+  },
+  {
+    "name": "SCORPION PLATE BRACELET",
+    "price": "168",
+    "description": "Bracelet made of metal links and embossed plating. Lobster clasp closure.",
+    "categories": ["accessories", "jewelery"],
+    "image": "https://static.zara.net/photos///2022/V/0/2/p/1124/300/303/2/w/850/1124300303_6_1_1.jpg?ts=1652265369685",
+    "rating": "3.9",
+    "stock": "8"
+  },
+  {
+    "name": "CHAIN WITH INITIAL CHARM",
+    "price": "9.99",
+    "description": "Metal chain necklace with tonal embossed charm. Lobster clasp closure.",
+    "categories": ["accessories", "jewelery"],
+    "image": "https://static.zara.net/photos///2022/V/0/2/p/8435/412/808/2/w/850/8435412808_6_1_1.jpg?ts=1639674980175",
+    "rating": "3",
+    "stock": "13"
+  },
+  {
+    "name": "COMBINATION LINK BRACELET",
+    "price": "10.99",
+    "description": "Bracelet made of combination metal links. Lobster clasp closure.",
+    "categories": ["accessories", "jewelery"],
+    "image": "https://static.zara.net/photos///2022/V/0/2/p/8435/416/808/2/w/850/8435416808_6_1_1.jpg?ts=1639674912195",
+    "rating": "1.9",
+    "stock": "31"
+  },
+  {
+    "name": "X RHUIGI DENIM SHORTS",
+    "price": "64",
+    "description": "Cropped shorts. Five pockets. Embroidered x Rhuigi logo at front and back. Washed effect. Front button closure. ",
+    "categories": ["men's clothing", "shorts"],
+    "image": "https://static.zara.net/photos///2022/I/0/2/p/6688/333/427/2/w/850/6688333427_6_1_1.jpg?ts=1652095518946",
+    "rating": "3.3",
+    "stock": "7"
+  },
+  {
+    "name": "X RHUIGI CARGO SHORTS",
+    "price": "109",
+    "description": "Shorts made of technical fabric. Adjustable elastic drawstring waistband. Side pockets and back welt pocket. Flap patch pocket at leg. Contrast x Rhuigi logo print at leg.",
+    "categories": ["men's clothing", "shorts"],
+    "image": "https://static.zara.net/photos///2022/I/0/2/p/1538/325/822/2/w/850/1538325822_6_1_1.jpg?ts=1652095605164",
+    "rating": "2.9",
+    "stock": "3"
+  },
+  {
+    "name": "PRINTED SHIRT DRESS",
+    "price": "109",
+    "description": "Mini dress with lapel collar and long sleeves. Tonal matching belt. Flounced hem. Front button closure.",
+    "categories": ["women's clothing", "dresses"],
+    "image": "https://static.zara.net/photos///2022/I/0/1/p/7786/855/903/2/w/850/7786855903_6_1_1.jpg?ts=1653043270555",
+    "rating": "4.8",
+    "stock": "4"
+  },
+  {
+    "name": "JACQUARD KNIT SKIRT",
+    "price": "114",
+    "description": "High-waisted midi skirt with elastic waistband. A-line silhouette.",
+    "categories": ["women's clothing", "skirts"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/4331/065/630/2/w/850/4331065630_6_1_1.jpg?ts=1652716673831",
+    "rating": "4.8",
+    "stock": "64"
+  },
+  {
+    "name": "WRAP DENIM SKIRT",
+    "price": "599",
+    "description": "High waist skort. False back welt pockets. Front wrap closure with button and hidden zipper.",
+    "categories": ["women's clothing", "skirts"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/6164/162/712/2/w/850/6164162712_6_1_1.jpg?ts=1653291397101",
+    "rating": "2.9",
+    "stock": "13"
+  },
+  {
+    "name": "LINEN BLEND STRETCH SKIRT",
+    "price": "999.99",
+    "description": "High-waisted skirt made of stretch linen blend fabric. Front slit at hem. Front knot detail. Side hidden in-seam zip closure.",
+    "categories": ["women's clothing", "skirts"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/3353/660/800/2/w/850/3353660800_6_1_1.jpg?ts=1649070225942",
+    "rating": "2.9",
+    "stock": "72"
+  },
+  {
+    "name": "BELTED PRINTED KIMONO",
+    "price": "56.99",
+    "description": "Printed kimono with long balloon sleeves with elastic cuffs. Tied self belt. Combination tonal beading appliqué. Side vents at hem.",
+    "categories": ["women's clothing", "dresses"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/7521/054/401/2/w/850/7521054401_6_1_1.jpg?ts=1650990281745",
+    "rating": "3.6",
+    "stock": "666"
+  },
+  {
+    "name": "WIDE LAPEL KNIT COAT",
+    "price": "29.95",
+    "description": "Open coat with wide lapel collar and long sleeves. Front welt pockets.",
+    "categories": ["women's clothing", "coats"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/5802/012/700/2/w/850/5802012700_6_1_1.jpg?ts=1639743599029",
+    "rating": "2.9",
+    "stock": "25"
+  },
+  {
+    "name": "OVERSIZED TRENCH LIMITED EDITION",
+    "price": "39.99",
+    "description": "Full cut trench coat with lapel collar, and adjustable button tab long sleeves. Front pockets. Tied self belt. Pronounced topstitching detail. Front hidden button closure.",
+    "categories": ["women's clothing", "coats"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/2583/960/710/2/w/850/2583960710_6_1_1.jpg?ts=1649143246379",
+    "rating": "3.8",
+    "stock": "25"
+  },
+  {
+    "name": "FAUX LEATHER PUFFER JACKET",
+    "price": "9.85",
+    "description": "Puffer jacket with high collar and long sleeves. Side pockets. Adjustable elastic drawcord hem with toggles. Front zip and snap button closure.",
+    "categories": ["women's clothing", "jackets"],
+    "image": "https://static.zara.net/photos///2021/I/0/1/p/3427/753/800/2/w/850/3427753800_6_1_1.jpg?ts=1631802167368",
+    "rating": "4.7",
+    "stock": "25"
+  },
+  {
+    "name": "CHENILLE CROCHETED SWEATSHIRT",
+    "price": "7.95",
+    "description": "Round neck sweatshirt with long sleeves. Soft feel fabric with contrasting crochet detail at front.",
+    "categories": ["women's clothing", "sweatshirts"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/7901/508/067/2/w/850/7901508067_6_1_1.jpg?ts=1644512013997",
+    "rating": "2.9",
+    "stock": "69"
+  },
+  {
+    "name": "CROCHET SWEATER",
+    "price": "12.99",
+    "description": "Round neck long sleeve sweater.",
+    "categories": ["women's clothing", "sweatshirts"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/7901/586/635/2/w/850/7901586635_6_1_1.jpg?ts=1646382352267",
+    "rating": "3.6",
+    "stock": "25"
+  },
+  {
+    "name": "JEWEL TRIM SOFT SWEATER",
+    "price": "12.99",
+    "description": "Round neck long sleeve sweater. Jewel appliqué detail.",
+    "categories": ["women's clothing", "sweatshirts"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/5644/037/251/2/w/850/5644037251_6_1_1.jpg?ts=1644570713593",
+    "rating": "2.6",
+    "stock": "25"
+  },
+  {
+    "name": "PRINTED SWEATSHIRT",
+    "price": "12.99",
+    "description": "Round neck sweatshirt with long sleeves. Rib trim.",
+    "categories": ["women's clothing", "sweatshirts"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/1131/306/070/2/w/850/1131306070_6_1_1.jpg?ts=1642755434027",
+    "rating": "3.6",
+    "stock": "25"
+  },
+  {
+    "name": "TAILORED SHORT WAISTCOAT",
+    "price": "12.99",
+    "description": "V-neck vest. False welt pockets. Front button closure.",
+    "categories": ["women's clothing", "coats"],
+    "image": "https://static.zara.net/photos///2022/I/0/1/p/7547/730/250/2/w/850/7547730250_6_1_1.jpg?ts=1652970091835",
+    "rating": "3.6",
+    "stock": "25"
+  },
+  {
+    "name": "PRINTED CUFF LINEN BLEND BLAZER",
+    "price": "12.99",
+    "description": "Open front blazer made of linen blend fabric. Lapel collar and long sleeves with printed turned-up cuffs and shoulder pads. Front flap pockets.",
+    "categories": ["women's clothing", "blazers"],
+    "image": "https://static.zara.net/photos///2022/I/0/1/p/2753/230/052/2/w/850/2753230052_6_1_1.jpg?ts=1652960692401",
+    "rating": "3.6",
+    "stock": "25"
+  },
+  {
+    "name": "BUTTONED TEXTURED WEAVE BLAZER",
+    "price": "12.99",
+    "description": "Blazer with lapel collar, long sleeves, and turned-up buttoned cuffs. Buttoned flap pockets. Tonal matching inner lining. Front embossed metal button closure.",
+    "image": "https://static.zara.net/photos///2022/I/0/1/p/3666/469/630/2/w/850/3666469630_6_1_1.jpg?ts=1652947090784",
+    "categories": ["women's clotthing", "blazers"],
+    "rating": "3.6",
+    "stock": "25"
+  },
+  {
+    "name": "LACE BODYSUIT",
+    "price": "12.99",
+    "description": "V-neck bodysuit with spaghetti straps. Bottom snap button closure.",
+    "categories": ["women's clothing", "bodysuits"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/2712/323/712/2/w/850/2712323712_6_1_1.jpg?ts=1651765991634",
+    "rating": "3.6",
+    "stock": "25"
+  },
+  {
+    "name": "RUFFLED ASYMMETRICAL BODYSUIT",
+    "price": "12.99",
+    "description": "Bodysuit with asymmetrical neckline and combination poplin ruffles. Bottom snap button closure.",
+    "categories": ["women's clothing", "bodysuits"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/1660/305/800/2/w/850/1660305800_6_1_1.jpg?ts=1652371438791",
+    "rating": "3.6",
+    "stock": "25"
+  },
+  {
+    "name": "PRINTED HALTER NECK BODYSUIT",
+    "price": "12.99",
+    "description": "Bodysuit with tied halter neck. Bottom snap button closure.",
+    "categories": ["women's clothing", "bodysuits"],
+    "image": "https://static.zara.net/photos///2022/V/0/1/p/0085/399/119/2/w/850/0085399119_6_1_1.jpg?ts=1652356123211",
+    "rating": "3.6",
+    "stock": "25"
+  },
+  {
+    "name": "BUCKLED CROSS STRAP FLAT SANDALS",
+    "price": "12.99",
+    "description": "Flat sandals with crossed straps. Buckle closure at ankle. ",
+    "categories": ["women's clothing", "shoes"],
+    "image": "https://static.zara.net/photos///2022/I/1/1/p/3606/010/032/2/w/850/3606010032_6_2_1.jpg?ts=1652960304164",
+    "rating": "3.6",
+    "stock": "25"
+  },
+  {
+    "name": "X RHUIGI PRINTED POLO",
+    "price": "12.99",
+    "description": "Polo shirt made of technical fabric. Lapel collar with contrasting jacquard detail and front vent. Long sleeves with rib cuffs. Front and back contrast x Rhuigi logo prints. Side vents at hem.",
+    "categories": ["men's clothing", "polo shirts"],
+    "image": "https://static.zara.net/photos///2022/I/0/2/p/6224/360/251/2/w/850/6224360251_6_1_1.jpg?ts=1652442060902",
+    "rating": "3.7",
+    "stock": "25"
+  },
+  {
+    "name": "PIQUÉ TEXTURED POLO SHIRT",
+    "price": "12.99",
+    "description": "Polo made of cotton fabric with piqué texture. Band collar and front closure with buttons. Short sleeves with rib trim. Side vents at hem.",
+    "categories": ["men's clothing", "polo shirts"],
+    "image": "https://static.zara.net/photos///2022/V/0/2/p/9240/455/800/2/w/850/9240455800_6_1_1.jpg?ts=1644491775271",
+    "rating": "1.1",
+    "stock": "25"
+  },
+  {
+    "name": "PIQUÉ TEXTURED POLO SHIRT SLEEVES",
+    "price": "12.99",
+    "description": "Lapel collar polo with front button closure. Long sleeves with rib cuffs. Side vents at hem.",
+    "categories": ["men's clothing", "polo shirts"],
+    "image": "https://static.zara.net/photos///2022/V/0/2/p/0761/417/677/2/w/850/0761417677_6_1_1.jpg?ts=1649341906810",
+    "rating": "4.5",
+    "stock": "25"
+  },
+  {
+    "name": "BASIC HOODIE SWEATSHIRT",
+    "price": "12.99",
+    "description": "Loose fit sweatshirt with adjustable hooded collar and long sleeves. Front pouch pocket. Rib trim.",
+    "categories": ["men's clothing", "sweatshirts"],
+    "image": "https://static.zara.net/photos///2022/I/0/2/p/0761/300/707/2/w/850/0761300707_6_1_1.jpg?ts=1652426751388",
+    "rating": "1.3",
+    "stock": "25"
+  },
+  {
+    "name": "ZIPPERED STRIPE SWEATSHIRT",
+    "price": "12.99",
+    "description": "Roomy sweatshirt high collar, long sleeves, and contrasting stripe. Welt pockets at hip. Rib trim. Front zip closure.",
+    "categories": ["men's clothing", "sweatshirts"],
+    "image": "https://static.zara.net/photos///2022/I/0/2/p/5372/302/250/2/w/850/5372302250_6_1_1.jpg?ts=1652426816212",
+    "rating": "1.4",
+    "stock": "25"
+  },
+  {
+    "name": "TECHNICAL COLORBLOCK JACKET",
+    "price": "12.99",
+    "description": "Jacket made of lightweight technical fabric. High collar with adjustable hood and long sleeves with elastic cuffs. Mesh lined interior. Zip pockets at hip. Elastic hem. Front zip closure.",
+    "categories": ["men's clothing", "sweatshirts"],
+    "image": "https://static.zara.net/photos///2022/V/0/2/p/4391/421/330/2/w/850/4391421330_6_1_1.jpg?ts=1646916384932",
+    "rating": "3.6",
+    "stock": "25"
+  },
+  {
+    "name": "JOGGING PANTS WITH BAND",
+    "price": "12.99",
+    "description": "Pants with adjustable elastic drawstring waistband. Front pockets and back welt pocket. Contrasting side band at legs. Elastic cuffs.",
+    "categories": ["men's clothing", "pants"],
+    "image": "https://static.zara.net/photos///2022/I/0/2/p/5372/301/800/2/w/850/5372301800_6_1_1.jpg?ts=1652426753385",
+    "rating": "3.8",
+    "stock": "25"
+  },
+  {
+    "name": "BASIC JOGGING PANTS",
+    "price": "12.99",
+    "description": "Pants with adjustable elastic drawstring waistband. Front pockets and back patch pocket. Rib cuffs.",
+    "categories": ["men's clothing", "pants"],
+    "image": "https://static.zara.net/photos///2022/I/0/2/p/0761/301/615/2/w/850/0761301615_6_1_1.jpg?ts=1652426791667",
+    "rating": "5",
+    "stock": "25"
+  },
+  {
+    "name": "COLOR BLOCK JOGGERS",
+    "price": "12.99",
+    "description": "Slim fit jogger pants with elastic waistband and adjustable drawstring. Front pockets. Rib cuffs.- Interior flatlock seams which minimize chafing.- Reflective logo at front.",
+    "categories": ["men's clothing", "pants"],
+    "image": "https://static.zara.net/photos///2022/V/0/2/p/0761/344/088/2/w/850/0761344088_6_1_1.jpg?ts=1645548044519",
+    "rating": "4.1",
+    "stock": "25"
+  },
+  {
+    "name": "FLAT LEATHER SANDAL WITH BUCKLE",
+    "price": "12.99",
+    "description": "Flat sandals with front strap. Rubber soles. Buckle closure at ankle.AIRFIT®. Technical flexible latex foam insole designed to offer increased comfort.",
+    "categories": ["women's clothing", "shoes"],
+    "image": "https://static.zara.net/photos///2022/V/1/1/p/1603/910/002/2/w/850/1603910002_6_2_1.jpg?ts=1646752660390",
+    "rating": "2.7",
+    "stock": "25"
+  },
+  {
+    "name": "HEELED PLATFORM SHOES",
+    "price": "12.99",
+    "description": "Heeled platform shoes with satin effect fabric. Block heels. Squared toe. Ankle strap with buckle closure. ",
+    "categories": ["women's clothing", "shoes"],
+    "image": "https://static.zara.net/photos///2022/V/1/1/p/1275/910/040/2/w/850/1275910040_6_2_1.jpg?ts=1644497134245",
+    "rating": "1",
+    "stock": "70"
+  }
+]

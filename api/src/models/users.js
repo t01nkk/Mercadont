@@ -36,9 +36,6 @@ module.exports = (sequelize) => {
             }),
             // allowNull: false,
         },
-        // description: {
-        //     type: DataTypes.STRING
-        // },
         image: {
             type: DataTypes.BLOB,
             // allowNull: false
@@ -50,6 +47,16 @@ module.exports = (sequelize) => {
                     text: DataTypes.STRING,
                 }))
         },
+        banned: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
+        isAdmin: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        }, 
     },
-        { timestamps: false })
+    
+    { timestamps: false, })
+
 };

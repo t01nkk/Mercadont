@@ -1,93 +1,86 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { ProductCart } from '../ProductCart/ProductCart'
+
 
 export const Cart = () => {
 
   let yourStorage = JSON.parse(localStorage.getItem("myCart"))
   const [storageCart, setStorageCart] = useState(yourStorage)
-  const [count, setCount] = useState(1)
   const history = useHistory()
-  const [permitLess, setPermitLess] = useState(false)
-  const [permitMore, setPermitMore] = useState(true)
+  const [priceTotal, setPriceTotal] = useState(0)
 
-
-  //FUNCION PARA VER EL STORAGE, NO BORRAR
-  const mostra = ()=>{
-    let miStorage = window.localStorage;
-    console.log(storageCart)
-  }
 
 
   const deleteDatatoStorage = (name) =>{
     let newLocalStorage = yourStorage.filter(e => e.name !== name)
-    // console.log(newLocalStorage)
     setStorageCart(newLocalStorage)
+    console.log(newLocalStorage)
     localStorage.setItem("myCart", JSON.stringify(newLocalStorage))
-    // setStorageCart(yourStorage)
+    totalPrice()
   }
 
-
+  //Funcion para ver detalle del producto por id
   const viewProduct = (id)=>{
     history.push(`/home/${id}`)
   }
 
-  const oneMore = (stock)=>{
-    setCount(count+1)
-
-    if(count >= 1) setPermitLess(true)
-    if(count === stock -1) setPermitMore(false)
-    console.log(count, "Suma")
-  }
-  
-  const oneLess = (stock)=>{
-    console.log(count)
-    setCount(count-1)
-    if(count <= 2) setPermitLess(false)
-    if(count <= stock) setPermitMore(true)
+    // FUNCION PARA VER EL STORAGE, NO BORRAR
+  const mostra = ()=>{
+    let miStorage = window.localStorage;
+    console.log(yourStorage)
   }
 
+  //Funcion para limpiar carro
+  const clearCart = ()=>{
+    localStorage.removeItem("myCart")
+    setStorageCart([])
+  }
+
+  let totalPrice = ()=>{
+    let local = JSON.parse(localStorage.getItem("myCart"))
+    let total = 0
+    for(let i = 0; i< local.length; i++){
+      total += local[i].totalPrice
+    }
+    setPriceTotal(total)
+  }
+
+  const makePurchase = ()=>{
+    let local = JSON.parse(localStorage.getItem("myCart"))
+    console.log(local, priceTotal)
+  }
 
   return (
     <div>
-      <button onClick={()=>mostra()}>mostra storage</button>
+      
+      <button onClick={()=>clearCart()}>Clear Cart</button>
+      <button onClick={()=>mostra()}>mostra storage</button>  
       <section>
+
         <h2>Welcome your Cart</h2>
+        <p>{priceTotal}</p>
         <div>
+          
             <h3>Tabla de datos</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {storageCart && storageCart.length > 0
-                        ?(storageCart.map(el=><tr key={el.id}>
-                                                <td><img src={el.image} alt={el.name}/></td>
-                                                <td>{el.name}</td>
-                                                <td>{el.price}</td>
-                                                <td>
-                                                    {/* <button onClick={()=>setDataToEdit(el)}>Editar</button> */}
-                                                    {permitMore && <button onClick={()=>oneMore(el.stock)}>+</button>}
-                                                    
-                                                    {permitLess && <button onClick={()=>oneLess(el.stock)}>-</button>}
-                                                    <span>{count}</span>
-                                                 
-                                                    <button onClick={()=>deleteDatatoStorage(el.name)}>Eliminar</button>
-                                                    <button onClick={()=>viewProduct(el.id)}>Ver</button>
-                                                  
-                                                </td>
-                                              </tr>
-                                              
-                             ))
-                        :<tr><td colSpan="3"> Sin datos</td></tr>  
-                    }
-                </tbody>
-            </table>
+            {storageCart && storageCart.length > 0
+                        ?(storageCart.map((el, index)=> <ProductCart
+                          key={el.name}
+                          name={el.name}
+                          stock={el.stock}
+                          price={el.price}
+                          id={el.id}
+                          image={el.image}
+                          pos={index}
+                          viewProduct={viewProduct}
+                          deleteDatatoStorage={deleteDatatoStorage}
+                          totalPrice={totalPrice}
+                        />)):
+                        <h3>Sin datos</h3>
+                        }
+           
         </div>
+        <button onClick={makePurchase}>Buy</button>
       </section>
     </div>
     

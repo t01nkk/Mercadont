@@ -1,46 +1,52 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
+/* import axios from "axios"; */
 import { useStore } from "../../context/store.js";
-import { fetchProducts } from "../../redux/actions/actions.js";
+import { fetchProducts, fetchCategories } from "../../redux/actions/actions.js";
 import "./Home.css";
+/* import { CATEGORIES_PRODUCT } from "../../redux/actions/actionTypes"; */
+import FilterCategoies from "../../components/FilterCategories/FilterCategories"
 
 export default function Home() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
-
   const [cart, setCart] = useState(initialCart);
+  const [state, dispatch] = useStore();
+  const [inCart, setInCart] = useState(false);
+
+  const handleSaveCart = (name, price, image, id, stock) => {
+    let amount = 1;
+    let totalPrice = price;
+    let products = { name, price, image, id, stock, amount, totalPrice };
+    let value = cart.find((e) => e.name === name);
+    if (value) {
+      setInCart(false);
+      return;
+    } else {
+      setInCart(true);
+      setCart((cart) => [...cart, products]);
+    }
+  };
+
+  //USEEFFECT CARGA DE PRODUCTOS
+  useEffect(() => {
+    fetchProducts(dispatch);
+  }, []);
+  useEffect(() => {
+    fetchCategories(dispatch);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("myCart", JSON.stringify(cart));
-    // localStorage.clear()
   }, [cart]);
 
-  const handleSaveCart = (name, price, image, id, stock) => {
-    let products = { name, price, image, id, stock };
-    console.log(products);
-    // console.log(state)
-    setCart((cart) => [...cart, products]);
+  const mostra = () => {
+    let miStorage = JSON.parse(localStorage.getItem("myUser"));
+    console.log(miStorage);
   };
-  //FUNCION PARA VER EL STORAGE, NO BORRAR
-  // const mostra = ()=>{
-  //   let miStorage = window.localStorage;
-  //   console.log(miStorage.myCart)
-  // }
-
-  const [state, dispatch] = useStore();
-
-  //USEEFFECT CARGA DE PRODUCTOS
-
-  useEffect(() => {
-    const carga = async () => {
-      await fetchProducts(dispatch);
-    };
-    carga();
-  }, []);
 
   return (
     <section className="section-products">
-      {/* <button onClick={()=>mostra()}>mostra storage</button>   */}
-      {/* BOTTON PARA VER EL STORAGE NO BORRAR */}
+<FilterCategoies/>
       {state.products &&
         React.Children.toArray(
           state.products.map((product) => {
@@ -49,7 +55,6 @@ export default function Home() {
                 id={product.id}
                 name={product.name}
                 stock={product.stock}
-                // key={product.id}
                 price={product.price}
                 image={product.image}
                 handleSaveCart={handleSaveCart}

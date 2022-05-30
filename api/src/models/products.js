@@ -1,4 +1,4 @@
-const { DataTypes, UUIDV4 } = require('sequelize');
+const { DataTypes, UUIDV4 } = require("sequelize");
 module.exports = (sequelize) => {
     sequelize.define('product', {
         id: {
@@ -17,17 +17,29 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         description: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         rating: {
-            type: DataTypes.FLOAT
+            type: DataTypes.JSON({
+                average: {
+                    type: DataTypes.FLOAT,
+                },
+                each: {
+                    type: DataTypes.ARRAY(DataTypes.FLOAT),
+                }
+            }),
+            defaultValue: {
+                average: null,
+                each: []
+            }
         },
-        image: {
+        image: { //DEBERÍA SER UN ARRAY, PUEDE HABER MAS DE UNA FOTO POR PRODUCTO
             // type: DataTypes.BLOB,
             type: DataTypes.STRING,
             // type: DataTypes.ARRAY(
             //     DataTypes.BLOB),
+            allowNull: false
         },
         status: {
             type: DataTypes.ENUM("active", "inactive"),
@@ -35,24 +47,30 @@ module.exports = (sequelize) => {
         },
         stock: {
             type: DataTypes.INTEGER,
-
+            allowNull: false
         },
-        reviews: {
-            type: DataTypes.ARRAY(
-                DataTypes.JSON({
-                    user: DataTypes.STRING,
-                    text: DataTypes.STRING,
-                }))
-        },
-        qua: {
-            type: DataTypes.ARRAY(
-                DataTypes.JSON({
-                    question: DataTypes.STRING,
-                    answer: DataTypes.STRING,
-                }))
-        },
+        // reviews: { //REVISAR, NUEVA TABLA
+        //     type: DataTypes.ARRAY(
+        //         DataTypes.JSON({
+        //             user: DataTypes.STRING,
+        //             text: DataTypes.TEXT,
+        //         })),
+        //     defaultValue: []
+        // },
+        // questionsAndAnswers: {
+        //     type: DataTypes.ARRAY(
+        //         DataTypes.JSON({
+        //             question: DataTypes.STRING,
+        //             answer: DataTypes.STRING,
+        //         })),
+        //     defaultValue: []
+        // },
+        created: { //esto va a ser deleteado cuando de deployee la cuestion.
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
     },
-    {timestamps: false})
+        { timestamps: false })
 
 };
 

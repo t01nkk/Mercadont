@@ -5,8 +5,9 @@ const { User } = require("../db")
 const { Router } = require("express")
 const bcrypt = require("bcrypt")
 const passport = require('passport');
-const { initialize } = require('../middlewares/middlewares');
+const { initialize, validateInputUser } = require('../middlewares/middlewares');
 // const session = require('express-session');
+
 
 
 function checkAuthenticated(req, res, next) {
@@ -24,18 +25,18 @@ function checkNotAuthenticated(req, res, next) {
 }
 
 async function findUser(email) {
+    // console.log(email,)
     const userEmail = await User.findOne({ where: { email: email } })
-    // console.log(userEmail);
+    // console.log(userEmail)
     return userEmail
 }
 
-async function findById(id) {
-    const userId = await User.findOne({ where: { id: id } });
-    // console.log(userId);
+async function findById(name) {
+    const userId = await User.findOne({ where: { name: name } });
     return userId
 }
 
-initialize(passport, email => findUser(email), id => findById(id))
+initialize(passport, email => findUser(email), name => findById(name))
 
 //
 const router = Router()
@@ -45,32 +46,48 @@ function getUser(user) {
     return user
 }
 
+//
 router.get("/login", async (req, res) => {
-    res.send({ msg: 'Failure to authenticate credentials' })
+    return res.send({ msg: 'Failure to authenticate credentials' })
 })
 
+//Checked logged-in statussss
 router.get("/", async (req, res) => {
-    const user = await getUser(req.user)
-    if (user) {
+    console.log(req,)
+    const users = await getUser(req.user);
+    if (users) { return res.status(200).send(users) }
+    try {
+        res.send({ msg: "Logged In" });
 
-        res.status(300).send(user)
-    } else {
-        return res.status(401).send({ msg: "you need to log in" })
+    } catch (err) {
+        console.log({ msg: err.message });
     }
 })
 
+//??
 router.get("/register", checkNotAuthenticated, async (req, res) => {
     res.send({ msg: 'reg' })
 })
 
+//Log in with valid user
 router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/user',
     failureRedirect: '/user/login',
     failureFlash: true
-}
-))
+})
+    , async (req, res) => {
+        const user = await getUser(req.user)
+        console.log(req)
+        // console.log(user)
+        if (user) {
+            res.status(200).send(user.dataValues)
+        } else {
+            return res.status(401).send({ msg: "you need to log in" })
+        }
+    }
+)
 
-
+//Log out from valid user
 router.post('/logout', function (req, res, next) {
     req.logout(function (err) {
         if (err) { return next(err); }
@@ -78,21 +95,23 @@ router.post('/logout', function (req, res, next) {
     });
 });
 
+//Register a new user
 router.post("/register", checkNotAuthenticated, async (req, res) => {
     if (req.user) {
         return res.status(400).send({ message: "You can't register right now, you're already logged in!" })
     }
-    // const { email, password } = req.body;
-    const { name, lastname, email, password, address, description, image, payment } = req.body;
+    const { name, lastname, email, password, address, image, payment } = req.body;
+
+    let errors = validateInputUser(name, lastname, email, password)
+    if (errors.length) return res.status(400).send({ msg: errors });
+
     const exists = await User.findOne({ where: { email: email } });
+
     try {
         if (!exists) {
             const hashPass = await bcrypt.hash(password, 10);
-            // const newUser = await User.create({ email: email, password: hashPass });
-            const newUser = await User.create({ name, lastname, email, password: hashPass, address, description, image, payment });
-            // console.log(newUser)
+            await User.create({ name, lastname, email, password: hashPass, address, image, payment });
             res.status(201).send("New User Created")
-
         } else {
             res.status(400).send({ msg: "This user already exists" });
         }
@@ -125,6 +144,9 @@ router.put("/:id", async (req, res) => {
     const { id } = req.params
     const { name, lastname, email, password, address, image, payment } = req.body;
 
+    let errors = validateInputUser(name, lastname, email, password)
+    if (errors.length) return res.status(400).send({ msg: errors });
+
     try {
         const updatedUser = await User.update(
             {
@@ -138,21 +160,61 @@ router.put("/:id", async (req, res) => {
             },
             { where: { id: id } }
         );
-        res.status(202).send(updatedUser)
+        return res.status(202).send(updatedUser)
 
     } catch (error) {
         res.status(400).send(error)
     }
 });
 
-//Delete User
-router.delete("/:id", async (req, res) => {
-    const { id } = req.params;
+
+//Get Banned Users
+router.get("/ban/", async (req, res) => {
+
     try {
-        const destroyedUser = await User.destroy({ where: { id: id } });
-        res.status(200).send(destroyedUser)
+        const user = await User.findAll({
+            where: { banned: true }
+        });
+        if (!user) {
+            return res.status(404).send("There aren't any banned users yet")
+        }
+        return res.status(200).send(user)
+
     } catch (error) {
-        res.status(400).send(error)
+        res.status(404).send(error)
+    }
+});
+
+//Ban User
+router.put("/ban/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const bannedUser = await User.update(
+            {
+                banned: true
+            },
+            { where: { id: id } });
+        res.status(200).send(bannedUser);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+//Set Admin credencials
+router.put("/admin/:id", async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    try {
+        const setAdmin = await User.update(
+            {
+                isAdmin: status
+            },
+            { where: { id: id } });
+        res.status(200).send(setAdmin);
+    } catch (error) {
+        res.status(400).send(error);
     }
 });
 module.exports = router

@@ -2,40 +2,71 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "../../helpers/useForm.js";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useStore } from "../../context/store.js";
+import { fetchCategories } from "../../redux/actions/actions.js";
+import CheckboxCategories from "./CheckboxCategoriesEdit/CheckboxCategoriesEdit.jsx";
+
 export default function EditProduct() {
+  const [state, dispatch] = useStore();
   const [product, setProduct] = useState({
     name: "",
     description: "",
     price: "",
     stock: "",
     image: "",
-    categories: [""],
+    categories: [],
+    status: "",
   });
-
+  const handleDeleteCat = (name, event) => {
+    event.preventDefault();
+    const filterCat = product.categories.filter((cat) => cat !== name);
+    setProduct({ ...product, categories: filterCat });
+  };
+  const handleChangeCat = (e) => {
+    const { value } = e.target;
+    if (!product.categories.includes(value)) {
+      setProduct({
+        ...product,
+        categories: [...product.categories, value],
+      });
+    }
+  };
   let { id } = useParams();
 
   const fetchProductById = async () => {
-    const fetchedProduct = await axios.get(
-      `http://localhost:3001/product/${id}`
-    );
-
+    let fetchedProduct = await axios.get(`http://localhost:3001/product/${id}`);
+    const destructuringCats = [];
+    const { categories } = fetchedProduct.data;
+    for (const cats of categories) {
+      const { name } = cats;
+      destructuringCats.push(name);
+    }
+    console.log(destructuringCats, "soy el array");
+    fetchedProduct.data.categories = destructuringCats;
     setProduct(fetchedProduct.data);
+    console.log(fetchedProduct.data.categories, "soy el fetch");
   };
+
   useEffect(() => {
     fetchProductById();
+    fetchCategories(dispatch);
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, description, price, stock, image, categories } = product;
+    const { name, description, price, stock, image, categories, status } =
+      product;
     try {
-      await axios.put(`http://localhost:3001/product/${id}`, {
+      const res = await axios.put(`http://localhost:3001/product/update/${id}`, {
         name,
         description,
         price,
         stock,
         image,
+        status,
+        categories,
       });
+      console.log(product);
     } catch (err) {
       console.log(err);
     }
@@ -45,7 +76,7 @@ export default function EditProduct() {
   };
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3001/product/${id}`);
+      await axios.delete(`http://localhost:3001/product/delete/${id}`);
       alert("product deleted successfully");
     } catch (err) {
       console.log(err);
@@ -53,6 +84,8 @@ export default function EditProduct() {
   };
   return (
     <div>
+      {console.log(product.categories.length)}
+
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -77,14 +110,27 @@ export default function EditProduct() {
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
         </select>
-        {/* {product.categories.map((category) => (
-          <input
-            type="text"
-            name={category.name}
-            value={[category.name]}
-            onChange={handleChange}
-          />
-        ))} */}
+        <select onChange={handleChangeCat}>
+          <option value="" hidden>
+            Categories
+          </option>
+          {state.categories?.length &&
+            state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
+            state.categories.map((category) => (
+              <option key={category.id} value={category.name || category}>
+                {category.name}
+              </option>
+            ))}
+        </select>
+        {product.categories.length &&
+          product.categories?.map((category, i) => (
+            <div key={i}>
+              <p>{category.name || category}</p>
+              <button onClick={(event) => handleDeleteCat(category, event)}>
+                x
+              </button>
+            </div>
+          ))}
         <textarea
           name="description"
           cols="30"
