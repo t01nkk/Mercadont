@@ -1,6 +1,7 @@
 const { Product, User, Category, Qa, Review } = require("../db")
 const { Router } = require("express")
 const { validateInputProduct } = require("../middlewares/middlewares");
+const { Op } = require("sequelize");
 const router = Router()
 
 // Working
@@ -25,6 +26,41 @@ router.get('/', async (req, res) => {
           through: { attributes: [] },
         }
       ]
+    })
+    res.status(200).send(allProducts);
+  } catch (err) {
+    res.status(400).send({ msg: err.message });
+  }
+});
+
+// Get all products
+router.get('/search', async (req, res) => {
+  const {name} = req.query;
+  console.log("name:", name)
+  try {
+    const allProducts = await Product.findAll({
+      include: [
+        {
+          model: Category,
+          attributes: ['name'],
+          through: { attributes: [] }
+        },
+        {
+          model: Qa,
+          attributes: ["question", "answer", "resolved"],
+          through: { attributes: [] },
+        },
+        {
+          model: Review,
+          attributes: ["rating", "text"],
+          through: { attributes: [] },
+        }
+      ],
+      where: {
+        name: {
+          [Op.iLike] : `%${name}%`
+        }
+      }
     })
     res.status(200).send(allProducts);
   } catch (err) {
