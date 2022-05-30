@@ -5,31 +5,15 @@ const { User } = require("../db")
 const { Router } = require("express")
 const bcrypt = require("bcrypt")
 const passport = require('passport');
-const { validateInputUser } = require('../middlewares/middlewares');
+const { validateInputUser, checkAuthenticated } = require('../middlewares/middlewares');
 const router = Router()
 
-function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/user/login');
-}
-
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        res.redirect('/user')
-    }
-    next()
-}
-
+//Working - Users needs to be logged-in to create. Credencials only check is user is logged-in, not if the user has admin credencials.
 //Register a new Admin user
-router.post("/register", checkNotAuthenticated, async (req, res) => {
-
+router.post("/register", checkAuthenticated, async (req, res) => {
     const { name, lastname, email, password} = req.body;
-
-    let errors = validateInputUser(name,lastname,email,password)
-    if(errors.length) return res.status(400).send({ msg: errors});
-
+    // let errors = validateInputUser(name,lastname,email,password)
+    // if(errors.length) return res.status(400).send({ msg: errors});
     const exists = await User.findOne({ where: { email: email } });
 
     try {
@@ -40,13 +24,11 @@ router.post("/register", checkNotAuthenticated, async (req, res) => {
         } else {
             res.status(400).send({ msg: "This user already exists" });
         }
-
     } catch (error) {
         res.status(401).send(error)
     }
 });
-
-// Working / DATE: 29/05 - 00:00 - NACHO Y MATEO - NACHO_BRANCH
+// Working
 //Get all Users
 router.get("/users", checkAuthenticated, async (req, res) => {
     try {
@@ -55,13 +37,11 @@ router.get("/users", checkAuthenticated, async (req, res) => {
             return res.status(404).send("Users Not Found")
         }
         return res.status(200).send(user)
-
     } catch (error) {
         res.status(404).send(error)
     }
 });
-
-// Working / DATE: 29/05 - 00:00 - NACHO Y MATEO - NACHO_BRANCH
+// Working
 //Get User details
 router.get("/users/:id", checkAuthenticated, async (req, res) => {
     const { id } = req.params
@@ -74,12 +54,10 @@ router.get("/users/:id", checkAuthenticated, async (req, res) => {
             return res.status(404).send("User Not Found")
         }
         return res.status(200).send(user)
-
     } catch (error) {
         res.status(404).send(error)
     }
 });
-
 
 //Get Banned Users
 router.get("/bannedUsers", checkAuthenticated, async (req, res) => {
@@ -98,14 +76,29 @@ router.get("/bannedUsers", checkAuthenticated, async (req, res) => {
     }
 });
 
-//Give user Admin credencials OR Ban user
-router.put("/set/:id", checkAuthenticated, async (req, res) => {
-    const { id } = req.params;
-    const {setAdmin, setBan} = req.body
-    console.log("isAdmin:", isAdmin)
-    console.log("banned:", banned)
+//Get Admin Users
+router.get("/adminUsers", checkAuthenticated, async (req, res) => {
 
-    if(setAdmin){
+    try {
+        const user = await User.findAll({
+            where: { isAdmin : true}
+        });
+        if (!user) {
+            return res.status(404).send("There aren't any Admin users yet")
+        }
+        return res.status(200).send(user)
+
+    } catch (error) {
+        res.status(404).send(error)
+    }
+});
+
+//Give user Admin credencials
+router.put("/setAdmin/:id", checkAuthenticated, async (req, res) => {
+    const { id } = req.params;
+    const {setAdmin} = req.body
+
+    if(setAdmin !== undefined || setAdmin !== null){
         try {
             const isAdmin = await User.update(
                 {
@@ -118,8 +111,14 @@ router.put("/set/:id", checkAuthenticated, async (req, res) => {
             return res.status(400).send(error);
         }
     }
+});
 
-    if(setBan){
+//Ban user
+router.put("/ban/:id", checkAuthenticated, async (req, res) => {
+    const { id } = req.params;
+    const {setBan} = req.body
+
+    if(setBan !== undefined || setBan !== null){
         try {
             const bannedUser = await User.update(
                 {

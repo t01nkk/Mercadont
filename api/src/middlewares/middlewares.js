@@ -30,6 +30,20 @@ const { Op } = require("sequelize");
 //     passport.deserializeUser((name, done) => done(null, getUserById(name)))
 // }
 
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/user/login');
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        res.redirect('/user')
+    }
+    next()
+}
+
 function validateInputUser(name, lastname, email, password) {
     let errors = [];
     // if (!/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) errors.push("Email address is not valid");
@@ -88,5 +102,7 @@ module.exports = {
     // initialize,
     getProducts,
     validateInputUser,
-    validateInputProduct
+    validateInputProduct,
+    checkAuthenticated,
+    checkNotAuthenticated
 }
