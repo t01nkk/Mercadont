@@ -20,3 +20,12 @@
 .header-nav a {
   color: #fff;
 }
+.header-nav select{
+  height: 10vh;
+  background: black;
+  border: none;
+  color: white;
+  font-weight: 500;
+  letter-spacing: 3px;
+  font-size: 1.15rem;
+}
