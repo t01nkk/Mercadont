@@ -36,10 +36,6 @@ module.exports = (sequelize) => {
             }),
             // allowNull: false,
         },
-        image: {
-            type: DataTypes.BLOB,
-            // allowNull: false
-        },
         payment: {
             type: DataTypes.ARRAY(
                 DataTypes.JSON({
@@ -54,9 +50,9 @@ module.exports = (sequelize) => {
         isAdmin: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
-        }, 
+        },
     },
-    
-    { timestamps: false, })
+
+        { timestamps: false, })
 
 };

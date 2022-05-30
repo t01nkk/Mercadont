@@ -4,28 +4,6 @@ const passport = require("passport");
 const { auth } = require("../middlewares/PasswordUtils");
 const { genPassword } = require("../middlewares/PasswordUtils");
 const { User } = require("../db");
-// const axios = require('axios');
-
-// router.get('/SignIn', (req, res, next)=>{
-//   const form = '<h1>Register Page</h1><form method="post" action="/SignIn">\
-//                     Enter Username:<br><input type="text" name="username">\
-//                     <br>Enter Password:<br><input type="password" name="password">\
-//                     <br><br><input type="submit" value="Submit"></form>';
-
-//     res.send(form)
-// })
-
-// router.get('/login', (req, res, next)=>{
-//   const form = '<h1>Login Page</h1><form method="POST" action="/login">\
-//     Enter Username:<br><input type="text" name="username">\
-//     <br>Enter Password:<br><input type="password" name="password">\
-//     <br><br><input type="submit" value="Submit"></form>';
-//   res.send(form)
-// })
-
-// router.get('/', (req, res, next)=>{
-//     res.status(200).send('<h1>Home</h1><p>Please <a href="/SignIn">register</a></p>');
-// })
 
 router.get('/findUser', async (req, res) => {
   const { email } = req.body;
@@ -35,13 +13,23 @@ router.get('/findUser', async (req, res) => {
 })
 
 router.post("/register", async (req, res, next) => {
-  const { email, password } = req.body;
+  // const { email, password } = req.body;
+  const { name, lastname, email, password, address, image, payment } = req.body;
 
   try {
     const userExist = await User.findOne({ where: { email: email } });
-    console.log(userExist ? userExist : null, "HERE BE USER");
+    // console.log(userExist ? userExist : null, "HERE BE USER");
     if (!userExist) {
-      await User.create({ email: email, password: genPassword(password) });
+      await User.create({
+        email: email,
+        password: genPassword(password),
+        name: name,
+        lastname: lastname,
+        address: address,
+        image: image,
+        payment: payment,
+        created: true
+      });
 
       res.send({ msg: "User Registered" });
     } else {

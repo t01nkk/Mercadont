@@ -1,8 +1,10 @@
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt');
 const productos = require("../../productsCats.json");
+const users = require("../../users.json")
 const { Product, User, Category } = require("../db")
 const { Op } = require("sequelize");
+const { genPassword } = require('./PasswordUtils');
 
 
 // function initialize(passport, getUserByEmail, getUserById) {//
@@ -82,8 +84,46 @@ async function getProducts() {
 
     } else return { msg: "Failed" };
 
-    return { msg: "Data base loaded succesfully!" };
+    return { msg: "Product Database loaded succesfully!" };
 }
+
+async function getUsers() {
+    const findCreated = await User.findAll({ where: { created: true } })
+    const count = await User.count();
+    if (count === findCreated.length) {
+        for (let i = 0; i < users.length; i++) {
+            let password = genPassword(users[i].password)
+            const jsonUsers = await User.create({
+                email: users[i].email,
+                password: password,
+                name: users[i].name,
+                lastname: users[i].lastname,
+                address: users[i].address,
+                image: users[i].image,
+                adress: users[i].adress,
+                banned: users[i].banned,
+                isAdmin: users[i].isAdmin
+            })
+        }
+    }
+
+
+}
+
+async function modifyStock(local) {
+    for (let i = 0; i < local.length; i++) {
+        const findProduct = await Product.findByPk(local[i].id);
+        if (findProduct.stock - local[i].amount > 0) {
+            await Product.update({ stock: findProduct.stock - local[i].amount })
+        } else if (findProduct.stock - local[i].amount === 0) {
+            await Product.update({ stock: findProduct.stock - local[i].amount, status: "inactive" })
+        } else {
+            throw new Error({ msg: "There's not enough products to fulfill this purchase" });
+        }
+    }
+    return { msg: "Purchase Successful" };
+}
+
 module.exports = {
     // initialize,
     getProducts,
