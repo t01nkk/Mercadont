@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useStore } from "../../context/store";
-import SearchBar from "../SearchBar/SearchBar";
 import "./navBar.css";
 import logo from "../../media/header_logo.png";
-import { checkSession } from "../../redux/actions/actions";
-
+import { checkSession, fetchCategories } from "../../redux/actions/actions";
 import LoggedNavBar from "./LoggedNavBar/LoggedNavBar.jsx";
 import GuestNavBar from "./GuestNavBar/GuestNavBar";
+import { useStore } from "../../context/store";
+
 export default function NavBar() {
   const [state, dispatch] = useStore();
-
+  useEffect(() => {
+    fetchCategories(dispatch);
+  }, []);
   useEffect(() => {
     checkSession(dispatch);
   }, [state.session]);
@@ -20,6 +21,7 @@ export default function NavBar() {
         <div className="header-logo">
           <img src={logo} alt="" />
         </div>
+
         {state.session ? <LoggedNavBar /> : <GuestNavBar />}
       </header>
     </div>

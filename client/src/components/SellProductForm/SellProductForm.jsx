@@ -13,7 +13,8 @@ export default function SellProductForm() {
     name: "",
     price: "",
     description: "",
-    image: "https://www.clarin.com/img/2019/02/18/Kc0iayYpn_340x340__1.jpg",
+    image:
+      "https://t2.uc.ltmcdn.com/es/posts/7/7/5/como_hacer_choripan_42577_orig.jpg",
     status: "inactive",
     stock: "",
     categories: [],
@@ -35,7 +36,7 @@ export default function SellProductForm() {
     e.preventDefault();
     const { name, price, description, image, status, stock, categories } = data;
     try {
-      await axios.post("http://localhost:3001/product/", {
+      await axios.post("http://localhost:3001/product/create", {
         name: name,
         price: parseInt(price),
         description: description,
@@ -54,93 +55,98 @@ export default function SellProductForm() {
     fetchCategories(dispatch);
   }, []);
   return (
-    <div className="loginCard">
-      {console.log(data.categories)}
-      <h2>Post Product</h2>
+    <div className="container-login">
+      <div className="sellProductCard">
+        {console.log(data.categories)}
+        <h2>Post Product</h2>
 
-      <form onSubmit={handleSubmit}>
-        <div className="divInputUser">
-          <input
-            type="text"
-            name="name"
-            placeholder="Product Name ..."
-            onChange={handleChange}
-            required
-            value={data.name}
-          />
-        </div>
-
-        <div className="divInputUser">
-          <input
-            type="number"
-            name="price"
-            placeholder="Price ..."
-            onChange={handleChange}
-            required
-            value={data.price}
-          />
-        </div>
-        <div className="divInputUser">
-          <textarea
-            cols="30"
-            rows="15"
-            type="textarea"
-            name="description"
-            placeholder="Product Description ..."
-            onChange={handleChange}
-            required
-            value={data.description}
-          ></textarea>
-        </div>
-        <select onChange={handleChangeCat}>
-          <option value="" hidden>
-            Categories
-          </option>
-          {state.categories?.length &&
-            state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
-            state.categories.map((category) => (
-              <option key={category.id} value={category.name}>
-                {category.name}
-              </option>
-            ))}
-        </select>
-        {data.categories?.map((category, i) => (
-          <div key={i}>
-            <p>{category}</p>
-            <button onClick={(event) => handleDeleteCat(category, event)}>
-              x
-            </button>
+        <form onSubmit={handleSubmit} className="sellProductForm">
+          <div className="divInputUser">
+            <input
+              type="text"
+              name="name"
+              placeholder="Product Name ..."
+              onChange={handleChange}
+              required
+              value={data.name}
+            />
           </div>
-        ))}
-        <div>
-          <input
-            type="text"
-            name="image"
-            placeholder="Image..."
-            onChange={handleChange}
-            value={data.image}
-          />
-        </div>
-        <div className="divInputUser">
-          <label>Product status:</label>
-          <select name="status" value={data.status} onChange={handleChange}>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
+
+          <div className="divInputUser">
+            <input
+              type="number"
+              name="price"
+              placeholder="Price ..."
+              onChange={handleChange}
+              required
+              value={data.price}
+            />
+          </div>
+          <div className="divInputUser">
+            <textarea
+              cols="30"
+              rows="15"
+              type="textarea"
+              name="description"
+              placeholder="Product Description ..."
+              onChange={handleChange}
+              required
+              value={data.description}
+            ></textarea>
+          </div>
+          <select onChange={handleChangeCat} className="divInputUser">
+            <option value="" hidden className="divInputUser">
+              Categories
+            </option>
+            {state.categories?.length &&
+              state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
+              state.categories.map((category) => (
+                <option key={category.id} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
           </select>
-        </div>
-        <div className="divInputUser">
-          <input
-            type="number"
-            name="stock"
-            placeholder="Stock..."
-            onChange={handleChange}
-            value={data.stock}
-          />
-        </div>
-        <div className="btn">
-          <input type="submit" value="Send" />
-        </div>
-      </form>
+          {data.categories?.map((category, i) => (
+            <div key={i} className="button-x-container">
+              <p>{category}</p>
+              <button
+                onClick={(event) => handleDeleteCat(category, event)}
+                className="button-delete-category"
+              >
+                x
+              </button>
+            </div>
+          ))}
+          <div className="divInputUser">
+            <input
+              type="text"
+              name="image"
+              placeholder="Image..."
+              onChange={handleChange}
+              value={data.image}
+            />
+          </div>
+          <div className="divInputUser">
+            <label>Product status:</label>
+            <select name="status" value={data.status} onChange={handleChange}>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+          <div className="divInputUser">
+            <input
+              type="number"
+              name="stock"
+              placeholder="Stock..."
+              onChange={handleChange}
+              value={data.stock}
+            />
+          </div>
+          <div className="btn-login">
+            <input type="submit" value="Send" className="input-submit" />
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

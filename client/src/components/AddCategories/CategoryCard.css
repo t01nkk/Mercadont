@@ -1,25 +1,48 @@
-.container-login {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.cardsContainer {
+  height: 50px;
+  width: 200px;
+  display: grid;
+  align-self: center;
+  margin: 0%;
+  text-align: center;
+}
+.create {
+  padding: 4px 0 0 0;
+  margin: 0 0 0 0;
+  height: 39px;
+  width: 80px;
+  margin-right: 20px;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
 }
 
-.loginCard {
+.add-button:hover {
+  background-color: gainsboro;
+  transition: 0.3s;
+}
+
+.add-button-div {
+  margin-top: 20px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-content: center;
-  background-color: #fff;
-  padding: 25px 30px;
-  border-radius: 5px;
-  border-radius: 5px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
+  margin-left: 12px;
+  float: right;
+}
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions button {
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 0 0 0;
+  padding: 0 7px 0 2px;
 }
 
 .input-submit {
@@ -36,7 +59,7 @@
   font-family: "Montserrat", sans-serif;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
-.btn-login {
+.btn-createUser {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,35 +88,4 @@ form .btn-login input:hover {
 .input-submit:active {
   transform: translateY(-1px);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-.createUser-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  margin-top: 20px;
-}
-.createUser-container p {
-  font-weight: 300;
-}
-.btn-createUser {
-  font-weight: 600;
-  padding-top: 7px;
-}
-.divInputUser {
-  margin-bottom: 15px;
-
-  width: calc(100% / 2 - 20px);
-}
-
-.divInputUser input {
-  height: 45px;
-  width: 400px;
-  outline: none;
-  font-size: 16px;
-  border-radius: 5px;
-  padding-left: 15px;
-  border: 1px solid #ccc;
-  border-bottom-width: 2px;
-  transition: all 0.3s ease;
 }
