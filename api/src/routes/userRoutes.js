@@ -53,11 +53,14 @@ router.get("/login", async (req, res) => {
 
 //Checked logged-in statussss
 router.get("/", async (req, res) => {
-    const user = await getUser(req.user)
-    if (user) {
-        return res.status(300).send(user)
-    } else {
-        return res.status(401).send({ msg: "you need to log in" })
+    console.log(req,)
+    const users = await getUser(req.user);
+    if (users) { return res.status(200).send(users) }
+    try {
+        res.send({ msg: "Logged In" });
+
+    } catch (err) {
+        console.log({ msg: err.message });
     }
 })
 
@@ -72,15 +75,16 @@ router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
     failureRedirect: '/user/login',
     failureFlash: true
 })
-// , async(req,res)=>{
-//     const user = await getUser(req.user)
-//     console.log(req)
-//     if (user) {
-//         res.status(200).send(user.dataValues)
-//     } else {
-//         return res.status(401).send({ msg: "you need to log in" })
-//     }
-// }
+    , async (req, res) => {
+        const user = await getUser(req.user)
+        console.log(req)
+        // console.log(user)
+        if (user) {
+            res.status(200).send(user.dataValues)
+        } else {
+            return res.status(401).send({ msg: "you need to log in" })
+        }
+    }
 )
 
 //Log out from valid user
@@ -200,7 +204,7 @@ router.put("/ban/:id", async (req, res) => {
 //Set Admin credencials
 router.put("/admin/:id", async (req, res) => {
     const { id } = req.params;
-    const {status} = req.body;
+    const { status } = req.body;
 
     try {
         const setAdmin = await User.update(

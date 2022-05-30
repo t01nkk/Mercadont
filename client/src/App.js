@@ -8,6 +8,8 @@ import SellProduct from "./pages/SellProduct/SellProduct.jsx";
 import UserCart from "./pages/UserCart/UserCart.jsx";
 import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx";
 import LogInForm from "./components/LogInForm/LogInForm.jsx";
+import Categories from "./components/Categories/Categories.jsx";
+import AddCategories from "./components/AddCategories/AddCategories.jsx";
 import EditProduct from "./pages/EditProduct/EditProduct.jsx";
 import SearchedProducts from "./pages/SearchedProducts/SearchedProducts";
 import AccountDetails from "./pages/AccountDetails/AccountDetails";
@@ -15,6 +17,14 @@ import AccountDetailsForm from "./components/AccountDetailsForm/AccountDetailsFo
 //
 //
 // APP ROUTING  //
+import CategoriesCards from "./components/AddCategories/CategoriesCards";
+import CreateCategory from "./components/AddCategories/CreateCategory.jsx";
+// =======
+// import NavBar from "./components/NavBar/NavBar.jsx";
+// import CreateUser from "./pages/CreateUser/CreateUser.jsx";
+// import Home from "./pages/Home/Home.jsx";
+// >>>>>>> Stashed changes
+
 function App() {
   return (
     <>
@@ -56,6 +66,22 @@ function App() {
           {/* USER CART */}
           <NavBar />
           <UserCart />
+        </Route>        
+        <Route path="/categories" exact>
+          <NavBar />
+          <Categories /> 
+        </Route>
+        <Route path="/addCategories" exact>
+          <NavBar />
+          <CategoriesCards/> 
+        </Route>
+        <Route path="/editCategories/:id" exact>
+          <NavBar />
+          <AddCategories/> 
+        </Route>
+        <Route path="/createCategory" exact>
+          <NavBar />
+          <CreateCategory/> 
         </Route>
         <Route path="/logIn" exact>
           {/* USER LOGIN  */}
