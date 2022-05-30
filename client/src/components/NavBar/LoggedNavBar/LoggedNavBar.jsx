@@ -9,7 +9,7 @@ export default function LoggedNavBar() {
   };
   return (
     <div className="header-nav">
-      <Link to="/home">Home</Link>
+      <Link to="/">Home</Link>
 
       <SearchBar />
       <div className="dropdown">

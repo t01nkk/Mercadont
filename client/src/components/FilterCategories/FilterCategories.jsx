@@ -12,6 +12,7 @@ export default function FilerCategories() {
         categories: [],
     });
 console.log(filter)
+
     const handleSearch = async (e) => {
         e.preventDefault()
         const{categories}=filter

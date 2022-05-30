@@ -28,14 +28,15 @@ export default function Home() {
   };
 
   //USEEFFECT CARGA DE PRODUCTOS
-  useEffect(() => {
-    fetchProducts(dispatch);
-  }, []);
+  // useEffect(() => {
+  //   fetchProducts(dispatch);
+  // }, []);
   useEffect(() => {
     fetchCategories(dispatch);
   }, []);
 
   useEffect(() => {
+    fetchProducts(dispatch);
     localStorage.setItem("myCart", JSON.stringify(cart));
   }, [cart]);
 

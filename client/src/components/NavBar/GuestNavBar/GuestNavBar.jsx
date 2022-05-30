@@ -5,7 +5,7 @@ import SearchBar from "../../SearchBar/SearchBar";
 export default function GuestNavBar() {
   return (
     <div className="header-nav">
-      <Link to="/home">Home</Link>
+      <Link to="/">Home</Link>
 
       <SearchBar />
       <Link to="/logIn">Log in/Sign Up</Link>
