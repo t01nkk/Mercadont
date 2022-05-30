@@ -30,10 +30,10 @@ export default function ProductDetails() {
           description={product.description}
           stock={product.stock}
           price={product.price}
-          rating={product.rating}
+          // rating={product.rating}
           categories={product.categories}
-          reviews={product.reviews}
-          qua={product.qua}
+          // reviews={product.reviews}
+          // qua={product.qua}
           status={product.status}
         />
       )}

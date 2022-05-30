@@ -35,13 +35,13 @@ export default function SellProductForm() {
     e.preventDefault();
     const { name, price, description, image, status, stock, categories } = data;
     try {
-      await axios.post("http://localhost:3001/product/", {
+      await axios.post("http://localhost:3001/product/create", {
         name: name,
-        price: price,
+        price: parseInt(price) ,
         description: description,
         image: image,
         status: status,
-        stock: stock,
+        stock: parseInt(stock),
         categories: categories,
       });
 

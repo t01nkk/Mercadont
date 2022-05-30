@@ -1,0 +1,47 @@
+.cardsContainer {
+    height:50px;  
+    width: 200px; 
+    display: grid;
+    align-self: center;
+   margin: 0%;
+   text-align: center;
+   
+  }
+  .create {
+    padding: 4px 0 0 0;
+    margin: 0 0 0 0;
+    height: 39px;
+    width: 80px;
+    margin-right: 20px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .add-button:hover {
+    background-color: gainsboro;
+    transition: 0.3s;
+  }
+  
+  .add-button-div {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    margin-left: 12px;
+    float: right;
+  }
+  .actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .actions button {
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 0 0 0 0;
+    padding: 0 7px 0 2px;
+  }

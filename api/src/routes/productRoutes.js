@@ -1,6 +1,7 @@
 const { Product, User, Category, Qa, Review } = require("../db")
 const { Router } = require("express")
 const { validateInputProduct } = require("../middlewares/middlewares");
+const { Op } = require("sequelize");
 const router = Router()
 
 // Working
@@ -32,9 +33,44 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get all products
+router.get('/search', async (req, res) => {
+  const {name} = req.query;
+  console.log("name:", name)
+  try {
+    const allProducts = await Product.findAll({
+      include: [
+        {
+          model: Category,
+          attributes: ['name'],
+          through: { attributes: [] }
+        },
+        {
+          model: Qa,
+          attributes: ["question", "answer", "resolved"],
+          through: { attributes: [] },
+        },
+        {
+          model: Review,
+          attributes: ["rating", "text"],
+          through: { attributes: [] },
+        }
+      ],
+      where: {
+        name: {
+          [Op.iLike] : `%${name}%`
+        }
+      }
+    })
+    res.status(200).send(allProducts);
+  } catch (err) {
+    res.status(400).send({ msg: err.message });
+  }
+});
+
 // Working
 // Get all products Filter By Category
-router.get('/filter', async (req, res) => {
+router.post('/filter', async (req, res) => {
   if (req.body.categories) {
     const { categories } = req.body;
     const setCat = new Set(categories)
@@ -85,38 +121,42 @@ router.get('/filter', async (req, res) => {
 //Get Product Details
 router.get("/:id", async (req, res) => {
   const { id } = req.params
-  const product = await Product.findOne({
-    include: [
-      {
-        model: Category,
-        attributes: ['name'],
-        through: { attributes: [] }
-      },
-      {
-        model: Qa,
-        attributes: ["question", "answer", "resolved"],
-        through: { attributes: [] },
-      },
-      {
-        model: Review,
-        attributes: ["rating", "text"],
-        through: { attributes: [] },
+  try {
+    const product = await Product.findOne({
+      include: [
+        {
+          model: Category,
+          attributes: ['name'],
+          through: { attributes: [] }
+        },
+        {
+          model: Qa,
+          attributes: ["question", "answer", "resolved"],
+          through: { attributes: [] },
+        },
+        {
+          model: Review,
+          attributes: ["rating", "text"],
+          through: { attributes: [] },
+        }
+      ],
+      where: {
+        id: id
       }
-    ],
-    where: {
-      id: id
+    })
+    console.log("product:", product)
+    if (!product) {
+      return res.status(404).send("Product Not Found")
     }
-  })
-  if (!product) {
-    return res.status(404).send("Product Not Found")
+    return res.status(200).send(product)
+  } catch (error) {
+    return res.status(400).send({ msg: err.message });
   }
-  return res.status(200).send(product)
 })
 
 // Working
 //Create Product
 router.post("/create", async (req, res) => {
-
   let { name, price, description, status, image, stock, categories } = req.body
   let exists = await Product.findOne({ where: { name: name } });
 
@@ -135,7 +175,7 @@ router.post("/create", async (req, res) => {
       let category = await Category.findOne({ where: { name: categories[i] } })
       console.log(category)
       if (!category) {
-        return res.status(400).send({ msg: "This isn't a valid category, you might have misspeled it or you can choose to create a new one" })
+        return res.status(401).send({ msg: "This isn't a valid category, you might have misspeled it or you can choose to create a new one" })
 
       } else await newProduct.addCategory(category)
     }
