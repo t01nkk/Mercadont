@@ -1,9 +1,10 @@
-<<<<<<< HEAD
 const { Product, User, Category, Qa, Review } = require("../db");
 const { Router } = require("express");
 const Stripe = require("stripe")
 const cors = require("cors")
 const {modifyStock} = require("../middlewares/middlewares")
+const { validateInputProduct } = require("../middlewares/middlewares");
+const { Op } = require("sequelize");
 
 const router = Router();
 
@@ -11,17 +12,6 @@ const stripe = new Stripe("sk_test_51L4snIL7xpNkb3eJIsYUyZ8SYO4cHXX3GyMVVgp1lJ56
 //WORKING
 //Get All Products, Filter By Category, Name, Price
 router.get("/", async (req, res) => {
-=======
-const { Product, User, Category, Qa, Review } = require("../db")
-const { Router } = require("express")
-const { validateInputProduct } = require("../middlewares/middlewares");
-const { Op } = require("sequelize");
-const router = Router()
-
-// Working
-// Get all products
-router.get('/', async (req, res) => {
->>>>>>> d5e6a877f377be17e50d6c515885987e4aa85118
   try {
     const allProducts = await Product.findAll({
       include: [
