@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+// import { FormBuys } from '../FormBuys/FormBuys'
 import { ProductCart } from '../ProductCart/ProductCart'
+import { totalPrice } from './actionsCart'
+
 
 
 export const Cart = () => {
@@ -11,13 +14,18 @@ export const Cart = () => {
   const [priceTotal, setPriceTotal] = useState(0)
 
 
+  useEffect(()=>{
+    setPriceTotal(totalPrice())
+    // totalPrice()
+  },[])
 
   const deleteDatatoStorage = (name) =>{
     let newLocalStorage = yourStorage.filter(e => e.name !== name)
     setStorageCart(newLocalStorage)
     console.log(newLocalStorage)
     localStorage.setItem("myCart", JSON.stringify(newLocalStorage))
-    totalPrice()
+    setPriceTotal(totalPrice())
+    // totalPrice()
   }
 
   //Funcion para ver detalle del producto por id
@@ -37,19 +45,15 @@ export const Cart = () => {
     setStorageCart([])
   }
 
-  let totalPrice = ()=>{
-    let local = JSON.parse(localStorage.getItem("myCart"))
-    let total = 0
-    for(let i = 0; i< local.length; i++){
-      total += local[i].totalPrice
-    }
-    setPriceTotal(total)
-  }
+ 
 
   const makePurchase = ()=>{
-    let local = JSON.parse(localStorage.getItem("myCart"))
-    console.log(local, priceTotal)
+    // let local = JSON.parse(localStorage.getItem("myCart"))
+    // console.log(local, priceTotal)
+    localStorage.setItem("myPrice", JSON.stringify(priceTotal))
+    history.push("/buysProducts")
   }
+  
 
   return (
     <div>
@@ -82,6 +86,9 @@ export const Cart = () => {
         </div>
         <button onClick={makePurchase}>Buy</button>
       </section>
+
+      {/* <FormBuys priceTotal={priceTotal}/> */}
+      <br />
     </div>
     
   )
