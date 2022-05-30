@@ -37,11 +37,11 @@ export default function SellProductForm() {
     try {
       await axios.post("http://localhost:3001/product/", {
         name: name,
-        price: price,
+        price: parseInt(price),
         description: description,
         image: image,
         status: status,
-        stock: stock,
+        stock: parseInt(stock),
         categories: categories,
       });
 
