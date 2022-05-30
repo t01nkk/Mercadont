@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ProductCart.css";
+// import { totalPrice } from '../Cart/actionsCart.js'
 export const ProductCart = ({
   name,
   stock,
@@ -9,13 +10,14 @@ export const ProductCart = ({
   deleteDatatoStorage,
   viewProduct,
   pos,
-  totalPrice,
+  totalPrice
 }) => {
   let yourStorage = JSON.parse(localStorage.getItem("myCart"));
   const [storageCart, setStorageCart] = useState(yourStorage);
   const [permitLess, setPermitLess] = useState(false);
   const [permitMore, setPermitMore] = useState(true);
   const [count, setCount] = useState(storageCart[pos].amount);
+
 
   useEffect(() => {
     totalPrice();

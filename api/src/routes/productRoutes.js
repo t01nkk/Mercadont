@@ -1,8 +1,12 @@
 const { Product, User, Category, Qa, Review } = require("../db");
 const { Router } = require("express");
+const Stripe = require("stripe")
+const cors = require("cors")
+const {modifyStock} = require("../middlewares/middlewares")
 
 const router = Router();
 
+const stripe = new Stripe("sk_test_51L4snIL7xpNkb3eJIsYUyZ8SYO4cHXX3GyMVVgp1lJ56KTEq6Mc8qtENUNlam4mslm4pwNXq48uFQYLrDPldNso900jpNAxL5e")
 //WORKING
 //Get All Products, Filter By Category, Name, Price
 router.get("/", async (req, res) => {
@@ -359,5 +363,26 @@ router.put("/:questionId/resolved", async (req, res) => {
     res.status(400).send(err);
   }
 });
+
+router.post("/buys", async (req,res)=>{
+  try {
+    const {id,amount,local} = req.body
+    console.log(req.body)
+    const payment = await stripe.paymentIntents.create({
+      amount,
+      currency: "USD",
+      description:"Compra",
+      payment_method:id,
+      confirm:true
+    })
+
+    // modifyStock(local)
+    res.send(modifyStock(local))
+    // await stripe.
+    // res.status(200).send(console.log(req.body))
+  } catch (error) {
+    res.send(error)
+  }
+})
 
 module.exports = router;

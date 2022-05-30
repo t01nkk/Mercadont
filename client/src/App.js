@@ -12,6 +12,7 @@ import EditProduct from "./pages/EditProduct/EditProduct.jsx";
 import SearchedProducts from "./pages/SearchedProducts/SearchedProducts";
 import AccountDetails from "./pages/AccountDetails/AccountDetails";
 import AccountDetailsForm from "./components/AccountDetailsForm/AccountDetailsForm";
+import { FormBuys } from "./components/FormBuys/FormBuys";
 //
 //
 // APP ROUTING  //
@@ -75,6 +76,11 @@ function App() {
           {/* USER ACCOUNT DETAIL FORM */}
           <NavBar />
           <AccountDetailsForm />
+        </Route>
+        <Route path="/buysProducts" exact>
+          {/* USER ACCOUNT DETAIL FORM */}
+          <NavBar />
+          <FormBuys/>
         </Route>
       </Router>
     </>

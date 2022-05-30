@@ -4,6 +4,25 @@ const productos = require("../../productsCats.json");
 const { Product, User, Category } = require("../db")
 const { Op } = require("sequelize");
 
+const modifyStock =  async (local) =>{
+    let updateProduct;
+    try{
+        for (let i = 0; i < local.length; i++) {
+            const findProduct = await Product.findByPk(local[i].id);
+            if (findProduct.stock - local[i].amount > 0) {
+                updateProduct = await Product.update({ stock: findProduct.stock - local[i].amount },{where:{id:local[i].id}})
+            } else if (findProduct.stock - local[i].amount === 0) {
+                updateProduct = await Product.update({ stock: findProduct.stock - local[i].amount, status: "inactive" },{where:{id:local[i].id}})
+            } else {
+                throw new Error({ msg: "There's not enough products to fulfill this purchase" });
+            }
+        }
+        console.log(updateProduct)
+        return { msg: "compra realizada" };
+    }catch(error){
+        return error
+    }
+}
 
 function initialize(passport, getUserByEmail, getUserById) {//
     const authenticateUser = async (email, password, done) => {
@@ -92,5 +111,6 @@ module.exports = {
     initialize,
     getProducts,
     validateInputUser,
-    validateInputProduct
+    validateInputProduct,
+    modifyStock
 }
