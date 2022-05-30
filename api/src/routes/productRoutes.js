@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
 
 // Working
 // Get all products Filter By Category
-router.get('/filter', async (req, res) => {
+router.post('/filter', async (req, res) => {
   if (req.body.categories) {
     const { categories } = req.body;
     const setCat = new Set(categories)
