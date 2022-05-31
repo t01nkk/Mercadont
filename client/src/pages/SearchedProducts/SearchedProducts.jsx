@@ -45,17 +45,17 @@ export default function SearchedProducts() {
   const handleChange = (e) => {
     setError("")
     let value = e.target.value
-    if (!/^\d+$/.test(value) )setError("Only Positive Numbers are accepted in this field")
-    if (Number(value)  < 0) setError("Only Positive Numbers are accepted in this field")
+    if(value === "") return setMax(value)
+    if (!/^\d+\S/.test(value) || Number(value)<0  )setError("Only Positive Numbers are accepted in this field")
     setMax(value);
   };
 
   const handleChange2 = (e) => {
     setError("")
     let value = e.target.value
-    if (!/^\d+$/.test(value) )setError("Only Positive Numbers are accepted in this field")
-    if (Number(value)  < 0) setError("Only Positive Numbers are accepted in this field")
-    setMin(e.target.value);
+    if (value === "") return setMin(value)
+    if (!/^\d+\S/.test(value) || Number(value)<0 )setError("Only Positive Numbers are accepted in this field")
+    setMin(value);
 
   };
 
