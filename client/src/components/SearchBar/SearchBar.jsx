@@ -33,7 +33,7 @@ export default function SearchBar() {
     setRedirect(false);
   }, []);
   return (
-    <div>
+    <div className="search-gral">
       {redirect ? <Redirect push to="/search" /> : null}
       <form
         role="search"
@@ -49,7 +49,7 @@ export default function SearchBar() {
           required
           onChange={handleChange}
         />
-        <button type="submit">
+        <button type="submit" className="searchBar-container-button">
           <img src={icon} alt="" />
         </button>
       </form>

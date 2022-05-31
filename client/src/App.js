@@ -15,6 +15,7 @@ import SearchedProducts from "./pages/SearchedProducts/SearchedProducts";
 import AccountDetails from "./pages/AccountDetails/AccountDetails";
 import AccountDetailsForm from "./components/AccountDetailsForm/AccountDetailsForm";
 import { FormBuys } from "./components/FormBuys/FormBuys";
+
 //
 //
 // APP ROUTING  //
@@ -67,25 +68,26 @@ function App() {
           {/* USER CART */}
           <NavBar />
           <UserCart />
-        </Route>        
+        </Route>
         <Route path="/categories" exact>
           <NavBar />
-          <Categories /> 
+          <Categories />
         </Route>
         <Route path="/addCategories" exact>
           <NavBar />
-          <CategoriesCards/> 
+          <CategoriesCards />
         </Route>
         <Route path="/editCategories/:id" exact>
           <NavBar />
-          <AddCategories/> 
+          <AddCategories />
         </Route>
         <Route path="/createCategory" exact>
           <NavBar />
-          <CreateCategory/> 
+          <CreateCategory />
         </Route>
         <Route path="/logIn" exact>
           {/* USER LOGIN  */}
+          <NavBar />
           <LogInForm />
         </Route>
         <Route path="/createUser" exact>
@@ -106,7 +108,7 @@ function App() {
         <Route path="/buysProducts" exact>
           {/* USER ACCOUNT DETAIL FORM */}
           <NavBar />
-          <FormBuys/>
+          <FormBuys />
         </Route>
       </Router>
     </>

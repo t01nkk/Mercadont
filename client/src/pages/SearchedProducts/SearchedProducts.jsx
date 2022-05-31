@@ -94,7 +94,7 @@ export default function SearchedProducts() {
       </select>
       </div>
      
-      <form
+      <form className="form-filter-price"
         onSubmit={handleSearch}
       >
         <input
