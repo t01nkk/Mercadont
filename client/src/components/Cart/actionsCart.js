@@ -1,5 +1,12 @@
-export const ADD_CART = "ADD_CART"
-export const DELETE_ONE_TO_CART = "DELETE_ONE_TO_CART"
-export const DELETE_ALL_TO_CART = "DELETE_ALL_TO_CART"
-export const CLEAR_CART = "CLEAR_CART"
+export const totalPrice = ()=>{
+    let local = JSON.parse(localStorage.getItem("myCart"))
+    let total = 0
+    if(local){
+      for(let i = 0; i< local.length; i++){
+        total += local[i].totalPrice
+    }
+    return total
+  }
+  }
 
+  

@@ -47,33 +47,34 @@ export default function SearchedProducts() {
     setError("")
   };
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    let Filter;  
-    
-    if (min && !max) {
-      Filter = state.filter.filter(product => product.price >= min)
-     
-    } else if (max && !min) {
-      Filter = state.filter.filter(product => product.price <= max)
-     
-    } else if(min>max && max<min){
-      Filter = state.filter.filter(product => product.price >= min && product.price <= max )
-      
-    } else{   
-      setError("Please select valid number for the min and max inputs")
-     console.log(error)
-    }
-    dispatch({
-      type: FILTER,
-      payload: Filter
-    });
-    
-  };
   const handleChange2 = (e) => {
     setMin(e.target.value);
     setError("")
   };
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    let filter = state.searchedProducts;
+
+    if (min) {
+      filter = filter.filter(product => product.price >= min)
+    }
+    if (max) {
+      filter = filter.filter(product => product.price <= max)
+    }
+    if ((max && min) && Number(max) < Number(min)) {
+      setError("Please select valid number for the min and max inputs")
+      filter = []
+
+    }
+
+    dispatch({
+      type: FILTER,
+      payload: filter
+    });
+  };
+
  
  
 
@@ -94,7 +95,7 @@ export default function SearchedProducts() {
       </select>
       </div>
      
-      <form
+      <form className="form-filter-price"
         onSubmit={handleSearch}
       >
         <input
@@ -120,9 +121,6 @@ export default function SearchedProducts() {
       </form>
       {error&&<p>{error}</p>}
       </div>
-
-
-      {console.log(state.searchedProducts, "soy el state global", redirect)}
       {redirect ? <Redirect push to="/home" /> : null}
       <div className="cardsContainer"> {state.searchedProducts &&
         React.Children.toArray(

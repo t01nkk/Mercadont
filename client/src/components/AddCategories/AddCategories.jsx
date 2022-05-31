@@ -3,30 +3,27 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useStore } from "../../context/store.js";
 import { fetchCategories } from "../../redux/actions/actions.js";
-import { MdDeleteForever } from 'react-icons/md';
-
-
+import { MdDeleteForever } from "react-icons/md";
+import "../SellProductForm/SellProductForm.css";
+import "./CategoryCard.css";
 export default function EditProduct() {
   const [state, dispatch] = useStore();
   const [product, setProduct] = useState({
-    name: "",   
+    name: "",
   });
- 
+
   let { id } = useParams();
 
- 
-
-  useEffect(() => {    
+  useEffect(() => {
     fetchCategories(dispatch);
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name } =
-      product;
+    const { name } = product;
     try {
       await axios.put(`http://localhost:3001/categories/${id}`, {
-        name,        
+        name,
       });
       alert("category update successfully");
       console.log(product);
@@ -46,19 +43,24 @@ export default function EditProduct() {
     }
   };
   return (
-    <div> 
-
+    <div>
       <form onSubmit={handleSubmit}>
         <input
+          className="divInputUser"
           type="text"
           name="name"
           value={product.name}
           onChange={handleChange}
-        />       
-        <input type="submit" name="Update info" />
+        />
+        <div className="btn-addCat">
+          <input type="submit" name="Update info" className="input-submit" />
+        </div>
       </form>
-      <div className="actions"><button className="button" onClick={handleDelete}><MdDeleteForever size={30}/></button></div>
-      
+      <div className="actions">
+        <button className="button" onClick={handleDelete}>
+          <MdDeleteForever size={30} />
+        </button>
+      </div>
     </div>
   );
 }

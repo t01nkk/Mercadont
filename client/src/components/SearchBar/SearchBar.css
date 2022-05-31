@@ -18,6 +18,9 @@
 .searchBar-container {
   display: flex;
 } */
+.search-gral {
+  align-self: center;
+}
 :root {
   --rad: 0.12rem;
   --dur: 0.3s;
@@ -38,7 +41,7 @@
   border-radius: var(--rad);
 }
 .searchBar-container input,
-button {
+.searchBar-container-button {
   height: var(--height);
   font-family: var(--font-fam);
   border: 0;
@@ -58,7 +61,7 @@ button {
   z-index: 1;
   position: relative;
 }
-.searchBar-container button {
+.searchBar-container-button {
   display: none;
   width: var(--btn-width);
   background: var(--color-brand);

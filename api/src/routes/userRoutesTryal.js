@@ -55,7 +55,7 @@ router.post("/register", async (req, res, next) => {
 router.get("/Profile/auth", auth, (req, res, next) => {
   //Create auth
 
-  res.send("You are authenticated");
+  res.send(req.session);
 });
 
 router.get("/fail", (req, res) => {
@@ -85,6 +85,13 @@ router.post('/logout', function (req, res, next) {
     if (err) { return next(err); }
     res.redirect('/user');
   });
+});
+
+router.post("/findUser", async (req, res) => {
+  const { id } = req.body;
+  let userInfo = await User.findOne({ where: { id: id } });
+  if (userInfo) res.send(userInfo);
+  else res.status(404).send({ msg: "This user doesn't exist" });
 });
 
 router.get("/findAll", async (req, res) => {

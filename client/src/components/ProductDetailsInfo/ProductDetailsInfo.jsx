@@ -7,10 +7,10 @@ export default function ProductDetailsInfo({
   name,
   description,
   stock,
-  rating,
+  // rating,
   categories,
-  reviews,
-  qua,
+  // reviews,
+  // qua,
   status,
   price,
 }) {
@@ -36,12 +36,12 @@ export default function ProductDetailsInfo({
         <p>{stock}</p>
         <p className="title">Price: </p>
         <p>{price}U$D</p>
-        <p className="title">Rating: </p>
-        <p>{rating}</p>
-        <p className="title">Reviews:</p>
-        <p>{reviews}</p>
-        <p className="title">Q{"&"}A:</p>
-        <p>{qua}</p>
+        {/* <p className="title">Rating: </p>
+        <p>{rating}</p> */}
+        {/* <p className="title">Reviews:</p>
+        <p>{reviews}</p> */}
+        {/* <p className="title">Q{"&"}A:</p>
+        <p>{qua}</p> */}
       </div>
     </div>
   );

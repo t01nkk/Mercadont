@@ -3,11 +3,11 @@ import {
   FETCH_PRODUCTS,
   SEARCH_PRODUCT,
   FETCH_CATEGORIES,
+  USER_SESSION,
   SORT_BY_PRICE,
   FILTER,
   FILTER2,
   CATEGORIES_PRODUCT
- 
 } from "../actions/actionTypes";
 
 export const initialState = {
@@ -15,8 +15,8 @@ export const initialState = {
   searchedProducts: [],
   filter: [],
   categories: [],
-  state4: "estado state store#3",
-  state5: "estado state store#3",
+  user: "",
+  session: false,
 };
 
 export function reducer(state = initialState, action) {
@@ -38,33 +38,24 @@ export function reducer(state = initialState, action) {
     case CATEGORIES_PRODUCT: {
       return {
         ...state,
-       products: action.payload,
-       
+        products: action.payload,
       };
     }
 
     case FILTER: {
-
-
       return {
         ...state,
         searchedProducts: action.payload
       };
     }
     case FILTER2: {
-
-     
       return {
         ...state,
         searchedProducts: action.payload
       };
     }
-   
-    
-  
-
+      
     case SORT_BY_PRICE: {
-
       let order;
 
       if (action.payload === "ASCENDING") {
@@ -90,7 +81,7 @@ export function reducer(state = initialState, action) {
         });
       }
       return {
-        ...state, searchedProducts: order
+        ...state
       }
     }
 
@@ -100,7 +91,13 @@ export function reducer(state = initialState, action) {
         categories: action.payload,
       };
     }
-
+    case USER_SESSION: {
+      return {
+        ...state,
+        user: action.payload.data,
+        session: action.payload.session,
+      };
+    }
     default:
       return state;
   }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ProductCart.css";
+// import { totalPrice } from '../Cart/actionsCart.js'
 export const ProductCart = ({
   name,
   stock,
@@ -9,13 +10,14 @@ export const ProductCart = ({
   deleteDatatoStorage,
   viewProduct,
   pos,
-  totalPrice,
+  totalPrice
 }) => {
   let yourStorage = JSON.parse(localStorage.getItem("myCart"));
   const [storageCart, setStorageCart] = useState(yourStorage);
   const [permitLess, setPermitLess] = useState(false);
   const [permitMore, setPermitMore] = useState(true);
   const [count, setCount] = useState(storageCart[pos].amount);
+
 
   useEffect(() => {
     totalPrice();
@@ -29,28 +31,24 @@ export const ProductCart = ({
   };
 
   //Funcion para restar producto al carro
-  const oneLess = (stock, name, price) => {
-    console.log(count);
-    setCount(count - 1);
-    if (count - 1 < 2) setPermitLess(false);
-    if (count - 1 < stock) setPermitMore(true);
-    changeAmount(count, name, -1, price);
-  };
-
-  let changeAmount = (num, name, SoR, price) => {
-    let articleStogare = yourStorage.find((e) => e.name === name);
-    articleStogare.amount = num + SoR;
-    articleStogare.totalPrice = Math.round(price * (count + SoR));
-    setStorageCart(yourStorage);
-    localStorage.setItem("myCart", JSON.stringify(yourStorage));
-
-    // priceTotal(price * (count + SoR))
-    // setPriceTotal(price * (count + SoR))
-    // localStorage.setItem("myCart", JSON.stringify(priceTotal))
-  };
+  const oneLess = (stock, name,price)=>{
+      console.log(count)
+      setCount(count-1)
+      if(count -1 < 2) setPermitLess(false)
+      if(count -1 < stock) setPermitMore(true)
+      changeAmount(count,name, -1, price)
+    }
+  
+  
+  let changeAmount = (num, name, SoR ,price)=>{
+    let articleStogare = yourStorage.find(e => e.name === name)
+    articleStogare.amount = num + (SoR)
+    articleStogare.totalPrice = Math.round(price * (count + SoR))
+    setStorageCart(yourStorage)
+    localStorage.setItem("myCart", JSON.stringify(yourStorage))
+  }
 
   //FUNCION PARA VER EL STORAGE, NO BORRAR
-
   const mostra = () => {
     let miStorage = window.localStorage;
     console.log(yourStorage);

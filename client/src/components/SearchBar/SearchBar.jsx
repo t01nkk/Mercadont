@@ -17,7 +17,7 @@ export default function SearchBar() {
     try {
       e.preventDefault();
       const res = await axios.get(
-        `http://localhost:3001/product/?name=${input}`
+        `http://localhost:3001/product/search?name=${input}`
       );
       dispatch({
         type: SEARCH_PRODUCT,
@@ -33,8 +33,7 @@ export default function SearchBar() {
     setRedirect(false);
   }, []);
   return (
-    <div>
-      {console.log(redirect, state.searchedProducts)}
+    <div className="search-gral">
       {redirect ? <Redirect push to="/search" /> : null}
       <form
         role="search"
@@ -50,7 +49,7 @@ export default function SearchBar() {
           required
           onChange={handleChange}
         />
-        <button type="submit">
+        <button type="submit" className="searchBar-container-button">
           <img src={icon} alt="" />
         </button>
       </form>

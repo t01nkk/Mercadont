@@ -57,7 +57,7 @@ export default function EditProduct() {
     const { name, description, price, stock, image, categories, status } =
       product;
     try {
-      const res = await axios.put(`http://localhost:3001/product/${id}`, {
+      const res = await axios.put(`http://localhost:3001/product/update/${id}`, {
         name,
         description,
         price,
@@ -76,7 +76,7 @@ export default function EditProduct() {
   };
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3001/product/${id}`);
+      await axios.delete(`http://localhost:3001/product/delete/${id}`);
       alert("product deleted successfully");
     } catch (err) {
       console.log(err);
