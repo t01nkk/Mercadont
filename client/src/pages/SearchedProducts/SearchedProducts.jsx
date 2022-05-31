@@ -55,7 +55,6 @@ export default function SearchedProducts() {
   const handleSearch = async (e) => {
     e.preventDefault();
 
-    console.log(state)
     let filter = state.searchedProducts;
 
     if (min) {
