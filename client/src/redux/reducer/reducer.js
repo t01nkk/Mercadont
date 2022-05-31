@@ -6,8 +6,9 @@ import {
   USER_SESSION,
   SORT_BY_PRICE,
   FILTER,
-  FILTER2,
-  CATEGORIES_PRODUCT
+  SORT_BY_PRICE_CAT,
+  CATEGORIES_PRODUCT,
+  FILTER2
 } from "../actions/actionTypes";
 
 export const initialState = {
@@ -51,7 +52,7 @@ export function reducer(state = initialState, action) {
     case FILTER2: {
       return {
         ...state,
-        searchedProducts: action.payload
+        products: action.payload
       };
     }
       
@@ -71,6 +72,36 @@ export function reducer(state = initialState, action) {
       }
       if (action.payload === "DESCENDING") {
         order = state.searchedProducts.sort(function (a, b) {
+          if (a.price > b.price) {
+            return -1;
+          }
+          if (a.price < b.price) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+      return {
+        ...state
+      }
+    }
+
+    case SORT_BY_PRICE_CAT: {
+      let order;
+
+      if (action.payload === "ASCENDING") {
+        order = state.products.sort(function (a, b) {
+          if (a.price > b.price) {
+            return 1;
+          }
+          if (a.price < b.price) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+      if (action.payload === "DESCENDING") {
+        order = state.products.sort(function (a, b) {
           if (a.price > b.price) {
             return -1;
           }

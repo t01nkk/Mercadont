@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default function FilerCategories() {
   const [state, dispatch] = useStore();
-
+  const [redirect, setRedirect] = useState(false);
   const [filter, setFilter] = useState({
     categories: [],
   });
@@ -24,6 +24,7 @@ export default function FilerCategories() {
           type: CATEGORIES_PRODUCT,
           payload: res.data,
         });
+        setRedirect(true);
       } else {
         document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
         setFilter({
@@ -56,11 +57,13 @@ export default function FilerCategories() {
     if (array.includes(sel)) return array.filter((num) => num !== sel);
     return  array.concat(sel);
   }
-
+  useEffect(() => {
+    setRedirect(false);
+  }, []);
 
   return (
     <div>
-
+          {redirect ? <Redirect push to="/categories" /> : null}
       <form
         onSubmit={(e) => {
           handleSearch(e);

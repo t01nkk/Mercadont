@@ -56,7 +56,6 @@ export default function SearchedProducts() {
     e.preventDefault();
 
     let filter = state.searchedProducts;
-
     if (min) {
       filter = filter.filter(product => product.price >= min)
     }
@@ -68,6 +67,7 @@ export default function SearchedProducts() {
       filter = []
 
     }
+
 
     dispatch({
       type: FILTER,
@@ -103,7 +103,7 @@ export default function SearchedProducts() {
           type="text"
           value={min}
           placeholder="min..."
-          required
+          
           onChange={handleChange2}
         />
       </form>
@@ -115,7 +115,7 @@ export default function SearchedProducts() {
           type="text"
           value={max}
           placeholder="max..."
-          required
+          
           onChange={handleChange}
         />
       </form>
