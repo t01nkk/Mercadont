@@ -60,7 +60,7 @@ export default function FilerCategories() {
         <div className="form-checkbox-container">
           <div className="from-checkbox-grid">
             {state.categories.map((categories) => (
-              <div className="from-checkbox">
+              <div key={categories.name} className="from-checkbox">
                 <div className="from-checkbox-input">
                   <label htmlFor={categories.name}>{categories.name}</label>
                   <input
