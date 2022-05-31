@@ -43,16 +43,24 @@ export default function SearchedProducts() {
     });
   }
   const handleChange = (e) => {
-    setMax(e.target.value);
     setError("")
+    let value = e.target.value
+    if (!/^\d+$/.test(value) )setError("Only Positive Numbers are accepted in this field")
+    if (Number(value)  < 0) setError("Only Positive Numbers are accepted in this field")
+    setMax(value);
   };
 
   const handleChange2 = (e) => {
-    setMin(e.target.value);
     setError("")
+    let value = e.target.value
+    if (!/^\d+$/.test(value) )setError("Only Positive Numbers are accepted in this field")
+    if (Number(value)  < 0) setError("Only Positive Numbers are accepted in this field")
+    setMin(e.target.value);
+
   };
 
   const handleSearch = async (e) => {
+
     e.preventDefault();
     let filter = state.filter;
     if(min) {
@@ -62,8 +70,12 @@ export default function SearchedProducts() {
       filter = filter.filter(product => product.price <= max)
     }
     if ((max && min) && Number(max) < Number(min)) {
-      setError("Please select valid number for the min and max inputs")
+      setError("Please select valid numbers for the min and max inputs")
       filter = []
+    }
+    if (error){
+      alert("Please Add Valid inputs")
+      filter = state.filter
     }
     dispatch({
       type: FILTER,
