@@ -49,6 +49,7 @@ console.log(filter)
             const array2 = array.concat(sel);
             return array2;
         }
+        
     }
     return (
         <div>
