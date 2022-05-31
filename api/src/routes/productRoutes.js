@@ -117,7 +117,8 @@ router.post('/filter', async (req, res) => {
       if (!products.length) return res.send({ msg: "There aren't any products that match all these categories" });
       return res.send(products);
     } catch (err) {
-      return res.status(400).send({ msg: err.message });
+      console.log(err)
+      return res.status(400).send(err);
     }
   }
 })
@@ -155,7 +156,7 @@ router.get("/:id", async (req, res) => {
     }
     return res.status(200).send(product)
   } catch (error) {
-    return res.status(400).send({ msg: err.message });
+    return res.status(400).send({ msg: error.message });
   }
 })
 
