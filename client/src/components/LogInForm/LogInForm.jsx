@@ -38,43 +38,45 @@ export default function LogInForm() {
   };
 
   return (
-    <div className="loginCard">
-      {redirect ? <Redirect push to="/home" /> : null}
-      <h2>Sign In</h2>
+    <div className="container-login">
+      <div className="loginCard">
+        {redirect ? <Redirect push to="/home" /> : null}
+        <h2>Sign In</h2>
 
-      <form
-        onSubmit={handleLogin}
-        method="POST"
-        action="http://localhost:3001/user/login"
-      >
-        <div className="divInputUser">
-          <input
-            type="email"
-            name="email"
-            placeholder="email ..."
-            onChange={handleChange}
-            required
-            value={data.email}
-          />
-        </div>
-        <div className="divInputUser">
-          <input
-            type="password"
-            name="password"
-            placeholder="Password..."
-            onChange={handleChange}
-            required
-            value={data.password}
-          />
-        </div>
-        <div className="btn">
-          <input type="submit" value="Submit" />
-        </div>
-      </form>
-      <div>
-        Not a user yet?
-        <div className="btn">
-          <Link to="/createUser">Create User</Link>
+        <form
+          onSubmit={handleLogin}
+          method="POST"
+          action="http://localhost:3001/user/login"
+        >
+          <div className="divInputUser">
+            <input
+              type="email"
+              name="email"
+              placeholder="email ..."
+              onChange={handleChange}
+              required
+              value={data.email}
+            />
+          </div>
+          <div className="divInputUser">
+            <input
+              type="password"
+              name="password"
+              placeholder="Password..."
+              onChange={handleChange}
+              required
+              value={data.password}
+            />
+          </div>
+          <div className="btn-login">
+            <input type="submit" value="Submit" className="input-submit" />
+          </div>
+        </form>
+        <div className="createUser-container">
+          <p>Not a user yet?</p>
+          <div className="btn-createUser">
+            <Link to="/createUser">Create User</Link>
+          </div>
         </div>
       </div>
     </div>
