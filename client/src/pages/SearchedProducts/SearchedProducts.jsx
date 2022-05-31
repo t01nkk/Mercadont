@@ -46,7 +46,7 @@ export default function SearchedProducts() {
     setError("")
     let value = e.target.value
     if(value === "") return setMax(value)
-    if (!/^\d+\S/.test(value) || Number(value)<0  )setError("Only Positive Numbers are accepted in this field")
+    if (!/^\d+\S/.test(value) || Number(value) <=0  )setError("Only Positive Numbers are accepted in this field")
     setMax(value);
   };
 
@@ -54,7 +54,7 @@ export default function SearchedProducts() {
     setError("")
     let value = e.target.value
     if (value === "") return setMin(value)
-    if (!/^\d+\S/.test(value) || Number(value)<0 )setError("Only Positive Numbers are accepted in this field")
+    if (!/^\d+\S/.test(value) || Number(value) <=0 )setError("Only Positive Numbers are accepted in this field")
     setMin(value);
 
   };
