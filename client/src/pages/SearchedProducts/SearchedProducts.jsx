@@ -54,9 +54,8 @@ export default function SearchedProducts() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-
-    let filter = state.searchedProducts;
-    if (min) {
+    let filter = state.filter;
+    if(min) {
       filter = filter.filter(product => product.price >= min)
     }
     if (max) {
@@ -65,14 +64,12 @@ export default function SearchedProducts() {
     if ((max && min) && Number(max) < Number(min)) {
       setError("Please select valid number for the min and max inputs")
       filter = []
-
     }
-
-
     dispatch({
       type: FILTER,
       payload: filter
     });
+    console.log(state)
   };
 
  

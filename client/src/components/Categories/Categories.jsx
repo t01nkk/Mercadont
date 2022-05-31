@@ -49,7 +49,7 @@ export default function Categories() {
   const handleSearch = async (e) => {
     e.preventDefault();
 
-    let filter = state.products;
+    let filter = state.filter;
 
     if (min) {
       filter = filter.filter(product => product.price >= min)
