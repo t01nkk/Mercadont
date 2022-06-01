@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 /* import axios from "axios"; */
@@ -14,6 +15,8 @@ export default function Home() {
   const [inCart, setInCart] = useState(false);
   const [error, setError] = useState();
 
+  let person = JSON.parse(localStorage.getItem("myUser"))
+
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
     let totalPrice = price;
@@ -27,6 +30,20 @@ export default function Home() {
     setCart((cart) => [...cart, products]);
     }
   };
+
+  const handleSaveFavorite = async (id)=>{
+    await axios ("http://localhost:3001/user/addFavorite",{
+      idUser: person,
+      idProduct: id
+    })
+  }
+
+  const handleDeleteFavorite = (id)=>{
+    await axios ("http://localhost:3001/user/removeFavorite",{
+      idUser: person,
+      idProduct: id
+    })
+  }
 
   //USEEFFECT CARGA DE PRODUCTOS
   // useEffect(() => {
@@ -86,6 +103,8 @@ export default function Home() {
                 price={product.price}
                 image={product.image}
                 handleSaveCart={handleSaveCart}
+                handleSaveFavorite={handleSaveFavorite}
+                handleDeleteFavorite={handleDeleteFavorite}
               />
             );
           })
