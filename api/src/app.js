@@ -40,6 +40,7 @@ require("./middlewares/AUTH");
 
 server.use(passport.initialize());
 
+require("./middlewares/googleauth")
 server.use(passport.session());
 
 server.use("/", routes);

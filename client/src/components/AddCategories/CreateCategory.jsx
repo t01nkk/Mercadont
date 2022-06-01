@@ -10,8 +10,23 @@ export default function CreateCategory() {
   const [data, setData] = useState({
     name: "",
   });
+  const [error, setError] = useState('');
 
+  function validate(value) {
+    const { name } = data;
+      if (!/^\d+\S/.test(value) && Number(value) ) {
+          setError('name category');
+          setData({ [name]: "" })
+      } else {
+          setError('')
+          
+      }
+  }
   const handleChange = (e) => {
+    const {  name } = e.target;
+    if (name === 'name') {
+        validate(data.name)    }
+
     setData({ ...data, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
@@ -44,9 +59,10 @@ export default function CreateCategory() {
             value={data.name}
           />
         </div>
+        {!error ? null : <div className="error" >{error}</div>}
 
         <div className="btn-createUser">
-          <input type="submit" value="Create" className="input-submit" />
+          <input type="submit" value="Create" disabled={error} className="input-submit" />
         </div>
       </form>
     </div>

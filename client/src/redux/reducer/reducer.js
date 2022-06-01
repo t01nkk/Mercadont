@@ -1,4 +1,3 @@
-
 import {
   FETCH_PRODUCTS,
   SEARCH_PRODUCT,
@@ -8,7 +7,8 @@ import {
   FILTER,
   SORT_BY_PRICE_CAT,
   CATEGORIES_PRODUCT,
-  FILTER2
+  FILTER2,
+  ADMIN_SESSION,
 } from "../actions/actionTypes";
 
 export const initialState = {
@@ -19,6 +19,8 @@ export const initialState = {
   categories: [],
   user: "",
   session: false,
+  admin: {},
+  sessionAdmin: false,
 };
 
 export function reducer(state = initialState, action) {
@@ -34,7 +36,7 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         searchedProducts: action.payload,
-        filterCategory: action.payload
+        filter: action.payload,
       };
     }
     case CATEGORIES_PRODUCT: {
@@ -47,7 +49,7 @@ export function reducer(state = initialState, action) {
     case FILTER: {
       return {
         ...state,
-        searchedProducts: action.payload
+        searchedProducts: action.payload,
       };
     }
     case FILTER2: {
@@ -56,7 +58,7 @@ export function reducer(state = initialState, action) {
         filterr: action.payload
       };
     }
-      
+
     case SORT_BY_PRICE: {
       let order;
 
@@ -129,6 +131,13 @@ export function reducer(state = initialState, action) {
         ...state,
         user: action.payload.data,
         session: action.payload.session,
+      };
+    }
+    case ADMIN_SESSION: {
+      return {
+        ...state,
+        admin: action.payload.admin,
+        sessionAdmin: action.payload.sessionAdmin,
       };
     }
     default:

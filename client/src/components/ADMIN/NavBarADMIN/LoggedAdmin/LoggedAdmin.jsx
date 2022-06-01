@@ -1,18 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FilterCategories from "../../FilterCategories/FilterCategories";
-import SearchBar from "../../SearchBar/SearchBar";
-import "./LoggedNavBar.css";
-export default function LoggedNavBar() {
-  const logoutSesion = () => {
-    // let user = JSON.parse(localStorage.getItem("myUser"))
-    localStorage.removeItem("myUser");
+import { useStore } from "../../../../context/store";
+import FilterCategories from "../../../FilterCategories/FilterCategories";
+export default function LoggedAdmin() {
+  const [state, dispatch] = useStore();
+  const logOutSession = () => {
+    localStorage.clear();
   };
+  const adminName = state.admin.data.name;
+  console.log(state.admin.data);
   return (
     <div className="header-nav">
-      {/* <Link to="/">Home</Link> */}
       <div className="container-actions-user">
-        <Link to="/">Home</Link>
+        {/* <Link to="/">Home</Link> */}
         <div className="dropdown">
           <a className="dropbtn">Categories</a>
           <div className="dropdown-content-categories">
@@ -20,23 +20,23 @@ export default function LoggedNavBar() {
           </div>
         </div>
       </div>
-
-      <SearchBar />
-
       <div className="container-actions-user">
         <div className="dropdown">
-          <a className="dropbtn">Profile</a>
+          <a className="dropbtn">{adminName}</a>
           <div className="dropdown-content">
-            <Link to="/accountDetails"> Account Details </Link>
-            <Link to="/favorites">Favorites</Link>
             <Link to="/sellProduct">Sell</Link>
             <Link to="/addCategories">Create Categories</Link>
-            <Link onClick={logoutSesion} to="/">
+            <Link
+              onClick={logOutSession}
+              to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/login"
+            >
               Log Out
             </Link>
           </div>
         </div>
-        <Link to="/cart">Cart</Link>
+        <Link onClick={logOutSession} to="/home">
+          Switch to Customer
+        </Link>
       </div>
     </div>
   );

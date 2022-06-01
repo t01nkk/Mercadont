@@ -1,25 +1,27 @@
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt');
 const productos = require("../../productsCats.json");
+const users = require("../../users.json")
 const { Product, User, Category } = require("../db")
 const { Op } = require("sequelize");
+const { genPassword } = require('./PasswordUtils');
 
-const modifyStock =  async (local) =>{
+const modifyStock = async (local) => {
     let updateProduct;
-    try{
+    try {
         for (let i = 0; i < local.length; i++) {
             const findProduct = await Product.findByPk(local[i].id);
             if (findProduct.stock - local[i].amount > 0) {
-                updateProduct = await Product.update({ stock: findProduct.stock - local[i].amount },{where:{id:local[i].id}})
+                updateProduct = await Product.update({ stock: findProduct.stock - local[i].amount }, { where: { id: local[i].id } })
             } else if (findProduct.stock - local[i].amount === 0) {
-                updateProduct = await Product.update({ stock: findProduct.stock - local[i].amount, status: "inactive" },{where:{id:local[i].id}})
+                updateProduct = await Product.update({ stock: findProduct.stock - local[i].amount, status: "inactive" }, { where: { id: local[i].id } })
             } else {
                 throw new Error({ msg: "There's not enough products to fulfill this purchase" });
             }
         }
         console.log(updateProduct)
         return { msg: "compra realizada" };
-    }catch(error){
+    } catch (error) {
         return error
     }
 }
@@ -115,10 +117,31 @@ async function getProducts() {
 
     } else return { msg: "Failed" };
 
-    return { msg: "Data base loaded succesfully!" };
+    return { msg: "Product Database loaded succesfully!" };
 }
+
+async function getUsers() {
+    const findCreated = await User.findAll({ where: { userCreated: true } })
+    const count = await User.count();
+    if (findCreated?.length === count) {
+        for (let i = 0; i < users.length; i++) {
+            let password = genPassword(users[i].password)
+            await User.create({
+                email: users[i].email,
+                password: password,
+                name: users[i].name,
+                lastname: users[i].lastname,
+                address: users[i].address,
+                image: users[i].image,
+                banned: users[i].banned,
+                isAdmin: users[i].isAdmin
+            })
+        }
+    }
+}
+
 module.exports = {
-    // initialize,
+    getUsers,
     getProducts,
     validateInputUser,
     validateInputProduct,

@@ -1,10 +1,10 @@
-const { Product, User, Category, Qa, Review } = require("../db");
+const { Product, User, Category, Qa, Review, PurchaseOrder } = require("../db");
 const { Router } = require("express");
 const Stripe = require("stripe")
 const cors = require("cors")
 const {modifyStock} = require("../middlewares/middlewares")
 const { validateInputProduct } = require("../middlewares/middlewares");
-const { Op } = require("sequelize");
+const { Op, where, Sequelize } = require("sequelize");
 
 const router = Router();
 
@@ -247,6 +247,42 @@ router.put("/update/:id", async (req, res) => {
     return res.status(400).send(err)
   }
 })
+//CART - Buy Product
+router.post("/buys", async (req,res)=>{
+  try {
+    const {id, amount, local, userId} = req.body;
+
+    const payment = await stripe.paymentIntents.create({
+      amount,
+      currency: "USD",
+      description:"Compra",
+      payment_method:id,
+      confirm:true
+    })
+    modifyStock(local)
+
+
+    // console.log("local:", local)
+    for(let product of local){
+      // console.log("product:", product)
+      // console.log("id:",typeof id)
+      // console.log("userId:",typeof userId)
+      // console.log("product.id:",typeof product.id)
+      // console.log("product.quantity:",typeof product.quantity)
+      // REVISAR LOS DATATYPES DEL MODEL PURCHASEORDER - SON STRINGS POR EL MOMENTO
+      const db = await PurchaseOrder.create({
+        orderId: id,
+        userId: userId,
+        productId: product.id,
+        productQuantity: product.quantity,
+      })
+      // console.log("db:", db)
+    }
+    return res.status(200).send(payment)
+  } catch (error) {
+    return res.send(error)
+  }
+})
 
 ///////////////REVISAR ANTES DE USAR///////
 //Product Bought 
@@ -267,28 +303,7 @@ router.put("/update/:id", async (req, res) => {
 //     res.status(400).send(err)
 //   }
 // })
-
-//Product Restock
-router.post("/buys", async (req,res)=>{
-  try {
-    const {id,amount,local} = req.body
-    console.log(req.body)
-    const payment = await stripe.paymentIntents.create({
-      amount,
-      currency: "USD",
-      description:"Compra",
-      payment_method:id,
-      confirm:true
-    })
-
-    // modifyStock(local)
-    res.send(modifyStock(local))
-    // await stripe.
-    // res.status(200).send(console.log(req.body))
-  } catch (error) {
-    res.send(error)
-  }
-})
+//
 // router.put("/:id/restock", async (req, res) => {
 //   const { id } = req.params
 //   const { amount } = req.body
