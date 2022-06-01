@@ -181,9 +181,10 @@ router.delete('/removeFavorite', async (req, res) =>{
   try {
     const user = await User.findOne({where: {id:idUser}});
     const favoriteProduct = await Product.findOne({where: {id:idProduct}});
-    await user.removeProduct(favoriteProduct);
-    return res.status(200).send("Favorite removed");
+    const removed = await user.removeProduct(favoriteProduct);
+    return res.status(200).send(removed);
   } catch (error) {
+    console.log("error:", error)
     return res.status(404).send({ msg: error});
   }
 })

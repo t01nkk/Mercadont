@@ -32,16 +32,18 @@ export default function Home() {
   };
 
   const handleSaveFavorite = async (id)=>{
-    await axios ("http://localhost:3001/user/addFavorite",{
+    await axios.post("http://localhost:3001/user/addFavorite",{
       idUser: person,
       idProduct: id
     })
   }
 
-  const handleDeleteFavorite = (id)=>{
-    await axios ("http://localhost:3001/user/removeFavorite",{
-      idUser: person,
-      idProduct: id
+  const handleDeleteFavorite = async (id)=>{
+    await axios.delete("http://localhost:3001/user/removeFavorite",{
+      data:{
+        idUser: person,
+        idProduct: id
+      }
     })
   }
 
