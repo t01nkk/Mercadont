@@ -120,6 +120,7 @@ router.get("/details/:id", async (req, res) => {
   try {
       const user = await User.findOne({
           where: { id: id },
+          include: { all: true } 
       });
       if (!user) {
           return res.status(404).send("User Not Found")
@@ -181,12 +182,35 @@ router.delete('/removeFavorite', async (req, res) =>{
   try {
     const user = await User.findOne({where: {id:idUser}});
     const favoriteProduct = await Product.findOne({where: {id:idProduct}});
-    const removed = await user.removeProduct(favoriteProduct);
-    return res.status(200).send(removed);
+    await user.removeProduct(favoriteProduct);
+    return res.status(200).send("Favorite removed");
   } catch (error) {
-    console.log("error:", error)
     return res.status(404).send({ msg: error});
   }
 })
+
+// Get User's favorites
+router.get("/favorite/:id", async (req, res) => {
+  const { id } = req.params
+
+  try {
+      const userFavorites = await User.findOne({ 
+        include: {
+          model: Product,
+          through: {
+            attributes: []
+          },
+        },
+        where: { id: id} 
+      })
+      if (!userFavorites) {
+          return res.status(404).send("User Not Found")
+      }
+      return res.status(200).send(userFavorites.products)
+  } catch (error) {
+    // console.log("error:",error)
+    return res.status(404).send(error)
+  }
+});
 
 module.exports = router;

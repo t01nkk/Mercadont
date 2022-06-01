@@ -33,7 +33,7 @@ const { Product, Category } = require("./src/db");
 const { getProducts } = require("./src/middlewares/middlewares");
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
   server.listen(3001, async () => {
     await getProducts();
     console.log("%s listening at 3001"); // eslint-disable-line no-console
