@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./LoginForm.css";
 import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
-import GoogleLogin from "react-google-login";
-// import loginService from "../Services/login";
 
-export default function LogInForm() {
+export default function LoginADMIN() {
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -16,22 +13,6 @@ export default function LogInForm() {
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-
-  const handleLoginGoogle = async (googleData) => {
-    const res = await axios("/api/v1/auth/google", {
-      method: "POST",
-      body: JSON.stringify({
-        token: googleData.tokenId,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.json();
-    console.log(data);
-    // store returned user somehow
-  };
-
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -45,20 +26,37 @@ export default function LogInForm() {
         withCredentials: true,
         url: "http://localhost:3001/user/login",
       });
+
       if (user.data.passport.user) {
-        localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
-        setRedirect(true);
+        const idAdmin = user.data.passport.user;
+        const admin = await axios.post("http://localhost:3001/admin/getAdmin", {
+          id: idAdmin,
+        });
+
+        if (admin.data.isAdmin === true) {
+          localStorage.setItem("myAdmin", JSON.stringify(admin));
+          setRedirect(true);
+        } else {
+          alert("WRONG CREDENTIALS");
+        }
       }
     } catch (err) {
       alert(err);
     }
   };
-
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
   return (
     <div className="container-login">
       <div className="loginCard">
-        {redirect ? <Redirect push to="/home" /> : null}
-        <h2>Sign In</h2>
+        {redirect ? (
+          <Redirect
+            push
+            to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home"
+          />
+        ) : null}
+        <h2>ADMIN LOG In</h2>
 
         <form
           onSubmit={handleLogin}
@@ -89,19 +87,6 @@ export default function LogInForm() {
             <input type="submit" value="Submit" className="input-submit" />
           </div>
         </form>
-        <div className="createUser-container">
-          <GoogleLogin
-            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            buttonText="Log in with Google"
-            onSuccess={handleLoginGoogle}
-            onFailure={handleLoginGoogle}
-            cookiePolicy={"single_host_origin"}
-          />
-          <p>Not a user yet?</p>
-          <div className="btn-createUser">
-            <Link to="/createUser">Create User</Link>
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -43,7 +43,6 @@ export default function Categories() {
             );
           })
         )}</div>
-     
     </div>
   );
 }

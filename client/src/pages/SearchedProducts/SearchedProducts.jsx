@@ -3,7 +3,7 @@ import "./SearchedProducts.css"
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useStore } from "../../context/store";
 import { Redirect } from "react-router-dom";
-import { SORT_BY_PRICE, FILTER, FILTER2 } from "../../redux/actions/actionTypes";
+import { SORT_BY_PRICE, FILTER } from "../../redux/actions/actionTypes";
 
 export default function SearchedProducts() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];

@@ -6,3 +6,4 @@ export const USER_SESSION = "USER_SESSION";
 export const FILTER = "FILTER";
 export const FILTER2 = "FILTER2";
 export const CATEGORIES_PRODUCT = "CATEGORIES_PRODUCT"
+export const ADMIN_SESSION="ADMIN_SESSION"
