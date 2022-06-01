@@ -31,7 +31,7 @@ function App() {
           <Redirect to="/home" />
         </Route>
         <Route path="/home" exact>
-          {/* ADMIN/USER HOME  */}
+          {/* USER HOME  */}
           <NavBar />
           <Home />
         </Route>

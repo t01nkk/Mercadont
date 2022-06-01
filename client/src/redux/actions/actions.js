@@ -6,6 +6,7 @@ import {
   ADMIN_SESSION,
 } from "./actionTypes";
 
+
 export const fetchProducts = async (dispatch) => {
   const fetchedProducts = await axios.get("http://localhost:3001/product/");
   dispatch({
