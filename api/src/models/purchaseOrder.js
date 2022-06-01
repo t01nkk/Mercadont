@@ -2,15 +2,15 @@ const { DataTypes, UUIDV4 } = require('sequelize');
 module.exports = (sequelize) => {
     sequelize.define('purchaseOrder', {
         orderId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         userId:{
-            type: DataTypes.UUID,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         productId: {
-            type: DataTypes.UUID,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         productQuantity:{

@@ -27,11 +27,13 @@ export const SendBuys = ()=>{
         if(!error){
             // console.log(paymentMethod)
             const {id} = paymentMethod
-            await axios.post("http://localhost:3001/product/buys",{
+            const purchase = await axios.post("http://localhost:3001/product/buys",{
                 id,
                 amount: priceTotal * 100,
                 local,
+                userId : user
             }) 
+            console.log("purchase:", purchase)
             
         }
         localStorage.removeItem("myCart")
