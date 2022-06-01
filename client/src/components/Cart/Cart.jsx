@@ -7,7 +7,8 @@ import { totalPrice } from './actionsCart'
 
 
 export const Cart = () => {
-  let yourStorage = JSON.parse(localStorage.getItem("myCart"));
+  let user = JSON.parse(localStorage.getItem("myUser"))
+  let yourStorage = JSON.parse(localStorage.getItem(user));
   const [storageCart, setStorageCart] = useState(yourStorage);
   const history = useHistory();
   const [priceTotal, setPriceTotal] = useState(0);
@@ -27,7 +28,7 @@ export const Cart = () => {
     let newLocalStorage = yourStorage.filter(e => e.name !== name)
     setStorageCart(newLocalStorage)
     console.log(newLocalStorage)
-    localStorage.setItem("myCart", JSON.stringify(newLocalStorage))
+    localStorage.setItem(user, JSON.stringify(newLocalStorage))
     setPriceTotal(totalPrice())
     // totalPrice()
   }
@@ -45,7 +46,7 @@ export const Cart = () => {
 
   //Funcion para limpiar carro
   const clearCart = () => {
-    localStorage.removeItem("myCart");
+    localStorage.removeItem(user);
     setStorageCart([]);
   };
 
@@ -61,8 +62,8 @@ export const Cart = () => {
 
   return (
     <div>
-      {/* <button onClick={() => clearCart()}>Clear Cart</button>
-      <button onClick={() => mostra()}>mostra storage</button> */}
+      <button onClick={() => clearCart()}>Clear Cart</button>
+      {/* <button onClick={() => mostra()}>mostra storage</button> */}
       <section>
         <h2>Welcome your Cart</h2>
         <p>Total price:{priceTotal}</p>
@@ -80,6 +81,7 @@ export const Cart = () => {
                 viewProduct={viewProduct}
                 deleteDatatoStorage={deleteDatatoStorage}
                 totalPrice={totalPrice}
+                setPriceTotal={setPriceTotal}
               />
             ))
           ) : (

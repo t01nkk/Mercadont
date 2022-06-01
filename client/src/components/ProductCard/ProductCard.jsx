@@ -24,12 +24,12 @@ export default function ProductCard({
         <img src={shoppingCart} alt="add-cart" />
       </button>
 
-      <button
+      {/* <button
         className="shoppingCart-btn"
         onClick={() => handleSaveFavorite(name, price, image, id, stock)}
       >
         <img src={addFavorite} alt="add-favorite" />
-      </button>
+      </button> */}
         
       <Link to={`/home/${id}`}>
         <article className="card card-style">
