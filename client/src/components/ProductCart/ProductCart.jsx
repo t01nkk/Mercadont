@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ProductCart.css";
-// import { totalPrice } from '../Cart/actionsCart.js'
+import { totalPrice } from '../Cart/actionsCart'
 export const ProductCart = ({
   name,
   stock,
@@ -10,18 +10,21 @@ export const ProductCart = ({
   deleteDatatoStorage,
   viewProduct,
   pos,
-  totalPrice
+  setPriceTotal
+  // totalPrice
 }) => {
-  let yourStorage = JSON.parse(localStorage.getItem("myCart"));
+  let user = JSON.parse(localStorage.getItem("myUser"))
+  let yourStorage = JSON.parse(localStorage.getItem(user));
   const [storageCart, setStorageCart] = useState(yourStorage);
   const [permitLess, setPermitLess] = useState(false);
   const [permitMore, setPermitMore] = useState(true);
-  const [count, setCount] = useState(storageCart[pos].amount);
+  const [count, setCount] = useState(storageCart[pos].quantity);
+  // const [count, setCount] = useState(0);
 
 
-  useEffect(() => {
-    totalPrice();
-  }, [count]);
+  // useEffect(() => {
+  //   totalPrice();
+  // }, [count]);
 
   const oneMore = (stock, name, price) => {
     setCount(count + 1);
@@ -42,10 +45,11 @@ export const ProductCart = ({
   
   let changeAmount = (num, name, SoR ,price)=>{
     let articleStogare = yourStorage.find(e => e.name === name)
-    articleStogare.amount = num + (SoR)
+    articleStogare.quantity = num + (SoR)
     articleStogare.totalPrice = Math.round(price * (count + SoR))
     setStorageCart(yourStorage)
-    localStorage.setItem("myCart", JSON.stringify(yourStorage))
+    localStorage.setItem(user, JSON.stringify(yourStorage))
+    setPriceTotal(totalPrice())
   }
 
   //FUNCION PARA VER EL STORAGE, NO BORRAR
@@ -74,7 +78,7 @@ export const ProductCart = ({
         ) : (
           console.log("chau")
         )}
-        <span>{storageCart[pos].amount}</span>
+        <span>{storageCart[pos].quantity}</span>
         <p>{price * count}</p>
 
         <button onClick={() => deleteDatatoStorage(name)}>Eliminar</button>
