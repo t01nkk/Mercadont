@@ -42,7 +42,8 @@ router.post("/register", async (req, res, next) => {
 
 router.get("/Profile/auth", auth, (req, res, next) => {
   //Create auth
-  console.log(req.session)
+  // console.log("this is REQ SESSION", req.session)
+  console.log("here be AUTH", req.isAuthenticated())
   res.send(req.session);
 });
 
@@ -54,17 +55,14 @@ router.get("/fail", (req, res) => {
   }
 });
 
-
-// router.get("/logout", auth, (req, res, next) => {
-//   req.logout();
-//   res.redirect("/login");
-// });
-
-router.post('/logout', function (req, res, next) {
+router.post('/logout', auth, function (req, res, next) {
   try {
+    console.log("AUTHENTICATE BEFORE", req.isAuthenticated())
     req.logout(function (err) {
       if (err) { return next(err); }
-      res.redirect('/user');
+      console.log("AUTHENTICATE BEFORE", req.isAuthenticated())
+      // console.log("REQ.USER", req.user)
+      res.send({ msg: "Logged out successfully" })
     });
 
   } catch (err) {
@@ -114,18 +112,7 @@ router.get('/googleAuth',
     res.redirect('/user/Profile/auth');
   });
 
-// server.use(
-//   "/login/google",
-//   passport.authenticate("google", {
-//     scope: [
-//       "https://www.googleapis.com/auth/userinfo.profile",
-//       "https://www.googleapis.com/auth/userinfo.email",
-//     ],
-//     session: true,
-//     failureRedirect: '/login',
-//     failureMessage: true
-//   })
-// );
+
 
 /*-------------------------------------------------------------- */
 /*-------------------------Emails------------------------------- */

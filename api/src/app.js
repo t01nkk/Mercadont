@@ -36,20 +36,6 @@ server.use(
   })
 );
 
-
-// server.use(
-//   "/login/google",
-//   passport.authenticate("google", {
-//     scope: [
-//       "https://www.googleapis.com/auth/userinfo.profile",
-//       "https://www.googleapis.com/auth/userinfo.email",
-//     ],
-//     session: true,
-//     failureRedirect: '/login',
-//     failureMessage: true
-//   })
-// );
-
 require("./middlewares/AUTH");
 
 server.use(passport.initialize());

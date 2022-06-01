@@ -1,5 +1,4 @@
 var GoogleStrategy = require('passport-google-oauth20');
-// const { OAuth2Strategy as GoogleStrategy } =require ("passport-google-oauth");
 var passport = require('passport');
 const { User } = require("../db");
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
@@ -9,7 +8,6 @@ const createUuid = async () => {
     const id = uuidv4()
     const exists = await User.findByPk(id)
     if (!exists) {
-        console.log("soy Id papu", id)
         return id;
     } else createUuid()
 };
@@ -37,7 +35,6 @@ passport.use(new GoogleStrategy({
     callbackURL: 'http://localhost:3001/user/googleAuth'
 },
     async function (accessToken, refreshToken, profile, done) {
-        console.log("SOY EL PROFILE", profile)
         const exists = await findUser(profile?.emails[0]?.value)
         if (exists) {
             done(null, profile);
@@ -58,11 +55,10 @@ passport.use(new GoogleStrategy({
 ));
 
 passport.serializeUser(async (user, done) => {
-    console.log("SOY EMAIL", user)
     if (user.emails) {
         const UserId = await User.findOne({ where: { email: user.emails[0]?.value } });
-        console.log("serializeUser", UserId); //usuario logueado
-        console.log("soy userid", user.id); //id hgenerado en la tabla
+        // console.log("serializeUser", UserId); //usuario logueado
+        // console.log("soy userid", user.id); //id hgenerado en la tabla
         done(null, UserId.dataValues.id);
 
     } else {
@@ -71,10 +67,8 @@ passport.serializeUser(async (user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-    console.log("soy userid deserialise", id); // recive id de la sesion
     try {
         const UserId = await User.findOne({ where: { id } }); // lo busacamos en la base de datos
-        console.log("soy userid deserialise base", UserId);
         done(null, UserId); // devolvemos el usuario
     } catch (err) {
         done(err);
