@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 /* import axios from "axios"; */
@@ -14,6 +15,8 @@ export default function Home() {
   const [inCart, setInCart] = useState(false);
   const [error, setError] = useState();
 
+  let person = JSON.parse(localStorage.getItem("myUser"))
+
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
     let totalPrice = price;
@@ -27,6 +30,32 @@ export default function Home() {
     setCart((cart) => [...cart, products]);
     }
   };
+
+  const handleSaveFavorite = async (id)=>{
+    try {
+      await axios.post("http://localhost:3001/user/addFavorite",{
+      idUser: person,
+      idProduct: id
+    })
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
+  const handleDeleteFavorite = async (id)=>{
+    try {
+      await axios.delete("http://localhost:3001/user/removeFavorite",{
+      data:{
+        idUser: person,
+        idProduct: id
+      }
+    })
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
 
   //USEEFFECT CARGA DE PRODUCTOS
   // useEffect(() => {
@@ -74,7 +103,7 @@ export default function Home() {
 
   return (
     <section className="section-products">
-    <button onClick={() => mostra()}>mostra storage</button>
+    {/* <button onClick={() => mostra()}>mostra storage</button> */}
       {state.products &&
         React.Children.toArray(
           state.products.map((product) => {
@@ -86,6 +115,8 @@ export default function Home() {
                 price={product.price}
                 image={product.image}
                 handleSaveCart={handleSaveCart}
+                handleSaveFavorite={handleSaveFavorite}
+                handleDeleteFavorite={handleDeleteFavorite}
               />
             );
           })

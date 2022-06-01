@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ProductCard.css";
 import { Link } from "react-router-dom";
 import shoppingCart from "../../media/shoppingCart.png";
-import addFavorite from "../../media/heart-add-cart.png";
-import deleteFavorite from "../../media/heart-delete-cart.png";
+import imgAddFavorite from "../../media/heart-add-cart.png";
+import imgDeleteFavorite from "../../media/heart-delete-cart.png";
 
 
 export default function ProductCard({
@@ -14,7 +14,20 @@ export default function ProductCard({
   id,
   stock,
   handleSaveCart,
+  handleSaveFavorite,
+  handleDeleteFavorite
 }) {
+  const [changeButton, setChangeButton] = useState(true)
+
+  const postFavorite = ()=>{
+    setChangeButton(false)
+    handleSaveFavorite(id)
+  } 
+
+  const deleteFavorite = ()=>{
+    setChangeButton(true)
+    handleDeleteFavorite(id)
+  }
   return (
     <div>
       <button
@@ -23,14 +36,20 @@ export default function ProductCard({
       >
         <img src={shoppingCart} alt="add-cart" />
       </button>
-
-      {/* <button
+      {changeButton
+      ?<button
         className="shoppingCart-btn"
-        onClick={() => handleSaveFavorite(name, price, image, id, stock)}
+        onClick={() => postFavorite()}
       >
-        <img src={addFavorite} alt="add-favorite" />
-      </button> */}
-        
+        <img src={imgAddFavorite} alt="add-favorite" />
+      </button>
+      :<button
+        className="shoppingCart-btn"
+        onClick={() => deleteFavorite()}
+      >
+        <img src={imgDeleteFavorite} alt="delete-favorite" />
+      </button>
+      }
       <Link to={`/home/${id}`}>
         <article className="card card-style">
           <div className="img-container">

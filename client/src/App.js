@@ -15,17 +15,12 @@ import SearchedProducts from "./pages/SearchedProducts/SearchedProducts";
 import AccountDetails from "./pages/AccountDetails/AccountDetails";
 import AccountDetailsForm from "./components/AccountDetailsForm/AccountDetailsForm";
 import { FormBuys } from "./components/FormBuys/FormBuys";
-
-//
-//
-// APP ROUTING  //
 import CategoriesCards from "./components/AddCategories/CategoriesCards";
 import CreateCategory from "./components/AddCategories/CreateCategory.jsx";
-// =======
-// import NavBar from "./components/NavBar/NavBar.jsx";
-// import CreateUser from "./pages/CreateUser/CreateUser.jsx";
-// import Home from "./pages/Home/Home.jsx";
-// >>>>>>> Stashed changes
+import LoginADMIN from "./pages/ADMIN/LoginADMIN/LoginADMIN";
+import HomeAdmin from "./pages/ADMIN/HomeADMIN/HomeAdmin";
+import NavBarADMIN from "./components/ADMIN/NavBarADMIN/NavBarADMIN";
+import { Favorites } from "./components/Favorites/Favorites";
 
 function App() {
   return (
@@ -62,6 +57,7 @@ function App() {
         </Route>
         <Route path="/favorites" exact>
           <NavBar />
+          <Favorites />
           {/* USER FAVORITE PRODUCTS */}
         </Route>
         <Route path="/cart" exact>
@@ -109,6 +105,27 @@ function App() {
           {/* USER ACCOUNT DETAIL FORM */}
           <NavBar />
           <FormBuys />
+        </Route>
+        {/* AAAAAAAAAAAAAAAAADDDDDDDDDMMMMMMMIIIIIIIIIINNNNNNNN */}
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F"
+          exact
+        >
+          <Redirect to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/login" />
+        </Route>
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/login"
+          exact
+        >
+          <NavBarADMIN />
+          <LoginADMIN />
+        </Route>
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home"
+          exact
+        >
+          <NavBarADMIN />
+          <HomeAdmin />
         </Route>
       </Router>
     </>
