@@ -3,7 +3,7 @@ const router = Router();
 const passport = require("passport");
 const { auth } = require("../middlewares/PasswordUtils");
 const { genPassword } = require("../middlewares/PasswordUtils");
-const { User } = require("../db");
+const { User, Product } = require("../db");
 
 router.get("/findUser", async (req, res) => {
   const { email } = req.body;
