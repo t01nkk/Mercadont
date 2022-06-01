@@ -6,22 +6,22 @@ const { Product, User, Category } = require("../db")
 const { Op } = require("sequelize");
 const { genPassword } = require('./PasswordUtils');
 
-const modifyStock =  async (local) =>{
+const modifyStock = async (local) => {
     let updateProduct;
-    try{
+    try {
         for (let i = 0; i < local.length; i++) {
             const findProduct = await Product.findByPk(local[i].id);
             if (findProduct.stock - local[i].amount > 0) {
-                updateProduct = await Product.update({ stock: findProduct.stock - local[i].amount },{where:{id:local[i].id}})
+                updateProduct = await Product.update({ stock: findProduct.stock - local[i].amount }, { where: { id: local[i].id } })
             } else if (findProduct.stock - local[i].amount === 0) {
-                updateProduct = await Product.update({ stock: findProduct.stock - local[i].amount, status: "inactive" },{where:{id:local[i].id}})
+                updateProduct = await Product.update({ stock: findProduct.stock - local[i].amount, status: "inactive" }, { where: { id: local[i].id } })
             } else {
                 throw new Error({ msg: "There's not enough products to fulfill this purchase" });
             }
         }
         console.log(updateProduct)
         return { msg: "compra realizada" };
-    }catch(error){
+    } catch (error) {
         return error
     }
 }
@@ -91,8 +91,6 @@ async function getProducts() {
     let count = await Product.count();
     if (findCreated.length === count) {
         for (let i = 0; i < productos.length; i++) {
-            console.log(i)
-            console.log(productos[i])
             const newProduct = await Product.create({
                 name: productos[i].name,
                 price: productos[i].price,
@@ -125,11 +123,8 @@ async function getProducts() {
 async function getUsers() {
     const findCreated = await User.findAll({ where: { userCreated: true } })
     const count = await User.count();
-    console.log(users.length)
     if (findCreated?.length === count) {
         for (let i = 0; i < users.length; i++) {
-            console.log(i)
-            console.log(users[i]);
             let password = genPassword(users[i].password)
             await User.create({
                 email: users[i].email,

@@ -202,6 +202,7 @@
 // });
 
 // //Set Admin credencials
+
 // router.put("/admin/:id", async (req, res) => {
 //     const { id } = req.params;
 //     const { status } = req.body;
