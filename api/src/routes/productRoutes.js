@@ -1,12 +1,17 @@
-const { Product, User, Category, Qa, Review } = require("../db")
-const { Router } = require("express")
+const { Product, User, Category, Qa, Review, PurchaseOrder } = require("../db");
+const { Router } = require("express");
+const Stripe = require("stripe")
+const cors = require("cors")
+const {modifyStock} = require("../middlewares/middlewares")
 const { validateInputProduct } = require("../middlewares/middlewares");
-const { Op } = require("sequelize");
-const router = Router()
+const { Op, where, Sequelize } = require("sequelize");
 
-// Working
-// Get all products
-router.get('/', async (req, res) => {
+const router = Router();
+
+const stripe = new Stripe("sk_test_51L4snIL7xpNkb3eJIsYUyZ8SYO4cHXX3GyMVVgp1lJ56KTEq6Mc8qtENUNlam4mslm4pwNXq48uFQYLrDPldNso900jpNAxL5e")
+//WORKING
+//Get All Products, Filter By Category, Name, Price
+router.get("/", async (req, res) => {
   try {
     const allProducts = await Product.findAll({
       include: [
@@ -112,7 +117,8 @@ router.post('/filter', async (req, res) => {
       if (!products.length) return res.send({ msg: "There aren't any products that match all these categories" });
       return res.send(products);
     } catch (err) {
-      return res.status(400).send({ msg: err.message });
+      console.log(err)
+      return res.status(400).send(err);
     }
   }
 })
@@ -150,7 +156,7 @@ router.get("/:id", async (req, res) => {
     }
     return res.status(200).send(product)
   } catch (error) {
-    return res.status(400).send({ msg: err.message });
+    return res.status(400).send({ msg: error.message });
   }
 })
 
@@ -241,6 +247,42 @@ router.put("/update/:id", async (req, res) => {
     return res.status(400).send(err)
   }
 })
+//CART - Buy Product
+router.post("/buys", async (req,res)=>{
+  try {
+    const {id, amount, local, userId} = req.body;
+
+    const payment = await stripe.paymentIntents.create({
+      amount,
+      currency: "USD",
+      description:"Compra",
+      payment_method:id,
+      confirm:true
+    })
+    modifyStock(local)
+
+
+    // console.log("local:", local)
+    for(let product of local){
+      // console.log("product:", product)
+      // console.log("id:",typeof id)
+      // console.log("userId:",typeof userId)
+      // console.log("product.id:",typeof product.id)
+      // console.log("product.quantity:",typeof product.quantity)
+      // REVISAR LOS DATATYPES DEL MODEL PURCHASEORDER - SON STRINGS POR EL MOMENTO
+      const db = await PurchaseOrder.create({
+        orderId: id,
+        userId: userId,
+        productId: product.id,
+        productQuantity: product.quantity,
+      })
+      // console.log("db:", db)
+    }
+    return res.status(200).send(payment)
+  } catch (error) {
+    return res.send(error)
+  }
+})
 
 ///////////////REVISAR ANTES DE USAR///////
 //Product Bought 
@@ -261,8 +303,7 @@ router.put("/update/:id", async (req, res) => {
 //     res.status(400).send(err)
 //   }
 // })
-
-//Product Restock
+//
 // router.put("/:id/restock", async (req, res) => {
 //   const { id } = req.params
 //   const { amount } = req.body

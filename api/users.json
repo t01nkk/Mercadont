@@ -1,0 +1,47 @@
+[
+    {
+        "name": "Bird",
+        "lastname": "Ramsey",
+        "email": "birdramsey@gmail.com",
+        "password": "Password12345",
+        "address": "Bird st.331",
+        "banned": false,
+        "isAdmin": true
+    },
+    {
+        "name": "Gordon",
+        "lastname": "Ramsay",
+        "email": "ihatecooking@gmail.com",
+        "password": "Password12345",
+        "address": "Elephant st.445",
+        "banned": false,
+        "isAdmin": false
+    },
+    {
+        "name": "Crystal",
+        "lastname": "Champagne",
+        "email": "aameetings@gmail.com",
+        "password": "NotdrunkEnough22",
+        "address": "Imaginary st.445",
+        "banned": true,
+        "isAdmin": false
+    },
+    {
+        "name": "Esteban",
+        "lastname": "Quito",
+        "email": "juegodepalabras@gmail.com",
+        "password": "CleverHuh321",
+        "address": "Imaginary st.445",
+        "banned": false,
+        "isAdmin": false
+    },
+    {
+        "name": "Admin",
+        "lastname": "Admin",
+        "email": "admin@admin.com",
+        "password": "Admin1234",
+        "address": "Mod st.445",
+        "banned": false,
+        "isAdmin": true
+    }
+]

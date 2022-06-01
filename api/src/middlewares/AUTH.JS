@@ -17,9 +17,8 @@ passport.use(
           return done(null, false);
         }
         const isCompared = await bcrypt.compare(password, user.password);
-        console.log(isCompared, "HERE BE PASSWORD CHECK");
 
-        if (!bcrypt.compare(password, user.password)) {
+        if (!isCompared) {
           return done(null, false);
         }
         return done(null, user);
@@ -32,16 +31,12 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  console.log("serializeUser", user); //usuario logueado
-  console.log("soy userid", user.id); //id hgenerado en la tabla
   done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
-  console.log("soy userid deserialise", id); // recive id de la sesion
   try {
     const UserId = await User.findByPk(id); // lo busacamos en la base de datos
-    console.log("soy userid deserialise base", UserId);
     done(null, UserId); // devolvemos el usuario
   } catch (err) {
     done(err);

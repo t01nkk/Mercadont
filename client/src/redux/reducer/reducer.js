@@ -1,4 +1,3 @@
-
 import {
   FETCH_PRODUCTS,
   SEARCH_PRODUCT,
@@ -6,8 +5,10 @@ import {
   USER_SESSION,
   SORT_BY_PRICE,
   FILTER,
+  SORT_BY_PRICE_CAT,
+  CATEGORIES_PRODUCT,
   FILTER2,
-  CATEGORIES_PRODUCT
+  ADMIN_SESSION,
 } from "../actions/actionTypes";
 
 export const initialState = {
@@ -17,6 +18,8 @@ export const initialState = {
   categories: [],
   user: "",
   session: false,
+  admin: {},
+  sessionAdmin: false,
 };
 
 export function reducer(state = initialState, action) {
@@ -25,14 +28,13 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
-        
       };
     }
     case SEARCH_PRODUCT: {
       return {
         ...state,
         searchedProducts: action.payload,
-        filter: action.payload
+        filter: action.payload,
       };
     }
     case CATEGORIES_PRODUCT: {
@@ -45,16 +47,16 @@ export function reducer(state = initialState, action) {
     case FILTER: {
       return {
         ...state,
-        searchedProducts: action.payload
+        searchedProducts: action.payload,
       };
     }
     case FILTER2: {
       return {
         ...state,
-        searchedProducts: action.payload
+        products: action.payload
       };
     }
-      
+
     case SORT_BY_PRICE: {
       let order;
 
@@ -81,7 +83,37 @@ export function reducer(state = initialState, action) {
         });
       }
       return {
-        ...state, searchedProducts: order
+        ...state
+      }
+    }
+
+    case SORT_BY_PRICE_CAT: {
+      let order;
+
+      if (action.payload === "ASCENDING") {
+        order = state.products.sort(function (a, b) {
+          if (a.price > b.price) {
+            return 1;
+          }
+          if (a.price < b.price) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+      if (action.payload === "DESCENDING") {
+        order = state.products.sort(function (a, b) {
+          if (a.price > b.price) {
+            return -1;
+          }
+          if (a.price < b.price) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+      return {
+        ...state
       }
     }
 
@@ -96,6 +128,13 @@ export function reducer(state = initialState, action) {
         ...state,
         user: action.payload.data,
         session: action.payload.session,
+      };
+    }
+    case ADMIN_SESSION: {
+      return {
+        ...state,
+        admin: action.payload.admin,
+        sessionAdmin: action.payload.sessionAdmin,
       };
     }
     default:

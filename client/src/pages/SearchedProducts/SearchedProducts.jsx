@@ -3,15 +3,15 @@ import "./SearchedProducts.css"
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useStore } from "../../context/store";
 import { Redirect } from "react-router-dom";
-import { SORT_BY_PRICE, FILTER, FILTER2 } from "../../redux/actions/actionTypes";
+import { SORT_BY_PRICE, FILTER } from "../../redux/actions/actionTypes";
 
 export default function SearchedProducts() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
   const [state, dispatch] = useStore();
   const [cart, setCart] = useState(initialCart);
-  const [min, setMin] = useState("");
-  const [max, setMax] = useState("");
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(0);
   const [error, setError] = useState("")
 
 
@@ -42,38 +42,43 @@ export default function SearchedProducts() {
       payload: e.target.value
     });
   }
-  const handleChange = (e) => {
-    setMax(e.target.value);
+  const handleChangeMax = (e) => {
     setError("")
+    if(e.target.value < 0)setError("Only Positive Numbers are accepted in this field")
+    setMax(e.target.value);
+  };
+
+  const handleChangeMin = (e) => {
+    setError("")
+    if (e.target.value <0 )setError("Only Positive Numbers are accepted in this field")
+    setMin(e.target.value);
   };
 
   const handleSearch = async (e) => {
+
     e.preventDefault();
-    let Filter;  
-    
-    if (min && !max) {
-      Filter = state.filter.filter(product => product.price >= min)
-     
-    } else if (max && !min) {
-      Filter = state.filter.filter(product => product.price <= max)
-     
-    } else if(min>max && max<min){
-      Filter = state.filter.filter(product => product.price >= min && product.price <= max )
-      
-    } else{   
-      setError("Please select valid number for the min and max inputs")
-     console.log(error)
+    let filter = state.filter;
+    if(min) {
+      filter = filter.filter(product => product.price >= min)
+    }
+    if (max) {
+      filter = filter.filter(product => product.price <= max)
+    }
+    if ((max && min) && parseInt(max) < parseInt(min)) {
+      setError("Please select valid numbers for the min and max inputs")
+      filter = []
+    }
+    if (error){
+      alert("Please Add Valid inputs")
+      filter = state.filter
     }
     dispatch({
       type: FILTER,
-      payload: Filter
+      payload: filter
     });
-    
+    console.log(state)
   };
-  const handleChange2 = (e) => {
-    setMin(e.target.value);
-    setError("")
-  };
+
  
  
 
@@ -94,35 +99,32 @@ export default function SearchedProducts() {
       </select>
       </div>
      
-      <form
+      <form className="form-filter-price"
         onSubmit={handleSearch}
       >
         <input
           id="filter2"
-          type="text"
+          type="number"
           value={min}
           placeholder="min..."
-          required
-          onChange={handleChange2}
-        />
+          min={0}
+          onChange={handleChangeMin}
+        input/>
       </form>
       <form
         onSubmit={handleSearch}
       >
         <input
           id="filter"
-          type="text"
+          type="number"
           value={max}
           placeholder="max..."
-          required
-          onChange={handleChange}
+          min={0}
+          onChange={handleChangeMax}
         />
       </form>
       {error&&<p>{error}</p>}
       </div>
-
-
-      {console.log(state.searchedProducts, "soy el state global", redirect)}
       {redirect ? <Redirect push to="/home" /> : null}
       <div className="cardsContainer"> {state.searchedProducts &&
         React.Children.toArray(

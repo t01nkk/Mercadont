@@ -2,17 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { fetchCategories } from "../../redux/actions/actions";
 import { useStore } from "../../context/store";
-
+import "./CategoryCard.css";
 
 export default function CreateCategory() {
   const [state, dispatch] = useStore();
-  
 
   const [data, setData] = useState({
     name: "",
-  
   });
-
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -23,8 +20,7 @@ export default function CreateCategory() {
     try {
       await axios.post("http://localhost:3001/categories/", {
         name: name,
-     
-      });  
+      });
       alert("Created category");
     } catch (err) {
       console.log(err);
@@ -35,7 +31,6 @@ export default function CreateCategory() {
   }, []);
   return (
     <div className="loginCard">
-     
       <h2>Post Category</h2>
 
       <form onSubmit={handleSubmit}>
@@ -50,9 +45,8 @@ export default function CreateCategory() {
           />
         </div>
 
-        
-        <div className="btn">
-          <input type="submit" value="Send" />
+        <div className="btn-createUser">
+          <input type="submit" value="Create" className="input-submit" />
         </div>
       </form>
     </div>
