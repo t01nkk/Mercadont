@@ -32,19 +32,29 @@ export default function Home() {
   };
 
   const handleSaveFavorite = async (id)=>{
-    await axios.post("http://localhost:3001/user/addFavorite",{
+    try {
+      await axios.post("http://localhost:3001/user/addFavorite",{
       idUser: person,
       idProduct: id
     })
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 
   const handleDeleteFavorite = async (id)=>{
-    await axios.delete("http://localhost:3001/user/removeFavorite",{
+    try {
+      await axios.delete("http://localhost:3001/user/removeFavorite",{
       data:{
         idUser: person,
         idProduct: id
       }
     })
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 
   //USEEFFECT CARGA DE PRODUCTOS

@@ -21,6 +21,7 @@ import { FormBuys } from "./components/FormBuys/FormBuys";
 // APP ROUTING  //
 import CategoriesCards from "./components/AddCategories/CategoriesCards";
 import CreateCategory from "./components/AddCategories/CreateCategory.jsx";
+import { Favorites } from "./components/Favorites/Favorites";
 // =======
 // import NavBar from "./components/NavBar/NavBar.jsx";
 // import CreateUser from "./pages/CreateUser/CreateUser.jsx";
@@ -62,6 +63,7 @@ function App() {
         </Route>
         <Route path="/favorites" exact>
           <NavBar />
+          <Favorites/>
           {/* USER FAVORITE PRODUCTS */}
         </Route>
         <Route path="/cart" exact>
