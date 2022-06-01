@@ -1,10 +1,10 @@
-const { Product, User, Category, Qa, Review } = require("../db");
+const { Product, User, Category, Qa, Review, PurchaseOrder } = require("../db");
 const { Router } = require("express");
 const Stripe = require("stripe")
 const cors = require("cors")
 const {modifyStock} = require("../middlewares/middlewares")
 const { validateInputProduct } = require("../middlewares/middlewares");
-const { Op } = require("sequelize");
+const { Op, where, Sequelize } = require("sequelize");
 
 const router = Router();
 
@@ -155,7 +155,7 @@ router.get("/:id", async (req, res) => {
     }
     return res.status(200).send(product)
   } catch (error) {
-    return res.status(400).send({ msg: err.message });
+    return res.status(400).send({ msg: error.message });
   }
 })
 
@@ -246,6 +246,47 @@ router.put("/update/:id", async (req, res) => {
     return res.status(400).send(err)
   }
 })
+//CART - Buy Product
+router.post("/buys", async (req,res)=>{
+  try {
+    // const {id,amount,local} = req.body
+    const {productsArray, userDetails, orderId, amount} = req.body;
+    // console.log("productsArray:", productsArray)
+    // console.log("userDetails:", userDetails)
+
+    // const payment = await stripe.paymentIntents.create({
+    //   amount,
+    //   currency: "USD",
+    //   description:"Compra",
+    //   payment_method:id,
+    //   confirm:true
+    // })
+    // modifyStock(local)
+    // res.send(modifyStock(local))
+    // await stripe.
+
+    const user = await User.findOne({
+      where:{
+        email: userDetails.email
+      }
+    })
+    // console.log("userId:",user.dataValues.id)
+    for(let product of productsArray){
+      await PurchaseOrder.create({
+        orderId: orderId,
+        userId: user.dataValues.id,
+        productId: product.id,
+        productQuantity: product.quantity,
+      })
+      // console.log("item:", item)
+      // console.log("order:", order)
+      // await item.addOrden(user, {through: {quantity: product.quantity}});
+    }
+    return res.status(200).send(req.body)
+  } catch (error) {
+    return res.send(error)
+  }
+})
 
 ///////////////REVISAR ANTES DE USAR///////
 //Product Bought 
@@ -266,28 +307,7 @@ router.put("/update/:id", async (req, res) => {
 //     res.status(400).send(err)
 //   }
 // })
-
-//Product Restock
-router.post("/buys", async (req,res)=>{
-  try {
-    const {id,amount,local} = req.body
-    console.log(req.body)
-    const payment = await stripe.paymentIntents.create({
-      amount,
-      currency: "USD",
-      description:"Compra",
-      payment_method:id,
-      confirm:true
-    })
-
-    // modifyStock(local)
-    res.send(modifyStock(local))
-    // await stripe.
-    // res.status(200).send(console.log(req.body))
-  } catch (error) {
-    res.send(error)
-  }
-})
+//
 // router.put("/:id/restock", async (req, res) => {
 //   const { id } = req.params
 //   const { amount } = req.body
