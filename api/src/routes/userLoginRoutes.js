@@ -118,4 +118,107 @@ router.get("/googleAuth", passport.authenticate("google"), function (req, res) {
 /*-------------------------------------------------------------- */
 /*-------------------------Emails------------------------------- */
 
+/*-------------------------------------------------------------- */
+/*-------------------------UserInfo------------------------------- */
+
+// Get User
+router.get("/details/:id", async (req, res) => {
+  const { id } = req.params
+
+  try {
+      const user = await User.findOne({
+          where: { id: id },
+          include: { all: true } 
+      });
+      if (!user) {
+          return res.status(404).send("User Not Found")
+      }
+      return res.status(200).send(user)
+
+  } catch (error) {
+    console.log("error:",error)
+    res.status(404).send(error)
+  }
+});
+
+// Update User
+router.put("/details/:id", async (req, res) => {
+  const { id } = req.params
+  const { name, lastname, email, password, address, image, payment } = req.body;
+
+  let errors = validateInputUser(name, lastname, email, password)
+  if (errors.length) return res.status(400).send({ msg: errors });
+
+  try {
+      const updatedUser = await User.update(
+          {
+              name: name,
+              lastname: lastname,
+              email: email,
+              password: password,
+              address: address,
+              image: image,
+              payment: payment,
+          },
+          { where: { id: id } }
+      );
+      return res.status(202).send(updatedUser)
+
+  } catch (error) {
+      res.status(400).send(error)
+  }
+});
+
+/*-------------------------------------------------------------- */
+/*-------------------------Favorites-----------------------------*/
+
+router.post('/addFavorite', async (req, res) =>{
+  const {idUser, idProduct} = req.body
+  try {
+    const user = await User.findOne({where: {id:idUser}});
+    const favoriteProduct = await Product.findOne({where: {id:idProduct}});
+    const favorite = await user.addProduct(favoriteProduct);
+    return res.status(200).send(favorite);
+  } catch (error) {
+    console.log("error:", error)
+    return res.status(404).send({ msg: error});
+  }
+})
+
+router.delete('/removeFavorite', async (req, res) =>{
+  const {idUser, idProduct} = req.body
+  try {
+    const user = await User.findOne({where: {id:idUser}});
+    const favoriteProduct = await Product.findOne({where: {id:idProduct}});
+    await user.removeProduct(favoriteProduct);
+    return res.status(200).send("Favorite removed");
+  } catch (error) {
+    return res.status(404).send({ msg: error});
+  }
+})
+
+// Get User's favorites
+router.get("/favorite/:id", async (req, res) => {
+  const { id } = req.params
+
+  try {
+      const userFavorites = await User.findOne({ 
+        include: {
+          model: Product,
+          through: {
+            attributes: []
+          },
+        },
+        where: { id: id} 
+      })
+      if (!userFavorites) {
+          return res.status(404).send("User Not Found")
+      }
+      return res.status(200).send(userFavorites.products)
+  } catch (error) {
+    // console.log("error:",error)
+    return res.status(404).send(error)
+  }
+});
+
 module.exports = router;

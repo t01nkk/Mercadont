@@ -20,7 +20,7 @@ import CreateCategory from "./components/AddCategories/CreateCategory.jsx";
 import LoginADMIN from "./pages/ADMIN/LoginADMIN/LoginADMIN";
 import HomeAdmin from "./pages/ADMIN/HomeADMIN/HomeAdmin";
 import NavBarADMIN from "./components/ADMIN/NavBarADMIN/NavBarADMIN";
-
+import { Favorites } from "./components/Favorites/Favorites";
 
 function App() {
   return (
@@ -57,6 +57,7 @@ function App() {
         </Route>
         <Route path="/favorites" exact>
           <NavBar />
+          <Favorites />
           {/* USER FAVORITE PRODUCTS */}
         </Route>
         <Route path="/cart" exact>
