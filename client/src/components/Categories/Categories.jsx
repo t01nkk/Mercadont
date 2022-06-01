@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useStore } from "../../context/store";
 import { Redirect } from "react-router-dom";
-import { SORT_BY_PRICE_CAT, FILTER2 } from "../../redux/actions/actionTypes";
 import { fetchProducts, fetchCategories } from "../../redux/actions/actions.js";
-
+import {SORT_BY_PRICE_CAT, FILTER2, FILTER} from "../../redux/actions/actionTypes";
 export default function Categories() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
@@ -39,17 +38,23 @@ export default function Categories() {
     });
   }
   const handleChange = (e) => {
-    setMax(e.target.value);
     setError("")
+    let value = e.target.value
+    if (!/^\d+$/.test(value) )setError("Only Positive Numbers are accepted in this field")
+    if (Number(value)  < 0) setError("Only Positive Numbers are accepted in this field")
+    setMax(value);
   };
 
   const handleChange2 = (e) => {
-    setMin(e.target.value);
     setError("")
+    let value = e.target.value
+    if (!/^\d+$/.test(value) )setError("Only Positive Numbers are accepted in this field")
+    if (Number(value)  < 0) setError("Only Positive Numbers are accepted in this field")
+    setMin(e.target.value);
+
   };
 
   const handleSearch = async (e) => {
-    e.preventDefault();
 
     let filter = state.products;
 
@@ -60,15 +65,18 @@ export default function Categories() {
       filter = filter.filter(product => product.price <= max)
     }
     if ((max && min) && Number(max) < Number(min)) {
-      setError("Please select valid number for the min and max inputs")
+      setError("Please select valid numbers for the min and max inputs")
       filter = []
-
     }
-
+    if (error){
+      alert("Please Add Valid inputs")
+      filter = state.filter
+    }
     dispatch({
-      type:FILTER2,
+      type: FILTER,
       payload: filter
     });
+    console.log(state)
   };
   useEffect(() => {
     fetchProducts(dispatch);
@@ -76,6 +84,7 @@ export default function Categories() {
   useEffect(() => {
     fetchCategories(dispatch);
   }, []);
+
 
   return (
     <div>
