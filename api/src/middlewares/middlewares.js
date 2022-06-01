@@ -26,31 +26,6 @@ const modifyStock = async (local) => {
     }
 }
 
-// function initialize(passport, getUserByEmail, getUserById) {//
-//     const authenticateUser = async (email, password, done) => {
-//         const user = await getUserByEmail(email)
-//         // console.log(user?.dataValues, "acá está el dataValues");
-//         if (user === null) {
-//             // console.log("Hola no existo")
-//             return done(null, false, { msg: 'No user with that email' });
-
-//         }
-//         try {
-//             // console.log(user.dataValues.password);
-//             if (await bcrypt.compare(password, user.dataValues.password)) {
-//                 console.log(user.dataValues.password, "SOY EL PASS")
-//                 return done(null, user);
-//             }
-//         } catch (err) {
-//             return done(err)
-//         }
-//     }
-
-//     passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
-//     passport.serializeUser((user, done) => done(null, user.dataValues.name))
-//     passport.deserializeUser((name, done) => done(null, getUserById(name)))
-// }
-
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
