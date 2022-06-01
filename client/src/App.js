@@ -15,20 +15,12 @@ import SearchedProducts from "./pages/SearchedProducts/SearchedProducts";
 import AccountDetails from "./pages/AccountDetails/AccountDetails";
 import AccountDetailsForm from "./components/AccountDetailsForm/AccountDetailsForm";
 import { FormBuys } from "./components/FormBuys/FormBuys";
-
-//
-//
-// APP ROUTING  //
 import CategoriesCards from "./components/AddCategories/CategoriesCards";
 import CreateCategory from "./components/AddCategories/CreateCategory.jsx";
 import LoginADMIN from "./pages/ADMIN/LoginADMIN/LoginADMIN";
 import HomeAdmin from "./pages/ADMIN/HomeADMIN/HomeAdmin";
 import NavBarADMIN from "./components/ADMIN/NavBarADMIN/NavBarADMIN";
-// =======
-// import NavBar from "./components/NavBar/NavBar.jsx";
-// import CreateUser from "./pages/CreateUser/CreateUser.jsx";
-// import Home from "./pages/Home/Home.jsx";
-// >>>>>>> Stashed changes
+
 
 function App() {
   return (

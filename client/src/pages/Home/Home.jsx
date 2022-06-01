@@ -74,7 +74,7 @@ export default function Home() {
 
   return (
     <section className="section-products">
-    <button onClick={() => mostra()}>mostra storage</button>
+    {/* <button onClick={() => mostra()}>mostra storage</button> */}
       {state.products &&
         React.Children.toArray(
           state.products.map((product) => {

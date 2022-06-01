@@ -2,35 +2,27 @@ import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
-import GoogleLogin from "react-google-login";
-// import loginService from "../Services/login";
+// import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 
 export default function LogInForm() {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-
   const [redirect, setRedirect] = useState(false);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-
-  const handleLoginGoogle = async (googleData) => {
-    const res = await axios("/api/v1/auth/google", {
-      method: "POST",
-      body: JSON.stringify({
-        token: googleData.tokenId,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.json();
-    console.log(data);
-    // store returned user somehow
-  };
+  // const handleLoginGoogle = async () => {
+  //   const res = await axios({
+  //     method: "GET",
+  //     url: "http://localhost:3001/user/login/google",
+  //   });
+  //   const data = await res.json();
+  //   console.log(data);
+  //   // store returned user somehow
+  // };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -45,6 +37,7 @@ export default function LogInForm() {
         withCredentials: true,
         url: "http://localhost:3001/user/login",
       });
+      console.log(user.data);
       if (user.data.passport.user) {
         localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
         setRedirect(true);
@@ -90,13 +83,14 @@ export default function LogInForm() {
           </div>
         </form>
         <div className="createUser-container">
+          {/* <GoogleLoginButton />
           <GoogleLogin
-            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            clientId={process.env.GOOGLE_CLIENT_ID}
             buttonText="Log in with Google"
             onSuccess={handleLoginGoogle}
             onFailure={handleLoginGoogle}
             cookiePolicy={"single_host_origin"}
-          />
+          /> */}
           <p>Not a user yet?</p>
           <div className="btn-createUser">
             <Link to="/createUser">Create User</Link>

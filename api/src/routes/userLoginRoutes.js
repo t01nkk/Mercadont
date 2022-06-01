@@ -5,12 +5,12 @@ const { auth } = require("../middlewares/PasswordUtils");
 const { genPassword } = require("../middlewares/PasswordUtils");
 const { User } = require("../db");
 
-router.get('/findUser', async (req, res) => {
+router.get("/findUser", async (req, res) => {
   const { email } = req.body;
-  let find = await User.findOne({ where: { email: email } })
+  let find = await User.findOne({ where: { email: email } });
   if (find) res.send(find);
   else res.status(404).send({ msg: "This user doesn't exist" });
-})
+});
 
 router.post("/register", async (req, res, next) => {
   // const { email, password } = req.body;
@@ -28,7 +28,7 @@ router.post("/register", async (req, res, next) => {
         address: address,
         image: image,
         payment: payment,
-        created: true
+        created: true,
       });
 
       res.send({ msg: "User Registered" });
@@ -43,7 +43,6 @@ router.post("/register", async (req, res, next) => {
 router.get("/Profile/auth", auth, (req, res, next) => {
   //Create auth
   // console.log("this is REQ SESSION", req.session)
-  console.log("here be AUTH", req.isAuthenticated())
   res.send(req.session);
 });
 
@@ -55,16 +54,17 @@ router.get("/fail", (req, res) => {
   }
 });
 
-router.post('/logout', auth, function (req, res, next) {
+router.post("/logout", auth, function (req, res, next) {
   try {
-    console.log("AUTHENTICATE BEFORE", req.isAuthenticated())
+    console.log("AUTHENTICATE BEFORE", req.isAuthenticated());
     req.logout(function (err) {
-      if (err) { return next(err); }
-      console.log("AUTHENTICATE BEFORE", req.isAuthenticated())
+      if (err) {
+        return next(err);
+      }
+      console.log("AUTHENTICATE BEFORE", req.isAuthenticated());
       // console.log("REQ.USER", req.user)
-      res.send({ msg: "Logged out successfully" })
+      res.send({ msg: "Logged out successfully" });
     });
-
   } catch (err) {
     console.log(err.message);
   }
@@ -86,33 +86,34 @@ router.get("/findAll", async (req, res) => {
   }
 });
 
-router.post("/login", passport.authenticate("local", {
-  failureRedirect: "/user/fail",
-  successRedirect: "/user/Profile/auth",
-})
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    failureRedirect: "/user/fail",
+    successRedirect: "/user/Profile/auth",
+  })
 );
 
 ///////////////// GOOGLE ///////////////////
 
-require("../middlewares/googleauth")
+require("../middlewares/googleauth");
 
-router.get('/login/google', passport.authenticate('google', {
-  scope: [
-    "https://www.googleapis.com/auth/userinfo.profile",
-    "https://www.googleapis.com/auth/userinfo.email",
-  ],
-  session: true,
-  failureRedirect: '/login',
-  failureMessage: true
-}));
+router.get(
+  "/login/google",
+  passport.authenticate("google", {
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+    ],
+    session: true,
+    failureRedirect: "/login",
+    failureMessage: true,
+  })
+);
 
-router.get('/googleAuth',
-  passport.authenticate('google'),
-  function (req, res) {
-    res.redirect('/user/Profile/auth');
-  });
-
-
+router.get("/googleAuth", passport.authenticate("google"), function (req, res) {
+  res.redirect("/user/Profile/auth");
+});
 
 /*-------------------------------------------------------------- */
 /*-------------------------Emails------------------------------- */
