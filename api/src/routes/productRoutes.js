@@ -117,7 +117,8 @@ router.post('/filter', async (req, res) => {
       if (!products.length) return res.send({ msg: "There aren't any products that match all these categories" });
       return res.send(products);
     } catch (err) {
-      return res.status(400).send({ msg: err.message });
+      console.log(err)
+      return res.status(400).send(err);
     }
   }
 })
@@ -249,40 +250,35 @@ router.put("/update/:id", async (req, res) => {
 //CART - Buy Product
 router.post("/buys", async (req,res)=>{
   try {
-    // const {id,amount,local} = req.body
-    const {productsArray, userDetails, orderId, amount} = req.body;
-    // console.log("productsArray:", productsArray)
-    // console.log("userDetails:", userDetails)
+    const {id, amount, local, userId} = req.body;
 
-    // const payment = await stripe.paymentIntents.create({
-    //   amount,
-    //   currency: "USD",
-    //   description:"Compra",
-    //   payment_method:id,
-    //   confirm:true
-    // })
-    // modifyStock(local)
-    // res.send(modifyStock(local))
-    // await stripe.
-
-    const user = await User.findOne({
-      where:{
-        email: userDetails.email
-      }
+    const payment = await stripe.paymentIntents.create({
+      amount,
+      currency: "USD",
+      description:"Compra",
+      payment_method:id,
+      confirm:true
     })
-    // console.log("userId:",user.dataValues.id)
-    for(let product of productsArray){
-      await PurchaseOrder.create({
-        orderId: orderId,
-        userId: user.dataValues.id,
+    modifyStock(local)
+
+
+    // console.log("local:", local)
+    for(let product of local){
+      // console.log("product:", product)
+      // console.log("id:",typeof id)
+      // console.log("userId:",typeof userId)
+      // console.log("product.id:",typeof product.id)
+      // console.log("product.quantity:",typeof product.quantity)
+      // REVISAR LOS DATATYPES DEL MODEL PURCHASEORDER - SON STRINGS POR EL MOMENTO
+      const db = await PurchaseOrder.create({
+        orderId: id,
+        userId: userId,
         productId: product.id,
         productQuantity: product.quantity,
       })
-      // console.log("item:", item)
-      // console.log("order:", order)
-      // await item.addOrden(user, {through: {quantity: product.quantity}});
+      // console.log("db:", db)
     }
-    return res.status(200).send(req.body)
+    return res.status(200).send(payment)
   } catch (error) {
     return res.send(error)
   }
