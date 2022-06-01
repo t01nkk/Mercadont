@@ -8,11 +8,15 @@ import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
 export const SendBuys = ()=>{
     const stripe = useStripe()
     const elements = useElements()
+    
+    let user = JSON.parse(localStorage.getItem("myUser"))
+    let local = JSON.parse(localStorage.getItem(user));
+    let priceTotal = JSON.parse(localStorage.getItem("myPrice"))
 
     const handleSubmit = async (e)=>{
         e.preventDefault()
-        let local = JSON.parse(localStorage.getItem("myCart"))
-        let priceTotal = JSON.parse(localStorage.getItem("myPrice"))
+        // let local = JSON.parse(localStorage.getItem("myCart"))
+        
         // console.log(local, priceTotal)
         console.log(local)
         const {error, paymentMethod} = await stripe.createPaymentMethod({
@@ -23,11 +27,13 @@ export const SendBuys = ()=>{
         if(!error){
             // console.log(paymentMethod)
             const {id} = paymentMethod
-            await axios.post("http://localhost:3001/product/buys",{
+            const purchase = await axios.post("http://localhost:3001/product/buys",{
                 id,
                 amount: priceTotal * 100,
                 local,
+                userId : user
             }) 
+            console.log("purchase:", purchase)
             
         }
         localStorage.removeItem("myCart")
@@ -37,7 +43,7 @@ export const SendBuys = ()=>{
     const [price, setPrice] = useState("")   
     
     useEffect(()=>{
-        let local = JSON.parse(localStorage.getItem("myCart"))
+        let local = JSON.parse(localStorage.getItem(user))
         let priceTotal = JSON.parse(localStorage.getItem("myPrice"))
 
         setProducts(local)

@@ -5,10 +5,12 @@ import SearchBar from "../../SearchBar/SearchBar";
 import "./LoggedNavBar.css";
 export default function LoggedNavBar() {
   const logoutSesion = () => {
-    localStorage.clear();
+    // let user = JSON.parse(localStorage.getItem("myUser"))
+    localStorage.removeItem("myUser");
   };
   return (
     <div className="header-nav">
+      {/* <Link to="/">Home</Link> */}
       <div className="container-actions-user">
         <Link to="/">Home</Link>
         <div className="dropdown">

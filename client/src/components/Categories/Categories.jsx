@@ -3,6 +3,7 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 import { useStore } from "../../context/store";
 import { Redirect } from "react-router-dom";
 import {SORT_BY_PRICE_CAT, FILTER2, FILTER} from "../../redux/actions/actionTypes";
+
 export default function Categories() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
