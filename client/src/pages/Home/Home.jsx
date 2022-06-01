@@ -103,8 +103,8 @@ export default function Home() {
       {state.products &&
         React.Children.toArray(
           state.products.map((product) => {
-            {
-              product.status === active ? (
+            if(product.status === "active"){
+              return (
                 <ProductCard
                   id={product.id}
                   name={product.name}
@@ -115,8 +115,8 @@ export default function Home() {
                   handleSaveFavorite={handleSaveFavorite}
                   handleDeleteFavorite={handleDeleteFavorite}
                 />
-              ) : null;
-            }
+              )}
+            return null
           })
         )}
     </section>
