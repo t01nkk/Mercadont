@@ -3,7 +3,8 @@ const router = Router();
 const passport = require("passport");
 const { auth } = require("../middlewares/PasswordUtils");
 const { genPassword } = require("../middlewares/PasswordUtils");
-const { User } = require("../db");
+const { User, Product } = require("../db");
+const { validateInputUser } = require("../middlewares/middlewares");
 // const axios = require('axios');
 
 // router.get('/SignIn', (req, res, next)=>{
@@ -26,6 +27,9 @@ const { User } = require("../db");
 // router.get('/', (req, res, next)=>{
 //     res.status(200).send('<h1>Home</h1><p>Please <a href="/SignIn">register</a></p>');
 // })
+
+/*-------------------------------------------------------------- */
+/*-------------------------Login------------------------------- */
 
 router.get('/findUser', async (req, res) => {
   const { email } = req.body;
@@ -105,5 +109,84 @@ router.get("/findAll", async (req, res) => {
 
 /*-------------------------------------------------------------- */
 /*-------------------------Emails------------------------------- */
+
+/*-------------------------------------------------------------- */
+/*-------------------------UserInfo------------------------------- */
+
+// Get User
+router.get("/details/:id", async (req, res) => {
+  const { id } = req.params
+
+  try {
+      const user = await User.findOne({
+          where: { id: id },
+      });
+      if (!user) {
+          return res.status(404).send("User Not Found")
+      }
+      return res.status(200).send(user)
+
+  } catch (error) {
+    console.log("error:",error)
+    res.status(404).send(error)
+  }
+});
+
+// Update User
+router.put("/details/:id", async (req, res) => {
+  const { id } = req.params
+  const { name, lastname, email, password, address, image, payment } = req.body;
+
+  let errors = validateInputUser(name, lastname, email, password)
+  if (errors.length) return res.status(400).send({ msg: errors });
+
+  try {
+      const updatedUser = await User.update(
+          {
+              name: name,
+              lastname: lastname,
+              email: email,
+              password: password,
+              address: address,
+              image: image,
+              payment: payment,
+          },
+          { where: { id: id } }
+      );
+      return res.status(202).send(updatedUser)
+
+  } catch (error) {
+      res.status(400).send(error)
+  }
+});
+
+/*-------------------------------------------------------------- */
+/*-------------------------Favorites-----------------------------*/
+
+router.post('/addFavorite', async (req, res) =>{
+  const {idUser, idProduct} = req.body
+  try {
+    const user = await User.findOne({where: {id:idUser}});
+    const favoriteProduct = await Product.findOne({where: {id:idProduct}});
+    const favorite = await user.addProduct(favoriteProduct);
+    return res.status(200).send(favorite);
+  } catch (error) {
+    console.log("error:", error)
+    return res.status(404).send({ msg: error});
+  }
+})
+
+router.delete('/removeFavorite', async (req, res) =>{
+  const {idUser, idProduct} = req.body
+  try {
+    const user = await User.findOne({where: {id:idUser}});
+    const favoriteProduct = await Product.findOne({where: {id:idProduct}});
+    const removed = await user.removeProduct(favoriteProduct);
+    return res.status(200).send(removed);
+  } catch (error) {
+    console.log("error:", error)
+    return res.status(404).send({ msg: error});
+  }
+})
 
 module.exports = router;

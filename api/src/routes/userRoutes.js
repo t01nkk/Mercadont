@@ -169,52 +169,52 @@ router.put("/:id", async (req, res) => {
 
 
 //Get Banned Users
-router.get("/ban/", async (req, res) => {
+// router.get("/ban/", async (req, res) => {
 
-    try {
-        const user = await User.findAll({
-            where: { banned: true }
-        });
-        if (!user) {
-            return res.status(404).send("There aren't any banned users yet")
-        }
-        return res.status(200).send(user)
+//     try {
+//         const user = await User.findAll({
+//             where: { banned: true }
+//         });
+//         if (!user) {
+//             return res.status(404).send("There aren't any banned users yet")
+//         }
+//         return res.status(200).send(user)
 
-    } catch (error) {
-        res.status(404).send(error)
-    }
-});
+//     } catch (error) {
+//         res.status(404).send(error)
+//     }
+// });
 
 //Ban User
-router.put("/ban/:id", async (req, res) => {
-    const { id } = req.params;
+// router.put("/ban/:id", async (req, res) => {
+//     const { id } = req.params;
 
-    try {
-        const bannedUser = await User.update(
-            {
-                banned: true
-            },
-            { where: { id: id } });
-        res.status(200).send(bannedUser);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-});
+//     try {
+//         const bannedUser = await User.update(
+//             {
+//                 banned: true
+//             },
+//             { where: { id: id } });
+//         res.status(200).send(bannedUser);
+//     } catch (error) {
+//         res.status(400).send(error);
+//     }
+// });
 
 //Set Admin credencials
-router.put("/admin/:id", async (req, res) => {
-    const { id } = req.params;
-    const { status } = req.body;
+// router.put("/admin/:id", async (req, res) => {
+//     const { id } = req.params;
+//     const { status } = req.body;
 
-    try {
-        const setAdmin = await User.update(
-            {
-                isAdmin: status
-            },
-            { where: { id: id } });
-        res.status(200).send(setAdmin);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-});
+//     try {
+//         const setAdmin = await User.update(
+//             {
+//                 isAdmin: status
+//             },
+//             { where: { id: id } });
+//         res.status(200).send(setAdmin);
+//     } catch (error) {
+//         res.status(400).send(error);
+//     }
+// });
 module.exports = router

@@ -6,6 +6,7 @@ import FilterCategoies from "../../FilterCategories/FilterCategories";
 export default function GuestNavBar() {
   return (
     <div className="header-nav">
+      <Link to="/">Home</Link>
       <div className="container-actions-user">
         <Link to="/">Home</Link>
         <div className="dropdown">

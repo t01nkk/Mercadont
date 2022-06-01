@@ -1,5 +1,7 @@
 export const totalPrice = ()=>{
-    let local = JSON.parse(localStorage.getItem("myCart"))
+  let user = JSON.parse(localStorage.getItem("myUser"))
+  let local = JSON.parse(localStorage.getItem(user));
+  console.log(local)
     let total = 0
     if(local){
       for(let i = 0; i< local.length; i++){

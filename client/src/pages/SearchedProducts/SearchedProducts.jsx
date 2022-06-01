@@ -10,8 +10,8 @@ export default function SearchedProducts() {
   const [redirect, setRedirect] = useState(false);
   const [state, dispatch] = useStore();
   const [cart, setCart] = useState(initialCart);
-  const [min, setMin] = useState("");
-  const [max, setMax] = useState("");
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(0);
   const [error, setError] = useState("")
 
 
@@ -42,21 +42,16 @@ export default function SearchedProducts() {
       payload: e.target.value
     });
   }
-  const handleChange = (e) => {
+  const handleChangeMax = (e) => {
     setError("")
-    let value = e.target.value
-    if(value === "") return setMax(value)
-    if (!/^\d+\S/.test(value) || Number(value) <=0  )setError("Only Positive Numbers are accepted in this field")
-    setMax(value);
+    if(e.target.value < 0)setError("Only Positive Numbers are accepted in this field")
+    setMax(e.target.value);
   };
 
-  const handleChange2 = (e) => {
+  const handleChangeMin = (e) => {
     setError("")
-    let value = e.target.value
-    if (value === "") return setMin(value)
-    if (!/^\d+\S/.test(value) || Number(value) <=0 )setError("Only Positive Numbers are accepted in this field")
-    setMin(value);
-
+    if (e.target.value <0 )setError("Only Positive Numbers are accepted in this field")
+    setMin(e.target.value);
   };
 
   const handleSearch = async (e) => {
@@ -69,7 +64,7 @@ export default function SearchedProducts() {
     if (max) {
       filter = filter.filter(product => product.price <= max)
     }
-    if ((max && min) && Number(max) < Number(min)) {
+    if ((max && min) && parseInt(max) < parseInt(min)) {
       setError("Please select valid numbers for the min and max inputs")
       filter = []
     }
@@ -109,23 +104,23 @@ export default function SearchedProducts() {
       >
         <input
           id="filter2"
-          type="text"
+          type="number"
           value={min}
           placeholder="min..."
-          
-          onChange={handleChange2}
-        />
+          min={0}
+          onChange={handleChangeMin}
+        input/>
       </form>
       <form
         onSubmit={handleSearch}
       >
         <input
           id="filter"
-          type="text"
+          type="number"
           value={max}
           placeholder="max..."
-          
-          onChange={handleChange}
+          min={0}
+          onChange={handleChangeMax}
         />
       </form>
       {error&&<p>{error}</p>}
