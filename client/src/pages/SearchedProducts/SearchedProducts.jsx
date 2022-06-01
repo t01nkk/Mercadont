@@ -44,16 +44,13 @@ export default function SearchedProducts() {
   }
   const handleChangeMax = (e) => {
     setError("")
-    let value = e.target.value
-    if (!/^\d+\S/.test(value) || parseInt(value) <0  )setError("Only Positive Numbers are accepted in this field")
-    setMax(value);
+    if(e.target.value < 0)setError("Only Positive Numbers are accepted in this field")
+    setMax(e.target.value);
   };
 
   const handleChangeMin = (e) => {
     setError("")
-    if (e.target.value <0 ){
-      setError("Only Positive Numbers are accepted in this field")
-    }
+    if (e.target.value <0 )setError("Only Positive Numbers are accepted in this field")
     setMin(e.target.value);
   };
 
