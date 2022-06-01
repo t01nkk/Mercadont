@@ -15,6 +15,7 @@ export const initialState = {
   products: [],
   searchedProducts: [],
   filter: [],
+  filterCategory: [],
   categories: [],
   user: "",
   session: false,
@@ -26,14 +27,14 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
-        
+        filterCategory: action.payload
       };
     }
     case SEARCH_PRODUCT: {
       return {
         ...state,
         searchedProducts: action.payload,
-        filter: action.payload
+        filterCategory: action.payload
       };
     }
     case CATEGORIES_PRODUCT: {
@@ -52,7 +53,7 @@ export function reducer(state = initialState, action) {
     case FILTER2: {
       return {
         ...state,
-        products: action.payload
+        filterr: action.payload
       };
     }
       
@@ -120,6 +121,7 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         categories: action.payload,
+        
       };
     }
     case USER_SESSION: {

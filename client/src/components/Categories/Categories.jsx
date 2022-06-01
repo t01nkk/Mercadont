@@ -3,6 +3,8 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 import { useStore } from "../../context/store";
 import { Redirect } from "react-router-dom";
 import { SORT_BY_PRICE_CAT, FILTER2 } from "../../redux/actions/actionTypes";
+import { fetchProducts, fetchCategories } from "../../redux/actions/actions.js";
+
 export default function Categories() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
@@ -49,7 +51,7 @@ export default function Categories() {
   const handleSearch = async (e) => {
     e.preventDefault();
 
-    let filter = state.filter;
+    let filter = state.products;
 
     if (min) {
       filter = filter.filter(product => product.price >= min)
@@ -68,6 +70,12 @@ export default function Categories() {
       payload: filter
     });
   };
+  useEffect(() => {
+    fetchProducts(dispatch);
+  }, []);
+  useEffect(() => {
+    fetchCategories(dispatch);
+  }, []);
 
   return (
     <div>
@@ -94,7 +102,6 @@ export default function Categories() {
           type="text"
           value={min}
           placeholder="min..."
-          required
           onChange={handleChange2}
         />
       </form>
@@ -106,14 +113,13 @@ export default function Categories() {
           type="text"
           value={max}
           placeholder="max..."
-          required
           onChange={handleChange}
         />
       </form>
       {error&&<p>{error}</p>}
       </div>
       {redirect ? <Redirect push to="/home" /> : null}
-      <div className="cardsContainer"> {
+      <div className="cardsContainer"> {state.products &&
         React.Children.toArray(
           state.products.map((product) => {
             return (

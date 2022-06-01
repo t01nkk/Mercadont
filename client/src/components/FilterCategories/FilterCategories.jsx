@@ -4,6 +4,7 @@ import { Link, Redirect, useHistory } from "react-router-dom";
 import {CATEGORIES_PRODUCT, FETCH_PRODUCTS} from "../../redux/actions/actionTypes";
 import axios from "axios";
 
+
 export default function FilerCategories() {
   const [state, dispatch] = useStore();
   const [redirect, setRedirect] = useState(false);
@@ -60,6 +61,7 @@ export default function FilerCategories() {
   useEffect(() => {
     setRedirect(false);
   }, []);
+ 
 
   return (
     <div>
