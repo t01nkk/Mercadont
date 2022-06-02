@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const router = Router();
 const passport = require("passport");
-const { auth } = require("../middlewares/PasswordUtils");
-const { genPassword } = require("../middlewares/PasswordUtils");
+const { auth } = require("../middlewares/password_utils");
+const { genPassword } = require("../middlewares/password_utils");
 const { User } = require("../db");
 
 router.get("/findUser", async (req, res) => {
