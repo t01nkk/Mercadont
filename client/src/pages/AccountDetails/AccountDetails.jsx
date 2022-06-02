@@ -11,7 +11,7 @@ export default function AccountDetails() {
 
   const fetchUser = async () => {
     try {
-      const userDB = await axios.post("http://localhost:3001/user/findUser", {
+      const userDB = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/findUser`, {
         id: state.user,
       });
       setUser(userDB.data);
@@ -25,14 +25,14 @@ export default function AccountDetails() {
     }
   }, []);
 
-  let mostrarFrente = (e)=>{
+  let mostrarFrente = (e) => {
     console.log(e)
   }
-  
+
   return (
     <>
-    {/* <script src="https://kit.fontawesome.com/2c36e9b7b1.js"></script> */}
-    {/* <script src="./js/main.js"></script> */}
+      {/* <script src="https://kit.fontawesome.com/2c36e9b7b1.js"></script> */}
+      {/* <script src="./js/main.js"></script> */}
       <Link to="/editProfile">
         <button>Edit your profile</button>
       </Link>

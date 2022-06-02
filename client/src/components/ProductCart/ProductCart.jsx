@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./ProductCart.css";
-import { totalPrice } from '../Cart/actionsCart'
+import { totalPrice } from "../Cart/actionsCart";
+import accounting from "accounting";
 export const ProductCart = ({
   name,
   stock,
@@ -10,17 +11,16 @@ export const ProductCart = ({
   deleteDatatoStorage,
   viewProduct,
   pos,
-  setPriceTotal
+  setPriceTotal,
   // totalPrice
 }) => {
-  let user = JSON.parse(localStorage.getItem("myUser"))
+  let user = JSON.parse(localStorage.getItem("myUser"));
   let yourStorage = JSON.parse(localStorage.getItem(user));
   const [storageCart, setStorageCart] = useState(yourStorage);
   const [permitLess, setPermitLess] = useState(false);
   const [permitMore, setPermitMore] = useState(true);
   const [count, setCount] = useState(storageCart[pos].quantity);
   // const [count, setCount] = useState(0);
-
 
   // useEffect(() => {
   //   totalPrice();
@@ -34,23 +34,22 @@ export const ProductCart = ({
   };
 
   //Funcion para restar producto al carro
-  const oneLess = (stock, name,price)=>{
-      console.log(count)
-      setCount(count-1)
-      if(count -1 < 2) setPermitLess(false)
-      if(count -1 < stock) setPermitMore(true)
-      changeAmount(count,name, -1, price)
-    }
-  
-  
-  let changeAmount = (num, name, SoR ,price)=>{
-    let articleStogare = yourStorage.find(e => e.name === name)
-    articleStogare.quantity = num + (SoR)
-    articleStogare.totalPrice = Math.round(price * (count + SoR))
-    setStorageCart(yourStorage)
-    localStorage.setItem(user, JSON.stringify(yourStorage))
-    setPriceTotal(totalPrice())
-  }
+  const oneLess = (stock, name, price) => {
+    console.log(count);
+    setCount(count - 1);
+    if (count - 1 < 2) setPermitLess(false);
+    if (count - 1 < stock) setPermitMore(true);
+    changeAmount(count, name, -1, price);
+  };
+
+  let changeAmount = (num, name, SoR, price) => {
+    let articleStogare = yourStorage.find((e) => e.name === name);
+    articleStogare.quantity = num + SoR;
+    articleStogare.totalPrice = Math.round(price * (count + SoR));
+    setStorageCart(yourStorage);
+    localStorage.setItem(user, JSON.stringify(yourStorage));
+    setPriceTotal(totalPrice());
+  };
 
   //FUNCION PARA VER EL STORAGE, NO BORRAR
   const mostra = () => {

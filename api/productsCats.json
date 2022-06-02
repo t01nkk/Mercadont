@@ -15,7 +15,8 @@
     "categories": ["men's clothing", "jackets"],
     "image": "https://static.zara.net/photos///2022/V/0/2/p/3918/350/505/2/w/850/3918350505_6_1_1.jpg?ts=1638265260644",
     "rating": "4.1",
-    "stock": "34"
+    "stock": "34",
+    "status": "inactive"
   },
   {
     "name": "X RHUIGI TECHNICAL SWEATSHIRT",

@@ -3,11 +3,11 @@ import {
   SEARCH_PRODUCT,
   FETCH_CATEGORIES,
   USER_SESSION,
-  SORT_BY_PRICE,
-  FILTER,
+  ORDER_BY_ASCDESC_PRICE,
+  FILTER_BY_PRICE,
   SORT_BY_PRICE_CAT,
   CATEGORIES_PRODUCT,
-  FILTER2,
+  SORTED_PRICE_PRODUCTS,
   ADMIN_SESSION,
   GET_FAVORITES
 } from "../actions/actionTypes";
@@ -21,12 +21,19 @@ export const initialState = {
   session: false,
   admin: {},
   sessionAdmin: false,
-  favorites:[]
+  favorites:[],
+  adminPorductList: [],
 };
 
 export function reducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_PRODUCTS: {
+      return {
+        ...state,
+        products: action.payload,
+      };
+    }
+    case SORTED_PRICE_PRODUCTS: {
       return {
         ...state,
         products: action.payload,
@@ -46,20 +53,15 @@ export function reducer(state = initialState, action) {
       };
     }
 
-    case FILTER: {
+    case FILTER_BY_PRICE: {
       return {
         ...state,
         searchedProducts: action.payload,
       };
     }
-    case FILTER2: {
-      return {
-        ...state,
-        products: action.payload
-      };
-    }
 
-    case SORT_BY_PRICE: {
+
+    case ORDER_BY_ASCDESC_PRICE: {
       let order;
 
       if (action.payload === "ASCENDING") {
@@ -85,8 +87,8 @@ export function reducer(state = initialState, action) {
         });
       }
       return {
-        ...state
-      }
+        ...state,
+      };
     }
 
     case SORT_BY_PRICE_CAT: {
@@ -115,8 +117,8 @@ export function reducer(state = initialState, action) {
         });
       }
       return {
-        ...state
-      }
+        ...state,
+      };
     }
 
     case FETCH_CATEGORIES: {
