@@ -18,7 +18,7 @@ export default function FilerCategories() {
     const { categories } = filter;
     try {
       console.log(categories)
-      const res = await axios.post(`http://localhost:3001/product/filter`, {
+      const res = await axios.post(`${process.env.REACT_APP_DOMAIN}/product/filter`, {
         categories,
       });
       if (Array.isArray(res.data)) {
@@ -30,20 +30,20 @@ export default function FilerCategories() {
       } else {
         document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
         setFilter({
-        categories: [],
+          categories: [],
         });
         console.log(state)
         alert("No products with those selected categories where found");
-        const allProducts = await axios.get("http://localhost:3001/product")
+        const allProducts = await axios.get(`${process.env.REACT_APP_DOMAIN}/product`)
         console.log(allProducts.data)
         dispatch({
           type: FETCH_PRODUCTS,
           payload: allProducts.data
         })
-      console.log(state.products)
+        console.log(state.products)
       }
     }
-      catch (err) {
+    catch (err) {
       alert(err);
     }
   };
@@ -57,7 +57,7 @@ export default function FilerCategories() {
 
   function deleted(array, sel) {
     if (array.includes(sel)) return array.filter((num) => num !== sel);
-    return  array.concat(sel);
+    return array.concat(sel);
   }
   useEffect(() => {
     setRedirect(false);
@@ -68,7 +68,7 @@ export default function FilerCategories() {
 
   return (
     <div>
-          {redirect ? <Redirect push to="/categories" /> : null}
+      {redirect ? <Redirect push to="/categories" /> : null}
       <form
         onSubmit={(e) => {
           handleSearch(e);

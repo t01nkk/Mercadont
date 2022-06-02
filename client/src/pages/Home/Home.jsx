@@ -8,14 +8,14 @@ import "./Home.css";
 /* import { CATEGORIES_PRODUCT } from "../../redux/actions/actionTypes"; */
 
 export default function Home() {
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState([]);
   // let initialCart = JSON.parse(localStorage.getItem(user)) || [];
   const [cart, setCart] = useState([]);
   const [state, dispatch] = useStore();
   const [inCart, setInCart] = useState(false);
   const [error, setError] = useState();
 
-  let person = JSON.parse(localStorage.getItem("myUser"))
+  let person = JSON.parse(localStorage.getItem("myUser"));
 
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
@@ -27,34 +27,34 @@ export default function Home() {
       return;
     } else {
       setInCart(true);
-    setCart((cart) => [...cart, products]);
+      setCart((cart) => [...cart, products]);
     }
   };
 
-  const handleSaveFavorite = async (id)=>{
+  const handleSaveFavorite = async (id) => {
     try {
-      await axios.post("http://localhost:3001/user/addFavorite",{
-      idUser: person,
-      idProduct: id
-    })
-    } catch (error) {
-      console.log(error)
-    }
-    
-  }
-
-  const handleDeleteFavorite = async (id)=>{
-    try {
-      await axios.delete("http://localhost:3001/user/removeFavorite",{
-      data:{
+      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
         idUser: person,
         idProduct: id
-      }
-    })
+      })
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  const handleDeleteFavorite = async (id) => {
+    try {
+      await axios.delete(`${process.env.REACT_APP_DOMAIN}/user/removeFavorite`, {
+        data: {
+          idUser: person,
+          idProduct: id
+        }
+      })
     } catch (error) {
       console.log(error)
     }
-    
+
   }
 
   //USEEFFECT CARGA DE PRODUCTOS
@@ -67,10 +67,10 @@ export default function Home() {
     let myUser = JSON.parse(localStorage.getItem("myUser"));
     let myCart = JSON.parse(localStorage.getItem(myUser))
     setUser(myUser)
-    if(myCart){
+    if (myCart) {
       setCart(myCart)
     }
-    else{
+    else {
       setCart([])
     }
     // if(typeof myUser === "string"){
@@ -88,7 +88,6 @@ export default function Home() {
     localStorage.setItem(user, JSON.stringify(cart));
   }, [cart]);
 
-
   const mostra = () => {
     let miStorage = JSON.parse(localStorage.getItem("myUser"));
     console.log(miStorage);
@@ -103,22 +102,24 @@ export default function Home() {
 
   return (
     <section className="section-products">
-    {/* <button onClick={() => mostra()}>mostra storage</button> */}
+      {/* <button onClick={() => mostra()}>mostra storage</button> */}
       {state.products &&
         React.Children.toArray(
           state.products.map((product) => {
-            return (
-              <ProductCard
-                id={product.id}
-                name={product.name}
-                stock={product.stock}
-                price={product.price}
-                image={product.image}
-                handleSaveCart={handleSaveCart}
-                handleSaveFavorite={handleSaveFavorite}
-                handleDeleteFavorite={handleDeleteFavorite}
-              />
-            );
+            if(product.status === "active"){
+              return (
+                <ProductCard
+                  id={product.id}
+                  name={product.name}
+                  stock={product.stock}
+                  price={product.price}
+                  image={product.image}
+                  handleSaveCart={handleSaveCart}
+                  handleSaveFavorite={handleSaveFavorite}
+                  handleDeleteFavorite={handleDeleteFavorite}
+                />
+              )}
+            return null
           })
         )}
     </section>

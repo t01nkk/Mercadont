@@ -36,7 +36,7 @@ server.use(
   })
 );
 
-require("./middlewares/AUTH");
+require("./middlewares/auth");
 
 server.use(passport.initialize());
 

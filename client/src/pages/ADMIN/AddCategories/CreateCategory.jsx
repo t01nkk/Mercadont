@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { fetchCategories } from "../../redux/actions/actions";
-import { useStore } from "../../context/store";
+import { fetchCategories } from "../../../redux/actions/actions";
+import { useStore } from "../../../context/store";
 import "./CategoryCard.css";
 
 export default function CreateCategory() {
@@ -35,7 +35,7 @@ export default function CreateCategory() {
     e.preventDefault();
     const { name } = data;
     try {
-      await axios.post("http://localhost:3001/categories/", {
+      await axios.post(`${process.env.REACT_APP_DOMAIN}/categories/`, {
         name: name,
       });
       alert("Created category");

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ProductDetailsInfo from "../../components/ProductDetailsInfo/ProductDetailsInfo";
 import axios from "axios";
-import "./ProductDetails.css";
+import ProductDetailsInfoAdmin from "../../../components/ADMIN/ProductDetailsInfoADMIN/ProductDetailsInfoAdmin";
+
 export default function ProductDetails() {
   let { id } = useParams();
   const [product, setProduct] = useState(null);
   const fetchProductById = async () => {
     const fetchedProduct = await axios.get(
-      `${process.env.REACT_APP_DOMAIN}/product/${id}`
+      `http://localhost:3001/product/${id}`
     );
 
     setProduct(fetchedProduct.data);
@@ -22,7 +22,7 @@ export default function ProductDetails() {
   return (
     <div className="product-details-container">
       {product && (
-        <ProductDetailsInfo
+        <ProductDetailsInfoAdmin
           key={product.id}
           id={product.id}
           image={product.image}

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useStore } from "../../context/store.js";
-import { fetchCategories } from "../../redux/actions/actions.js";
+import { useStore } from "../../../context/store";
+import { fetchCategories } from "../../../redux/actions/actions.js";
 import { MdDeleteForever } from "react-icons/md";
-import "../SellProductForm/SellProductForm.css";
 import "./CategoryCard.css";
 export default function EditProduct() {
   const [state, dispatch] = useStore();
@@ -33,7 +32,7 @@ export default function EditProduct() {
     e.preventDefault();
     const { name } = product;
     try {
-      await axios.put(`http://localhost:3001/categories/${id}`, {
+      await axios.put(`${process.env.REACT_APP_DOMAIN}/categories/${id}`, {
         name,
       });
       alert("category update successfully");
@@ -53,7 +52,7 @@ export default function EditProduct() {
   };
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3001/categories/${id}`);
+      await axios.delete(`${process.env.REACT_APP_DOMAIN}/categories/${id}`);
       alert("Category deleted successfully");
     } catch (err) {
       console.log(err);
