@@ -36,7 +36,7 @@ export default function SellProductForm() {
     e.preventDefault();
     const { name, price, description, image, status, stock, categories } = data;
     try {
-      await axios.post("http://localhost:3001/product/create", {
+      await axios.post("https://mercadon-t.herokuapp.com/product/create", {
         name: name,
         price: parseInt(price),
         description: description,

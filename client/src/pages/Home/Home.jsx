@@ -27,34 +27,34 @@ export default function Home() {
       return;
     } else {
       setInCart(true);
-    setCart((cart) => [...cart, products]);
+      setCart((cart) => [...cart, products]);
     }
   };
 
-  const handleSaveFavorite = async (id)=>{
+  const handleSaveFavorite = async (id) => {
     try {
-      await axios.post("http://localhost:3001/user/addFavorite",{
-      idUser: person,
-      idProduct: id
-    })
-    } catch (error) {
-      console.log(error)
-    }
-    
-  }
-
-  const handleDeleteFavorite = async (id)=>{
-    try {
-      await axios.delete("http://localhost:3001/user/removeFavorite",{
-      data:{
+      await axios.post("https://mercadon-t.herokuapp.com/user/addFavorite", {
         idUser: person,
         idProduct: id
-      }
-    })
+      })
     } catch (error) {
       console.log(error)
     }
-    
+
+  }
+
+  const handleDeleteFavorite = async (id) => {
+    try {
+      await axios.delete("https://mercadon-t.herokuapp.com/user/removeFavorite", {
+        data: {
+          idUser: person,
+          idProduct: id
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
   //USEEFFECT CARGA DE PRODUCTOS
@@ -67,10 +67,10 @@ export default function Home() {
     let myUser = JSON.parse(localStorage.getItem("myUser"));
     let myCart = JSON.parse(localStorage.getItem(myUser))
     setUser(myUser)
-    if(myCart){
+    if (myCart) {
       setCart(myCart)
     }
-    else{
+    else {
       setCart([])
     }
     // if(typeof myUser === "string"){
@@ -103,7 +103,7 @@ export default function Home() {
 
   return (
     <section className="section-products">
-    {/* <button onClick={() => mostra()}>mostra storage</button> */}
+      {/* <button onClick={() => mostra()}>mostra storage</button> */}
       {state.products &&
         React.Children.toArray(
           state.products.map((product) => {

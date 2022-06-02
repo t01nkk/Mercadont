@@ -7,14 +7,14 @@ import {
 } from "./actionTypes";
 
 export const fetchProducts = async (dispatch) => {
-  const fetchedProducts = await axios.get("http://localhost:3001/product/");
+  const fetchedProducts = await axios.get("https://mercadon-t.herokuapp.com/product/");
   dispatch({
     type: FETCH_PRODUCTS,
     payload: fetchedProducts.data,
   });
 };
 export const fetchCategories = async (dispatch) => {
-  const fetchedProducts = await axios.get("http://localhost:3001/categories/");
+  const fetchedProducts = await axios.get("https://mercadon-t.herokuapp.com/categories/");
   dispatch({
     type: FETCH_CATEGORIES,
     payload: fetchedProducts.data,

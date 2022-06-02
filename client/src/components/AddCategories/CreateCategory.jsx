@@ -18,7 +18,7 @@ export default function CreateCategory() {
     e.preventDefault();
     const { name } = data;
     try {
-      await axios.post("http://localhost:3001/categories/", {
+      await axios.post("https://mercadon-t.herokuapp.com/categories/", {
         name: name,
       });
       alert("Created category");

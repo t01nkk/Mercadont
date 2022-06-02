@@ -34,7 +34,7 @@ export default function EditProduct() {
   let { id } = useParams();
 
   const fetchProductById = async () => {
-    let fetchedProduct = await axios.get(`http://localhost:3001/product/${id}`);
+    let fetchedProduct = await axios.get(`https://mercadon-t.herokuapp.com/product/${id}`);
     const destructuringCats = [];
     const { categories } = fetchedProduct.data;
     for (const cats of categories) {
@@ -57,7 +57,7 @@ export default function EditProduct() {
     const { name, description, price, stock, image, categories, status } =
       product;
     try {
-      const res = await axios.put(`http://localhost:3001/product/update/${id}`, {
+      const res = await axios.put(`https://mercadon-t.herokuapp.com/product/update/${id}`, {
         name,
         description,
         price,
@@ -76,7 +76,7 @@ export default function EditProduct() {
   };
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3001/product/delete/${id}`);
+      await axios.delete(`https://mercadon-t.herokuapp.com/product/delete/${id}`);
       alert("product deleted successfully");
     } catch (err) {
       console.log(err);

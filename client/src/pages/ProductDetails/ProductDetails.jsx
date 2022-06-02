@@ -8,7 +8,7 @@ export default function ProductDetails() {
   const [product, setProduct] = useState(null);
   const fetchProductById = async () => {
     const fetchedProduct = await axios.get(
-      `http://localhost:3001/product/${id}`
+      `https://mercadon-t.herokuapp.com/product/${id}`
     );
 
     setProduct(fetchedProduct.data);

@@ -9,7 +9,7 @@ export default function AccountDetailsForm() {
 
   const fetchUser = async () => {
     try {
-      const userDB = await axios.post("http://localhost:3001/user/findUser", {
+      const userDB = await axios.post("https://mercadon-t.herokuapp.com/user/findUser", {
         id: state.user,
       });
       setUser(userDB.data);

@@ -52,7 +52,7 @@ export const GoogleLoginButton = () => {
 
   return (
     <a
-      href="http://localhost:3001/user/login/google"
+      href="https://mercadon-t.herokuapp.com/user/login/google"
       className={classes.button}
     >
       <div className={classes.wrapper}>
