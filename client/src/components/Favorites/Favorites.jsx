@@ -8,7 +8,7 @@ export const Favorites = () => {
     let id = JSON.parse(localStorage.getItem("myUser"))
     useEffect(() => {
         const getFavorites = async () => {
-            const giveMeFavorites = await axios(`https://mercadon-t.herokuapp.com/user/favorite/${id}`)
+            const giveMeFavorites = await axios(`${process.env.REACT_APP_DOMAIN}/user/favorite/${id}`)
             try {
                 // console.log(addfavorites)
                 setFavorites(giveMeFavorites.data)

@@ -17,7 +17,7 @@ export default function SearchBar() {
     try {
       e.preventDefault();
       const res = await axios.get(
-        `https://mercadon-t.herokuapp.com/product/search?name=${input}`
+        `${process.env.REACT_APP_DOMAIN}/product/search?name=${input}`
       );
       dispatch({
         type: SEARCH_PRODUCT,

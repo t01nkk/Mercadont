@@ -24,12 +24,12 @@ export default function LoginADMIN() {
           password: data.password,
         },
         withCredentials: true,
-        url: "https://mercadon-t.herokuapp.com/user/login",
+        url: `${process.env.REACT_APP_DOMAIN}/user/login`,
       });
 
       if (user.data.passport.user) {
         const idAdmin = user.data.passport.user;
-        const admin = await axios.post("https://mercadon-t.herokuapp.com/admin/getAdmin", {
+        const admin = await axios.post(`${process.env.REACT_APP_DOMAIN}/admin/getAdmin`, {
           id: idAdmin,
         });
 
@@ -61,7 +61,11 @@ export default function LoginADMIN() {
         <form
           onSubmit={handleLogin}
           method="POST"
+<<<<<<< HEAD
           action="https://mercadon-t.herokuapp.com/user/login"
+=======
+          action={`${process.env.REACT_APP_DOMAIN}/user/login`}
+>>>>>>> 6556942aec7f4af546bb5bc09617fb7f21e39eb0
         >
           <div className="divInputUser">
             <input

@@ -21,7 +21,6 @@ import LoginADMIN from "./pages/ADMIN/LoginADMIN/LoginADMIN";
 import HomeAdmin from "./pages/ADMIN/HomeADMIN/HomeAdmin";
 import NavBarADMIN from "./components/ADMIN/NavBarADMIN/NavBarADMIN";
 import { Favorites } from "./components/Favorites/Favorites";
-
 function App() {
   return (
     <>

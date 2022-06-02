@@ -27,7 +27,7 @@ export const SendBuys = () => {
         if (!error) {
             // console.log(paymentMethod)
             const { id } = paymentMethod
-            const purchase = await axios.post("https://mercadon-t.herokuapp.com/product/buys", {
+            const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/product/buys`, {
                 id,
                 amount: priceTotal * 100,
                 local,

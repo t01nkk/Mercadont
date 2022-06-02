@@ -20,7 +20,7 @@ export default function LogInForm() {
     e.preventDefault();
     const { name, lastName, email, password } = data;
     try {
-      await axios.post("https://mercadon-t.herokuapp.com/user/register", {
+      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/register`, {
         email: email,
         password: password,
       });

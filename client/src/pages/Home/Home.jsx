@@ -33,7 +33,7 @@ export default function Home() {
 
   const handleSaveFavorite = async (id) => {
     try {
-      await axios.post("https://mercadon-t.herokuapp.com/user/addFavorite", {
+      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
         idUser: person,
         idProduct: id
       })
@@ -45,7 +45,7 @@ export default function Home() {
 
   const handleDeleteFavorite = async (id) => {
     try {
-      await axios.delete("https://mercadon-t.herokuapp.com/user/removeFavorite", {
+      await axios.delete(`${process.env.REACT_APP_DOMAIN}/user/removeFavorite`, {
         data: {
           idUser: person,
           idProduct: id

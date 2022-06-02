@@ -22,7 +22,7 @@ export default function EditProduct() {
     e.preventDefault();
     const { name } = product;
     try {
-      await axios.put(`https://mercadon-t.herokuapp.com/categories/${id}`, {
+      await axios.put(`${process.env.REACT_APP_DOMAIN}/categories/${id}`, {
         name,
       });
       alert("category update successfully");
@@ -36,7 +36,7 @@ export default function EditProduct() {
   };
   const handleDelete = async () => {
     try {
-      await axios.delete(`https://mercadon-t.herokuapp.com/categories/${id}`);
+      await axios.delete(`${process.env.REACT_APP_DOMAIN}/categories/${id}`);
       alert("Category deleted successfully");
     } catch (err) {
       console.log(err);

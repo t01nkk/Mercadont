@@ -17,7 +17,7 @@ export default function LogInForm() {
   // const handleLoginGoogle = async () => {
   //   const res = await axios({
   //     method: "GET",
-  //     url: "https://mercadon-t.herokuapp.com/user/login/google",
+  //     url: "`${REACT_APP_DOMAIN}`/user/login/google",
   //   });
   //   const data = await res.json();
   //   console.log(data);
@@ -35,7 +35,7 @@ export default function LogInForm() {
           password: data.password,
         },
         withCredentials: true,
-        url: "https://mercadon-t.herokuapp.com/user/login",
+        url: `${process.env.REACT_APP_DOMAIN}/user/login`,
       });
       console.log(user.data);
       if (user.data.passport.user) {
@@ -56,7 +56,7 @@ export default function LogInForm() {
         <form
           onSubmit={handleLogin}
           method="POST"
-          action="https://mercadon-t.herokuapp.com/user/login"
+          action={`${process.env.REACT_APP_DOMAIN}/user/login`}
         >
           <div className="divInputUser">
             <input
