@@ -33,27 +33,29 @@ export default function Home() {
 
   const handleSaveFavorite = async (id) => {
     try {
-      await axios.post("http://localhost:3001/user/addFavorite", {
+      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
         idUser: person,
-        idProduct: id,
-      });
+        idProduct: id
+      })
     } catch (error) {
       console.log(error);
     }
-  };
+
+  }
 
   const handleDeleteFavorite = async (id) => {
     try {
-      await axios.delete("http://localhost:3001/user/removeFavorite", {
+      await axios.delete(`${process.env.REACT_APP_DOMAIN}/user/removeFavorite`, {
         data: {
           idUser: person,
-          idProduct: id,
-        },
-      });
+          idProduct: id
+        }
+      })
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+
+  }
 
   //USEEFFECT CARGA DE PRODUCTOS
   // useEffect(() => {
@@ -63,12 +65,13 @@ export default function Home() {
     fetchCategories(dispatch);
     fetchProducts(dispatch);
     let myUser = JSON.parse(localStorage.getItem("myUser"));
-    let myCart = JSON.parse(localStorage.getItem(myUser));
-    setUser(myUser);
+    let myCart = JSON.parse(localStorage.getItem(myUser))
+    setUser(myUser)
     if (myCart) {
-      setCart(myCart);
-    } else {
-      setCart([]);
+      setCart(myCart)
+    }
+    else {
+      setCart([])
     }
     // if(typeof myUser === "string"){
     //   setCart([])

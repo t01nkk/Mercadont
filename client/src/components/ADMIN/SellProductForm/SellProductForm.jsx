@@ -35,7 +35,7 @@ export default function SellProductForm() {
     e.preventDefault();
     const { name, price, description, image, status, stock, categories } = data;
     try {
-      await axios.post("http://localhost:3001/product/create", {
+      await axios.post(`${process.env.REACT_APP_DOMAIN}/product/create`, {
         name: name,
         price: parseInt(price),
         description: description,

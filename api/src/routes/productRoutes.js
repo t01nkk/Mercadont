@@ -170,7 +170,7 @@ router.get("/:id", async (req, res) => {
 // Working
 //Create Product
 router.post("/create", async (req, res) => {
-  let { name, price, description, status, image, stock, categories } = req.body;
+  let { name, price, description, status, image, stock, categories, sizes } = req.body
   let exists = await Product.findOne({ where: { name: name } });
 
   if (exists)
@@ -191,14 +191,8 @@ router.post("/create", async (req, res) => {
 
   try {
     const newProduct = await Product.create({
-      name,
-      price,
-      description,
-      status,
-      image,
-      stock,
-      created: true,
-    });
+      name, price, description, status, image, stock, created: true, sizes
+    })
     for (var i = 0; i < categories.length; i++) {
       let category = await Category.findOne({ where: { name: categories[i] } });
       console.log(category);
@@ -229,9 +223,8 @@ router.delete("/delete/:id", async (req, res) => {
 // Working
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/update/:id", async (req, res) => {
-  const { id } = req.params;
-  const { name, price, description, image, stock, categories, status } =
-    req.body;
+  const { id } = req.params
+  const { name, price, description, image, stock, categories, sizes,status } = req.body
 
   const errors = validateInputProduct(
     name,
@@ -261,13 +254,13 @@ router.put("/update/:id", async (req, res) => {
 
     await Product.update(
       {
-        name: name,
-        price: price,
-        description: description,
-        image: image,
-        stock: stock,
-        status: status,
-      },
+        name,
+        price,
+        description,
+        image,
+        stock,
+        sizes,
+        status     },
       {
         where: { id: id },
       }
@@ -293,13 +286,7 @@ router.post("/buys", async (req, res) => {
     modifyStock(local);
 
     // console.log("local:", local)
-    for (let product of local) {
-      // console.log("product:", product)
-      // console.log("id:",typeof id)
-      // console.log("userId:",typeof userId)
-      // console.log("product.id:",typeof product.id)
-      // console.log("product.quantity:",typeof product.quantity)
-      // REVISAR LOS DATATYPES DEL MODEL PURCHASEORDER - SON STRINGS POR EL MOMENTO
+    for(let product of local){
       const db = await PurchaseOrder.create({
         orderId: id,
         userId: userId,
@@ -312,69 +299,6 @@ router.post("/buys", async (req, res) => {
   } catch (error) {
     return res.send(error);
   }
-});
-//RUTA PARA TRAER LOS PRODUCTOS !!ACTIVOS!!
-router.get("/common", async (req, res) => {
-  try {
-    const allProducts = await Product.findAll(
-      {
-        include: [
-          {
-            model: Category,
-            attributes: ["name"],
-            through: { attributes: [] },
-          },
-          {
-            model: Qa,
-            attributes: ["question", "answer", "resolved"],
-            through: { attributes: [] },
-          },
-          {
-            model: Review,
-            attributes: ["rating", "text"],
-            through: { attributes: [] },
-          },
-        ],
-      },
-      { where: { status: "active" } }
-    );
-    res.status(200).send(allProducts);
-  } catch (err) {
-    res.status(400).send({ msg: err.message });
-  }
-});
-///////////////REVISAR ANTES DE USAR///////
-//Product Bought
-//////////////  VA A LLEGAR EL CARRITO ENTERO /////////////////////
-// router.put("/:id/buy", async (req, res) => {
-//   const { id } = req.params
-//   const { amount } = req.body
+})
 
-//   try {
-//     const { stock } = await Product.findOne({ where: { id: id } })
-//     if (stock - amount === 0) {
-//       await Product.update({ stock: "0", status: "inactive" }, { where: { id: id } })
-//     }
-//     await Product.update({ stock: (stock - amount) }, { where: { id: id } })
-//     return res.status(200).send("Product Bought")
-//   }
-//   catch (err) {
-//     res.status(400).send(err)
-//   }
-// })
-//
-// router.put("/:id/restock", async (req, res) => {
-//   const { id } = req.params
-//   const { amount } = req.body
-
-//   try {
-//     const { stock } = await Product.findOne({ where: { id: id } })
-//     await Product.update({ stock: (stock + amount), status: "active" }, { where: { id: id } })
-//     return res.status(200).send("Product Restocked")
-//   }
-//   catch (err) {
-//     res.status(400).send(err)
-//   }
-// })
-
-module.exports = router;
+module.exports = router

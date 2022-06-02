@@ -81,9 +81,10 @@ export default function Categories() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
+    console.log(state)
     let filter = state.products;
-    if (min) {
-      filter = filter.filter((product) => product.price >= min);
+    if(min) {
+      filter = filter.filter(product => product.price >= min)
     }
     if (max) {
       filter = filter.filter((product) => product.price <= max);
