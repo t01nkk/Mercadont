@@ -24,7 +24,12 @@ export default function LoggedAdmin() {
         <div className="dropdown">
           <a className="dropbtn">{adminName}</a>
           <div className="dropdown-content">
-            <Link to="/sellProduct">Sell</Link>
+            <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home">
+              Product List
+            </Link>
+            <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/sellProduct">
+              Sell
+            </Link>
             <Link to="/addCategories">Create Categories</Link>
             <Link
               onClick={logOutSession}

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import shoppingCart from "../../media/shoppingCart.png";
 import imgAddFavorite from "../../media/heart-add-cart.png";
 import imgDeleteFavorite from "../../media/heart-delete-cart.png";
-
+import accounting from "accounting";
 
 export default function ProductCard({
   name,
@@ -15,19 +15,19 @@ export default function ProductCard({
   stock,
   handleSaveCart,
   handleSaveFavorite,
-  handleDeleteFavorite
+  handleDeleteFavorite,
 }) {
-  const [changeButton, setChangeButton] = useState(true)
+  const [changeButton, setChangeButton] = useState(true);
 
-  const postFavorite = ()=>{
-    setChangeButton(false)
-    handleSaveFavorite(id)
-  } 
+  const postFavorite = () => {
+    setChangeButton(false);
+    handleSaveFavorite(id);
+  };
 
-  const deleteFavorite = ()=>{
-    setChangeButton(true)
-    handleDeleteFavorite(id)
-  }
+  const deleteFavorite = () => {
+    setChangeButton(true);
+    handleDeleteFavorite(id);
+  };
   return (
     <div>
       <button
@@ -36,25 +36,24 @@ export default function ProductCard({
       >
         <img src={shoppingCart} alt="add-cart" />
       </button>
-      {changeButton
-      ?<button
-        className="shoppingCart-btn"
-        onClick={() => postFavorite()}
-      >
-        <img src={imgAddFavorite} alt="add-favorite" />
-      </button>
-      :<button
-        className="shoppingCart-btn"
-        onClick={() => deleteFavorite()}
-      >
-        <img src={imgDeleteFavorite} alt="delete-favorite" />
-      </button>
-      }
+      {changeButton ? (
+        <button className="shoppingCart-btn" onClick={() => postFavorite()}>
+          <img src={imgAddFavorite} alt="add-favorite" />
+        </button>
+      ) : (
+        <button className="shoppingCart-btn" onClick={() => deleteFavorite()}>
+          <img src={imgDeleteFavorite} alt="delete-favorite" />
+        </button>
+      )}
       <Link to={`/home/${id}`}>
         <article className="card card-style">
           <div className="img-container">
             <img src={`${image}`} alt={`${name}`} />
-            <span className="price">{`$${price}`}</span>
+            <span className="price">{`${accounting.formatMoney(
+              price,
+              "U$D ",
+              0
+            )}`}</span>
           </div>
 
           <div className="productCard-info">

@@ -29,8 +29,6 @@ export default function LoggedNavBar() {
           <div className="dropdown-content">
             <Link to="/accountDetails"> Account Details </Link>
             <Link to="/favorites">Favorites</Link>
-            <Link to="/sellProduct">Sell</Link>
-            <Link to="/addCategories">Create Categories</Link>
             <Link onClick={logoutSesion} to="/">
               Log Out
             </Link>
