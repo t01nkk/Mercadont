@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
     "@stripe/react-stripe-js": "^1.8.1",
     "@stripe/stripe-js": "^1.31.0",
     "@testing-library/jest-dom": "^5.11.6",
@@ -11,6 +12,7 @@
     "axios": "^0.27.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-google-login": "^5.2.2",
     "react-hook-form": "^7.30.0",
     "react-icons": "^4.3.1",
     "react-router-dom": "^5.3.1",

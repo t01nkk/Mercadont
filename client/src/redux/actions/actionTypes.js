@@ -7,4 +7,5 @@ export const FILTER = "FILTER";
 export const FILTER2 = "FILTER2";
 export const CATEGORIES_PRODUCT = "CATEGORIES_PRODUCT";
 export const SORT_BY_PRICE_CAT = "SORT_BY_PRICE_CAT"
+export const ADMIN_SESSION="ADMIN_SESSION"
 

@@ -4,48 +4,32 @@ const passport = require("passport");
 const { auth } = require("../middlewares/PasswordUtils");
 const { genPassword } = require("../middlewares/PasswordUtils");
 const { User, Product } = require("../db");
-const { validateInputUser } = require("../middlewares/middlewares");
-// const axios = require('axios');
 
-// router.get('/SignIn', (req, res, next)=>{
-//   const form = '<h1>Register Page</h1><form method="post" action="/SignIn">\
-//                     Enter Username:<br><input type="text" name="username">\
-//                     <br>Enter Password:<br><input type="password" name="password">\
-//                     <br><br><input type="submit" value="Submit"></form>';
-
-//     res.send(form)
-// })
-
-// router.get('/login', (req, res, next)=>{
-//   const form = '<h1>Login Page</h1><form method="POST" action="/login">\
-//     Enter Username:<br><input type="text" name="username">\
-//     <br>Enter Password:<br><input type="password" name="password">\
-//     <br><br><input type="submit" value="Submit"></form>';
-//   res.send(form)
-// })
-
-// router.get('/', (req, res, next)=>{
-//     res.status(200).send('<h1>Home</h1><p>Please <a href="/SignIn">register</a></p>');
-// })
-
-/*-------------------------------------------------------------- */
-/*-------------------------Login------------------------------- */
-
-router.get('/findUser', async (req, res) => {
+router.get("/findUser", async (req, res) => {
   const { email } = req.body;
-  let find = await User.findOne({ where: { email: email } })
+  let find = await User.findOne({ where: { email: email } });
   if (find) res.send(find);
   else res.status(404).send({ msg: "This user doesn't exist" });
-})
+});
 
 router.post("/register", async (req, res, next) => {
-  const { email, password } = req.body;
-
+  // const { email, password } = req.body;
+  const { name, lastname, email, password, address, image, payment } = req.body;
+  if (!password) throw new Error({ msg: "Password is required" });
   try {
     const userExist = await User.findOne({ where: { email: email } });
-    console.log(userExist ? userExist : null, "HERE BE USER");
+    // console.log(userExist ? userExist : null, "HERE BE USER");
     if (!userExist) {
-      await User.create({ email: email, password: genPassword(password) });
+      await User.create({
+        email: email,
+        password: genPassword(password),
+        name: name,
+        lastname: lastname,
+        address: address,
+        image: image,
+        payment: payment,
+        created: true,
+      });
 
       res.send({ msg: "User Registered" });
     } else {
@@ -58,7 +42,7 @@ router.post("/register", async (req, res, next) => {
 
 router.get("/Profile/auth", auth, (req, res, next) => {
   //Create auth
-
+  // console.log("this is REQ SESSION", req.session)
   res.send(req.session);
 });
 
@@ -70,25 +54,20 @@ router.get("/fail", (req, res) => {
   }
 });
 
-router.post(
-  "/login",
-
-  passport.authenticate("local", {
-    failureRedirect: "/user/fail",
-    successRedirect: "/user/Profile/auth",
-  })
-);
-
-// router.get("/logout", auth, (req, res, next) => {
-//   req.logout();
-//   res.redirect("/login");
-// });
-
-router.post('/logout', function (req, res, next) {
-  req.logout(function (err) {
-    if (err) { return next(err); }
-    res.redirect('/user');
-  });
+router.post("/logout", auth, function (req, res, next) {
+  try {
+    console.log("AUTHENTICATE BEFORE", req.isAuthenticated());
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+      console.log("AUTHENTICATE BEFORE", req.isAuthenticated());
+      // console.log("REQ.USER", req.user)
+      res.send({ msg: "Logged out successfully" });
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
 });
 
 router.post("/findUser", async (req, res) => {
@@ -107,6 +86,35 @@ router.get("/findAll", async (req, res) => {
   }
 });
 
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    failureRedirect: "/user/fail",
+    successRedirect: "/user/Profile/auth",
+  })
+);
+
+///////////////// GOOGLE ///////////////////
+
+require("../middlewares/googleauth");
+
+router.get(
+  "/login/google",
+  passport.authenticate("google", {
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+    ],
+    session: true,
+    failureRedirect: "/login",
+    failureMessage: true,
+  })
+);
+
+router.get("/googleAuth", passport.authenticate("google"), function (req, res) {
+  res.redirect("/user/Profile/auth");
+});
+
 /*-------------------------------------------------------------- */
 /*-------------------------Emails------------------------------- */
 
@@ -120,6 +128,7 @@ router.get("/details/:id", async (req, res) => {
   try {
       const user = await User.findOne({
           where: { id: id },
+          include: { all: true } 
       });
       if (!user) {
           return res.status(404).send("User Not Found")
@@ -187,5 +196,29 @@ router.delete('/removeFavorite', async (req, res) =>{
     return res.status(404).send({ msg: error});
   }
 })
+
+// Get User's favorites
+router.get("/favorite/:id", async (req, res) => {
+  const { id } = req.params
+
+  try {
+      const userFavorites = await User.findOne({ 
+        include: {
+          model: Product,
+          through: {
+            attributes: []
+          },
+        },
+        where: { id: id} 
+      })
+      if (!userFavorites) {
+          return res.status(404).send("User Not Found")
+      }
+      return res.status(200).send(userFavorites.products)
+  } catch (error) {
+    // console.log("error:",error)
+    return res.status(404).send(error)
+  }
+});
 
 module.exports = router;
