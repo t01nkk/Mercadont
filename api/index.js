@@ -32,7 +32,7 @@ const { conn } = require("./src/db.js");
 const { Product, Category } = require("./src/db");
 const { getProducts, getUsers } = require("./src/middlewares/middlewares");
 
-// Syncing all the models at once.
+// Syncing all the models at once./
 conn.sync({ force: true }).then(() => {
   server.listen(process.env.PORT || 3001, async () => {
     await getProducts();
