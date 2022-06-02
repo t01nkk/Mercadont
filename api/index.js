@@ -33,7 +33,7 @@ const { Product, Category } = require("./src/db");
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  server.listen(3001, async () => {
+  server.listen(process.env.PORT, async () => {
     /*
         const cat = await Category.create({name:"Testing"})
         const test1 = await Product.create({
@@ -63,6 +63,6 @@ conn.sync({ force: true }).then(() => {
             stock: 1,
         })
 */
-    console.log("%s listening at 3001"); // eslint-disable-line no-console
+    console.log(`I stand ready at ${process.env.PORT}`); // eslint-disable-line no-console
   });
 });
