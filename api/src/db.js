@@ -3,14 +3,27 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const {
-    DB_USER, DB_PASSWORD, DB_HOST,
+    DB_USER, DB_PASSWORD, DB_HOST, DATABASE_URL
 } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/ecommerce`, {
+// const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/ecommerce`, {
+//     logging: false,
+//     native: false,
+//     timestamps: false
+// });
+
+const sequelize = new Sequelize(DATABASE_URL, {
     logging: false,
     native: false,
-    timestamps: false
+    timestamps: false,
+    dialectOptions: {
+        ssl: {
+            required: true,
+            rejectUnauthorized: false
+        }
+    }
 });
+
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
@@ -28,7 +41,7 @@ let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].s
 sequelize.models = Object.fromEntries(capsEntries);
 
 
-const { User, Product, Category, Review, Qa, PurchaseOrder} = sequelize.models;
+const { User, Product, Category, Review, Qa, PurchaseOrder } = sequelize.models;
 
 Product.belongsToMany(User, { through: 'favorites' }); //Relation for
 User.belongsToMany(Product, { through: 'favorites' });// favorites
@@ -43,15 +56,15 @@ Category.belongsToMany(Product, { through: 'productCategories' }); //Relation fo
 Product.belongsToMany(Category, { through: 'productCategories' }); //categories
 
 Product.belongsToMany(Qa, { through: 'productQAs' }); //Relation for questions and answers
-Qa.belongsTo(Product);  
+Qa.belongsTo(Product);
 
 Product.belongsToMany(Review, { through: 'productReviews' }); //Relation for reviews
-Review.belongsTo(Product);  
+Review.belongsTo(Product);
 
-User.belongsToMany(Qa, {through: 'userQAs'});
+User.belongsToMany(Qa, { through: 'userQAs' });
 Qa.belongsTo(User);
 
-User.belongsToMany(Review, {through: 'userReviews'});
+User.belongsToMany(Review, { through: 'userReviews' });
 Review.belongsTo(User);
 
 

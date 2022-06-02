@@ -34,7 +34,7 @@ const { getProducts, getUsers } = require("./src/middlewares/middlewares");
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  server.listen(3001, async () => {
+  server.listen(process.env.PORT || 3001, async () => {
     await getProducts();
     // await getUsers();
     console.log("%s listening at 3001"); // eslint-disable-line no-console
