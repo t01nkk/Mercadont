@@ -6,6 +6,7 @@ import {
   ADMIN_SESSION,
 } from "./actionTypes";
 
+
 export const fetchProducts = async (dispatch) => {
   const fetchedProducts = await axios.get(`${process.env.REACT_APP_DOMAIN}/product/`);
   dispatch({

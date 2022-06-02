@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./SellProductForm.css";
 import axios from "axios";
-import { fetchCategories } from "../../redux/actions/actions";
-import { useStore } from "../../context/store";
-// import Multiselect from "multiselect-react-dropdown";
+import { fetchCategories } from "../../../redux/actions/actions";
+import { useStore } from "../../../context/store";
 
 export default function SellProductForm() {
   const [state, dispatch] = useStore();

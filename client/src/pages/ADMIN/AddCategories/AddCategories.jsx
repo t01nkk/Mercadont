@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useStore } from "../../context/store.js";
-import { fetchCategories } from "../../redux/actions/actions.js";
+import { useStore } from "../../../context/store";
+import { fetchCategories } from "../../../redux/actions/actions.js";
 import { MdDeleteForever } from "react-icons/md";
-import "../SellProductForm/SellProductForm.css";
 import "./CategoryCard.css";
 export default function EditProduct() {
   const [state, dispatch] = useStore();
