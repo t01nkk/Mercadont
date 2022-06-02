@@ -4,24 +4,24 @@ import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import CreateUser from "./pages/CreateUser/CreateUser.jsx";
 import Home from "./pages/Home/Home.jsx";
-import SellProduct from "./pages/SellProduct/SellProduct.jsx";
+import SellProduct from "./pages/ADMIN/SellProduct/SellProduct";
 import UserCart from "./pages/UserCart/UserCart.jsx";
 import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx";
 import LogInForm from "./components/LogInForm/LogInForm.jsx";
 import Categories from "./components/Categories/Categories.jsx";
-import AddCategories from "./components/AddCategories/AddCategories.jsx";
-import EditProduct from "./pages/EditProduct/EditProduct.jsx";
+import AddCategories from "./pages/ADMIN/AddCategories/AddCategories";
+import EditProduct from "./pages/ADMIN/EditProduct/EditProduct";
 import SearchedProducts from "./pages/SearchedProducts/SearchedProducts";
 import AccountDetails from "./pages/AccountDetails/AccountDetails";
 import AccountDetailsForm from "./components/AccountDetailsForm/AccountDetailsForm";
 import { FormBuys } from "./components/FormBuys/FormBuys";
-import CategoriesCards from "./components/AddCategories/CategoriesCards";
-import CreateCategory from "./components/AddCategories/CreateCategory.jsx";
+import CategoriesCards from "./pages/ADMIN/AddCategories/CategoriesCards";
+import CreateCategory from "./pages/ADMIN/AddCategories/CreateCategory.jsx";
 import LoginADMIN from "./pages/ADMIN/LoginADMIN/LoginADMIN";
 import HomeAdmin from "./pages/ADMIN/HomeADMIN/HomeAdmin";
 import NavBarADMIN from "./components/ADMIN/NavBarADMIN/NavBarADMIN";
 import { Favorites } from "./components/Favorites/Favorites";
-
+import ProductDetailsAdmin from "./pages/ADMIN/ProductDetailsADMIN/ProductDetailsAdmin";
 function App() {
   return (
     <>
@@ -35,25 +35,19 @@ function App() {
           <NavBar />
           <Home />
         </Route>
+        <Route path="/categories" exact>
+          <NavBar/>
+          <Categories />
+        </Route>
         <Route path="/home/:id" exact>
           {/* ADMIN/USER DETAILS PRODUCT */}
           <NavBar />
           <ProductDetails />
         </Route>
-        <Route path="/edit/:id" exact>
-          {/* ADMIN/USER NAV BAR */}
-          <NavBar />
-          <EditProduct />
-        </Route>
         <Route path="/search" exact>
           {/* ADMIN/USER SEARCHED PRODUCTS */}
           <NavBar />
           <SearchedProducts />
-        </Route>
-        <Route path="/sellProduct" exact>
-          {/* ADMIN SELL PRODUCT FORM  */}
-          <NavBar />
-          <SellProduct />
         </Route>
         <Route path="/favorites" exact>
           <NavBar />
@@ -64,22 +58,6 @@ function App() {
           {/* USER CART */}
           <NavBar />
           <UserCart />
-        </Route>
-        <Route path="/categories" exact>
-          <NavBar />
-          <Categories />
-        </Route>
-        <Route path="/addCategories" exact>
-          <NavBar />
-          <CategoriesCards />
-        </Route>
-        <Route path="/editCategories/:id" exact>
-          <NavBar />
-          <AddCategories />
-        </Route>
-        <Route path="/createCategory" exact>
-          <NavBar />
-          <CreateCategory />
         </Route>
         <Route path="/logIn" exact>
           {/* USER LOGIN  */}
@@ -126,6 +104,58 @@ function App() {
         >
           <NavBarADMIN />
           <HomeAdmin />
+        </Route>
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/sellProduct"
+          exact
+        >
+          {/* ADMIN SELL PRODUCT FORM  */}
+          <NavBarADMIN />
+          <SellProduct />
+        </Route>
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/admin/edit/:id"
+          exact
+        >
+          {/* ADMIN EDIT PRODUCT */}
+          <NavBarADMIN />
+          <EditProduct />
+        </Route>
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home/:id"
+          exact
+        >
+          {/* ADMIN DETAILS PRODUCT */}
+          <NavBarADMIN />
+          <ProductDetailsAdmin />
+        </Route>
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/categories"
+          exact
+        >
+          <NavBarADMIN />
+          <Categories />
+        </Route>
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/addCategories"
+          exact
+        >
+          <NavBarADMIN />
+          <CategoriesCards />
+        </Route>
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/editCategories/:id"
+          exact
+        >
+          <NavBarADMIN />
+          <AddCategories />
+        </Route>
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/createCategory"
+          exact
+        >
+          <NavBarADMIN />
+          <CreateCategory />
         </Route>
       </Router>
     </>

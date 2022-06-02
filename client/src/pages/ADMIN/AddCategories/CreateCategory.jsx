@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { fetchCategories } from "../../redux/actions/actions";
-import { useStore } from "../../context/store";
+import { fetchCategories } from "../../../redux/actions/actions";
+import { useStore } from "../../../context/store";
 import "./CategoryCard.css";
 
 export default function CreateCategory() {

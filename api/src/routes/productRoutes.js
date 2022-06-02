@@ -203,11 +203,9 @@ router.post("/create", async (req, res) => {
       let category = await Category.findOne({ where: { name: categories[i] } });
       console.log(category);
       if (!category) {
-        return res
-          .status(401)
-          .send({
-            msg: "This isn't a valid category, you might have misspeled it or you can choose to create a new one",
-          });
+        return res.status(401).send({
+          msg: "This isn't a valid category, you might have misspeled it or you can choose to create a new one",
+        });
       } else await newProduct.addCategory(category);
     }
     return res.status(201).send("New Product Created");
@@ -232,7 +230,8 @@ router.delete("/delete/:id", async (req, res) => {
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, price, description, image, stock, categories } = req.body;
+  const { name, price, description, image, stock, categories, status } =
+    req.body;
 
   const errors = validateInputProduct(
     name,
@@ -240,7 +239,8 @@ router.put("/update/:id", async (req, res) => {
     description,
     image,
     stock,
-    categories
+    categories,
+    status
   );
   if (errors.length) {
     return res.status(400).send(errors);
@@ -266,6 +266,7 @@ router.put("/update/:id", async (req, res) => {
         description: description,
         image: image,
         stock: stock,
+        status: status,
       },
       {
         where: { id: id },

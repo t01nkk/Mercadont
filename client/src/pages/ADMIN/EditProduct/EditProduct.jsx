@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "../../helpers/useForm.js";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useStore } from "../../context/store.js";
-import { fetchCategories } from "../../redux/actions/actions.js";
-import CheckboxCategories from "./CheckboxCategoriesEdit/CheckboxCategoriesEdit.jsx";
+import { useStore } from "../../../context/store.js";
+import { fetchCategories } from "../../../redux/actions/actions.js";
+
 
 export default function EditProduct() {
   const [state, dispatch] = useStore();

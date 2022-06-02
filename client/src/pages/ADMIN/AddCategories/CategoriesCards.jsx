@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CategoryCard from "./CategoryCard.jsx";
-import { useStore } from "../../context/store.js";
-import { fetchCategories } from "../../redux/actions/actions.js";
+import { useStore } from "../../../context/store.js";
+import { fetchCategories } from "../../../redux/actions/actions.js";
 import { MdOutlineAddCircle } from "react-icons/md";
 import { Link } from "react-router-dom";
 

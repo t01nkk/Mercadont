@@ -1,5 +1,5 @@
 import React from "react";
-import SellProductForm from "../../components/SellProductForm/SellProductForm";
+import SellProductForm from "../../../components/ADMIN/SellProductForm/SellProductForm";
 
 export default function SellProduct() {
   return (
