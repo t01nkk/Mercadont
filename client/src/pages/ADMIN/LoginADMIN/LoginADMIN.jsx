@@ -24,12 +24,12 @@ export default function LoginADMIN() {
           password: data.password,
         },
         withCredentials: true,
-        url: "http://localhost:3001/user/login",
+        url: `${process.env.REACT_APP_DOMAIN}/user/login`,
       });
 
       if (user.data.passport.user) {
         const idAdmin = user.data.passport.user;
-        const admin = await axios.post("http://localhost:3001/admin/getAdmin", {
+        const admin = await axios.post(`${process.env.REACT_APP_DOMAIN}/admin/getAdmin`, {
           id: idAdmin,
         });
 
@@ -61,7 +61,7 @@ export default function LoginADMIN() {
         <form
           onSubmit={handleLogin}
           method="POST"
-          action="http://localhost:3001/user/login"
+          action={`${process.env.REACT_APP_DOMAIN}/user/login`}
         >
           <div className="divInputUser">
             <input

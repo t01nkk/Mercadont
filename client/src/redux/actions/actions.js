@@ -7,14 +7,15 @@ import {
 } from "./actionTypes";
 
 export const fetchProducts = async (dispatch) => {
-  const fetchedProducts = await axios.get("http://localhost:3001/product/");
+  const fetchedProducts = await axios.get(`${process.env.REACT_APP_DOMAIN}/product/`);
   dispatch({
     type: FETCH_PRODUCTS,
     payload: fetchedProducts.data,
   });
 };
+console.log("here be env", process.env.REACT_APP_DOMAIN)
 export const fetchCategories = async (dispatch) => {
-  const fetchedProducts = await axios.get("http://localhost:3001/categories/");
+  const fetchedProducts = await axios.get(`${process.env.REACT_APP_DOMAIN}/categories/`);
   dispatch({
     type: FETCH_CATEGORIES,
     payload: fetchedProducts.data,

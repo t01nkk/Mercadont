@@ -18,7 +18,7 @@ export default function CreateCategory() {
     e.preventDefault();
     const { name } = data;
     try {
-      await axios.post("http://localhost:3001/categories/", {
+      await axios.post(`${process.env.REACT_APP_DOMAIN}/categories/`, {
         name: name,
       });
       alert("Created category");
