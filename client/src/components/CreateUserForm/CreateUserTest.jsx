@@ -3,6 +3,8 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 export default function LogInForm() {
+  const [errors, setErrors] = useState({});
+ 
   const [data, setData] = useState({
     name: "",
     lastName: "",
@@ -13,9 +15,44 @@ export default function LogInForm() {
     profilePic: "",
   });
   const history = useHistory();
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+  
+
+  function validator(input) {
+    let errors = {};    
+    
+    if (!expresiones.nombre.test(input.name)) {
+        errors.name = 'Name is necessary';
+    }
+    if (!expresiones.correo.test(input.email)) {
+      errors.email = 'Email is necessary';
+  }
+    return errors
+  }
+
+  const handleChangeMin = (e) => {
+    setErrors("")  
+    if (!expresiones.nombre.test(data.name))setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+    
+        setData({ ...data, [e.target.name]: e.target.value });
   };
+  const handleChangeMi = (e) => {
+    setErrors("")  
+    if (!expresiones.correo.test(data.password))setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+    
+        setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const handleChangeM = (e) => {
+   
+        setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+ 
+  const expresiones = {	
+		nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+    correo: /\S+@\S+\.\S+/
+  }
+
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, lastName, email, password } = data;
@@ -40,26 +77,28 @@ export default function LogInForm() {
               type="text"
               name="name"
               placeholder="First Name ..."
-              onChange={handleChange}
+              onChange={ handleChangeMin}
               value={data.name}
             />
+            {errors.name && ( <p className='error-input'>{errors.name}</p> )}
           </div>
           <div className="divInputUser">
             <input
               type="email"
               name="email"
               placeholder="Email ..."
-              onChange={handleChange}
+              onChange={handleChangeMi}
               required
               value={data.email}
             />
+             {errors.email && ( <p className='error-input'>{errors.email}</p> )}
           </div>
           <div className="divInputUser">
             <input
               type="password"
               name="password"
               placeholder="Password..."
-              onChange={handleChange}
+              onChange={handleChangeM}
               required
               value={data.password}
             />

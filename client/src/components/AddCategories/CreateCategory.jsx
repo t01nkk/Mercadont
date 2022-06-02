@@ -5,30 +5,32 @@ import { useStore } from "../../context/store";
 import "./CategoryCard.css";
 
 export default function CreateCategory() {
-  const [state, dispatch] = useStore();
+  const [state, dispatch] = useStore(); 
+  const [errors, setErrors] = useState({});
 
   const [data, setData] = useState({
     name: "",
   });
-  const [error, setError] = useState('');
-
-  function validate(value) {
-    const { name } = data;
-      if (!/^\d+\S/.test(value) && Number(value) ) {
-          setError('name category');
-          setData({ [name]: "" })
-      } else {
-          setError('')
-          
-      }
+  function validator(input) {
+    let errors = {};    
+    
+    if (!expresiones.nombre.test(input.name)) {
+        errors.name = 'Name is necessary';
+    }
+   
+    return errors
   }
-  const handleChange = (e) => {
-    const {  name } = e.target;
-    if (name === 'name') {
-        validate(data.name)    }
-
-    setData({ ...data, [e.target.name]: e.target.value });
+  const handleChangeMin = (e) => {
+    setErrors("")  
+    if (!expresiones.nombre.test(data.name))setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+    
+        setData({ ...data, [e.target.name]: e.target.value });
   };
+  const expresiones = {	
+		nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+   
+  }
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name } = data;
@@ -54,15 +56,14 @@ export default function CreateCategory() {
             type="text"
             name="name"
             placeholder="Category Name ..."
-            onChange={handleChange}
+            onChange={handleChangeMin }
             required
             value={data.name}
           />
         </div>
-        {!error ? null : <div className="error" >{error}</div>}
-
+        {errors.name && ( <p className='error-input'>{errors.name}</p> )}
         <div className="btn-createUser">
-          <input type="submit" value="Create" disabled={error} className="input-submit" />
+          <input type="submit" value="Create" disabled={errors} className="input-submit" />
         </div>
       </form>
     </div>

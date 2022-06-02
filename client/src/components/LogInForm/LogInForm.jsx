@@ -9,11 +9,36 @@ export default function LogInForm() {
     email: "",
     password: "",
   });
+  const [errors,setErrors] =useState({})
   const [redirect, setRedirect] = useState(false);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
+
+  function validator(input) {
+    let errors = {};    
+    
+    if (!expresiones.nombre.test(input.name)) {
+        errors.name = 'Name is necessary';
+    }
+    if (!expresiones.correo.test(input.email)) {
+      errors.email = 'Email is necessary';
+  }
+    return errors
+  }
+
+  const handleChangeMi = (e) => {
+    setErrors("")  
+    if (!expresiones.correo.test(data.password))setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+    
+        setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const expresiones = {	
+		nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+    correo: /\S+@\S+\.\S+/
+  }
   // const handleLoginGoogle = async () => {
   //   const res = await axios({
   //     method: "GET",
@@ -63,10 +88,11 @@ export default function LogInForm() {
               type="email"
               name="email"
               placeholder="email ..."
-              onChange={handleChange}
+              onChange={handleChangeMi}
               required
               value={data.email}
             />
+             {errors.email && ( <p className='error-input'>{errors.email}</p> )}
           </div>
           <div className="divInputUser">
             <input

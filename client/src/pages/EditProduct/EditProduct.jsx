@@ -8,6 +8,7 @@ import CheckboxCategories from "./CheckboxCategoriesEdit/CheckboxCategoriesEdit.
 
 export default function EditProduct() {
   const [state, dispatch] = useStore();
+  const [errors, setErrors] = useState({});
   const [product, setProduct] = useState({
     name: "",
     description: "",
@@ -17,6 +18,36 @@ export default function EditProduct() {
     categories: [],
     status: "",
   });
+
+  
+  function validator(input) {
+    let errors = {};    
+    
+    if (!expresiones.nombre.test(input.name)) {
+        errors.name = 'Name is necessary';
+    }
+    if (!expresiones.num.test(input.price)) {
+      errors.price = 'Price is necessary';
+  }
+    return errors
+  }
+  const handleChangeMin = (e) => {
+    setErrors("")  
+    if (!expresiones.nombre.test(product.name))setErrors(validator({ ...product, [e.target.name]: e.target.value }));
+    
+        setProduct({ ...product, [e.target.name]: e.target.value });
+  };
+
+  const handleChangePrice = (e) => {
+    setErrors("")  
+    if (!expresiones.num.test(product.price))setErrors(validator({ ...product, [e.target.name]: e.target.value }));
+    
+        setProduct({ ...product, [e.target.name]: e.target.value });
+  };
+  const expresiones = {	
+		nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+    num: /^\d{1,14}$/
+  }
   const handleDeleteCat = (name, event) => {
     event.preventDefault();
     const filterCat = product.categories.filter((cat) => cat !== name);
@@ -91,14 +122,16 @@ export default function EditProduct() {
           type="text"
           name="name"
           value={product.name}
-          onChange={handleChange}
+          onChange={handleChangeMin}
         />
+          {errors.name && ( <p className='error-input'>{errors.name}</p> )}
         <input
           type="number"
           name="price"
           value={product.price}
-          onChange={handleChange}
+          onChange={handleChangePrice}
         />
+         {errors.price && ( <p className='error-input'>{errors.price}</p> )}
         <input
           type="number"
           name="stock"

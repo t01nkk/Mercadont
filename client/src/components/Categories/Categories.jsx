@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useStore } from "../../context/store";
 import { Redirect } from "react-router-dom";
-import { fetchProducts, fetchCategories } from "../../redux/actions/actions.js";
 import {SORT_BY_PRICE_CAT, FILTER2, FILTER} from "../../redux/actions/actionTypes";
 
 export default function Categories() {
@@ -52,9 +51,10 @@ export default function Categories() {
 
   const handleSearch = async (e) => {
 
-    let filter = state.products;
-
-    if (min) {
+    e.preventDefault();
+    console.log(state)
+    let filter = state.filterr;
+    if(min) {
       filter = filter.filter(product => product.price >= min)
     }
     if (max) {
@@ -66,20 +66,14 @@ export default function Categories() {
     }
     if (error){
       alert("Please Add Valid inputs")
-      filter = state.filter
+      filter = state.filterr
     }
     dispatch({
-      type: FILTER,
+      type: FILTER2,
       payload: filter
     });
     console.log(state)
   };
-  useEffect(() => {
-    fetchProducts(dispatch);
-  }, []);
-  useEffect(() => {
-    fetchCategories(dispatch);
-  }, []);
 
 
 
@@ -99,35 +93,35 @@ export default function Categories() {
         <option value="DESCENDING">⬆  </option>
       </select>
       </div>
-     
-      <form className="form-filter-price"
-        onSubmit={handleSearch}
-      >
-        <input
-          id="filter2"
-          type="text"
-          value={min}
-          placeholder="min..."
-          required
-          onChange={handleChangeMin}
-        />
-      </form>
-      <form
-        onSubmit={handleSearch}
-      >
-        <input
-          id="filter"
-          type="text"
-          value={max}
-          placeholder="max..."
-          required
-          onChange={handleChangeMax}
-        />
-      </form>
+
+        <form className="form-filter-price"
+              onSubmit={handleSearch}
+        >
+          <input
+              id="filter2"
+              type="number"
+              value={min}
+              placeholder="min..."
+              min={0}
+              onChange={handleChangeMin}
+              input/>
+        </form>
+        <form
+            onSubmit={handleSearch}
+        >
+          <input
+              id="filter"
+              type="number"
+              value={max}
+              placeholder="max..."
+              min={0}
+              onChange={handleChangeMax}
+          />
+        </form>
       {error&&<p>{error}</p>}
       </div>
       {redirect ? <Redirect push to="/home" /> : null}
-      <div className="cardsContainer"> {state.products &&
+      <div className="cardsContainer"> {
         React.Children.toArray(
           state.products.map((product) => {
             return (

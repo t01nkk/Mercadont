@@ -15,14 +15,13 @@ export default function EditProduct() {
   const [error, setError] = useState('');
 
   function validate(value) {
-    const { name } = product;
-      if (!/^\d+\S/.test(value) && Number(value) ) {
-          setError('name category');
-          setProduct({ [name]: "" })
-      } else {
-          setError('')
-          
-      }
+    var expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
+
+    if (!expression.test(value)) {
+        setError("Name is nessesary");
+    } else if (value === "") {
+        setError('')
+    }
   }
  
 
@@ -44,10 +43,11 @@ export default function EditProduct() {
     }
   };
   const handleChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
-    const {  name } = e.target;
+    setError('')   
+    const {  name } = e.target;    
     if (name === 'name') {
-      validate(product.name)    }
+        validate(product.name)
+    }
 
   setProduct({ ...product, [e.target.name]: e.target.value });
   };

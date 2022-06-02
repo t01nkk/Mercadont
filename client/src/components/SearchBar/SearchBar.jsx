@@ -10,7 +10,25 @@ export default function SearchBar() {
   const [state, dispatch] = useStore();
   const [error, setError] = useState(false);
   const [input, setInput] = useState("");
+
+
+
+
+  function validate(value) {
+    var expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
+
+    if (!expression.test(value)) {
+        setError('you can use letters spaces and accents');
+    } else if (value === "") {
+        setError('')
+    }
+}
   const handleChange = (e) => {
+    setError('')   
+    const {  name } = e.target;    
+    if (name === "search") {
+        validate(input)
+    }
     setInput(e.target.value);
   };
   const handleSearch = async (e) => {
@@ -43,13 +61,15 @@ export default function SearchBar() {
         <input
           id="search"
           type="text"
+          name="search"
           value={input}
           placeholder="Search..."
           autoFocus
           required
           onChange={handleChange}
         />
-        <button type="submit" className="searchBar-container-button">
+       {/*  {!error ? null : alert(error)} */}
+        <button type="submit" disabled={error} className="searchBar-container-button">
           <img src={icon} alt="" />
         </button>
       </form>
