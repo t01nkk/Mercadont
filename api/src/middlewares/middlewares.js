@@ -4,7 +4,7 @@ const productos = require("../../productsCats.json");
 const users = require("../../users.json")
 const { Product, User, Category } = require("../db")
 const { Op } = require("sequelize");
-const { genPassword } = require('./PasswordUtils');
+const { genPassword } = require('./password_utils');
 const nodemailer = require("nodemailer");
 
 const modifyStock = async (local) => {
