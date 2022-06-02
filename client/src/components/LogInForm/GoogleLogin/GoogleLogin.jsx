@@ -52,7 +52,7 @@ export const GoogleLoginButton = () => {
 
   return (
     <a
-      href="http://localhost:3001/user/login/google"
+      href={`${process.env.REACT_APP_DOMAIN}/user/login/google`}
       className={classes.button}
     >
       <div className={classes.wrapper}>

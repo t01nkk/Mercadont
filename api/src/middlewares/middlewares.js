@@ -27,48 +27,6 @@ const modifyStock = async (local) => {
     }
 }
 
-// passport.use(new Strategy(
-//     function(username, password, done) {
-//       db.users.findByUsername(username)
-//         .then((user) => {
-//           if(!user) {
-//             return done(null, false);
-//           }
-//           if(user.password != password) {
-//             return done(null, false);
-//           }
-//           return done(null, user);
-//         })
-//       .catch(err => {
-//         return done(err);
-//       })
-//     }));
-
-// function initialize(passport, getUserByEmail, getUserById) {
-//     console.log(passport)
-//     const authenticateUser = async (email, password, done) => {
-//         const user = await getUserByEmail(email)
-//         // console.log(user?.dataValues, "acá está el dataValues");
-//         if (user === null) {
-//             // console.log("Hola no existo")
-//             return done(null, false, { msg: 'No user with that email' });
-
-//         }
-//         try {
-//             // console.log(user.dataValues.password);
-//             if (await bcrypt.compare(password, user.dataValues.password)) {
-//                 console.log(user.dataValues.password, "SOY EL PASS")
-//                 return done(null, user);
-//             }
-//         } catch (err) {
-//             return done(err)
-//         }
-//     }
-
-//     passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
-//     passport.serializeUser((user, done) => done(null, user.dataValues.name))
-//     passport.deserializeUser((name, done) => done(null, getUserById(name)))
-// }
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
@@ -181,12 +139,12 @@ async function mailPayPal() {
 
 module.exports = {
   // initialize
-  getUsers,
-  getProducts,
-  validateInputUser,
-  validateInputProduct,
-  modifyStock,
-  checkAuthenticated,
-  checkNotAuthenticated,
-  mailPayPal,
+    getUsers,
+    getProducts,
+    validateInputUser,
+    validateInputProduct,
+    modifyStock,
+    checkAuthenticated,
+    checkNotAuthenticated,
+    mailPayPal,
 }

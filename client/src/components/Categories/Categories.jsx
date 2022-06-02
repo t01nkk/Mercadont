@@ -52,7 +52,8 @@ export default function Categories() {
   const handleSearch = async (e) => {
 
     e.preventDefault();
-    let filter = state.filter;
+    console.log(state)
+    let filter = state.products;
     if(min) {
       filter = filter.filter(product => product.price >= min)
     }
@@ -68,7 +69,7 @@ export default function Categories() {
       filter = state.filter
     }
     dispatch({
-      type: FILTER,
+      type: FILTER2,
       payload: filter
     });
     console.log(state)
@@ -92,31 +93,31 @@ export default function Categories() {
         <option value="DESCENDING">⬆  </option>
       </select>
       </div>
-     
-      <form className="form-filter-price"
-        onSubmit={handleSearch}
-      >
-        <input
-          id="filter2"
-          type="text"
-          value={min}
-          placeholder="min..."
-          required
-          onChange={handleChangeMin}
-        />
-      </form>
-      <form
-        onSubmit={handleSearch}
-      >
-        <input
-          id="filter"
-          type="text"
-          value={max}
-          placeholder="max..."
-          required
-          onChange={handleChangeMax}
-        />
-      </form>
+
+        <form className="form-filter-price"
+              onSubmit={handleSearch}
+        >
+          <input
+              id="filter2"
+              type="number"
+              value={min}
+              placeholder="min..."
+              min={0}
+              onChange={handleChangeMin}
+              input/>
+        </form>
+        <form
+            onSubmit={handleSearch}
+        >
+          <input
+              id="filter"
+              type="number"
+              value={max}
+              placeholder="max..."
+              min={0}
+              onChange={handleChangeMax}
+          />
+        </form>
       {error&&<p>{error}</p>}
       </div>
       {redirect ? <Redirect push to="/home" /> : null}
