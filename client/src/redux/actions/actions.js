@@ -4,6 +4,7 @@ import {
   FETCH_CATEGORIES,
   USER_SESSION,
   ADMIN_SESSION,
+  GET_FAVORITES
 } from "./actionTypes";
 
 export const fetchProducts = async (dispatch) => {
@@ -64,3 +65,14 @@ export const checkSessionADMIN = (dispatch) => {
     });
   }
 };
+export const getFavorites = async (dispatch,id)=>{
+  const giveMeFavorites = await axios(`http://localhost:3001/user/favorite/${id}`)
+  try {
+    dispatch({
+      type: GET_FAVORITES,
+      payload: giveMeFavorites.data
+    });
+  } catch (error) {
+      console.log(error)
+  } 
+}

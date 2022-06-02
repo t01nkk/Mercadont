@@ -1,28 +1,30 @@
 import React, {useState,useEffect} from 'react'
-import axios from "axios";
+import { useStore } from "../../context/store.js";
+import { ArticleFavorites } from './ArticleFavorites';
+import { getFavorites } from '../../redux/actions/actions';
 
 export const Favorites = () => {
-
+    const [state, dispatch] = useStore();
     const [favorites, setFavorites] = useState([])
 
     let id = JSON.parse(localStorage.getItem("myUser"))
     useEffect(()=>{
-        const getFavorites = async ()=>{
-            const giveMeFavorites = await axios(`http://localhost:3001/user/favorite/${id}`)
-            try {
-                // console.log(addfavorites)
-                setFavorites(giveMeFavorites.data)
-            } catch (error) {
-                console.log(error)
-            } 
-        }
-        
-        getFavorites()
+        getFavorites(dispatch,id)
     },[])
   return (
     <div>
         <p>favorite</p>
-        {favorites.length && favorites.map(e => console.log(e))}
+        {console.log(state)}
+        {state.favorites.length && state.favorites.map(e =>
+          <ArticleFavorites 
+             key={e.id}
+             id={e.id}
+             name={e.name}
+             price={e.price}
+             rating={e.rating}
+             image={e.image}
+         />
+         )}
     </div>
   )
 }
