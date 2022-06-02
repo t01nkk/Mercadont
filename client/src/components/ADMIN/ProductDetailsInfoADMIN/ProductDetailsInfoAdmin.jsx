@@ -1,8 +1,7 @@
 import React from "react";
-import "./ProductDetailsInfo.css";
 import { Link } from "react-router-dom";
 import accounting from "accounting";
-export default function ProductDetailsInfo({
+export default function ProductDetailsInfoAdmin({
   id,
   image,
   name,
@@ -17,6 +16,14 @@ export default function ProductDetailsInfo({
 }) {
   return (
     <div className="details-container">
+      <button>
+        <Link
+          to={`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/admin/edit/${id}`}
+        >
+          EDIT PRODUCT
+        </Link>
+      </button>
+
       <div className="img-container">
         <img src={image} alt={` ${name}`} className="product-img" />
       </div>

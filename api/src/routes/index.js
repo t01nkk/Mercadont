@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const productRoutes = require("./productRoutes")
-// const userRoutes = require("./userRoutes")
-const userRoutes = require("./userLoginRoutes")
-const categoryRoutes = require("./categoryRoutes")
-const qaRoutes = require("./qARoutes")
-const reviewRoutes = require("./reviewRoutes")
-const adminRoutes = require("./adminRoutes")
+const productRoutes = require("./product_routes")
+const userRoutes = require("./user_login_routes")
+const categoryRoutes = require("./category_routes")
+const qaRoutes = require("./question_answer_routes")
+const reviewRoutes = require("./review_routes")
+const adminRoutes = require("./admin_routes")
+const payRoutes = require("./pay_routes");
 
 router.use("/product", productRoutes)
 router.use("/user", userRoutes)
@@ -13,6 +13,6 @@ router.use("/categories", categoryRoutes)
 router.use("/qa", qaRoutes)
 router.use("/review", reviewRoutes)
 router.use("/admin", adminRoutes)
-
+router.use("/buying", payRoutes);
 
 module.exports = router;

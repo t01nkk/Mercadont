@@ -8,14 +8,14 @@ import "./Home.css";
 /* import { CATEGORIES_PRODUCT } from "../../redux/actions/actionTypes"; */
 
 export default function Home() {
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState([]);
   // let initialCart = JSON.parse(localStorage.getItem(user)) || [];
   const [cart, setCart] = useState([]);
   const [state, dispatch] = useStore();
   const [inCart, setInCart] = useState(false);
   const [error, setError] = useState();
 
-  let person = JSON.parse(localStorage.getItem("myUser"))
+  let person = JSON.parse(localStorage.getItem("myUser"));
 
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
@@ -38,7 +38,7 @@ export default function Home() {
         idProduct: id
       })
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
 
   }
@@ -88,7 +88,6 @@ export default function Home() {
     localStorage.setItem(user, JSON.stringify(cart));
   }, [cart]);
 
-
   const mostra = () => {
     let miStorage = JSON.parse(localStorage.getItem("myUser"));
     console.log(miStorage);
@@ -107,18 +106,20 @@ export default function Home() {
       {state.products &&
         React.Children.toArray(
           state.products.map((product) => {
-            return (
-              <ProductCard
-                id={product.id}
-                name={product.name}
-                stock={product.stock}
-                price={product.price}
-                image={product.image}
-                handleSaveCart={handleSaveCart}
-                handleSaveFavorite={handleSaveFavorite}
-                handleDeleteFavorite={handleDeleteFavorite}
-              />
-            );
+            if(product.status === "active"){
+              return (
+                <ProductCard
+                  id={product.id}
+                  name={product.name}
+                  stock={product.stock}
+                  price={product.price}
+                  image={product.image}
+                  handleSaveCart={handleSaveCart}
+                  handleSaveFavorite={handleSaveFavorite}
+                  handleDeleteFavorite={handleDeleteFavorite}
+                />
+              )}
+            return null
           })
         )}
     </section>
