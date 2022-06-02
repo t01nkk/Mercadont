@@ -22,8 +22,8 @@ const createOrder = async (req, res) => {
         brand_name: "Mercadon't Libre", //String. 127 max length. Nombre de la marca del sitio en PayPal.
         landing_page: "LOGIN", //ENUM. LOGIN: si acepta el pago lo lleva a la página para loggearse en PP. BILLING: lo lleva a la página para poner la info de tarjeta de crédito/débito en PP. NO_PREFERENCE: dependiendo de si está logeado o no en PP va al login o al billing.
         user_action: "PAY_NOW", //ENUM. CONTINUE: básicamente si el sitio no te dio toda la info porque cosas usar este. Más "confianza", ponele. PAY_NOW: cobrale ahora y que se cague.
-        return_url: `${process.env.HOST}${process.env.PORT}/buying/capture-order`, //Si todo sale bien (acepta el pago) devolvelo a esta página.
-        cancel_url: `${process.env.HOST}${process.env.PORT}/buying/cancel-order`, //Si el muchacho cancela traelo para acá.
+        return_url: `${process.env.HOST}${process.env.PORT}/buying/payPal/capture-order`, //Si todo sale bien (acepta el pago) devolvelo a esta página.
+        cancel_url: `${process.env.HOST}${process.env.PORT}/buying/payPal/cancel-order`, //Si el muchacho cancela traelo para acá.
       },
     };
 
@@ -55,6 +55,7 @@ const createOrder = async (req, res) => {
 
     res.status(200).send(data);
   } catch (error) {
+    console.log("error:", error)
     return res
       .status(500)
       .send(
