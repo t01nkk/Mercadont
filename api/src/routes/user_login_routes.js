@@ -113,7 +113,7 @@ router.get(
 
 router.get("/googleAuth", passport.authenticate("google"), function (req, res) {
   res.redirect(
-    `http://localhost:3000/login?id=${req.session.passport.user}`
+    `${process.env.REACT_APP_DOMAIN_GOOGLE_LOGIN}/login?id=${req.session.passport.user}`
   );
 });
 
