@@ -52,10 +52,12 @@ export const SendBuys = () => {
                     },
                     description: "Girasol en rama.", //No requerido. Max: 128 caracteres.
                     }
-                ]
-                })
-                console.log("purchase:", purchase)
-                setRedirect("https://www.sandbox.paypal.com/checkoutnow?token=2XC827257C074442Y")
+                ],
+            user ,
+            local 
+        })
+        console.log("purchase:", purchase)
+        setRedirect(purchase.data)
 
         
         // purchase_units: [
@@ -115,7 +117,7 @@ export const SendBuys = () => {
         
         {/* <button onClick={() => mostra()}>mostra storage</button> */}
         <button>Compra</button>
-        {selectBuys?<CardElement className='cardElement'/>:<a href="https://www.sandbox.paypal.com/checkoutnow?token=2XC827257C074442Y">Redireccionar</a>}
+        {selectBuys?<CardElement className='cardElement'/>:<a href={redirect}>Redireccionar</a>}
     </form>
     )
 }

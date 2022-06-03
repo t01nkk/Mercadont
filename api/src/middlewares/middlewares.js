@@ -2,11 +2,12 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 const productos = require("../../productsCats.json");
 const users = require("../../users.json");
-const { Product, User, Category } = require("../db");
+const { Product, User, Category, PurchaseOrder } = require("../db");
 const { Op } = require("sequelize");
 const { genPassword } = require('./password_utils');
 const nodemailer = require("nodemailer");
-const modifyStock = async (local) => {
+
+const modifyStockStripe = async (local) => {
   let updateProduct;
   try {
     for (let i = 0; i < local.length; i++) {
@@ -27,9 +28,51 @@ const modifyStock = async (local) => {
         });
       }
     }
-    console.log(updateProduct);
+    // console.log(updateProduct);
     return { msg: "compra realizada" };
   } catch (error) {
+    return error;
+  }
+};
+
+const modifyStockPaypal = async (orderId,userId) => {
+  let updateProduct;
+  // console.log("orderId:", typeof orderId)
+  // console.log("userId:", typeof userId)
+  try {
+    const findProducts = await PurchaseOrder.findAll({
+      where:
+        {
+          orderId,
+          userId
+        }
+    });
+    // console.log("modifyStockPaypal-findProducts:", findProducts)
+    for (let product of findProducts) {
+      // console.log("product:",product)
+      // console.log("product.purchaseOrder:",product.purchaseOrder)
+      // console.log("product.dataValues:",product.dataValues)
+      // console.log("product.dataValues.productId:",product.dataValues.productId)
+      const findProduct = await Product.findByPk(product.dataValues.productId);
+      if (findProduct.stock - product.dataValues.productQuantity > 0) {
+        updateProduct = await Product.update(
+          { stock: findProduct.stock - product.dataValues.productQuantity },
+          { where: { id: product.dataValues.productId } }
+        );
+      } else if (findProduct.stock - product.dataValues.productQuantity === 0) {
+        updateProduct = await Product.update(
+          { stock: findProduct.stock - product.dataValues.productQuantity, status: "inactive" },
+          { where: { id: product.dataValues.productId } }
+        );
+      } else {
+        throw new Error({
+          msg: "There's not enough products to fulfill this purchase",
+        });
+      }
+    }
+    return { msg: "stock updated" };
+  } catch (error) {
+    // console.log(error)
     return error;
   }
 };
@@ -168,7 +211,8 @@ module.exports = {
     getProducts,
     validateInputUser,
     validateInputProduct,
-    modifyStock,
+    modifyStockStripe,
+    modifyStockPaypal,
     checkAuthenticated,
     checkNotAuthenticated,
     mailPayPal,

@@ -1,8 +1,9 @@
 const axios = require("axios");
-const { mailPayPal } = require("../middlewares/middlewares");
+const { mailPayPal, modifyStockPaypal } = require("../middlewares/middlewares");
+const { createPurchaseOrder, createPurchaseCompleted, createPurchaseCanceled } = require("./purchase_order");
 
 const createOrder = async (req, res) => {
-  const {purchase_units} = req.body
+  const {purchase_units, user, local} = req.body
   try {
     const order = {
       // intent: "CAPTURE", // Requerido. Es lo que se va a hacer con la compra. Si paga al instante o no.
@@ -53,10 +54,12 @@ const createOrder = async (req, res) => {
         },
       }
     );
-    // console.log("data:",data)  
-    // console.log("data:",data.links[1].href)  
+    // console.log("purchase_units:", purchase_units)
+    // console.log("user:", user)
+    // console.log("local:", local)
+    // console.log("data:", data.id)
+    createPurchaseOrder(data.id,user,local)
     res.status(200).send(data.links[1].href);
-    // res.status(200).redirect(data.links[1].href)
   } catch (error) {
     console.log("error:", error)
     return res
@@ -80,13 +83,25 @@ const captureOrder = async (req, res) => {
       },
     }
   );
+  // console.log("data in captureOrder:",data)
+  // console.log("data.id in captureOrder:",data.id)
+  // console.log("data.status in captureOrder:",data.status)
+  // console.log("user.datavalues.id in captureOrder:",req.user.dataValues.id)
+  createPurchaseCompleted(data.id, req.user.dataValues.id)
+  modifyStockPaypal(data.id, req.user.dataValues.id)
   mailPayPal();
   // purchaseOrder(id,userId,local)
-  res.status(200).redirect(`${process.env.HOST}${process.env.PORT}/home`);
+  res.status(200).redirect(`http://localhost:3000/home`);
 };
 
 const cancelOrder = (req, res) => {
-  res.status(200).send("Pathetic.");
+  // console.log("req in cancelOrder:",req)
+  // console.log("req.query.token:",req.query.token)
+  // console.log("req.route.Route.path:",req.route.Route.path)
+  // console.log("user.datavalues.id in captureOrder:",req.user.dataValues.id)
+  createPurchaseCanceled(req.query.token,req.user.dataValues.id)
+  // res.status(200).send("Pathetic.");
+  res.status(200).redirect(`http://localhost:3000/home`);
 };
 
 module.exports = {
