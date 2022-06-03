@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
+
+
 export default function LogInForm() {
+  
   const [errors, setErrors] = useState({});
  
   const [data, setData] = useState({
@@ -10,6 +13,7 @@ export default function LogInForm() {
     lastName: "",
     email: "",
     password: "",
+    passwordValidate:"",
     address: "",
     payment: "",
     profilePic: "",
@@ -20,37 +24,47 @@ export default function LogInForm() {
   function validator(input) {
     let errors = {};    
     
-    if (!expresiones.nombre.test(input.name)) {
+    if (!expression.nameExpression.test(input.name)) {
         errors.name = 'Name is necessary';
     }
-    if (!expresiones.correo.test(input.email)) {
+    if (!expression.email.test(input.email)) {
       errors.email = 'Email is necessary';
-  }
+  }if ((!expression.password.test(input.password)) !== (!expression.password.test(input.passwordValidate))) {
+    errors.password = 'Passwords must be the same ';
+     }
     return errors
+   
   }
 
-  const handleChangeMin = (e) => {
+  const handleChangeName = (e) => {   
     setErrors("")  
-    if (!expresiones.nombre.test(data.name))setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+    setErrors(validator({ ...data, [e.target.name]: e.target.value }));    
+        setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const handleChangeEmail = (e) => {
+    setErrors("")  
+    setErrors(validator({ ...data, [e.target.name]: e.target.value }));
     
         setData({ ...data, [e.target.name]: e.target.value });
   };
-  const handleChangeMi = (e) => {
+  const handleChangePasspord = (e) => {
     setErrors("")  
-    if (!expresiones.correo.test(data.password))setErrors(validator({ ...data, [e.target.name]: e.target.value }));
-    
+    setErrors(validator({ ...data, [e.target.name]: e.target.value }));
         setData({ ...data, [e.target.name]: e.target.value });
   };
-  const handleChangeM = (e) => {
-   
+  const handleChangePasspor = (e) => {
+    setErrors("")  
+    setErrors(validator({ ...data, [e.target.name]: e.target.value }));
         setData({ ...data, [e.target.name]: e.target.value });
   };
 
  
-  const expresiones = {	
-		nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-    correo: /\S+@\S+\.\S+/
+  const expression = {	
+		nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+    email: /\S+@\S+\.\S+/,
+    password: /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{0,16}$/,
   }
+  
 
  
   const handleSubmit = async (e) => {
@@ -77,7 +91,7 @@ export default function LogInForm() {
               type="text"
               name="name"
               placeholder="First Name ..."
-              onChange={ handleChangeMin}
+              onChange={ handleChangeName}
               value={data.name}
             />
             {errors.name && ( <p className='error-input'>{errors.name}</p> )}
@@ -87,7 +101,7 @@ export default function LogInForm() {
               type="email"
               name="email"
               placeholder="Email ..."
-              onChange={handleChangeMi}
+              onChange={handleChangeEmail}
               required
               value={data.email}
             />
@@ -98,13 +112,25 @@ export default function LogInForm() {
               type="password"
               name="password"
               placeholder="Password..."
-              onChange={handleChangeM}
+              onChange={handleChangePasspord}
               required
               value={data.password}
             />
+             
           </div>
+          <div className="divInputUser">
+            <input
+              type="password"
+              name="passwordValidate"
+              placeholder="Password..." 
+              onChange={handleChangePasspor}
+              required
+              value={data.passwordValidate}
+            />
+          </div>
+          {errors.password && ( <p className='error-input'>{errors.password}</p> )}
           <div className="btn-login">
-            <input type="submit" value="Create User" className="input-submit" />
+            <input type="submit" value="Create User"  disabled={errors} className="input-submit" />
           </div>
         </form>
       </div>

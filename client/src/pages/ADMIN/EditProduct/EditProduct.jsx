@@ -17,36 +17,57 @@ export default function EditProduct() {
     categories: [],
     status: "",
   });
-
+  const expression = {	
+		nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+    priceExpression: /^\d{1,14}$/,
+    descriptionExpression: /^[a-zA-ZÀ-ÿ\s]{1,200}$/,
+    stockExpression: /^\d{1,14}$/,
+  }
   
   function validator(input) {
     let errors = {};    
     
-    if (!expresiones.nombre.test(input.name)) {
+    if (!expression.nameExpression.test(input.name)) {
         errors.name = 'Name is necessary';
     }
-    if (!expresiones.num.test(input.price)) {
+    if (!expression.priceExpression.test(input.price)) {
       errors.price = 'Price is necessary';
   }
+  if (!expression.descriptionExpression.test(input.description)) {
+    errors.description = 'Description is necessary';
+}
+if (!expression.stockExpression.test(input.stock)) {
+  errors.stock = 'Stock is necessary';
+}
     return errors
   }
-  const handleChangeMin = (e) => {
+
+  const handleChangeName = (e) => {
     setErrors("")  
-    if (!expresiones.nombre.test(product.name))setErrors(validator({ ...product, [e.target.name]: e.target.value }));
+    setErrors(validator({ ...product, [e.target.name]: e.target.value }));
     
         setProduct({ ...product, [e.target.name]: e.target.value });
   };
 
   const handleChangePrice = (e) => {
     setErrors("")  
-    if (!expresiones.num.test(product.price))setErrors(validator({ ...product, [e.target.name]: e.target.value }));
+    setErrors(validator({ ...product, [e.target.name]: e.target.value }));
     
         setProduct({ ...product, [e.target.name]: e.target.value });
   };
-  const expresiones = {	
-		nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-    num: /^\d{1,14}$/
-  }
+  const handleChangeDescription = (e) => {
+    setErrors("")  
+    setErrors(validator({ ...product, [e.target.name]: e.target.value }));
+    
+        setProduct({ ...product, [e.target.name]: e.target.value });
+  };
+  const handleChangeStock = (e) => {
+    setErrors("")  
+    (validator({ ...product, [e.target.name]: e.target.value }));
+    
+        setProduct({ ...product, [e.target.name]: e.target.value });
+  };
+  
   const handleDeleteCat = (name, event) => {
     event.preventDefault();
     const filterCat = product.categories.filter((cat) => cat !== name);
@@ -121,7 +142,7 @@ export default function EditProduct() {
           type="text"
           name="name"
           value={product.name}
-          onChange={handleChangeMin}
+          onChange={handleChangeName}
         />
           {errors.name && ( <p className='error-input'>{errors.name}</p> )}
         <input
@@ -135,8 +156,9 @@ export default function EditProduct() {
           type="number"
           name="stock"
           value={product.stock}
-          onChange={handleChange}
+          onChange={handleChangeStock}
         />
+         {errors.stock && ( <p className='error-input'>{errors.stock}</p> )}
         <select name="status" onChange={handleChange}>
           Status:
           <option value="active">Active</option>
@@ -168,10 +190,11 @@ export default function EditProduct() {
           cols="30"
           rows="10"
           value={product.description}
-          onChange={handleChange}
+          onChange={handleChangeDescription}
         >
           {product.description}
         </textarea>
+        {errors.description && ( <p className='error-input'>{errors.description}</p> )}
         <input type="submit" name="Update info" />
       </form>
       <img src={`${product.image}`} alt="" />

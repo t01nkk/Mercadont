@@ -19,10 +19,10 @@ export default function LogInForm() {
   function validator(input) {
     let errors = {};    
     
-    if (!expresiones.nombre.test(input.name)) {
+    if (!expression.nameValidate.test(input.name)) {
         errors.name = 'Name is necessary';
     }
-    if (!expresiones.correo.test(input.email)) {
+    if (!expression.correoEmail.test(input.email)) {
       errors.email = 'Email is necessary';
   }
     return errors
@@ -30,14 +30,14 @@ export default function LogInForm() {
 
   const handleChangeMi = (e) => {
     setErrors("")  
-    if (!expresiones.correo.test(data.password))setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+  setErrors(validator({ ...data, [e.target.name]: e.target.value }));
     
         setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const expresiones = {	
-		nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-    correo: /\S+@\S+\.\S+/
+  const expression = {	
+		nameValidate: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+    correoEmail: /\S+@\S+\.\S+/
   }
   // const handleLoginGoogle = async () => {
   //   const res = await axios({

@@ -11,25 +11,27 @@ export default function CreateCategory() {
   const [data, setData] = useState({
     name: "",
   });
+
+  const expression = {	
+		name: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+   
+  }
   function validator(input) {
     let errors = {};    
     
-    if (!expresiones.nombre.test(input.name)) {
+    if (!expression.name.test(input.name)) {
         errors.name = 'Name is necessary';
     }
    
     return errors
   }
-  const handleChangeMin = (e) => {
+  const handleChangeName = (e) => {
     setErrors("")  
-    if (!expresiones.nombre.test(data.name))setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+    if (!expression.name.test(data.name))setErrors(validator({ ...data, [e.target.name]: e.target.value }));
     
         setData({ ...data, [e.target.name]: e.target.value });
   };
-  const expresiones = {	
-		nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-   
-  }
+  
  
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,7 +58,7 @@ export default function CreateCategory() {
             type="text"
             name="name"
             placeholder="Category Name ..."
-            onChange={handleChangeMin }
+            onChange={handleChangeName }
             required
             value={data.name}
           />

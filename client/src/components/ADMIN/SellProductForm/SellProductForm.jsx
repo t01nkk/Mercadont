@@ -4,8 +4,10 @@ import axios from "axios";
 import { fetchCategories } from "../../../redux/actions/actions";
 import { useStore } from "../../../context/store";
 
+
 export default function SellProductForm() {
   const [state, dispatch] = useStore();
+  const [errors, setErrors] = useState({});
   const [selected, setSelected] = useState([]);
 
   const [data, setData] = useState({
@@ -18,6 +20,56 @@ export default function SellProductForm() {
     stock: "",
     categories: [],
   });
+  const expression = {	
+		nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+    priceExpression: /^\d{1,14}$/,
+    descriptionExpression: /^[a-zA-ZÀ-ÿ\s]{1,200}$/,
+    stockExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+  }
+  
+  function validator(input) {
+    let errors = {};    
+    
+    if (!expression.nameExpression.test(input.name)) {
+        errors.name = 'Name is necessary';
+    }
+    if (!expression.priceExpression.test(input.price)) {
+      errors.price = 'Price is necessary';
+  }
+  if (!expression.descriptionExpression.test(input.description)) {
+    errors.description = 'Description is necessary';
+}
+if (!expression.stockExpression.test(input.stock)) {
+  errors.stock = 'Stock is necessary';
+}
+    return errors
+  }
+
+  const handleChangeName = (e) => {
+    setErrors("")  
+    setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+    
+        setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleChangePrice = (e) => {
+    setErrors("")  
+    setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+    
+        setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const handleChangeDescription = (e) => {
+    setErrors("")  
+    setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+    
+        setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const handleChangeStock = (e) => {
+    setErrors("")  
+    setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+    
+        setData({ ...data, [e.target.name]: e.target.value });
+  };
   const handleDeleteCat = (name, event) => {
     event.preventDefault();
     const filterCat = data.categories.filter((cat) => cat !== name);
@@ -65,22 +117,24 @@ export default function SellProductForm() {
               type="text"
               name="name"
               placeholder="Product Name ..."
-              onChange={handleChange}
+              onChange={handleChangeName}
               required
               value={data.name}
             />
           </div>
+           {errors.name && ( <p className='error-input'>{errors.name}</p> )}
 
           <div className="divInputUser">
             <input
               type="number"
               name="price"
               placeholder="Price ..."
-              onChange={handleChange}
+              onChange={handleChangePrice}
               required
               value={data.price}
             />
           </div>
+          {errors.price && ( <p className='error-input'>{errors.price}</p> )}
           <div className="divInputUser">
             <textarea
               cols="30"
@@ -88,11 +142,12 @@ export default function SellProductForm() {
               type="textarea"
               name="description"
               placeholder="Product Description ..."
-              onChange={handleChange}
+              onChange={handleChangeDescription}
               required
               value={data.description}
-            ></textarea>
+            ></textarea>  
           </div>
+          {errors.description && ( <p className='error-input'>{errors.description}</p> )}
           <select onChange={handleChangeCat} className="divInputUser">
             <option value="" hidden className="divInputUser">
               Categories
@@ -137,12 +192,13 @@ export default function SellProductForm() {
               type="number"
               name="stock"
               placeholder="Stock..."
-              onChange={handleChange}
+              onChange={handleChangeStock}
               value={data.stock}
             />
           </div>
+          {errors.stock && ( <p className='error-input'>{errors.stock}</p> )}
           <div className="btn-login">
-            <input type="submit" value="Send" className="input-submit" />
+            <input type="submit" value="Send" disabled={errors} className="input-submit" />
           </div>
         </form>
       </div>

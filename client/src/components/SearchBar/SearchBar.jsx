@@ -69,7 +69,7 @@ export default function SearchBar() {
           onChange={handleChange}
         />
        {/*  {!error ? null : alert(error)} */}
-        <button type="submit" disabled={error} className="searchBar-container-button">
+        <button type="submit"  className="searchBar-container-button">
           <img src={icon} alt="" />
         </button>
       </form>
