@@ -29,9 +29,12 @@ export default function LoginADMIN() {
 
       if (user.data.passport.user) {
         const idAdmin = user.data.passport.user;
-        const admin = await axios.post(`${process.env.REACT_APP_DOMAIN}/admin/getAdmin`, {
-          id: idAdmin,
-        });
+        const admin = await axios.post(
+          `${process.env.REACT_APP_DOMAIN}/admin/getAdmin`,
+          {
+            id: idAdmin,
+          }
+        );
 
         if (admin.data.isAdmin === true) {
           localStorage.setItem("myAdmin", JSON.stringify(admin));

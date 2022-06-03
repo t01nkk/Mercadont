@@ -9,11 +9,15 @@ export default function AccountDetails() {
   const [user, setUser] = useState("");
   const [state, dispatch] = useStore();
 
+
   const fetchUser = async () => {
     try {
-      const userDB = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/findUser`, {
-        id: state.user,
-      });
+      const userDB = await axios.post(
+        `${process.env.REACT_APP_DOMAIN}/user/findUser`,
+        {
+          id: state.user,
+        }
+      );
       setUser(userDB.data);
     } catch (err) {
       console.log(err);
@@ -26,8 +30,8 @@ export default function AccountDetails() {
   }, []);
 
   let mostrarFrente = (e) => {
-    console.log(e)
-  }
+    console.log(e);
+  };
 
   return (
     <>
@@ -45,7 +49,10 @@ export default function AccountDetails() {
       </div>
       <div>
         <h3>Yours Cads:</h3>
-        <div>Iria un div por cada tarjeta que tenga el usuario con boton de eliminar</div>
+        <div>
+          Iria un div por cada tarjeta que tenga el usuario con boton de
+          eliminar
+        </div>
       </div>
 
       <div>
@@ -80,8 +87,6 @@ export default function AccountDetails() {
 
         </section>
       </div> */}
-
-
     </>
   );
 }

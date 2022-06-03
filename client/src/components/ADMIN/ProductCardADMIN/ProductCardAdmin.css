@@ -1,0 +1,98 @@
+.card-clothe-admin {
+  overflow: hidden;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  /* grid-column: 1/13; */
+  height: 20vh;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  border-radius: 5px;
+  border: none;
+  width: 80%;
+  cursor: pointer;
+  transition: transform 200ms ease-in;
+  margin: 0.5rem;
+}
+.card-body-admin {
+  grid-column: 1/13;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+.card-image-admin {
+  height: 20vh;
+  width: auto;
+  object-fit: cover;
+  grid-column: 1/2;
+}
+.card-info-wrapper-admin {
+  grid-column: 2/11;
+}
+.card-info-details-admin {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-column: 2/13;
+}
+.card-info-details-admin p {
+  grid-column: 1/10;
+}
+
+.card-title-admin {
+  grid-column: 3/7;
+  font-size: 1.02rem;
+  font-weight: 500;
+}
+.card-rating-admin {
+  padding: 0 1rem;
+}
+.card-clothe-admin:hover {
+  transform: scale(1.01);
+}
+
+.card-info-details-admin p {
+  width: 100%;
+}
+.card-rating-admin {
+}
+.card-rating-admin p {
+  width: fit-content;
+}
+.card-rating-admin span {
+  font-weight: 600;
+}
+/* .card-clothe-admin {
+  overflow: hidden;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  display: grid;
+  border-radius: 5px;
+  border: none;
+  width: 80%;
+  cursor: pointer;
+  transition: transform 200ms ease-in;
+  margin: 0.5rem;
+  grid-template-rows: repeat(auto-fit, minmax(2rem, 25rem));
+}
+
+.card-image-admin {
+}
+
+.card-title-admin {
+}
+/* .card-rating-admin {
+  padding: 0 1rem;
+} */
+/* .card-clothe-admin:hover {
+}
+
+.card-body-admin {
+}
+.card-info-wrapper-admin {
+}
+.card-info-details-admin {
+}
+.card-info-details-admin p {
+}
+.card-rating-admin {
+}
+.card-rating-admin p {
+}
+.card-rating-admin span {
+}  */
