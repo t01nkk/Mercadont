@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
-<<<<<<< HEAD
-=======
-// import { GoogleLogin } from "react-google-login";
->>>>>>> 1aacd159b7a87e5517fe63032c4dcd804b082249
 import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 
 export default function LogInForm() {
@@ -110,21 +106,12 @@ export default function LogInForm() {
           </div>
         </form>
         <div className="createUser-container">
-<<<<<<< HEAD
           <GoogleLoginButton />
           {/* <GoogleLogin
             clientId={process.env.GOOGLE_CLIENT_ID}
             buttonText="Log in with Google"
             onSuccess={handleLoginGoogle}
             onFailure={handleLoginGoogle}
-=======
-          <GoogleLoginButton setRedirect={setRedirect} />
-          {/* <GoogleLogin
-            clientId="167880420540-7d29u3ge9nn3r9lvsvji6s202i5iku5c.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
->>>>>>> 1aacd159b7a87e5517fe63032c4dcd804b082249
             cookiePolicy={"single_host_origin"}
           /> */}
           <p>Not a user yet?</p>
