@@ -1,74 +1,117 @@
 import React, { useState } from "react";
 import axios from "axios";
+import {Formik} from "formik"
 import { useHistory } from "react-router-dom";
 
+
+
 export default function LogInForm() {
-  const [data, setData] = useState({
-    name: "",
-    lastName: "",
-    email: "",
-    password: "",
-    address: "",
-    payment: "",
-    profilePic: "",
-  });
   const history = useHistory();
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { name, lastName, email, password } = data;
+  const handleSubmitt = async (values) => {    
+    console.log(values)    
     try {
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/register`, {
-        email: email,
-        password: password,
+        name:values.name,
+        email: values.email,
+        password: values.password,
       });
       history.push("/login");
     } catch (err) {
       alert(err);
     }
   };
-  console.log(data);
+
   return (
-    <div className="container-login">
+    <div>
+      <Formik
+      initialValues={{
+        name: "",
+        email:"",
+        password:""
+      }}  
+      validate={
+        values =>{
+          const errors={}
+         if(!values.email){
+           errors.email= "Required email"
+         }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+          errors.email = "Invalid email";
+        }
+        if (!values.password ) {
+          errors.password = "Password required.";
+        } else if (
+          !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(values.password)
+        ) {
+          errors.password =
+            "Your password must be 8 to 16 characters long long and must contain both uppercase and lowercase letters, and at least one number.";
+        } 
+        if (values.password !==  values.password2){
+          errors.password= "Password must be the same"
+        }      
+         return errors
+        }
+      }
+      onSubmit= {(values, {setErrors}) => {
+        return handleSubmitt(values)
+        .catch(()=> {
+          setErrors("email" ,"This email is not valid") 
+        })
+      }}   
+      >
+      {
+        ({ errors,handleSubmit, handleChange, isSubmitting,touched})=>
+          <div className="container-login">
       <div className="loginCard">
         <h2>Create Account</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="divInputUser">
-            <input
-              type="text"
-              name="name"
-              placeholder="First Name ..."
-              onChange={handleChange}
-              value={data.name}
-            />
+         <form onSubmit={handleSubmit}>
+         <div className="divInputUser">
+            <input 
+            type="text" 
+            name="name" 
+            placeholder="First Name ..." 
+            onChange={handleChange}  />
+          </div>
+         <div className="divInputUser">
+          <input 
+          type="text" 
+          required placeholder="Email ..." 
+          name="email"
+          onChange={handleChange}/> 
+          <small style={{color: "red"}}>
+            {touched.email &&errors.email ? <p>{errors.email}</p>: ""}            
+          </small>
           </div>
           <div className="divInputUser">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email ..."
-              onChange={handleChange}
-              required
-              value={data.email}
-            />
+          <input 
+          type="password"  
+          required 
+          placeholder="Password..." 
+          name="password" 
+          onChange={handleChange}/>            
           </div>
           <div className="divInputUser">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password..."
-              onChange={handleChange}
-              required
-              value={data.password}
-            />
+          <input 
+          type="password"  
+          required    
+          placeholder="Confirm Password..." 
+          name="password2" 
+          onChange={handleChange}/> 
+           <small style={{color: "red"}}>
+           {touched.password &&errors.password ? <p>{errors.password}</p>: ""}             
+          </small>
           </div>
           <div className="btn-login">
-            <input type="submit" value="Create User" className="input-submit" />
+          <input disabled={isSubmitting} type="submit" value="Create User" className="input-submit" />
+          
           </div>
+          
         </form>
-      </div>
+       
+        </div>
     </div>
+      }
+      </Formik>
+    </div>
+    
   );
 }

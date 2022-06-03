@@ -1,29 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import axios from "axios";
+import {Formik} from "formik"
 import { Link, Redirect } from "react-router-dom";
-// import { GoogleLogin } from "react-google-login";
 import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 
 export default function LogInForm() {
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
+  
   const [redirect, setRedirect] = useState(false);
 
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
-  const handleLogin = async (e) => {
-    e.preventDefault();
+
+  const handleLogin = async (values) => {
+    
     try {
       console.log("entre en el try");
       const user = await axios({
         method: "POST",
         data: {
-          email: data.email,
-          password: data.password,
+          email: values.email,
+          password: values.password,
         },
         withCredentials: true,
         url: `${process.env.REACT_APP_DOMAIN}/user/login`,
@@ -54,38 +49,75 @@ export default function LogInForm() {
 
   return (
     <div className="container-login">
+   
+      <Formik
+      initialValues={{
+        name: "",
+        email:"",
+        password:""
+      }}  
+      validate={
+        values =>{
+          const errors={}
+         if(!values.email){
+           errors.email= "Required email"
+         }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+          errors.email = "Invalid email";
+        }
+        if (!values.password ) {
+          errors.password = "Password required.";
+        } else if (
+          !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(values.password)
+        ) {
+          errors.password =
+            "Your password must be 8 to 16 characters long and must contain both uppercase and lowercase letters, and at least one number.";
+        } 
+             
+         return errors
+        }
+      }
+      onSubmit= {(values, {setErrors}) => {
+        return handleLogin(values)
+        .catch(()=> {
+          setErrors("email" ,"This email is not valid") 
+        })
+      }}   
+      >
+      {
+        ({ errors,handleSubmit, handleChange, isSubmitting,touched})=>
+       
       <div className="loginCard">
-        {redirect ? <Redirect push to="/home" /> : null}
+      {redirect ? <Redirect push to="/home" /> : null}
         <h2>Sign In</h2>
-
-        <form
-          onSubmit={handleLogin}
-          method="POST"
-          action={`${process.env.REACT_APP_DOMAIN}/user/login`}
-        >
-          <div className="divInputUser">
-            <input
-              type="email"
-              name="email"
-              placeholder="email ..."
-              onChange={handleChange}
-              required
-              value={data.email}
-            />
+         <form  onSubmit={handleSubmit}>
+        
+         <div className="divInputUser">
+          <input 
+          type="text" 
+          required placeholder="Email ..." 
+          name="email"
+          onChange={handleChange}/> 
+          <small style={{color: "red"}}>
+            {touched.email &&errors.email ? <p>{errors.email}</p>: ""}            
+          </small>
           </div>
           <div className="divInputUser">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password..."
-              onChange={handleChange}
-              required
-              value={data.password}
-            />
+          <input 
+          type="password"  
+          required 
+          placeholder="Password..." 
+          name="password" 
+          onChange={handleChange}/>            
           </div>
+          <small style={{color: "red"}}>
+           {touched.password &&errors.password ? <p>{errors.password}</p>: ""}             
+          </small>
+          
           <div className="btn-login">
-            <input type="submit" value="Submit" className="input-submit" />
+          <input disabled={isSubmitting} type="submit" value="Create User" className="input-submit" />
+          
           </div>
+          
         </form>
         <div className="createUser-container">
           <GoogleLoginButton setRedirect={setRedirect} />
@@ -101,7 +133,13 @@ export default function LogInForm() {
             <Link to="/createUser">Create User</Link>
           </div>
         </div>
-      </div>
+       
+        </div>
+    
+      }
+      </Formik>
     </div>
+
+   
   );
 }

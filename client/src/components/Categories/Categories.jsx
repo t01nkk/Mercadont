@@ -4,8 +4,7 @@ import { useStore } from "../../context/store";
 import { Redirect } from "react-router-dom";
 import {
   SORT_BY_PRICE_CAT,
-  FILTER_BY_PRICE,
-  SORTED_PRICE_PRODUCTS,
+  FILTER_BY_PRICE_CATEGORY
 } from "../../redux/actions/actionTypes";
 import axios from "axios";
 
@@ -82,7 +81,7 @@ export default function Categories() {
   const handleSearch = async (e) => {
     e.preventDefault();
     console.log(state)
-    let filter = state.products;
+    let filter = state.filterCategory;
     if(min) {
       filter = filter.filter(product => product.price >= min)
     }
@@ -95,10 +94,10 @@ export default function Categories() {
     }
     if (error) {
       alert("Please Add Valid inputs");
-      filter = state.products;
+      filter = state.filterCategory;
     }
     dispatch({
-      type: SORTED_PRICE_PRODUCTS,
+      type: FILTER_BY_PRICE_CATEGORY,
       payload: filter,
     });
     console.log(state);
