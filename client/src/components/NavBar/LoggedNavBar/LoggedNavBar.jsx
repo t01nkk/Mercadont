@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useStore } from "../../../context/store";
 import FilterCategories from "../../FilterCategories/FilterCategories";
 import SearchBar from "../../SearchBar/SearchBar";
 import "./LoggedNavBar.css";
 export default function LoggedNavBar() {
+  const [state,dispatch]=useStore()
   const logoutSesion = () => {
     // let user = JSON.parse(localStorage.getItem("myUser"))
     localStorage.removeItem("myUser");
