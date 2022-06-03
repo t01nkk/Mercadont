@@ -11,7 +11,7 @@ export default function ProductDetailsInfo({
   // rating,
   categories,
   // reviews,
-  // qua,
+  qas,
   status,
   price,
 }) {
@@ -37,8 +37,17 @@ export default function ProductDetailsInfo({
         <p>{rating}</p> */}
         {/* <p className="title">Reviews:</p>
         <p>{reviews}</p> */}
-        {/* <p className="title">Q{"&"}A:</p>
-        <p>{qua}</p> */}
+        <p className="title">Q{"&"}A:</p>
+        <p>{qas.map(qa => (
+          <div>
+            <p key={qa.question}>{qa.question}</p>
+            {
+              qa.answer
+              ?<p key={qa.answer}>{qa.answer}</p>
+              : null
+            } 
+          </div>
+        ))}</p>
       </div>
     </div>
   );
