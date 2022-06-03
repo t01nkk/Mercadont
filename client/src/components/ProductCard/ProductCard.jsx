@@ -29,39 +29,38 @@ export default function ProductCard({
     handleDeleteFavorite(id);
   };
   return (
-    <div>
-      <button
-        className="shoppingCart-btn"
-        onClick={() => handleSaveCart(name, price, image, id, stock)}
-      >
-        <img src={shoppingCart} alt="add-cart" />
-      </button>
-      {changeButton ? (
-        <button className="shoppingCart-btn" onClick={() => postFavorite()}>
-          <img src={imgAddFavorite} alt="add-favorite" />
-        </button>
-      ) : (
-        <button className="shoppingCart-btn" onClick={() => deleteFavorite()}>
-          <img src={imgDeleteFavorite} alt="delete-favorite" />
-        </button>
-      )}
+    <div className="card-clothe">
       <Link to={`/home/${id}`}>
-        <article className="card card-style">
-          <div className="img-container">
-            <img src={`${image}`} alt={`${name}`} />
-            <span className="price">{`${accounting.formatMoney(
-              price,
-              "U$D ",
-              0
-            )}`}</span>
-          </div>
-
-          <div className="productCard-info">
-            <span>{name}</span>
-            <span>{rating}</span>
-          </div>
-        </article>
+        <div className="card-body">
+          <img className="card-image" src={`${image}`} alt={`${name}`} />
+          <p className="card-title">{name}</p>
+          <p className="card-rating">{rating}</p>
+        </div>
       </Link>
+      <div className="btn-wrapper">
+        <button
+          className="card-btn"
+          onClick={() => handleSaveCart(name, price, image, id, stock)}
+        >
+          <img className="cart-btn" src={shoppingCart} alt="add-cart" />
+        </button>
+        {changeButton ? (
+          <button className="card-btn" onClick={() => postFavorite()}>
+            <img className="fav-btn" src={imgAddFavorite} alt="add-favorite" />
+          </button>
+        ) : (
+          <button className="card-btn" onClick={() => deleteFavorite()}>
+            <img
+              className="fav-btn"
+              src={imgDeleteFavorite}
+              alt="delete-favorite"
+            />
+          </button>
+        )}
+        <div className="price">
+          <p>U$D{price}</p>
+        </div>
+      </div>
     </div>
   );
 }

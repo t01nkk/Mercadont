@@ -33,16 +33,23 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
+<<<<<<< HEAD
       callbackURL: "http://localhost:3001/user/googleAuth",
+=======
+      callbackURL: `${process.env.REACT_APP_DOMAIN}/user/googleAuth`,
+>>>>>>> 1aacd159b7a87e5517fe63032c4dcd804b082249
     },
     async function (accessToken, refreshToken, profile, done) {
       const exists = await findUser(profile?.emails[0]?.value);
       if (exists) {
-        done(null, profile);
+        return done(null, profile);
       } else {
         await User.findOrCreate({
           where: {
+<<<<<<< HEAD
             // id: await createUuid(),
+=======
+>>>>>>> 1aacd159b7a87e5517fe63032c4dcd804b082249
             name: profile.displayName,
             lastname: profile.name.givenName,
             email: profile.emails[0]?.value,
@@ -50,7 +57,7 @@ passport.use(
             userCreated: true,
           },
         });
-        done(null, profile);
+        return done(null, profile);
       }
     }
   )

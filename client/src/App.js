@@ -36,7 +36,7 @@ function App() {
           <Home />
         </Route>
         <Route path="/categories" exact>
-          <NavBar/>
+          <NavBar />
           <Categories />
         </Route>
         <Route path="/home/:id" exact>
@@ -74,6 +74,7 @@ function App() {
           <NavBar />
           <AccountDetails />
         </Route>
+
         <Route path="/accountDetails/editProfile" exact>
           {/* USER ACCOUNT DETAIL FORM */}
           <NavBar />
