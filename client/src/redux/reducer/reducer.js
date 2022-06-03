@@ -21,7 +21,7 @@ export const initialState = {
   session: false,
   admin: {},
   sessionAdmin: false,
-  favorites:[],
+  favorites:"",
   adminPorductList: [],
 };
 

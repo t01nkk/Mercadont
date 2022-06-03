@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ProductCard.css";
 import { Link, useHistory } from "react-router-dom";
 import shoppingCart from "../../media/shoppingCart.png";
@@ -22,19 +22,24 @@ export default function ProductCard({
   const history = useHistory()
   let myUser = JSON.parse(localStorage.getItem("myUser"));
 
+  useEffect(()=>{
+    setChangeButton(isAdd)
+    // console.log(isAdd)
+  },[isAdd])
+
   const postFavorite = () => {
     let person = JSON.parse(localStorage.getItem("myUser"))
     if(!person){
       history.push("/logIn")
       return
     }
-    setChangeButton(true);
+    setChangeButton(true)
     handleSaveFavorite(id);
   };
 
 
   const deleteFavorite = () => {
-    setChangeButton(false);
+    setChangeButton(false)
     handleDeleteFavorite(id);
   };
 

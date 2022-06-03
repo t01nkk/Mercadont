@@ -4,7 +4,6 @@ import axios from "axios";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { getFavorites } from "../../redux/actions/actions";
 import { useStore } from "../../context/store.js";
-import { auth, provider } from "../../firebase";
 // import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 
 export default function LogInForm() {
@@ -31,23 +30,22 @@ export default function LogInForm() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // console.log("entre en el try");
-      // const user = await axios({
-      //   method: "POST",
-      //   data: {
-      //     email: data.email,
-      //     password: data.password,
-      //   },
-      //   withCredentials: true,
-      //   url: `${process.env.REACT_APP_DOMAIN}/user/login`,
-      // });
-      // console.log(user.data);
-      // if (user.data.passport.user) {
-      //   localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
-      //   getFavorites(dispatch,user.data.passport.user)
-      //   history.push("/")
-      // }
-      auth.signInWithPopup(provider).then(result => console.log(result)).catch()
+      console.log("entre en el try");
+      const user = await axios({
+        method: "POST",
+        data: {
+          email: data.email,
+          password: data.password,
+        },
+        withCredentials: true,
+        url: `${process.env.REACT_APP_DOMAIN}/user/login`,
+      });
+      console.log(user.data);
+      if (user.data.passport.user) {
+        localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
+        getFavorites(dispatch,user.data.passport.user)
+        history.push("/")
+      }
     } catch (err) {
       alert(err);
     }
