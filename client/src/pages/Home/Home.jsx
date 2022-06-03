@@ -80,15 +80,15 @@ export default function Home() {
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   useEffect(() => {
-    fetchCategories(dispatch);
-    fetchProducts(dispatch);
-  
     let myUser = JSON.parse(localStorage.getItem("myUser"));
-    let myCart = JSON.parse(localStorage.getItem(myUser));
-    setUser(myUser);
+    let myCart = JSON.parse(localStorage.getItem(myUser))
+    fetchCategories(dispatch);
+    getFavorites(dispatch,person)
+    fetchProducts(dispatch)
+    setUser(myUser)
     if (myCart) {
       setCart(myCart);
     } else {
@@ -104,14 +104,13 @@ export default function Home() {
   const mostra = () => {
     let miStorage = JSON.parse(localStorage.getItem("myUser"));
     console.log(miStorage);
-    console.log(state.favorites)
   };
 
   return (
     <section className="section-products">
       <button onClick={() => mostra()}>mostra storage</button>
-      {state.products && state.favorites &&
-        React.Children.toArray(
+        {state.products && state.favorites
+        ? React.Children.toArray(
           state.products.map((product) => {
             if (product.status === "active") {
               return (
@@ -130,7 +129,8 @@ export default function Home() {
             }
             return null;
           })
-        )}
+        ):console.log("Aca vendría el loader")
+      }
       <ToastContainer />
     </section>
   );

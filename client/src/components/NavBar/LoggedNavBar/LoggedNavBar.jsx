@@ -9,10 +9,9 @@ export default function LoggedNavBar() {
 
   const [state, dispatch] = useStore();
 
- useEffect(()=>{
+  useEffect(()=>{
     let myUser = JSON.parse(localStorage.getItem("myUser"));
-    // if(myUser)getFavorites(dispatch,myUser)
-    if(!state.favorites){
+    if(myUser){
       getFavorites(dispatch,myUser)
     }
   }, [state.favorites.length])

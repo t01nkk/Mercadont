@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
-// import { GoogleLogin } from "react-google-login";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { getFavorites } from "../../redux/actions/actions";
+import { useStore } from "../../context/store.js";
 import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 
 export default function LogInForm() {
+  const [state, dispatch] = useStore();
   const [data, setData] = useState({
     email: "",
     password: "",
   });
   const [redirect, setRedirect] = useState(false);
-
+  const history = useHistory()
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -31,7 +33,8 @@ export default function LogInForm() {
       console.log(user.data);
       if (user.data.passport.user) {
         localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
-        setRedirect(true);
+        getFavorites(dispatch,user.data.passport.user)
+        history.push("/")
       }
     } catch (err) {
       alert(err);
@@ -55,7 +58,7 @@ export default function LogInForm() {
   return (
     <div className="container-login">
       <div className="loginCard">
-        {redirect ? <Redirect push to="/home" /> : null}
+        {/* {redirect ? <Redirect push to="/" /> : null} */}
         <h2>Sign In</h2>
 
         <form
