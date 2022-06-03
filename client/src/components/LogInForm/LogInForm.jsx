@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
-// import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
+// import { GoogleLogin } from "react-google-login";
+import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 
 export default function LogInForm() {
   const [data, setData] = useState({
@@ -14,16 +15,6 @@ export default function LogInForm() {
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-  // const handleLoginGoogle = async () => {
-  //   const res = await axios({
-  //     method: "GET",
-  //     url: "`${REACT_APP_DOMAIN}`/user/login/google",
-  //   });
-  //   const data = await res.json();
-  //   console.log(data);
-  //   // store returned user somehow
-  // };
-
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -46,6 +37,20 @@ export default function LogInForm() {
       alert(err);
     }
   };
+  const checkGoogleLogin = () => {
+    const params = new URLSearchParams(window.location.search); // id=123
+    let id = params.get("id");
+    if (id) {
+      localStorage.setItem("myUser", JSON.stringify(id));
+      console.log(id);
+      setRedirect(true);
+    }
+  };
+
+  useEffect(() => {
+    // 123
+    checkGoogleLogin();
+  }, []);
 
   return (
     <div className="container-login">
@@ -83,12 +88,12 @@ export default function LogInForm() {
           </div>
         </form>
         <div className="createUser-container">
-          {/* <GoogleLoginButton />
-          <GoogleLogin
-            clientId={process.env.GOOGLE_CLIENT_ID}
-            buttonText="Log in with Google"
-            onSuccess={handleLoginGoogle}
-            onFailure={handleLoginGoogle}
+          <GoogleLoginButton setRedirect={setRedirect} />
+          {/* <GoogleLogin
+            clientId="167880420540-7d29u3ge9nn3r9lvsvji6s202i5iku5c.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
             cookiePolicy={"single_host_origin"}
           /> */}
           <p>Not a user yet?</p>

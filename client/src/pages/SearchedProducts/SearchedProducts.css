@@ -1,20 +1,23 @@
-.selectF select {
+.filter-wrapper select {
   width: 12rem;
   margin: 0.33rem;
   padding: 0.33rem;
   border: none;
   font-weight: bold;
   text-align: center;
-  background-color: #262626;
+  background-color: #000000;
   color: white;
   transition: color 0.5s ease-in-out;
+  display: flex;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
 }
 
 .form-filter-price input {
   height: 35px;
-  width: 150px;
+  width: 4rem;
   outline: none;
-  font-size: 16px;
+  font-size: 1rem;
   border-radius: 5px;
   padding-left: 15px;
   border: 1px solid #ccc;
@@ -22,7 +25,24 @@
   transition: all 0.3s ease;
 }
 
-.cardsContainer {
+.filter-wrapper p {
+  background: rgb(211, 209, 209);
+  color: black;
+  border-radius: 2px;
+  display: inline-block;
+  height: 30px;
+  padding: 5px;
+  margin-top: 1rem;
+  font-size: 12px;
+}
+.section-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(2rem, 25rem));
+  gap: 5rem;
+  justify-content: center;
+}
+
+/* .cardsContainer {
   width: 250px;
   margin: 2rem;
   display: grid;
@@ -33,14 +53,4 @@
   grid-column-gap: 2rem;
   margin-left: 450px;
   margin-top: 0px;
-}
-.selectF p {
-  background: rgb(211, 209, 209);
-  color: black;
-  border-radius: 2px;
-  display: inline-block;
-  height: 30px;
-  padding: 5px;
-  margin-top: 1rem;
-  font-size: 12px;
-}
+} */
