@@ -1,7 +1,13 @@
-.section-products {
+/* .section-products {
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+} */
+.section-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(2rem, 25rem));
+  gap: 5rem;
+  justify-content: center;
 }

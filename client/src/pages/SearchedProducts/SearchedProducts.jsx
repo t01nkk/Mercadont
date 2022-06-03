@@ -3,7 +3,10 @@ import "./SearchedProducts.css";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useStore } from "../../context/store";
 import { Redirect } from "react-router-dom";
-import {ORDER_BY_ASCDESC_PRICE, FILTER_BY_PRICE } from "../../redux/actions/actionTypes";
+import {
+  ORDER_BY_ASCDESC_PRICE,
+  FILTER_BY_PRICE,
+} from "../../redux/actions/actionTypes";
 import axios from "axios";
 
 export default function SearchedProducts() {
@@ -34,7 +37,7 @@ export default function SearchedProducts() {
       console.log(error);
     }
   };
-
+  console.log(state.searchedProducts);
   const handleDeleteFavorite = async (id) => {
     try {
       await axios.delete("http://localhost:3001/user/removeFavorite", {
@@ -104,22 +107,21 @@ export default function SearchedProducts() {
 
   return (
     <div>
-      <div className="selectF">
+      <div className="filter-wrapper">
         <div>
           <select
             onChange={(e) => {
               handleOrder(e);
             }}
           >
-            <option value="" selected>
-              Sort !
-            </option>
-            <option value="ASCENDING">⬇</option>
-            <option value="DESCENDING">⬆ </option>
+            <option value="">Order</option>
+            <option value="ASCENDING">ASC</option>
+            <option value="DESCENDING">DESC </option>
           </select>
         </div>
 
         <form className="form-filter-price" onSubmit={handleSearch}>
+          <label htmlFor="">Min: </label>
           <input
             id="filter2"
             type="number"
@@ -130,7 +132,8 @@ export default function SearchedProducts() {
             input
           />
         </form>
-        <form onSubmit={handleSearch}>
+        <form className="form-filter-price" onSubmit={handleSearch}>
+          <label htmlFor="">Max: </label>
           <input
             id="filter"
             type="number"
@@ -143,11 +146,12 @@ export default function SearchedProducts() {
         {error && <p>{error}</p>}
       </div>
       {redirect ? <Redirect push to="/home" /> : null}
-      <div className="cardsContainer">
+      <div className="section-products">
         {state.searchedProducts &&
           React.Children.toArray(
             state.searchedProducts.map((product) => {
               if (product.status === "active") {
+                console.log(product.status);
                 return (
                   <ProductCard
                     id={product.id}
@@ -160,8 +164,9 @@ export default function SearchedProducts() {
                     handleDeleteFavorite={handleDeleteFavorite}
                   />
                 );
+              } else {
+                return null;
               }
-              return null;
             })
           )}
       </div>
