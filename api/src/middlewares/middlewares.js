@@ -6,7 +6,6 @@ const { Product, User, Category } = require("../db");
 const { Op } = require("sequelize");
 const { genPassword } = require('./password_utils');
 const nodemailer = require("nodemailer");
-
 const modifyStock = async (local) => {
   let updateProduct;
   try {

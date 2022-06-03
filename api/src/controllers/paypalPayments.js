@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { mailPayPal } = require("../middlewares/middlewares");
 
-const createOrder = async (req, res, next) => {
+const createOrder = async (req, res) => {
   const {purchase_units} = req.body
   try {
     const order = {
@@ -82,7 +82,7 @@ const captureOrder = async (req, res) => {
   );
   mailPayPal();
   // purchaseOrder(id,userId,local)
-  res.status(200).redirect("http://localhost:3000/home");
+  res.status(200).redirect(`${process.env.HOST}${process.env.PORT}/home`);
 };
 
 const cancelOrder = (req, res) => {

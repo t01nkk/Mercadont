@@ -29,7 +29,7 @@ export default function LogInForm() {
       alert(err);
     }
   };
-  console.log(data);
+
   return (
     <div className="container-login">
       <div className="loginCard">

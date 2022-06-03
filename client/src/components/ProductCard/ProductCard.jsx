@@ -16,16 +16,18 @@ export default function ProductCard({
   handleSaveCart,
   handleSaveFavorite,
   handleDeleteFavorite,
+  isAdd
 }) {
-  const [changeButton, setChangeButton] = useState(true);
+  const [changeButton, setChangeButton] = useState(isAdd);
 
-  const postFavorite = () => {
-    setChangeButton(false);
+  const postFavorite = () => {  
+    setChangeButton(true);
     handleSaveFavorite(id);
   };
 
+
   const deleteFavorite = () => {
-    setChangeButton(true);
+    setChangeButton(false);
     handleDeleteFavorite(id);
   };
   return (
@@ -37,13 +39,13 @@ export default function ProductCard({
         <img src={shoppingCart} alt="add-cart" />
       </button>
       {changeButton ? (
-        <button className="shoppingCart-btn" onClick={() => postFavorite()}>
-          <img src={imgAddFavorite} alt="add-favorite" />
-        </button>
-      ) : (
         <button className="shoppingCart-btn" onClick={() => deleteFavorite()}>
-          <img src={imgDeleteFavorite} alt="delete-favorite" />
-        </button>
+        <img src={imgDeleteFavorite} alt="delete-favorite" />
+      </button>
+      ) : (
+        <button className="shoppingCart-btn" onClick={() => postFavorite()}>
+        <img src={imgAddFavorite} alt="add-favorite" />
+      </button>
       )}
       <Link to={`/home/${id}`}>
         <article className="card card-style">
