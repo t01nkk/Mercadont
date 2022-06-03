@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
-// import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
+import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 
 export default function LogInForm() {
   const [data, setData] = useState({
@@ -37,7 +37,7 @@ export default function LogInForm() {
         withCredentials: true,
         url: `${process.env.REACT_APP_DOMAIN}/user/login`,
       });
-      console.log(user.data);
+      console.log(user);
       if (user.data.passport.user) {
         localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
         setRedirect(true);
@@ -83,8 +83,8 @@ export default function LogInForm() {
           </div>
         </form>
         <div className="createUser-container">
-          {/* <GoogleLoginButton />
-          <GoogleLogin
+          <GoogleLoginButton />
+          {/* <GoogleLogin
             clientId={process.env.GOOGLE_CLIENT_ID}
             buttonText="Log in with Google"
             onSuccess={handleLoginGoogle}

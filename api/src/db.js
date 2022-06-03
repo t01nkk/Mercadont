@@ -3,27 +3,14 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const {
-    DB_USER, DB_PASSWORD, DB_HOST, DATABASE_URL
+    DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
-// const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/ecommerce`, {
-//     logging: false,
-//     native: false,
-//     timestamps: false
-// });
-
-const sequelize = new Sequelize(DATABASE_URL, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/ecommerce`, {
     logging: false,
     native: false,
-    timestamps: false,
-    dialectOptions: {
-        ssl: {
-            required: true,
-            rejectUnauthorized: false
-        }
-    }
+    timestamps: false
 });
-
 const basename = path.basename(__filename);
 
 const modelDefiners = [];

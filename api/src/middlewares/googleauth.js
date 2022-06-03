@@ -33,7 +33,7 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/home",
+      callbackURL: "http://localhost:3001/user/googleAuth",
     },
     async function (accessToken, refreshToken, profile, done) {
       const exists = await findUser(profile?.emails[0]?.value);
@@ -42,7 +42,7 @@ passport.use(
       } else {
         await User.findOrCreate({
           where: {
-            id: await createUuid(),
+            // id: await createUuid(),
             name: profile.displayName,
             lastname: profile.name.givenName,
             email: profile.emails[0]?.value,
