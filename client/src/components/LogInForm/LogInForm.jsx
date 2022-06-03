@@ -28,18 +28,35 @@ export default function LogInForm() {
     e.preventDefault();
     try {
       console.log("entre en el try");
-      // const user = await axios({
-      //   method: "POST",
-      //   data: {
-      //     email: data.email,
-      //     password: data.password,
-      //   },
-      //   withCredentials: true,
-      //   url: `${process.env.REACT_APP_DOMAIN}/user/login`,
-      // });
-      // console.log(user);
-      const user = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, data, { withCredentials: true });
-      console.log("user: ", user);
+      const user = await axios({
+        method: "POST",
+        data: {
+          email: data.email,
+          password: data.password,
+        },
+        withCredentials: true,
+        url: `${process.env.REACT_APP_DOMAIN}/user/login`,
+      });
+      console.log(user);
+      // const user = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, data, { withCredentials: true });
+      // console.log("user: ", user);
+      // if (user.data.passport.user) {
+      //   localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
+      //   setRedirect(true);
+      // }
+
+
+      // const user = await fetch(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+      //   method: 'POST',
+      //   credentials: 'same-origin',
+      //   body: {
+      //     data: {
+      //       email: data.email,
+      //       password: data.password,
+      //     }
+      //   }
+      // })
+      console.log(user)
       if (user.data.passport.user) {
         localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
         setRedirect(true);
