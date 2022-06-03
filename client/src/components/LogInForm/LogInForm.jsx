@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { getFavorites } from "../../redux/actions/actions";
+import { useStore } from "../../context/store.js";
+import { auth, provider } from "../../firebase";
 // import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 
 export default function LogInForm() {
+  const [state, dispatch] = useStore();
   const [data, setData] = useState({
     email: "",
     password: "",
   });
   const [redirect, setRedirect] = useState(false);
-
+  const history = useHistory()
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -27,21 +31,23 @@ export default function LogInForm() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      console.log("entre en el try");
-      const user = await axios({
-        method: "POST",
-        data: {
-          email: data.email,
-          password: data.password,
-        },
-        withCredentials: true,
-        url: `${process.env.REACT_APP_DOMAIN}/user/login`,
-      });
-      console.log(user.data);
-      if (user.data.passport.user) {
-        localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
-        setRedirect(true);
-      }
+      // console.log("entre en el try");
+      // const user = await axios({
+      //   method: "POST",
+      //   data: {
+      //     email: data.email,
+      //     password: data.password,
+      //   },
+      //   withCredentials: true,
+      //   url: `${process.env.REACT_APP_DOMAIN}/user/login`,
+      // });
+      // console.log(user.data);
+      // if (user.data.passport.user) {
+      //   localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
+      //   getFavorites(dispatch,user.data.passport.user)
+      //   history.push("/")
+      // }
+      auth.signInWithPopup(provider).then(result => console.log(result)).catch()
     } catch (err) {
       alert(err);
     }
@@ -50,7 +56,7 @@ export default function LogInForm() {
   return (
     <div className="container-login">
       <div className="loginCard">
-        {redirect ? <Redirect push to="/home" /> : null}
+        {/* {redirect ? <Redirect push to="/" /> : null} */}
         <h2>Sign In</h2>
 
         <form

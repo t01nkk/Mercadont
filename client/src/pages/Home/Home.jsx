@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
+import { useHistory } from "react-router-dom";
 import { useStore } from "../../context/store.js";
 import { fetchProducts, fetchCategories, getFavorites } from "../../redux/actions/actions.js";
 import "./Home.css";
@@ -12,6 +13,7 @@ export default function Home() {
   const [state, dispatch] = useStore();
   const [inCart, setInCart] = useState(false);
   const [error, setError] = useState();
+  const history = useHistory()
 
   let person = JSON.parse(localStorage.getItem("myUser"));
 
@@ -51,15 +53,16 @@ export default function Home() {
     } catch (error) {
       console.log(error)
     }
-
   }
 
   useEffect(() => {
-    fetchCategories(dispatch);
-    fetchProducts(dispatch);
-  
     let myUser = JSON.parse(localStorage.getItem("myUser"));
     let myCart = JSON.parse(localStorage.getItem(myUser))
+    fetchCategories(dispatch);
+    if(myUser){
+      getFavorites(dispatch,myUser)
+    }
+    fetchProducts(dispatch);
     setUser(myUser)
     if (myCart) {
       setCart(myCart)
@@ -73,6 +76,12 @@ export default function Home() {
     localStorage.setItem(user, JSON.stringify(cart));
   }, [cart]);
 
+  // useEffect(()=>{
+  //   let myUser = JSON.parse(localStorage.getItem("myUser"));
+  //   if(myUser){
+  //     getFavorites(dispatch,myUser)
+  //   }
+  // }, [state.favorites.length])
 
   const mostra = () => {
     let miStorage = JSON.parse(localStorage.getItem("myUser"));
@@ -83,7 +92,7 @@ export default function Home() {
   return (
     <section className="section-products">
       <button onClick={() => mostra()}>mostra storage</button>
-      {state.products && state.favorites &&
+      {state.products &&
         React.Children.toArray(
           state.products.map((product) => {
             if(product.status === "active"){
@@ -100,7 +109,7 @@ export default function Home() {
                   isAdd={state.favorites.find(e => e.id === product.id)}
                 />
               )}
-            return null
+            // return null
           })
         )}
     </section>

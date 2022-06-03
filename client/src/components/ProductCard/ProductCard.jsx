@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ProductCard.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import shoppingCart from "../../media/shoppingCart.png";
 import imgAddFavorite from "../../media/heart-add-cart.png";
 import imgDeleteFavorite from "../../media/heart-delete-cart.png";
@@ -19,8 +19,15 @@ export default function ProductCard({
   isAdd
 }) {
   const [changeButton, setChangeButton] = useState(isAdd);
+  const history = useHistory()
+  let myUser = JSON.parse(localStorage.getItem("myUser"));
 
-  const postFavorite = () => {  
+  const postFavorite = () => {
+    let person = JSON.parse(localStorage.getItem("myUser"))
+    if(!person){
+      history.push("/logIn")
+      return
+    }
     setChangeButton(true);
     handleSaveFavorite(id);
   };
@@ -30,11 +37,19 @@ export default function ProductCard({
     setChangeButton(false);
     handleDeleteFavorite(id);
   };
+
+  const clickSaveCart = ()=>{
+    if(!myUser){
+      history.push("/logIn")
+      return
+    }
+    handleSaveCart(name, price, image, id, stock)
+  }
   return (
     <div>
       <button
         className="shoppingCart-btn"
-        onClick={() => handleSaveCart(name, price, image, id, stock)}
+        onClick={() => clickSaveCart()}
       >
         <img src={shoppingCart} alt="add-cart" />
       </button>
