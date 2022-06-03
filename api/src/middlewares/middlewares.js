@@ -4,13 +4,8 @@ const productos = require("../../productsCats.json");
 const users = require("../../users.json");
 const { Product, User, Category } = require("../db");
 const { Op } = require("sequelize");
-<<<<<<< HEAD
-const { genPassword } = require('./PasswordUtils');
-const nodemailer = require("nodemailer");
-=======
 const { genPassword } = require('./password_utils');
->>>>>>> 334009d1f96e33bc14fd660f56476ce149ad0bc0
-
+const nodemailer = require("nodemailer");
 const modifyStock = async (local) => {
   let updateProduct;
   try {
@@ -32,52 +27,6 @@ const modifyStock = async (local) => {
         });
       }
     }
-<<<<<<< HEAD
-}
-
-// passport.use(new Strategy(
-//     function(username, password, done) {
-//       db.users.findByUsername(username)
-//         .then((user) => {
-//           if(!user) {
-//             return done(null, false);
-//           }
-//           if(user.password != password) {
-//             return done(null, false);
-//           }
-//           return done(null, user);
-//         })
-//       .catch(err => {
-//         return done(err);
-//       })
-//     }));
-
-// function initialize(passport, getUserByEmail, getUserById) {
-//     console.log(passport)
-//     const authenticateUser = async (email, password, done) => {
-//         const user = await getUserByEmail(email)
-//         // console.log(user?.dataValues, "acá está el dataValues");
-//         if (user === null) {
-//             // console.log("Hola no existo")
-//             return done(null, false, { msg: 'No user with that email' });
-
-//         }
-//         try {
-//             // console.log(user.dataValues.password);
-//             if (await bcrypt.compare(password, user.dataValues.password)) {
-//                 console.log(user.dataValues.password, "SOY EL PASS")
-//                 return done(null, user);
-//             }
-//         } catch (err) {
-//             return done(err)
-//         }
-//     }
-
-//     passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
-//     passport.serializeUser((user, done) => done(null, user.dataValues.name))
-//     passport.deserializeUser((name, done) => done(null, getUserById(name)))
-// }
-=======
     console.log(updateProduct);
     return { msg: "compra realizada" };
   } catch (error) {
@@ -85,7 +34,6 @@ const modifyStock = async (local) => {
   }
 };
 
->>>>>>> 334009d1f96e33bc14fd660f56476ce149ad0bc0
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -133,34 +81,6 @@ function validateInputProduct(
 }
 
 async function getProducts() {
-<<<<<<< HEAD
-    const findCreated = await Product.findAll({ where: { created: true } })
-    let count = await Product.count();
-    if (findCreated.length === count) {
-        for (let i = 0; i < productos.length; i++) {
-            const newProduct = await Product.create({
-                name: productos[i].name,
-                price: productos[i].price,
-                description: productos[i].description,
-                rating: productos[i].rating,
-                image: productos[i].image,
-                stock: productos[i].stock,
-                db: true
-            })
-            for (let j = 0; j < productos[i].categories.length; j++) {
-                let cat = await Category.findOne({ where: { name: { [Op.iLike]: `%${productos[i].categories[j]}%` } } })
-
-                if (cat) {
-                    await newProduct.addCategory(cat)
-                } else {
-                    let created = await Category.create({ name: productos[i].categories[j] })
-                    await newProduct.addCategory(created);
-                }
-            }
-        }
-    } else return { msg: "Failed" };
-    return { msg: "Product Database loaded succesfully!" };
-=======
   const findCreated = await Product.findAll({ where: { created: true } });
   let count = await Product.count();
   if (findCreated.length === count) {
@@ -194,7 +114,6 @@ async function getProducts() {
   } else return { msg: "Failed" };
 
   return { msg: "Product Database loaded succesfully!" };
->>>>>>> 334009d1f96e33bc14fd660f56476ce149ad0bc0
 }
 
 async function getUsers() {
@@ -244,10 +163,6 @@ async function mailPayPal() {
 }
 
 module.exports = {
-<<<<<<< HEAD
-  // initialize
-=======
->>>>>>> 334009d1f96e33bc14fd660f56476ce149ad0bc0
   getUsers,
   getProducts,
   validateInputUser,
@@ -255,9 +170,5 @@ module.exports = {
   modifyStock,
   checkAuthenticated,
   checkNotAuthenticated,
-<<<<<<< HEAD
   mailPayPal,
 }
-=======
-};
->>>>>>> 334009d1f96e33bc14fd660f56476ce149ad0bc0

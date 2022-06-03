@@ -158,6 +158,7 @@ export default function Categories() {
                   handleSaveCart={handleSaveCart}
                   handleSaveFavorite={handleSaveFavorite}
                   handleDeleteFavorite={handleDeleteFavorite}
+                  isAdd={state.favorites.find(e => e.id === product.id)}
                 />
               );
             }

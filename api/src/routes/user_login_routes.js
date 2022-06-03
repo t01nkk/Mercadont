@@ -212,7 +212,7 @@ router.get("/favorite/:id", async (req, res) => {
         where: { id: id} 
       })
       if (!userFavorites) {
-          return res.status(404).send("User Not Found")
+          return res.status(200).send([])
       }
       return res.status(200).send(userFavorites.products)
   } catch (error) {

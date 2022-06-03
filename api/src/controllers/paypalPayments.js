@@ -2,6 +2,7 @@ const axios = require("axios");
 const { mailPayPal } = require("../middlewares/middlewares");
 
 const createOrder = async (req, res) => {
+  console.log(req.body)
   try {
     const order = {
       intent: "CAPTURE", // Requerido. Es lo que se va a hacer con la compra. Si paga al instante o no.
