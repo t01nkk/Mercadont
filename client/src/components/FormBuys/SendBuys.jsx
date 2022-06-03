@@ -44,18 +44,20 @@ export const SendBuys = () => {
         const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/payPal/create-order`, {
             purchase_units: [
                 //   //^ Requerido. Es... Bueno, lo que está comprando.
-                  {
+                    {
                     amount: {
                       currency_code: "USD", //Requerido. El código de 3 letras de la moneda en la que se cobra el pago. SIEMPRE es 3 letras. Estándar ISO-4217.
                       value: ""+priceTotal, //Requerido. Precio total. Y es una string. Ojete al piojete.
                       //Se puede poner un objeto breakdown: {} para dar más info de todo el pago y bla bla, pero no es requerido.
                     },
                     description: "Girasol en rama.", //No requerido. Max: 128 caracteres.
-                  }
-                ]
-                })
-                console.log("purchase:", purchase)
-                setRedirect("https://www.sandbox.paypal.com/checkoutnow?token=2XC827257C074442Y")
+                    }
+                ],
+            user ,
+            local 
+        })
+        console.log("purchase:", purchase)
+        setRedirect(purchase.data)
 
         
         // purchase_units: [
@@ -115,7 +117,7 @@ export const SendBuys = () => {
         
         {/* <button onClick={() => mostra()}>mostra storage</button> */}
         <button>Compra</button>
-        {selectBuys?<CardElement className='cardElement'/>:<a href="https://www.sandbox.paypal.com/checkoutnow?token=2XC827257C074442Y">Redireccionar</a>}
+        {selectBuys?<CardElement className='cardElement'/>:<a href={redirect}>Redireccionar</a>}
     </form>
     )
 }
