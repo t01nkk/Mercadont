@@ -1,7 +1,8 @@
 import React from "react";
 import "./ProductDetailsInfo.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import accounting from "accounting";
+import { FormQA } from "../FormQA/FormQA";
 export default function ProductDetailsInfo({
   id,
   image,
@@ -49,6 +50,7 @@ export default function ProductDetailsInfo({
           </div>
         ))}</p>
       </div>
+      <div><FormQA productId={id}/></div>
     </div>
   );
 }
