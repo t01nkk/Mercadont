@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import {useAuth} from "../../context/authContext";
-
+import { useAuth } from "../../context/authContext";
 
 export default function LogInForm() {
   const [data, setData] = useState({
@@ -19,24 +18,27 @@ export default function LogInForm() {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const {signup} = useAuth()
-  const [error, setError] = useState()
+  const { signup } = useAuth();
+  const [error, setError] = useState();
 
   const handleSubmit = async (e) => {
-    setError("")
+    setError("");
     e.preventDefault();
     const { name, lastName, email, password } = data;
     try {
-      const userCredentials = await signup(email, password)
+      const userCredentials = await signup(email, password);
+      console.log("soy el usercredentials", userCredentials);
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/register`, {
         email: email,
         password: password,
+        id: userCredentials.user.uid,
       });
+      console.log("pase el post uwu");
       history.push("/login");
     } catch (err) {
-
-      if(err.code === "auth/internal-error") setError("Correo Invalido")
-      if(err.code === "auth/email-already-in-use") setError("El correo ya se encuentra en use")
+      if (err.code === "auth/internal-error") setError("Correo Invalido");
+      if (err.code === "auth/email-already-in-use")
+        setError("El correo ya se encuentra en use");
     }
   };
   console.log(data);
