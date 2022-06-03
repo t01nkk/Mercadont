@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
-// import { GoogleLogin } from "react-google-login";
-import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { useAuth } from "../../context/authContext";
+// import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 
 export default function LogInForm() {
   const [data, setData] = useState({
@@ -12,14 +12,18 @@ export default function LogInForm() {
   });
   const [redirect, setRedirect] = useState(false);
 
+  const history = useHistory();
+  const { login } = useAuth();
+
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      console.log("entre en el try");
-      const user = await axios({
+      const userCredentials = await login(data.email, data.password);
+      console.log("User Credentials:");
+      /*const user = await axios({
         method: "POST",
         data: {
           email: data.email,
@@ -27,10 +31,13 @@ export default function LogInForm() {
         },
         withCredentials: true,
         url: `${process.env.REACT_APP_DOMAIN}/user/login`,
-      });
-      console.log(user.data);
-      if (user.data.passport.user) {
-        localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
+      });*/
+
+      if (userCredentials.user.uid) {
+        localStorage.setItem(
+          "myUser",
+          JSON.stringify(userCredentials.user.uid)
+        );
         setRedirect(true);
       }
     } catch (err) {
@@ -52,17 +59,15 @@ export default function LogInForm() {
     checkGoogleLogin();
   }, []);
 
+  const handleGoogleLogin = async (e) => {};
+
   return (
     <div className="container-login">
       <div className="loginCard">
         {redirect ? <Redirect push to="/home" /> : null}
         <h2>Sign In</h2>
 
-        <form
-          onSubmit={handleLogin}
-          method="POST"
-          action={`${process.env.REACT_APP_DOMAIN}/user/login`}
-        >
+        <form onSubmit={handleLogin}>
           <div className="divInputUser">
             <input
               type="email"
@@ -88,12 +93,13 @@ export default function LogInForm() {
           </div>
         </form>
         <div className="createUser-container">
-          <GoogleLoginButton setRedirect={setRedirect} />
-          {/* <GoogleLogin
-            clientId="167880420540-7d29u3ge9nn3r9lvsvji6s202i5iku5c.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
+          <button onClick={handleGoogleLogin}> Login With Google</button>
+          {/* <GoogleLoginButton />
+          <GoogleLogin
+            clientId={process.env.GOOGLE_CLIENT_ID}
+            buttonText="Log in with Google"
+            onSuccess={handleLoginGoogle}
+            onFailure={handleLoginGoogle}
             cookiePolicy={"single_host_origin"}
           /> */}
           <p>Not a user yet?</p>
