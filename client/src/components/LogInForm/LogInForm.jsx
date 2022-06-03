@@ -38,14 +38,7 @@ export default function LogInForm() {
       //   url: `${process.env.REACT_APP_DOMAIN}/user/login`,
       // });
       // console.log(user);
-      const user = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`,
-        {
-          data: {
-            email: data.email,
-            password: data.password,
-          }
-        }
-      );
+      const user = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, data);
       console.log("user: ", user);
       if (user.data.passport.user) {
         localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
