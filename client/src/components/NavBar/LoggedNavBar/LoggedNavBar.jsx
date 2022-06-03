@@ -1,11 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import FilterCategories from "../../FilterCategories/FilterCategories";
 import SearchBar from "../../SearchBar/SearchBar";
 import "./LoggedNavBar.css";
+import {useAuth} from "../../../context/authContext";
 export default function LoggedNavBar() {
-  const logoutSesion = () => {
+
+  const {logout} = useAuth()
+  const history = useHistory();
+  const logoutSesion = async () => {
     // let user = JSON.parse(localStorage.getItem("myUser"))
+    await logout
     localStorage.removeItem("myUser");
   };
   return (

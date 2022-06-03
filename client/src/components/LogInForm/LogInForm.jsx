@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
+import {useAuth} from "../../context/authContext";
 // import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 
 export default function LogInForm() {
@@ -10,6 +11,8 @@ export default function LogInForm() {
     password: "",
   });
   const [redirect, setRedirect] = useState(false);
+
+  const {login} = useAuth()
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -27,8 +30,9 @@ export default function LogInForm() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      console.log("entre en el try");
-      const user = await axios({
+      const userCredentials = await login(data.email, data.password)
+      console.log("User Credentials:",userCredentials)
+      /*const user = await axios({
         method: "POST",
         data: {
           email: data.email,
@@ -41,11 +45,16 @@ export default function LogInForm() {
       if (user.data.passport.user) {
         localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
         setRedirect(true);
-      }
+      }*/
     } catch (err) {
       alert(err);
     }
   };
+
+  const handleGoogleLogin = async (e)=>{
+
+
+  }
 
   return (
     <div className="container-login">
@@ -83,6 +92,7 @@ export default function LogInForm() {
           </div>
         </form>
         <div className="createUser-container">
+          <button onClick={handleGoogleLogin}> Login With Google</button>
           {/* <GoogleLoginButton />
           <GoogleLogin
             clientId={process.env.GOOGLE_CLIENT_ID}

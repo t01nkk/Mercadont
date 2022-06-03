@@ -24,6 +24,7 @@
     "express-flash": "^0.0.2",
     "express-openid-connect": "^2.7.2",
     "express-session": "^1.17.3",
+    "firebase": "^9.8.2",
     "ioredis": "^5.0.5",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
