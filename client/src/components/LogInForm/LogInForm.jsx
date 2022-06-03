@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
+import {Link, Redirect, useHistory} from "react-router-dom";
 import {useAuth} from "../../context/authContext";
 // import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 
@@ -12,6 +12,7 @@ export default function LogInForm() {
   });
   const [redirect, setRedirect] = useState(false);
 
+  const history = useHistory()
   const {login} = useAuth()
 
   const handleChange = (e) => {
@@ -43,9 +44,11 @@ export default function LogInForm() {
       });
       console.log(user.data);
       if (user.data.passport.user) {
-        localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
+
         setRedirect(true);
       }*/
+      localStorage.setItem("myUser", JSON.stringify(userCredentials));
+      history.push("/")
     } catch (err) {
       alert(err);
     }
@@ -64,8 +67,6 @@ export default function LogInForm() {
 
         <form
           onSubmit={handleLogin}
-          method="POST"
-          action={`${process.env.REACT_APP_DOMAIN}/user/login`}
         >
           <div className="divInputUser">
             <input
