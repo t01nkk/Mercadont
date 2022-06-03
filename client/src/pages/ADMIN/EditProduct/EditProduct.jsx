@@ -134,24 +134,37 @@ if (!expression.stockExpression.test(input.stock)) {
     }
   };
   return (
-    <div>
+    <div className="container-login">
       {console.log(product.categories.length)}
-
+      
+        <h2>Edit product</h2>
       <form onSubmit={handleSubmit}>
+      <img src={`${product.image}`} height={"500px"} width={"300px"} alt="" />
+
+      <div className="divInputUser">
+      <label className="title">Name</label>
         <input
           type="text"
           name="name"
           value={product.name}
+          ontouchstart={handleChangeName}
           onChange={handleChangeName}
         />
           {errors.name && ( <p className='error-input'>{errors.name}</p> )}
+          </div>
+          <div className="divInputUser">
+          <p className="title">Price: </p>
         <input
           type="number"
           name="price"
+          ontouchstart={handleChangePrice}
           value={product.price}
           onChange={handleChangePrice}
         />
          {errors.price && ( <p className='error-input'>{errors.price}</p> )}
+         </div>
+         <div className="divInputUser">
+         <p className="title">Available stock: </p>
         <input
           type="number"
           name="stock"
@@ -159,6 +172,9 @@ if (!expression.stockExpression.test(input.stock)) {
           onChange={handleChangeStock}
         />
          {errors.stock && ( <p className='error-input'>{errors.stock}</p> )}
+         </div>
+         <div className="divInputUser">
+         <p className="title">Status and categories </p>
         <select name="status" onChange={handleChange}>
           Status:
           <option value="active">Active</option>
@@ -176,6 +192,8 @@ if (!expression.stockExpression.test(input.stock)) {
               </option>
             ))}
         </select>
+        </div>
+        <div className="divInputUser">
         {product.categories.length &&
           product.categories?.map((category, i) => (
             <div key={i}>
@@ -185,6 +203,9 @@ if (!expression.stockExpression.test(input.stock)) {
               </button>
             </div>
           ))}
+          </div>
+          <div className="divInputUser">
+          <p className="title">Description </p>
         <textarea
           name="description"
           cols="30"
@@ -194,11 +215,16 @@ if (!expression.stockExpression.test(input.stock)) {
         >
           {product.description}
         </textarea>
-        {errors.description && ( <p className='error-input'>{errors.description}</p> )}
-        <input type="submit" name="Update info" />
+        {errors.description && ( <p className='error-input'>{errors.description}</p> )
+        }</div>
+        <div classname="btn-login">
+        <input type="submit"  name="Update info" className="input-submit"/>
+        </div>
+        
       </form>
-      <img src={`${product.image}`} alt="" />
+      
       <button onClick={handleDelete}>Delete product</button>
     </div>
+    
   );
 }
