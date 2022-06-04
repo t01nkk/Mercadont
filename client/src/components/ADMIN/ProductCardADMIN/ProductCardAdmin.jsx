@@ -17,18 +17,7 @@ export default function ProductCardAdmin({
       <Link
         to={`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/admin/edit/${id}`}
       >
-        {" "}
-        <button class="btn-edit-admin button button--atlas">
-          <span>Edit</span>
-          <div class="marquee" aria-hidden="true">
-            <div class="marquee__inner">
-              <span>Edit</span>
-              <span>Edit</span>
-              <span>Edit</span>
-              <span>Edit</span>
-            </div>
-          </div>
-        </button>
+        <button class="btn-edit-admin btn-animated">Edit</button>
       </Link>
       {/* to={`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home/${id}`} */}
 

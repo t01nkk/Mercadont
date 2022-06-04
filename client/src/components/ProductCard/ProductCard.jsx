@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ProductCard.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import shoppingCart from "../../media/shoppingCart.png";
 import imgAddFavorite from "../../media/heart-add-cart.png";
 import imgDeleteFavorite from "../../media/heart-delete-cart.png";
@@ -16,18 +16,40 @@ export default function ProductCard({
   handleSaveCart,
   handleSaveFavorite,
   handleDeleteFavorite,
+  isAdd,
 }) {
-  const [changeButton, setChangeButton] = useState(true);
+  const [changeButton, setChangeButton] = useState(isAdd);
+  const history = useHistory();
+  let myUser = JSON.parse(localStorage.getItem("myUser"));
+
+  useEffect(() => {
+    setChangeButton(isAdd);
+    // console.log(isAdd)
+  }, [isAdd]);
 
   const postFavorite = () => {
-    setChangeButton(false);
+    let person = JSON.parse(localStorage.getItem("myUser"));
+    if (!person) {
+      history.push("/logIn");
+      return;
+    }
+    setChangeButton(true);
     handleSaveFavorite(id);
   };
 
   const deleteFavorite = () => {
-    setChangeButton(true);
+    setChangeButton(false);
     handleDeleteFavorite(id);
   };
+
+  const clickSaveCart = () => {
+    if (!myUser) {
+      history.push("/logIn");
+      return;
+    }
+    handleSaveCart(name, price, image, id, stock);
+  };
+
   return (
     <div className="card-clothe">
       <Link to={`/home/${id}`}>
@@ -44,17 +66,26 @@ export default function ProductCard({
         >
           <img className="cart-btn" src={shoppingCart} alt="add-cart" />
         </button>
+        {/* {changeButton ? (
+        <button className="shoppingCart-btn" onClick={() => deleteFavorite()}>
+          <img src={imgDeleteFavorite} alt="delete-favorite" />
+        </button>
+      ) : (
+        <button className="shoppingCart-btn" onClick={() => postFavorite()}>
+          <img src={imgAddFavorite} alt="add-favorite" />
+        </button>
+      )} */}
         {changeButton ? (
-          <button className="card-btn" onClick={() => postFavorite()}>
-            <img className="fav-btn" src={imgAddFavorite} alt="add-favorite" />
-          </button>
-        ) : (
           <button className="card-btn" onClick={() => deleteFavorite()}>
             <img
               className="fav-btn"
               src={imgDeleteFavorite}
               alt="delete-favorite"
             />
+          </button>
+        ) : (
+          <button className="card-btn" onClick={() => postFavorite()}>
+            <img className="fav-btn" src={imgAddFavorite} alt="add-favorite" />
           </button>
         )}
         <div className="price">

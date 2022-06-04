@@ -14,21 +14,20 @@ router.get("/findUser", async (req, res) => {
 
 router.post("/register", async (req, res, next) => {
   // const { email, password } = req.body;
-  const { name, lastname, email, password, address, image, payment } = req.body;
-  if (!password) throw new Error({ msg: "Password is required" });
+  const { name, lastname, email, address, image, payment, id } = req.body;
   try {
     const userExist = await User.findOne({ where: { email: email } });
     // console.log(userExist ? userExist : null, "HERE BE USER");
     if (!userExist) {
       await User.create({
         email: email,
-        password: genPassword(password),
         name: name,
         lastname: lastname,
         address: address,
         image: image,
         payment: payment,
         created: true,
+        id: id,
       });
 
       res.send({ msg: "User Registered" });
