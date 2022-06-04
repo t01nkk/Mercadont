@@ -39,35 +39,28 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-router.get("/Profile/auth", auth, (req, res, next) => {
-  //Create auth
-  // console.log("this is REQ SESSION", req.session)
-  res.send(req.session);
-});
-
-router.get("/fail", (req, res) => {
+router.post("/login", async (req, res, next) => {
+  // const { email, password } = req.body;
+  const { name, email, image,id } = req.body;
   try {
-    return res.send({ msg: "Something went wrong" });
-  } catch (err) {
-    console.log(err);
+    const userExist = await User.findOrCreate({
+      email: email,
+      name: name,
+      image: image,
+      created: true,
+      id: id,
+    }, {
+      where: {id:id},
+    })
+    // console.log(userExist ? userExist : null, "HERE BE USER");
+
+  res.send({ msg: "User Logged In" });
+  }
+  catch (err) {
+    console.log(err)
   }
 });
 
-router.post("/logout", auth, function (req, res, next) {
-  try {
-    console.log("AUTHENTICATE BEFORE", req.isAuthenticated());
-    req.logout(function (err) {
-      if (err) {
-        return next(err);
-      }
-      console.log("AUTHENTICATE BEFORE", req.isAuthenticated());
-      // console.log("REQ.USER", req.user)
-      res.send({ msg: "Logged out successfully" });
-    });
-  } catch (err) {
-    console.log(err.message);
-  }
-});
 
 router.post("/findUser", async (req, res) => {
   const { id } = req.body;
@@ -85,39 +78,7 @@ router.get("/findAll", async (req, res) => {
   }
 });
 
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    failureRedirect: "/user/fail",
-    successRedirect: "/user/Profile/auth",
-  })
-);
 
-///////////////// GOOGLE ///////////////////
-
-require("../middlewares/googleauth");
-
-router.get(
-  "/login/google",
-  passport.authenticate("google", {
-    scope: [
-      "https://www.googleapis.com/auth/userinfo.profile",
-      "https://www.googleapis.com/auth/userinfo.email",
-    ],
-    session: true,
-    failureRedirect: "/login",
-    failureMessage: true,
-  })
-);
-
-router.get("/googleAuth", passport.authenticate("google"), function (req, res) {
-  res.redirect(
-    `${process.env.REACT_APP_DOMAIN_GOOGLE_LOGIN}/login?id=${req.session.passport.user}`
-  );
-});
-
-/*-------------------------------------------------------------- */
-/*-------------------------Emails------------------------------- */
 
 /*-------------------------------------------------------------- */
 /*-------------------------UserInfo------------------------------- */
