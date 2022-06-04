@@ -12,7 +12,7 @@ const router = Router();
 //Working - Users needs to be logged-in to create. Credencials only check is user is logged-in, not if the user has admin credencials.
 //Register a new Admin user
 router.post("/register", async (req, res) => {
-  const { name, lastname, email, password} = req.body;
+  const { name, lastname, email, password } = req.body;
   // let errors = validateInputUser(name,lastname,email,password)
   // if(errors.length) return res.status(400).send({ msg: errors});
   const exists = await User.findOne({ where: { email: email } });
@@ -97,17 +97,17 @@ router.get("/adminUsers", checkAuthenticated, async (req, res) => {
 });
 
 //Give user Admin credencials
-router.put("/setAdmin/:id", checkAuthenticated, async (req, res) => {
-  const { id } = req.params;
-  const { setAdmin } = req.body;
-
+router.put("/setAdmin", checkAuthenticated, async (req, res) => {
+  const { email } = req.body;
+  const setAdmin = true;
+  // const { setAdmin } = req.body;
   if (setAdmin !== undefined || setAdmin !== null) {
     try {
       const isAdmin = await User.update(
         {
           isAdmin: setAdmin,
         },
-        { where: { id: id } }
+        { where: { email: email } }
       );
       return res.status(200).send(isAdmin);
     } catch (error) {

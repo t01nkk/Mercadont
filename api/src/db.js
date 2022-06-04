@@ -45,16 +45,14 @@ Product.belongsToMany(Category, { through: 'productCategories' }); //categories
 Product.belongsToMany(Qa, { through: 'productQAs' }); //Relation for questions and answers
 Qa.belongsTo(Product);
 
-Product.belongsToMany(Review, { through: 'productReviews' }); //Relation for reviews
-Review.belongsTo(Product);
-
 User.belongsToMany(Qa, { through: 'userQAs' });
 Qa.belongsTo(User);
 
+Product.belongsToMany(Review, { through: 'productReviews' }); //Relation for reviews
+Review.belongsTo(Product);
+
 User.belongsToMany(Review, { through: 'userReviews' });
 Review.belongsTo(User);
-
-
 
 module.exports = {
     ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

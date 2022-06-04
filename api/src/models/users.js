@@ -4,9 +4,8 @@ module.exports = (sequelize) => {
     "user",
     {
       id: {
-        type: DataTypes.UUID,
+        type: DataTypes.STRING,
         // allowNull: false,
-        defaultValue: UUIDV4,
         unique: true,
         primaryKey: true,
       },
@@ -23,11 +22,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         unique: true,
       },
-      password: {
-        type: DataTypes.STRING,
-        // allowNull: false,
-        unique: true,
-      },
+
       address: {
         type: DataTypes.JSON({
           country: DataTypes.STRING,

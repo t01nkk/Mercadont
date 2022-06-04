@@ -5,21 +5,25 @@ import {
   USER_SESSION,
   ORDER_BY_ASCDESC_PRICE,
   FILTER_BY_PRICE,
+  FILTER_BY_PRICE_CATEGORY,
   SORT_BY_PRICE_CAT,
   CATEGORIES_PRODUCT,
   SORTED_PRICE_PRODUCTS,
   ADMIN_SESSION,
+  GET_FAVORITES
 } from "../actions/actionTypes";
 
 export const initialState = {
   products: [],
   searchedProducts: [],
   filter: [],
+  filterCategory:[],
   categories: [],
   user: "",
   session: false,
   admin: {},
   sessionAdmin: false,
+  favorites:"",
   adminPorductList: [],
 };
 
@@ -48,6 +52,7 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
+        filterCategory: action.payload,
       };
     }
 
@@ -57,7 +62,12 @@ export function reducer(state = initialState, action) {
         searchedProducts: action.payload,
       };
     }
-
+    case FILTER_BY_PRICE_CATEGORY: {
+      return {
+        ...state,
+        products: action.payload,
+      };
+    }
 
     case ORDER_BY_ASCDESC_PRICE: {
       let order;
@@ -138,6 +148,12 @@ export function reducer(state = initialState, action) {
         admin: action.payload.admin,
         sessionAdmin: action.payload.sessionAdmin,
       };
+    }
+    case GET_FAVORITES:{
+      return{
+        ...state,
+        favorites:action.payload
+      }
     }
     default:
       return state;

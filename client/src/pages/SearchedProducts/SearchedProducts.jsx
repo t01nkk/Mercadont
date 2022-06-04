@@ -8,7 +8,9 @@ import {
   FILTER_BY_PRICE,
 } from "../../redux/actions/actionTypes";
 import axios from "axios";
-
+import { getFavorites } from "../../redux/actions/actions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function SearchedProducts() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
@@ -17,19 +19,58 @@ export default function SearchedProducts() {
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
   const [error, setError] = useState("");
+  const [inCart, setInCart] = useState(false);
+  const [user, setUser] = useState([]);
   let person = JSON.parse(localStorage.getItem("myUser"));
-  useEffect(() => {
-    localStorage.setItem("myCart", JSON.stringify(cart));
-  }, [cart]);
-
   const handleRedirect = () => {
     if (!state.searchedProducts.length) {
       setRedirect(true);
     }
   };
+
+  const alertAddedToCart = () => {
+    toast.success("Added to cart!", {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+  const alertAlreadyInCart = () => {
+    toast.success("Already in cart!", {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+  const handleSaveCart = (name, price, image, id, stock) => {
+    let quantity = 1;
+    let totalPrice = price;
+    let products = { name, price, image, id, stock, quantity, totalPrice };
+    let value = cart.find((e) => e.name === name);
+    if (value) {
+      setInCart(false);
+      alertAlreadyInCart();
+      return;
+    } else {
+      setInCart(true);
+      setCart((cart) => [...cart, products]);
+      alertAddedToCart();
+    }
+  };
+
   const handleSaveFavorite = async (id) => {
     try {
-      await axios.post("http://localhost:3001/user/addFavorite", {
+      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
         idUser: person,
         idProduct: id,
       });
@@ -37,35 +78,20 @@ export default function SearchedProducts() {
       console.log(error);
     }
   };
-  console.log(state.searchedProducts);
   const handleDeleteFavorite = async (id) => {
     try {
-      await axios.delete("http://localhost:3001/user/removeFavorite", {
-        data: {
-          idUser: person,
-          idProduct: id,
-        },
-      });
+      await axios.delete(
+        `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
+        {
+          data: {
+            idUser: person,
+            idProduct: id,
+          },
+        }
+      );
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleSaveCart = (name, price, image, id, stock) => {
-    let products = { name, price, image, id, stock };
-    console.log(products);
-
-    setCart((cart) => [...cart, products]);
-  };
-  useEffect(() => {
-    handleRedirect();
-  }, []);
-  const handleOrder = (e) => {
-    e.preventDefault();
-    dispatch({
-      type: ORDER_BY_ASCDESC_PRICE,
-      payload: e.target.value,
-    });
   };
   const handleChangeMax = (e) => {
     setError("");
@@ -104,6 +130,33 @@ export default function SearchedProducts() {
     });
     console.log(state);
   };
+  const handleOrder = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: ORDER_BY_ASCDESC_PRICE,
+      payload: e.target.value,
+    });
+  };
+
+  useEffect(() => {
+    if (person) {
+      getFavorites(dispatch, person);
+    }
+    handleRedirect();
+  }, []);
+  useEffect(() => {
+    let myUser = JSON.parse(localStorage.getItem("myUser"));
+    let myCart = JSON.parse(localStorage.getItem(myUser));
+    setUser(myUser);
+    if (myCart) {
+      setCart(myCart);
+    } else {
+      setCart([]);
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem(user, JSON.stringify(cart));
+  }, [cart]);
 
   return (
     <div>
@@ -162,6 +215,7 @@ export default function SearchedProducts() {
                     handleSaveCart={handleSaveCart}
                     handleSaveFavorite={handleSaveFavorite}
                     handleDeleteFavorite={handleDeleteFavorite}
+                    isAdd={state.favorites.find((e) => e.id === product.id)}
                   />
                 );
               } else {
@@ -170,6 +224,7 @@ export default function SearchedProducts() {
             })
           )}
       </div>
+      <ToastContainer />
     </div>
   );
 }

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useStore } from "../../context/store";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { CATEGORIES_PRODUCT, FETCH_PRODUCTS } from "../../redux/actions/actionTypes";
+import {CATEGORIES_PRODUCT, FETCH_PRODUCTS} from "../../redux/actions/actionTypes";
+import {  fetchCategories } from "../../redux/actions/actions.js";
 import axios from "axios";
+
 
 export default function FilerCategories() {
   const [state, dispatch] = useStore();
@@ -59,6 +61,9 @@ export default function FilerCategories() {
   }
   useEffect(() => {
     setRedirect(false);
+  }, []);
+  useEffect(() => {
+    fetchCategories(dispatch);
   }, []);
 
   return (
