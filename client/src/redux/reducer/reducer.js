@@ -9,6 +9,7 @@ import {
   CATEGORIES_PRODUCT,
   SORTED_PRICE_PRODUCTS,
   ADMIN_SESSION,
+  GET_FAVORITES
 } from "../actions/actionTypes";
 
 export const initialState = {
@@ -20,6 +21,7 @@ export const initialState = {
   session: false,
   admin: {},
   sessionAdmin: false,
+  favorites:"",
   adminPorductList: [],
 };
 
@@ -138,6 +140,12 @@ export function reducer(state = initialState, action) {
         admin: action.payload.admin,
         sessionAdmin: action.payload.sessionAdmin,
       };
+    }
+    case GET_FAVORITES:{
+      return{
+        ...state,
+        favorites:action.payload
+      }
     }
     default:
       return state;

@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
-import axios from "axios";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import { useAuth } from "../../context/authContext";
+// import axios from "axios";
+// import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+// import { getFavorites } from "../../redux/actions/actions";
+// import { useStore } from "../../context/store.js";
 // import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
+import { useAuth } from "../../context/authContext";
 
 export default function LogInForm() {
+  // const [state, dispatch] = useStore();
   const [data, setData] = useState({
     email: "",
     password: "",
   });
   const [redirect, setRedirect] = useState(false);
 
-  const history = useHistory();
+  // const history = useHistory();
   const { login } = useAuth();
 
   const handleChange = (e) => {
@@ -64,7 +68,7 @@ export default function LogInForm() {
   return (
     <div className="container-login">
       <div className="loginCard">
-        {redirect ? <Redirect push to="/home" /> : null}
+        {redirect ? <Redirect push to="/" /> : null}
         <h2>Sign In</h2>
 
         <form onSubmit={handleLogin}>

@@ -8,6 +8,7 @@ import {
   FILTER_BY_PRICE,
 } from "../../redux/actions/actionTypes";
 import axios from "axios";
+import { getFavorites } from "../../redux/actions/actions";
 
 export default function SearchedProducts() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
@@ -18,10 +19,6 @@ export default function SearchedProducts() {
   const [max, setMax] = useState(0);
   const [error, setError] = useState("");
   let person = JSON.parse(localStorage.getItem("myUser"));
-  useEffect(() => {
-    localStorage.setItem("myCart", JSON.stringify(cart));
-  }, [cart]);
-
   const handleRedirect = () => {
     if (!state.searchedProducts.length) {
       setRedirect(true);
@@ -56,16 +53,6 @@ export default function SearchedProducts() {
     console.log(products);
 
     setCart((cart) => [...cart, products]);
-  };
-  useEffect(() => {
-    handleRedirect();
-  }, []);
-  const handleOrder = (e) => {
-    e.preventDefault();
-    dispatch({
-      type: ORDER_BY_ASCDESC_PRICE,
-      payload: e.target.value,
-    });
   };
   const handleChangeMax = (e) => {
     setError("");
@@ -104,6 +91,26 @@ export default function SearchedProducts() {
     });
     console.log(state);
   };
+  const handleOrder = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: ORDER_BY_ASCDESC_PRICE,
+      payload: e.target.value,
+    });
+  };
+
+  useEffect(() => {
+    if(person){
+      getFavorites(dispatch,person)
+    }
+    handleRedirect();
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("myCart", JSON.stringify(cart));
+  }, [cart]);
+
+
 
   return (
     <div>
@@ -162,6 +169,7 @@ export default function SearchedProducts() {
                     handleSaveCart={handleSaveCart}
                     handleSaveFavorite={handleSaveFavorite}
                     handleDeleteFavorite={handleDeleteFavorite}
+                    isAdd={state.favorites.find(e => e.id === product.id)}
                   />
                 );
               } else {

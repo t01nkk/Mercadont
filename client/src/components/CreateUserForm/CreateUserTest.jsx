@@ -41,7 +41,7 @@ export default function LogInForm() {
         setError("El correo ya se encuentra en use");
     }
   };
-  console.log(data);
+
   return (
     <div className="container-login">
       {error && <p>{error}</p>}

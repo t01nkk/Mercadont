@@ -33,7 +33,7 @@ export default function ProductDetails() {
           // rating={product.rating}
           categories={product.categories}
           // reviews={product.reviews}
-          // qua={product.qua}
+          qas={product.qas}
           status={product.status}
         />
       )}

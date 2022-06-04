@@ -8,6 +8,7 @@ import {
   SORTED_PRICE_PRODUCTS,
 } from "../../redux/actions/actionTypes";
 import axios from "axios";
+import { getFavorites } from "../../redux/actions/actions.js"
 
 export default function Categories() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
@@ -18,9 +19,8 @@ export default function Categories() {
   const [max, setMax] = useState("");
   const [error, setError] = useState("");
   let person = JSON.parse(localStorage.getItem("myUser"));
-  useEffect(() => {
-    localStorage.setItem("myCart", JSON.stringify(cart));
-  }, [cart]);
+
+
   const handleSaveFavorite = async (id) => {
     try {
       await axios.post("http://localhost:3001/user/addFavorite", {
@@ -55,9 +55,7 @@ export default function Categories() {
 
     setCart((cart) => [...cart, products]);
   };
-  useEffect(() => {
-    handleRedirect();
-  }, []);
+
   const handleOrder = (e) => {
     e.preventDefault();
     dispatch({
@@ -104,6 +102,18 @@ export default function Categories() {
     console.log(state);
   };
 
+
+  useEffect(() => {
+    localStorage.setItem("myCart", JSON.stringify(cart));
+  }, [cart]);
+
+
+  useEffect(() => {
+    if(person){
+      getFavorites(dispatch,person)
+    }
+    handleRedirect();
+  }, []);
   return (
     <div>
       <div className="selectF">
@@ -158,6 +168,7 @@ export default function Categories() {
                   handleSaveCart={handleSaveCart}
                   handleSaveFavorite={handleSaveFavorite}
                   handleDeleteFavorite={handleDeleteFavorite}
+                  isAdd={state.favorites.find(e => e.id === product.id)}
                 />
               );
             }
