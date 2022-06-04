@@ -22,6 +22,9 @@ import HomeAdmin from "./pages/ADMIN/HomeADMIN/HomeAdmin";
 import NavBarADMIN from "./components/ADMIN/NavBarADMIN/NavBarADMIN";
 import { Favorites } from "./components/Favorites/Favorites";
 import ProductDetailsAdmin from "./pages/ADMIN/ProductDetailsADMIN/ProductDetailsAdmin";
+
+//Cualquier ruta que tiene que solo estar disponible a usuario logueado, se le puede envolver en ProtectedRoutes
+import {ProtectedRoute} from "./components/ProtectedRoute/ProtectedRoute";
 function App() {
   return (
     <>
@@ -36,7 +39,7 @@ function App() {
           <Home />
         </Route>
         <Route path="/categories" exact>
-          <NavBar/>
+          <NavBar />
           <Categories />
         </Route>
         <Route path="/home/:id" exact>
@@ -74,6 +77,7 @@ function App() {
           <NavBar />
           <AccountDetails />
         </Route>
+
         <Route path="/accountDetails/editProfile" exact>
           {/* USER ACCOUNT DETAIL FORM */}
           <NavBar />

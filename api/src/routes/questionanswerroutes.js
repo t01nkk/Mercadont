@@ -8,6 +8,10 @@ router.post("/:id/question", async (req, res) => {
     const { id } = req.params
     const { question, userId } = req.body
 
+    // console.log("id:", id)
+    // console.log("question:", question)
+    // console.log("userId:", userId)
+
     if (!question || question.length < 1) return res.status(400).send("Questions can't be empty")
 
     try {
@@ -17,12 +21,14 @@ router.post("/:id/question", async (req, res) => {
         })
         product.addQa(q)
 
-        const user = await User.findOne({ where: { id: userId } })
+        const user = await User.findOne({ where: { id: userId.trim() } })
+        // console.log("user:", user)
+        // console.log("q:", q)
         user.addQa(q)
         return res.status(200).send("Question Added")
     }
     catch (err) {
-        console.log(err)
+        // console.log(err)
         return res.status(400).send(err)
     }
 })
@@ -39,29 +45,30 @@ router.put("/:questionId/answer", async (req, res) => {
     try {
         await Qa.update({
             answer,
+            resolved: true,
         }, { where: { id: questionId } })
 
         return res.status(200).send("Answer Added")
     }
     catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(400).send(err)
     }
 })
 
-router.put("/:questionId/resolved", async (req, res) => {
-    const { questionId } = req.params
-    try {
-        await Qa.update({
-            resolved: true,
-        }, { where: { id: questionId } })
+// router.put("/:questionId/resolved", async (req, res) => {
+//     const { questionId } = req.params
+//     try {
+//         await Qa.update({
+//             resolved: true,
+//         }, { where: { id: questionId } })
 
-        return res.status(200).send("Answer Resolved")
-    }
-    catch (err) {
-        console.log(err)
-        res.status(400).send(err)
-    }
-})
+//         return res.status(200).send("Answer Resolved")
+//     }
+//     catch (err) {
+//         console.log(err)
+//         res.status(400).send(err)
+//     }
+// })
 
 module.exports = router;

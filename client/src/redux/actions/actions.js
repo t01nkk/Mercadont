@@ -7,17 +7,20 @@ import {
   GET_FAVORITES
 } from "./actionTypes";
 
-
 export const fetchProducts = async (dispatch) => {
-  const fetchedProducts = await axios.get(`${process.env.REACT_APP_DOMAIN}/product/`);
+  const fetchedProducts = await axios.get(
+    `${process.env.REACT_APP_DOMAIN}/product/`
+  );
   dispatch({
     type: FETCH_PRODUCTS,
     payload: fetchedProducts.data,
   });
 };
-console.log("here be env", process.env.REACT_APP_DOMAIN)
+console.log("here be env", process.env.REACT_APP_DOMAIN);
 export const fetchCategories = async (dispatch) => {
-  const fetchedProducts = await axios.get(`${process.env.REACT_APP_DOMAIN}/categories/`);
+  const fetchedProducts = await axios.get(
+    `${process.env.REACT_APP_DOMAIN}/categories/`
+  );
   dispatch({
     type: FETCH_CATEGORIES,
     payload: fetchedProducts.data,

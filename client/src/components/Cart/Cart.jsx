@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 // import { FormBuys } from '../FormBuys/FormBuys'
-import { ProductCart } from '../ProductCart/ProductCart'
-import { totalPrice } from './actionsCart'
-
-
+import { ProductCart } from "../ProductCart/ProductCart";
+import { totalPrice } from "./actionsCart";
+import accounting from "accounting";
 
 export const Cart = () => {
-  let user = JSON.parse(localStorage.getItem("myUser"))
+  let user = JSON.parse(localStorage.getItem("myUser"));
   let yourStorage = JSON.parse(localStorage.getItem(user));
   const [storageCart, setStorageCart] = useState(yourStorage);
   const history = useHistory();
@@ -18,20 +17,19 @@ export const Cart = () => {
   // const history = useHistory()
   // const [priceTotal, setPriceTotal] = useState(0)
 
-
   useEffect(() => {
-    setPriceTotal(totalPrice())
+    setPriceTotal(totalPrice());
     // totalPrice()
-  }, [])
+  }, []);
 
   const deleteDatatoStorage = (name) => {
-    let newLocalStorage = yourStorage.filter(e => e.name !== name)
-    setStorageCart(newLocalStorage)
-    console.log(newLocalStorage)
-    localStorage.setItem(user, JSON.stringify(newLocalStorage))
-    setPriceTotal(totalPrice())
+    let newLocalStorage = yourStorage.filter((e) => e.name !== name);
+    setStorageCart(newLocalStorage);
+    console.log(newLocalStorage);
+    localStorage.setItem(user, JSON.stringify(newLocalStorage));
+    setPriceTotal(totalPrice());
     // totalPrice()
-  }
+  };
 
   //Funcion para ver detalle del producto por id
   const viewProduct = (id) => {
@@ -50,15 +48,12 @@ export const Cart = () => {
     setStorageCart([]);
   };
 
-
-
   const makePurchase = () => {
     // let local = JSON.parse(localStorage.getItem("myCart"))
     // console.log(local, priceTotal)
-    localStorage.setItem("myPrice", JSON.stringify(priceTotal))
-    history.push("/buysProducts")
-  }
-
+    localStorage.setItem("myPrice", JSON.stringify(priceTotal));
+    history.push("/buysProducts");
+  };
 
   return (
     <div>
@@ -66,7 +61,10 @@ export const Cart = () => {
       {/* <button onClick={() => mostra()}>mostra storage</button> */}
       <section>
         <h2>Welcome your Cart</h2>
-        <p>Total price:{priceTotal}</p>
+        <p>
+          Total price: 
+          {`${accounting.formatMoney(priceTotal, "U$D ", 0)}`}
+        </p>
         <div>
           {storageCart && storageCart.length > 0 ? (
             storageCart.map((el, index) => (

@@ -4,13 +4,17 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { StoreProvider } from "./context/store";
+import { AuthProvider } from "./context/authContext";
 import { initialState } from "./redux/reducer/reducer";
 import reducer from "./redux/reducer/reducer";
+
 
 ReactDOM.render(
   <React.StrictMode>
     <StoreProvider initialState={initialState} reducer={reducer}>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </StoreProvider>
   </React.StrictMode>,
 
