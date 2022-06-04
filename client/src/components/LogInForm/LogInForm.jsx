@@ -7,13 +7,12 @@ import { Formik } from "formik";
 import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 export default function LogInForm() {
   const [redirect, setRedirect] = useState(false);
-  const { login } = useAuth();
+  const { login, loginWithGoogle, resetPassword } = useAuth();
 
   const handleLogin = async (values) => {
-    console.log("SOY VALUES UWU: ", values);
     try {
       const userCredentials = await login(values.email, values.password);
-      console.log("User Credentials:");
+      console.log("User Credentials:", userCredentials);
 
       if (userCredentials.user.uid) {
         localStorage.setItem(
@@ -26,19 +25,30 @@ export default function LogInForm() {
       alert(err);
     }
   };
-  const checkGoogleLogin = () => {
-    const params = new URLSearchParams(window.location.search); // id=123
-    let id = params.get("id");
-    if (id) {
-      localStorage.setItem("myUser", JSON.stringify(id));
-      console.log(id);
-      setRedirect(true);
-    }
-  };
-  useEffect(() => {
-    // 123
-    checkGoogleLogin();
-  }, []);
+ const handleGoogleSignin = async()=>{
+   try {
+     const userCredentials = await loginWithGoogle()
+     if (userCredentials.user.uid) localStorage.setItem("myUser",JSON.stringify(userCredentials.user.uid))
+
+    setRedirect(true)
+
+   } catch (err){
+     console.log(err)
+   }
+ }
+
+ const handleResetPassword = async ()=>{
+   if (!value.email) return setError("Please Enter Your Email")
+   try {
+    await resetPassword(value.email)
+     alert("Check your email inbox to reset your password")
+   }
+   catch (err){
+     alert(err.message)
+   }
+ }
+
+
   return (
     <div className="container-login">
       <Formik
@@ -115,9 +125,12 @@ export default function LogInForm() {
                   className="input-submit"
                 />
               </div>
+              <div>
+                <input type="submit" value="Forgot Your Password?" onClick={handleResetPassword}/>
+              </div>
             </form>
             <div className="createUser-container">
-              {/* <button onClick={handleGoogleLogin}> Login With Google</button> */}
+              <button onClick={handleGoogleSignin}> Login With Google</button>
               {/* <GoogleLoginButton />
           <GoogleLogin
             clientId={process.env.GOOGLE_CLIENT_ID}
