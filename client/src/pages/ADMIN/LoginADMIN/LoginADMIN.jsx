@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { useAuth } from "../../../context/authContext";
 
 export default function LoginADMIN() {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-
   const [redirect, setRedirect] = useState(false);
-
+  const history = useHistory();
+  const { login } = useAuth();
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -17,18 +18,20 @@ export default function LoginADMIN() {
     e.preventDefault();
     try {
       console.log("entre en el try");
-      const user = await axios({
-        method: "POST",
-        data: {
-          email: data.email,
-          password: data.password,
-        },
-        withCredentials: true,
-        url: `${process.env.REACT_APP_DOMAIN}/user/login`,
-      });
 
-      if (user.data.passport.user) {
-        const idAdmin = user.data.passport.user;
+      // const user = await axios({
+      //   method: "POST",
+      //   data: {
+      //     email: data.email,
+      //     password: data.password,
+      //   },
+      //   withCredentials: true,
+      //   url: `${process.env.REACT_APP_DOMAIN}/user/login`,
+      // });
+      const userCredentials = await login(data.email, data.password);
+
+      if (userCredentials.user.uid) {
+        const idAdmin = userCredentials.user.uid;
         const admin = await axios.post(
           `${process.env.REACT_APP_DOMAIN}/admin/getAdmin`,
           {

@@ -55,7 +55,7 @@ export default function Home() {
       alertAddedToCart();
     }
   };
-
+  const pene = JSON.parse(localStorage.getItem("myUser"));
   const handleSaveFavorite = async (id) => {
     try {
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
@@ -66,7 +66,7 @@ export default function Home() {
       console.log(error);
     }
   };
-
+  console.log(pene);
   const handleDeleteFavorite = async (id) => {
     try {
       await axios.delete(
