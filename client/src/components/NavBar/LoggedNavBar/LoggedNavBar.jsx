@@ -1,29 +1,29 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useStore } from "../../../context/store";
-import {Link, useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import FilterCategories from "../../FilterCategories/FilterCategories";
 import { getFavorites } from "../../../redux/actions/actions.js";
 import SearchBar from "../../SearchBar/SearchBar";
 import "./LoggedNavBar.css";
-import {useAuth} from "../../../context/authContext";
+import { useAuth } from "../../../context/authContext";
 export default function LoggedNavBar() {
-
   const [state, dispatch] = useStore();
 
-  useEffect(()=>{
+  useEffect(() => {
     let myUser = JSON.parse(localStorage.getItem("myUser"));
-    if(myUser){
-      getFavorites(dispatch,myUser)
+    if (myUser) {
+      getFavorites(dispatch, myUser);
     }
-  }, [state.favorites.length])
+  }, [state.favorites.length]);
 
-  const {logout} = useAuth()
+  const { logout } = useAuth();
   const history = useHistory();
 
   const logoutSesion = async () => {
     // let user = JSON.parse(localStorage.getItem("myUser"))
-    await logout
+    await logout;
     localStorage.removeItem("myUser");
+    history.push("/");
   };
 
   return (
@@ -44,9 +44,7 @@ export default function LoggedNavBar() {
           <div className="dropdown-content">
             <Link to="/accountDetails"> Account Details </Link>
             <Link to="/favorites">Favorites</Link>
-            <Link onClick={logoutSesion} to="/">
-              Log Out
-            </Link>
+            <a onClick={logoutSesion}>Log Out</a>
           </div>
         </div>
         <Link to="/cart">Cart</Link>

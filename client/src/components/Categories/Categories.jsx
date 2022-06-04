@@ -4,25 +4,28 @@ import { useStore } from "../../context/store";
 import { Redirect } from "react-router-dom";
 import {
   SORT_BY_PRICE_CAT,
-  FILTER_BY_PRICE_CATEGORY
+  FILTER_BY_PRICE_CATEGORY,
 } from "../../redux/actions/actionTypes";
 import axios from "axios";
-import { getFavorites } from "../../redux/actions/actions.js"
+import { getFavorites } from "../../redux/actions/actions.js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Categories() {
-  let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
+  // let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
   const [state, dispatch] = useStore();
-  const [cart, setCart] = useState(initialCart);
+  const [cart, setCart] = useState([]);
+  const [inCart, setInCart] = useState(false);
   const [min, setMin] = useState("");
   const [max, setMax] = useState("");
   const [error, setError] = useState("");
+  const [user, setUser] = useState([]);
   let person = JSON.parse(localStorage.getItem("myUser"));
-
 
   const handleSaveFavorite = async (id) => {
     try {
-      await axios.post("http://localhost:3001/user/addFavorite", {
+      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
         idUser: person,
         idProduct: id,
       });
@@ -30,15 +33,17 @@ export default function Categories() {
       console.log(error);
     }
   };
-
   const handleDeleteFavorite = async (id) => {
     try {
-      await axios.delete("http://localhost:3001/user/removeFavorite", {
-        data: {
-          idUser: person,
-          idProduct: id,
-        },
-      });
+      await axios.delete(
+        `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
+        {
+          data: {
+            idUser: person,
+            idProduct: id,
+          },
+        }
+      );
     } catch (error) {
       console.log(error);
     }
@@ -48,11 +53,45 @@ export default function Categories() {
       setRedirect(true);
     }
   };
+  const alertAddedToCart = () => {
+    toast.success("Added to cart!", {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+  const alertAlreadyInCart = () => {
+    toast.success("Already in cart!", {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
   const handleSaveCart = (name, price, image, id, stock) => {
-    let products = { name, price, image, id, stock };
-    console.log(products);
-
-    setCart((cart) => [...cart, products]);
+    console.log(name, price, image, id, stock);
+    let quantity = 1;
+    let totalPrice = price;
+    let products = { name, price, image, id, stock, quantity, totalPrice };
+    let value = cart.find((e) => e.name === name);
+    if (value) {
+      setInCart(false);
+      alertAlreadyInCart();
+      return;
+    } else {
+      setInCart(true);
+      setCart((cart) => [...cart, products]);
+      alertAddedToCart();
+    }
   };
 
   const handleOrder = (e) => {
@@ -78,10 +117,10 @@ export default function Categories() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    console.log(state)
+    console.log(state);
     let filter = state.filterCategory;
-    if(min) {
-      filter = filter.filter(product => product.price >= min)
+    if (min) {
+      filter = filter.filter((product) => product.price >= min);
     }
     if (max) {
       filter = filter.filter((product) => product.price <= max);
@@ -101,15 +140,25 @@ export default function Categories() {
     console.log(state);
   };
 
+  useEffect(() => {
+    let myUser = JSON.parse(localStorage.getItem("myUser"));
+    let myCart = JSON.parse(localStorage.getItem(myUser));
+    setUser(myUser);
+    if (myCart) {
+      setCart(myCart);
+    } else {
+      setCart([]);
+    }
+  }, []);
 
   useEffect(() => {
-    localStorage.setItem("myCart", JSON.stringify(cart));
+    localStorage.setItem(user, JSON.stringify(cart));
   }, [cart]);
 
-
+  console.log(state.products);
   useEffect(() => {
-    if(person){
-      getFavorites(dispatch,person)
+    if (person) {
+      getFavorites(dispatch, person);
     }
     handleRedirect();
   }, []);
@@ -118,13 +167,12 @@ export default function Categories() {
       <div className="selectF">
         <div>
           <select
+            defaultValue=""
             onChange={(e) => {
               handleOrder(e);
             }}
           >
-            <option value="" selected>
-              Sort !
-            </option>
+            <option value="">Sort !</option>
             <option value="ASCENDING">⬇</option>
             <option value="DESCENDING">⬆ </option>
           </select>
@@ -136,7 +184,6 @@ export default function Categories() {
             type="text"
             value={min}
             placeholder="min..."
-            required
             onChange={handleChangeMin}
           />
         </form>
@@ -146,34 +193,36 @@ export default function Categories() {
             type="text"
             value={max}
             placeholder="max..."
-            required
             onChange={handleChangeMax}
           />
         </form>
         {error && <p>{error}</p>}
       </div>
       {redirect ? <Redirect push to="/home" /> : null}
-      <div className="cardsContainer">
-        {React.Children.toArray(
-          state.products.map((product) => {
-            if (product.status === "active") {
-              return (
-                <ProductCard
-                  id={product.id}
-                  name={product.name}
-                  stock={product.stock}
-                  price={product.price}
-                  image={product.image}
-                  handleSaveCart={handleSaveCart}
-                  handleSaveFavorite={handleSaveFavorite}
-                  handleDeleteFavorite={handleDeleteFavorite}
-                  isAdd={state.favorites.find(e => e.id === product.id)}
-                />
-              );
-            }
-            return null;
-          })
-        )}
+      <div className="section-products">
+        {state.products && state.favorites
+          ? React.Children.toArray(
+              state.products.map((product) => {
+                if (product.status === "active") {
+                  return (
+                    <ProductCard
+                      id={product.id}
+                      name={product.name}
+                      stock={product.stock}
+                      price={product.price}
+                      image={product.image}
+                      handleSaveCart={handleSaveCart}
+                      handleSaveFavorite={handleSaveFavorite}
+                      handleDeleteFavorite={handleDeleteFavorite}
+                      isAdd={state.favorites.find((e) => e.id === product.id)}
+                    />
+                  );
+                }
+                return null;
+              })
+            )
+          : console.log("Aca vendría el loader")}
+        <ToastContainer />
       </div>
     </div>
   );

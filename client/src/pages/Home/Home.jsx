@@ -2,18 +2,21 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import { useStore } from "../../context/store.js";
-import { fetchProducts, fetchCategories, getFavorites } from "../../redux/actions/actions.js";
+import {
+  fetchProducts,
+  fetchCategories,
+  getFavorites,
+} from "../../redux/actions/actions.js";
 import "./Home.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const [user, setUser] = useState([]);
-  const [cart, setCart] = useState([]);
   const [state, dispatch] = useStore();
-  const [inCart, setInCart] = useState(false);
   // const [error, setError] = useState();
-
+  const [cart, setCart] = useState([]);
+  const [inCart, setInCart] = useState(false);
   let person = JSON.parse(localStorage.getItem("myUser"));
   const alertAddedToCart = () => {
     toast.success("Added to cart!", {
@@ -54,7 +57,7 @@ export default function Home() {
       alertAddedToCart();
     }
   };
-  const pene = JSON.parse(localStorage.getItem("myUser"));
+ 
   const handleSaveFavorite = async (id) => {
     try {
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
@@ -65,7 +68,6 @@ export default function Home() {
       console.log(error);
     }
   };
-  console.log(pene);
   const handleDeleteFavorite = async (id) => {
     try {
       await axios.delete(
@@ -80,15 +82,15 @@ export default function Home() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     let myUser = JSON.parse(localStorage.getItem("myUser"));
-    let myCart = JSON.parse(localStorage.getItem(myUser))
+    let myCart = JSON.parse(localStorage.getItem(myUser));
     fetchCategories(dispatch);
-    getFavorites(dispatch,person)
-    fetchProducts(dispatch)
-    setUser(myUser)
+    getFavorites(dispatch, person);
+    fetchProducts(dispatch);
+    setUser(myUser);
     if (myCart) {
       setCart(myCart);
     } else {
@@ -100,7 +102,6 @@ export default function Home() {
     localStorage.setItem(user, JSON.stringify(cart));
   }, [cart]);
 
-
   const mostra = () => {
     let miStorage = JSON.parse(localStorage.getItem("myUser"));
     console.log(miStorage);
@@ -108,29 +109,29 @@ export default function Home() {
 
   return (
     <section className="section-products">
-      <button onClick={() => mostra()}>mostra storage</button>
-        {state.products && state.favorites
+      {/* <button onClick={() => mostra()}>mostra storage</button> */}
+      {state.products && state.favorites
         ? React.Children.toArray(
-          state.products.map((product) => {
-            if (product.status === "active") {
-              return (
-                <ProductCard
-                  id={product.id}
-                  name={product.name}
-                  stock={product.stock}
-                  price={product.price}
-                  image={product.image}
-                  handleSaveCart={handleSaveCart}
-                  handleSaveFavorite={handleSaveFavorite}
-                  handleDeleteFavorite={handleDeleteFavorite}
-                  isAdd={state.favorites.find(e => e.id === product.id)}
-                />
-              );
-            }
-            return null;
-          })
-        ):console.log("Aca vendría el loader")
-      }
+            state.products.map((product) => {
+              if (product.status === "active") {
+                return (
+                  <ProductCard
+                    id={product.id}
+                    name={product.name}
+                    stock={product.stock}
+                    price={product.price}
+                    image={product.image}
+                    handleSaveCart={handleSaveCart}
+                    handleSaveFavorite={handleSaveFavorite}
+                    handleDeleteFavorite={handleDeleteFavorite}
+                    isAdd={state.favorites.find((e) => e.id === product.id)}
+                  />
+                );
+              }
+              return null;
+            })
+          )
+        : console.log("Aca vendría el loader")}{" "}
       <ToastContainer />
     </section>
   );
