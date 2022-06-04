@@ -37,17 +37,20 @@ export default function LogInForm() {
    }
  }
 
- const handleResetPassword = async ()=>{
-   if (!value.email) return setError("Please Enter Your Email")
+ //RESET PASSWORD FORMIK
+  /*
+ const handleResetPassword = async (values)=>{
+   console.log(values.email)
+   if (!values.email) return console.log("Please Enter Your Email")
    try {
-    await resetPassword(value.email)
+    await resetPassword(values.email)
      alert("Check your email inbox to reset your password")
    }
    catch (err){
      alert(err.message)
    }
  }
-
+*/
 
   return (
     <div className="container-login">
@@ -125,9 +128,9 @@ export default function LogInForm() {
                   className="input-submit"
                 />
               </div>
-              <div>
-                <input type="submit" value="Forgot Your Password?" onClick={handleResetPassword}/>
-              </div>
+              {/*<div>
+                <input type="submit" value="Forgot Your Password?"/>
+              </div>*/}
             </form>
             <div className="createUser-container">
               <button onClick={handleGoogleSignin}> Login With Google</button>
