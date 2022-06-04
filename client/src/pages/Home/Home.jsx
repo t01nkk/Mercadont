@@ -2,19 +2,21 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import { useStore } from "../../context/store.js";
-import { fetchProducts, fetchCategories } from "../../redux/actions/actions.js";
+import {
+  fetchProducts,
+  fetchCategories,
+  getFavorites,
+} from "../../redux/actions/actions.js";
 import "./Home.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const [user, setUser] = useState([]);
-  // let initialCart = JSON.parse(localStorage.getItem(user)) || [];
-  const [cart, setCart] = useState([]);
   const [state, dispatch] = useStore();
+  // const [error, setError] = useState();
+  const [cart, setCart] = useState([]);
   const [inCart, setInCart] = useState(false);
-  const [error, setError] = useState();
-
   let person = JSON.parse(localStorage.getItem("myUser"));
   const alertAddedToCart = () => {
     toast.success("Added to cart!", {
@@ -55,7 +57,7 @@ export default function Home() {
       alertAddedToCart();
     }
   };
-
+ 
   const handleSaveFavorite = async (id) => {
     try {
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
@@ -66,7 +68,6 @@ export default function Home() {
       console.log(error);
     }
   };
-
   const handleDeleteFavorite = async (id) => {
     try {
       await axios.delete(
@@ -83,30 +84,18 @@ export default function Home() {
     }
   };
 
-  //USEEFFECT CARGA DE PRODUCTOS
-  // useEffect(() => {
-  //   fetchProducts(dispatch);
-  // }, []);
   useEffect(() => {
-    fetchCategories(dispatch);
-    fetchProducts(dispatch);
     let myUser = JSON.parse(localStorage.getItem("myUser"));
     let myCart = JSON.parse(localStorage.getItem(myUser));
+    fetchCategories(dispatch);
+    getFavorites(dispatch, person);
+    fetchProducts(dispatch);
     setUser(myUser);
     if (myCart) {
       setCart(myCart);
     } else {
       setCart([]);
     }
-    // if(typeof myUser === "string"){
-    //   setCart([])
-    // }
-    // else{
-    //   setUser(myUser)
-    //   setCart(myCart)
-    // }
-    // let miCart = JSON.parse(localStorage.getItem(miUser));
-    // setCart(miCart)
   }, []);
 
   useEffect(() => {
@@ -116,38 +105,33 @@ export default function Home() {
   const mostra = () => {
     let miStorage = JSON.parse(localStorage.getItem("myUser"));
     console.log(miStorage);
-    // console.log(cart);
-    // console.log(cart)
-
-    // console.log(initialCart)
-    // let miCart = JSON.parse(localStorage.getItem(user));
-    // console.log(miCart);
-    console.log(cart);
   };
 
   return (
     <section className="section-products">
       {/* <button onClick={() => mostra()}>mostra storage</button> */}
-      {state.products &&
-        React.Children.toArray(
-          state.products.map((product) => {
-            if (product.status === "active") {
-              return (
-                <ProductCard
-                  id={product.id}
-                  name={product.name}
-                  stock={product.stock}
-                  price={product.price}
-                  image={product.image}
-                  handleSaveCart={handleSaveCart}
-                  handleSaveFavorite={handleSaveFavorite}
-                  handleDeleteFavorite={handleDeleteFavorite}
-                />
-              );
-            }
-            return null;
-          })
-        )}
+      {state.products && state.favorites
+        ? React.Children.toArray(
+            state.products.map((product) => {
+              if (product.status === "active") {
+                return (
+                  <ProductCard
+                    id={product.id}
+                    name={product.name}
+                    stock={product.stock}
+                    price={product.price}
+                    image={product.image}
+                    handleSaveCart={handleSaveCart}
+                    handleSaveFavorite={handleSaveFavorite}
+                    handleDeleteFavorite={handleDeleteFavorite}
+                    isAdd={state.favorites.find((e) => e.id === product.id)}
+                  />
+                );
+              }
+              return null;
+            })
+          )
+        : console.log("Aca vendría el loader")}{" "}
       <ToastContainer />
     </section>
   );

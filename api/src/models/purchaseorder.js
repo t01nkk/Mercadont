@@ -20,6 +20,10 @@ module.exports = (sequelize) => {
         date: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
+        },
+        status: {
+            type: DataTypes.ENUM("pending", "completed", "canceled"),
+            defaultValue: "pending"
         }
     },{timestamps: false}
     )

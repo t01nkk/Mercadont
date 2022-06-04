@@ -1,7 +1,8 @@
 import React from "react";
 import "./ProductDetailsInfo.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import accounting from "accounting";
+import { FormQA } from "../FormQA/FormQA";
 export default function ProductDetailsInfo({
   id,
   image,
@@ -11,7 +12,7 @@ export default function ProductDetailsInfo({
   // rating,
   categories,
   // reviews,
-  // qua,
+  qas,
   status,
   price,
 }) {
@@ -37,9 +38,19 @@ export default function ProductDetailsInfo({
         <p>{rating}</p> */}
         {/* <p className="title">Reviews:</p>
         <p>{reviews}</p> */}
-        {/* <p className="title">Q{"&"}A:</p>
-        <p>{qua}</p> */}
+        <p className="title">Q{"&"}A:</p>
+        <p>{qas.map(qa => (
+          <div>
+            <p key={qa.question}>{qa.question}</p>
+            {
+              qa.answer
+              ?<p key={qa.answer}>{qa.answer}</p>
+              : null
+            } 
+          </div>
+        ))}</p>
       </div>
+      <div><FormQA productId={id}/></div>
     </div>
   );
 }

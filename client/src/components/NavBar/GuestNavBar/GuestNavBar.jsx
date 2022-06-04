@@ -4,6 +4,8 @@ import SearchBar from "../../SearchBar/SearchBar";
 import "./GuestNavBar.css";
 import FilterCategoies from "../../FilterCategories/FilterCategories";
 export default function GuestNavBar() {
+
+
   return (
     <div className="header-nav">
       <div className="container-actions-user">
@@ -19,7 +21,7 @@ export default function GuestNavBar() {
       <SearchBar />
       <div className="container-actions-user">
         <Link to="/logIn">Login/SignUp</Link>
-        <Link to="/cart">Cart</Link>
+        <Link to="/logIn">Cart</Link>
       </div>
     </div>
   );
