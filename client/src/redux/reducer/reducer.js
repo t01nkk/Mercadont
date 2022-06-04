@@ -5,6 +5,7 @@ import {
   USER_SESSION,
   ORDER_BY_ASCDESC_PRICE,
   FILTER_BY_PRICE,
+  FILTER_BY_PRICE_CATEGORY,
   SORT_BY_PRICE_CAT,
   CATEGORIES_PRODUCT,
   SORTED_PRICE_PRODUCTS,
@@ -16,6 +17,7 @@ export const initialState = {
   products: [],
   searchedProducts: [],
   filter: [],
+  filterCategory:[],
   categories: [],
   user: "",
   session: false,
@@ -50,6 +52,7 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
+        filterCategory: action.payload,
       };
     }
 
@@ -59,7 +62,12 @@ export function reducer(state = initialState, action) {
         searchedProducts: action.payload,
       };
     }
-
+    case FILTER_BY_PRICE_CATEGORY: {
+      return {
+        ...state,
+        products: action.payload,
+      };
+    }
 
     case ORDER_BY_ASCDESC_PRICE: {
       let order;
