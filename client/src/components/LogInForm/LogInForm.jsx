@@ -10,8 +10,8 @@ export default function LogInForm() {
   const { login } = useAuth();
 
   const handleLogin = async (values) => {
-    console.log("SOY VALUES UWU: ", values);
     try {
+      
       const userCredentials = await login(values.email, values.password);
       console.log("User Credentials:");
 

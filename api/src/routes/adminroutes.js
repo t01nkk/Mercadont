@@ -37,7 +37,7 @@ router.post("/register", async (req, res) => {
 });
 // Working
 //Get all Users
-router.get("/users", checkAuthenticated, async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     const user = await User.findAll();
     if (!user) {
@@ -97,7 +97,7 @@ router.get("/adminUsers", checkAuthenticated, async (req, res) => {
 });
 
 //Give user Admin credencials
-router.put("/setAdmin", checkAuthenticated, async (req, res) => {
+router.put("/setAdmin", async (req, res) => {
   const { email } = req.body;
   const setAdmin = true;
   // const { setAdmin } = req.body;
