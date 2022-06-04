@@ -5,15 +5,34 @@ import { useStore } from "../../../context/store";
 import "./CategoryCard.css";
 
 export default function CreateCategory() {
-  const [state, dispatch] = useStore();
+  const [state, dispatch] = useStore(); 
+  const [errors, setErrors] = useState({});
 
   const [data, setData] = useState({
     name: "",
   });
 
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+  const expression = {	
+		name: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+   
+  }
+  function validator(input) {
+    let errors = {};    
+    
+    if (!expression.name.test(input.name)) {
+        errors.name = 'Name is necessary';
+    }
+   
+    return errors
+  }
+  const handleChangeName = (e) => {
+    setErrors("")  
+    if (!expression.name.test(data.name))setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+    
+        setData({ ...data, [e.target.name]: e.target.value });
   };
+  
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name } = data;
@@ -39,14 +58,14 @@ export default function CreateCategory() {
             type="text"
             name="name"
             placeholder="Category Name ..."
-            onChange={handleChange}
+            onChange={handleChangeName }
             required
             value={data.name}
           />
         </div>
-
+        {errors.name && ( <p className='error-input'>{errors.name}</p> )}
         <div className="btn-createUser">
-          <input type="submit" value="Create" className="input-submit" />
+          <input type="submit" value="Create" disabled={errors} className="input-submit" />
         </div>
       </form>
     </div>

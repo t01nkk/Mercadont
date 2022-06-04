@@ -8,15 +8,14 @@
     "@testing-library/user-event": "^12.2.2",
     "axios": "^0.27.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-hook-form": "^7.30.0",
+    "react-dom": "^17.0.1",    
     "react-router-dom": "^5.3.1",
     "react-scripts": "4.0.0",
     "router-dom": "^2.2.9",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts  start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -9,6 +9,7 @@ Pablo Marrero
 Ignacio Williams
 Tatiana Pachon
 Mateo Miniati
+Emmanuel Cuello
 
 OBJECTIVE: Developing a web platform for buying/selling items and managing stock.
 
