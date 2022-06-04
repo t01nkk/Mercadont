@@ -1,10 +1,11 @@
 import React, {useEffect} from "react";
-import { Link } from "react-router-dom";
 import { useStore } from "../../../context/store";
+import {Link, useHistory} from "react-router-dom";
 import FilterCategories from "../../FilterCategories/FilterCategories";
 import { getFavorites } from "../../../redux/actions/actions.js";
 import SearchBar from "../../SearchBar/SearchBar";
 import "./LoggedNavBar.css";
+import {useAuth} from "../../../context/authContext";
 export default function LoggedNavBar() {
 
   const [state, dispatch] = useStore();
@@ -16,10 +17,15 @@ export default function LoggedNavBar() {
     }
   }, [state.favorites.length])
 
-  const logoutSesion = () => {
+  const {logout} = useAuth()
+  const history = useHistory();
+
+  const logoutSesion = async () => {
     // let user = JSON.parse(localStorage.getItem("myUser"))
+    await logout
     localStorage.removeItem("myUser");
   };
+
   return (
     <div className="header-nav">
       <div className="container-actions-user">
@@ -31,9 +37,7 @@ export default function LoggedNavBar() {
           </div>
         </div>
       </div>
-
       <SearchBar />
-
       <div className="container-actions-user">
         <div className="dropdown">
           <a className="dropbtn">Profile</a>

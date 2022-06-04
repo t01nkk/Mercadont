@@ -14,7 +14,8 @@ router.get("/findUser", async (req, res) => {
 
 router.post("/register", async (req, res, next) => {
   // const { email, password } = req.body;
-  const { name, lastname, email, password, address, image, payment } = req.body;
+  const { name, lastname, email, password, address, image, payment, id } =
+    req.body;
   if (!password) throw new Error({ msg: "Password is required" });
   try {
     const userExist = await User.findOne({ where: { email: email } });
@@ -29,6 +30,7 @@ router.post("/register", async (req, res, next) => {
         image: image,
         payment: payment,
         created: true,
+        id: id,
       });
 
       res.send({ msg: "User Registered" });
