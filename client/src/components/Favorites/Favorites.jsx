@@ -13,13 +13,15 @@ export const Favorites = () => {
         getFavorites(dispatch,id)
     },[])
   return (
+
+
     <div>
         <h3>favorite</h3>
       <div className='container container-all-favorites'>
 
         {/* <div className='card float-left'> */}
           {/* <div className='row'> */}
-              {state.favorites.length && state.favorites.map(e =>
+              {state.favorites.length !==0 && state.favorites.map(e =>
                 <ArticleFavorites 
                 key={e.id}
                 id={e.id}
