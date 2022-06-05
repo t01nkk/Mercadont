@@ -43,9 +43,13 @@ export const Cart = () => {
   };
 
   //Funcion para limpiar carro
-  const clearCart = () => {
-    localStorage.removeItem(user);
-    setStorageCart([]);
+  const clearCart = (e) => {
+    const answer = window.confirm("Are you sure you want to clear your cart?")
+    if(answer){
+      setStorageCart([]);
+      setPriceTotal(totalPrice())
+      localStorage.removeItem(user);
+    }
   };
 
   const makePurchase = () => {
@@ -56,14 +60,13 @@ export const Cart = () => {
   };
 
   return (
-    <div>
-      <button onClick={() => clearCart()}>Clear Cart</button>
-      {/* <button onClick={() => mostra()}>mostra storage</button> */}
+    <div>{}
+      <button onClick={() => clearCart()}  disabled={storageCart === null}>Clear Cart</button>
       <section>
         <h2>Welcome your Cart</h2>
         <p>
-          Total price: 
-          {`${accounting.formatMoney(priceTotal, "U$D ", 0)}`}
+          Total price:
+          {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
         </p>
         <div>
           {storageCart && storageCart.length > 0 ? (
@@ -83,10 +86,10 @@ export const Cart = () => {
               />
             ))
           ) : (
-            <h3>Sin datos</h3>
+            <h3>Your Cart is Empty</h3>
           )}
         </div>
-        <button onClick={makePurchase}>Buy</button>
+        <button onClick={makePurchase} disabled={storageCart === null}>Buy</button>
       </section>
 
       {/* <FormBuys priceTotal={priceTotal}/> */}

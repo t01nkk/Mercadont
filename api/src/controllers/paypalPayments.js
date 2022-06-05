@@ -4,20 +4,11 @@ const { createPurchaseOrder, createPurchaseCompleted, createPurchaseCanceled } =
 
 const createOrder = async (req, res) => {
   const {purchase_units, user, local} = req.body
+  // console.log("createOrder / purchase_units:", purchase_units)
+  // console.log("createOrder / user:", user)
+  // console.log("createOrder / local:", local)
   try {
     const order = {
-      // intent: "CAPTURE", // Requerido. Es lo que se va a hacer con la compra. Si paga al instante o no.
-      // purchase_units: [
-      //   //^ Requerido. Es... Bueno, lo que está comprando.
-      //   {
-      //     amount: {
-      //       //^ Requerido.
-      //       currency_code: "USD", //Requerido. El código de 3 letras de la moneda en la que se cobra el pago. SIEMPRE es 3 letras. Estándar ISO-4217.
-      //       value: "10", //Requerido. Precio total. Y es una string. Ojete al piojete.
-      //       //Se puede poner un objeto breakdown: {} para dar más info de todo el pago y bla bla, pero no es requerido.
-      //     },
-      //     description: "Girasol en rama.", //No requerido. Max: 128 caracteres.
-      //   },
       intent: "CAPTURE",
       purchase_units: purchase_units,
       application_context: {
@@ -71,6 +62,7 @@ const createOrder = async (req, res) => {
 };
 
 const captureOrder = async (req, res) => {
+  let completedOrder;
   const { token } = req.query;
 
   const { data } = await axios.post(
@@ -83,24 +75,30 @@ const captureOrder = async (req, res) => {
       },
     }
   );
+  // console.log("req.user in captureOrder:",req.user)
+  // console.log("req in captureOrder:",req)
   // console.log("data in captureOrder:",data)
   // console.log("data.id in captureOrder:",data.id)
   // console.log("data.status in captureOrder:",data.status)
   // console.log("user.datavalues.id in captureOrder:",req.user.dataValues.id)
-  createPurchaseCompleted(data.id, req.user.dataValues.id)
-  modifyStockPaypal(data.id, req.user.dataValues.id)
+  // completedOrder = createPurchaseCompleted(data.id, req.user?.dataValues?.id)
+  completedOrder = createPurchaseCompleted(data.id)
+  // console.log("completedOrder:", completedOrder)
+  modifyStockPaypal(data.id)
   mailPayPal();
   // purchaseOrder(id,userId,local)
   res.status(200).redirect(`http://localhost:3000/home`);
 };
 
 const cancelOrder = (req, res) => {
+  let canceledOrder;
   // console.log("req in cancelOrder:",req)
   // console.log("req.query.token:",req.query.token)
   // console.log("req.route.Route.path:",req.route.Route.path)
   // console.log("user.datavalues.id in captureOrder:",req.user.dataValues.id)
-  createPurchaseCanceled(req.query.token,req.user.dataValues.id)
-  // res.status(200).send("Pathetic.");
+  // canceledOrder = createPurchaseCanceled(req.query?.token,req.user?.dataValues?.id)
+  canceledOrder = createPurchaseCanceled(req.query?.token)
+  // console.log("canceledOrder:", canceledOrder)
   res.status(200).redirect(`http://localhost:3000/home`);
 };
 
