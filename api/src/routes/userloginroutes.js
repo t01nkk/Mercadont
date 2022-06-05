@@ -1,16 +1,7 @@
 const { Router } = require("express");
 const router = Router();
-const passport = require("passport");
-const { auth } = require("../middlewares/password_utils");
-const { genPassword } = require("../middlewares/password_utils");
 const { User, Product } = require("../db");
 
-router.get("/findUser", async (req, res) => {
-  const { email } = req.body;
-  let find = await User.findOne({ where: { email: email } });
-  if (find) res.send(find);
-  else res.status(404).send({ msg: "This user doesn't exist" });
-});
 
 router.post("/register", async (req, res, next) => {
   // const { email, password } = req.body;
@@ -39,6 +30,7 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
+<<<<<<< HEAD
 router.get("/Profile/auth", auth, (req, res, next) => {
   //Create auth
   // console.log("this is REQ SESSION", req.session)
@@ -47,76 +39,32 @@ router.get("/Profile/auth", auth, (req, res, next) => {
 });
 
 router.get("/fail", (req, res) => {
+=======
+router.post("/login", async (req, res, next) => {
+  // const { email, password } = req.body;
+  const { name, email, image,id } = req.body;
+>>>>>>> 24277bac5a3df1a9ac8e45d6b8c6e829c7629f2c
   try {
-    return res.send({ msg: "Something went wrong" });
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-router.post("/logout", auth, function (req, res, next) {
-  try {
-    console.log("AUTHENTICATE BEFORE", req.isAuthenticated());
-    req.logout(function (err) {
-      if (err) {
-        return next(err);
+    const userExist = await User.findOrCreate({
+      where: { id: id }, defaults: {
+        email: email,
+        name: name,
+        image: image,
+        created: true,
+        id: id,
       }
-      console.log("AUTHENTICATE BEFORE", req.isAuthenticated());
-      // console.log("REQ.USER", req.user)
-      res.send({ msg: "Logged out successfully" });
-    });
-  } catch (err) {
-    console.log(err.message);
+    }
+    )
+    // console.log(userExist ? userExist : null, "HERE BE USER");
+
+    res.send({ msg: "User Logged In" });
+  }
+  catch (err) {
+    console.log(err)
   }
 });
 
-router.post("/findUser", async (req, res) => {
-  const { id } = req.body;
-  let userInfo = await User.findOne({ where: { id: id } });
-  if (userInfo) res.send(userInfo);
-  else res.status(404).send({ msg: "This user doesn't exist" });
-});
 
-router.get("/findAll", async (req, res) => {
-  const all = await User.findAll();
-  try {
-    return res.send(all);
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-router.post("/login", passport.authenticate("local", {
-  failureRedirect: "/user/fail",
-  successRedirect: "/user/Profile/auth",
-})
-);
-
-///////////////// GOOGLE ///////////////////
-
-require("../middlewares/googleauth");
-
-router.get(
-  "/login/google",
-  passport.authenticate("google", {
-    scope: [
-      "https://www.googleapis.com/auth/userinfo.profile",
-      "https://www.googleapis.com/auth/userinfo.email",
-    ],
-    session: true,
-    failureRedirect: "/login",
-    failureMessage: true,
-  })
-);
-
-router.get("/googleAuth", passport.authenticate("google"), function (req, res) {
-  res.redirect(
-    `${process.env.REACT_APP_DOMAIN_GOOGLE_LOGIN}/login?id=${req.session.passport.user}`
-  );
-});
-
-/*-------------------------------------------------------------- */
-/*-------------------------Emails------------------------------- */
 
 /*-------------------------------------------------------------- */
 /*-------------------------UserInfo------------------------------- */

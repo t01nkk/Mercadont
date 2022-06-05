@@ -1,8 +1,9 @@
 const { PurchaseOrder } = require("../db");
 
 const createPurchaseOrder = async (orderId,userId,local,status) => {
+    let created;
     for(let product of local){
-        await PurchaseOrder.create({
+        created = await PurchaseOrder.create({
             orderId,
             userId,
             productId: product.id,
@@ -10,28 +11,31 @@ const createPurchaseOrder = async (orderId,userId,local,status) => {
             status
         })
     }
+    return created;
 }
 
-const createPurchaseCompleted = async (orderId,userId) => {
+const createPurchaseCompleted = async (orderId) => {
+    let updated;
     await PurchaseOrder.update({
         status: "completed",
     },{
         where:{
             orderId,
-            userId
         }
     })
+    return updated;
 }
 
-const createPurchaseCanceled= async (orderId,userId) => {
+const createPurchaseCanceled= async (orderId) => {
+    let updated;
     await PurchaseOrder.update({
         status: "canceled",
     },{
         where:{
             orderId,
-            userId
         }
     })
+    return updated;
 }
 
 module.exports = {

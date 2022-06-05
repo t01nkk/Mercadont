@@ -14,13 +14,9 @@ export default function LogInForm() {
   const [error, setError] = useState();
 
     const handleSubmitt = async (values) => {
-      console.log(values);
       try {
         const userCredentials = await signup(values.email, values.password);
-        console.log("soy el usercredentials", userCredentials);
         await axios.post(`${process.env.REACT_APP_DOMAIN}/user/register`, {
-          // email: email,
-          // password: password,
           id: userCredentials.user.uid,
           name: values.name,
           email: values.email,
@@ -29,8 +25,7 @@ export default function LogInForm() {
         history.push("/login");
       } catch (err) {
         if (err.code === "auth/internal-error") setError("Correo Invalido");
-        if (err.code === "auth/email-already-in-use")
-          setError("El correo ya se encuentra en use");
+        if (err.code === "auth/email-already-in-use")setError("El correo ya se encuentra en uso");
       }
     };
 
