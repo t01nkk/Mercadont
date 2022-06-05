@@ -5,7 +5,6 @@ import axios from "axios"
 import { totalPrice } from '../Cart/actionsCart'
 import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
 
-
 export const SendBuys = () => {
     const stripe = useStripe()
     const elements = useElements()
@@ -18,65 +17,57 @@ export const SendBuys = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // let local = JSON.parse(localStorage.getItem("myCart"))
+        if(selectBuys === "card"){        
+            // console.log(local, priceTotal)
+            const { error, paymentMethod } = await stripe.createPaymentMethod({
+                type: "card",
+                card: elements.getElement(CardElement)
+            })
 
-        // console.log(local, priceTotal)
-        // console.log(local)
-        // const { error, paymentMethod } = await stripe.createPaymentMethod({
-        //     type: "card",
-        //     card: elements.getElement(CardElement)
-        // })
-
-        // if (!error) {
-        //     // console.log(paymentMethod)
-        //     const { id } = paymentMethod
-        //     const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/product/buys`, {
-        //         id,
-        //         amount: priceTotal * 100,
-        //         local,
-        //         userId: user
-        //     })
-        //     console.log("purchase:", purchase)
-
-        // }
-        // localStorage.removeItem("myCart")
-        
-        const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/payPal/create-order`, {
-            purchase_units: [
-                //   //^ Requerido. Es... Bueno, lo que está comprando.
-                    {
-                    amount: {
-                      currency_code: "USD", //Requerido. El código de 3 letras de la moneda en la que se cobra el pago. SIEMPRE es 3 letras. Estándar ISO-4217.
-                      value: ""+priceTotal, //Requerido. Precio total. Y es una string. Ojete al piojete.
-                      //Se puede poner un objeto breakdown: {} para dar más info de todo el pago y bla bla, pero no es requerido.
-                    },
-                    description: "Girasol en rama.", //No requerido. Max: 128 caracteres.
-                    }
-                ],
-            user ,
-            local 
-        })
-        console.log("purchase:", purchase)
-        setRedirect(purchase.data)
-
-        
-        // purchase_units: [
-            //   //^ Requerido. Es... Bueno, lo que está comprando.
-            //   {
-            //     amount: {
-            //       //^ Requerido.
-            //       currency_code: "USD", //Requerido. El código de 3 letras de la moneda en la que se cobra el pago. SIEMPRE es 3 letras. Estándar ISO-4217.
-            //       value: "10", //Requerido. Precio total. Y es una string. Ojete al piojete.
-            //       //Se puede poner un objeto breakdown: {} para dar más info de todo el pago y bla bla, pero no es requerido.
-            //     },
-            //     description: "Girasol en rama.", //No requerido. Max: 128 caracteres.
-            //   }
+            if (!error) {
+                // console.log(paymentMethod)
+                const { id } = paymentMethod
+                console.log("local:", local)
+                console.log("id:", id)
+                console.log("user:", user)
+                const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
+                    id,
+                    amount: priceTotal * 100,
+                    local,
+                    userId: user
+                })
+                console.log("purchase:", purchase)
+            }
+            localStorage.removeItem("myCart")
+        }
     }
 
-    const handelClik = (e)=>{
+    const handelClik = async (e)=>{
         e.preventDefault()
-        if(e.target.textContent === "card")setSelectBuys(true)
-        if(e.target.textContent === "paypal")setSelectBuys(false)
+        if(e.target.textContent === "card") setSelectBuys("card")
+        if(e.target.textContent === "paypal"){
+            setSelectBuys("paypal")
+            // console.log("user:", user)
+            // console.log("local:", local)
+            // console.log("priceTotal:", priceTotal)
+            const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/payPal/create-order`, {
+                purchase_units: [
+                    //   //^ Requerido. Es... Bueno, lo que está comprando.
+                        {
+                        amount: {
+                            currency_code: "USD", //Requerido. El código de 3 letras de la moneda en la que se cobra el pago. SIEMPRE es 3 letras. Estándar ISO-4217.
+                            value: ""+priceTotal, //Requerido. Precio total. Y es una string. Ojete al piojete.
+                            //Se puede poner un objeto breakdown: {} para dar más info de todo el pago y bla bla, pero no es requerido.
+                        },
+                        description: "Compra PayPal", //No requerido. Max: 128 caracteres.
+                        }
+                    ],
+                user ,
+                local 
+            }) 
+            setRedirect(purchase.data)
+            localStorage.removeItem("myCart")
+        }        
     }
 
     const [products, setProducts] = useState("")
@@ -111,13 +102,28 @@ export const SendBuys = () => {
             </div>
         </div>
         <div>
-            <div onClick={e=>handelClik(e)}>card</div>
-            <div onClick={e=>handelClik(e)}>paypal</div>
+            <p>Choose your payment method</p>
+            <button onClick={e=>handelClik(e)}>card</button>
+            <button onClick={e=>handelClik(e)} type='submit'>paypal</button>
         </div>
-        
-        {/* <button onClick={() => mostra()}>mostra storage</button> */}
-        <button>Compra</button>
-        {selectBuys?<CardElement className='cardElement'/>:<a href={redirect}>Redireccionar</a>}
+        { 
+            <div>
+                {selectBuys === "card"? 
+                <>
+                    <CardElement className='cardElement'/>
+                    <button type='submit'>Pay</button>
+                </>           
+                : null}
+            </div>
+        }
+        {selectBuys === "paypal"?
+            <button type='submit'>
+                {redirect?
+                <a href={redirect}>Continue on PayPal</a>
+                : <p>Cargando link...</p>
+                }
+            </button>
+        : null}
     </form>
     )
 }
