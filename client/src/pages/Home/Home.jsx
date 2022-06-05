@@ -59,6 +59,7 @@ export default function Home() {
   };
  
   const handleSaveFavorite = async (id) => {
+    if (!person) return  alert("You must be Logged In to add items to your favorites list")
     try {
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
         idUser: person,

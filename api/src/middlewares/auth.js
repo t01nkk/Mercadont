@@ -10,9 +10,7 @@ passport.use(
       try {
         // console.log(email, password, "EMAIL, PASS");
         const user = await User.findOne({ where: { email: email } });
-
         // console.log(user, "HERE BE USER IF FOUND");
-
         if (!user) {
           return done(null, false);
         }
