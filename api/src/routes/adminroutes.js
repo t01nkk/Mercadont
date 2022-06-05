@@ -50,7 +50,7 @@ router.get("/users", checkAuthenticated, async (req, res) => {
 });
 // Working
 //Get User details
-router.get("/users/:id", checkAuthenticated, async (req, res) => {
+router.get("/users/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -97,7 +97,7 @@ router.get("/adminUsers", checkAuthenticated, async (req, res) => {
 });
 
 //Give user Admin credencials
-router.put("/setAdmin", checkAuthenticated, async (req, res) => {
+router.put("/setAdmin", async (req, res) => {
   const { email } = req.body;
   const setAdmin = true;
   // const { setAdmin } = req.body;
