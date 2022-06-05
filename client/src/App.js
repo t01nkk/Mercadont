@@ -24,7 +24,7 @@ import { Favorites } from "./components/Favorites/Favorites";
 import ProductDetailsAdmin from "./pages/ADMIN/ProductDetailsADMIN/ProductDetailsAdmin";
 
 //Cualquier ruta que tiene que solo estar disponible a usuario logueado, se le puede envolver en ProtectedRoutes
-import {ProtectedRoute} from "./components/ProtectedRoute/ProtectedRoute";
+// import {ProtectedRoute} from "./components/ProtectedRoute/ProtectedRoute";
 function App() {
   return (
     <>

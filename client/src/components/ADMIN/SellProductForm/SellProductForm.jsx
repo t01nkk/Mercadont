@@ -20,55 +20,55 @@ export default function SellProductForm() {
     stock: "",
     categories: [],
   });
-  const expression = {	
-		nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+  const expression = {
+    nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
     priceExpression: /^\d{1,14}$/,
     descriptionExpression: /^[a-zA-ZÀ-ÿ\s]{1,200}$/,
     stockExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
   }
-  
+
   function validator(input) {
-    let errors = {};    
-    
+    let errors = {};
+
     if (!expression.nameExpression.test(input.name)) {
-        errors.name = 'Name is necessary';
+      errors.name = 'Name is necessary';
     }
     if (!expression.priceExpression.test(input.price)) {
       errors.price = 'Price is necessary';
-  }
-  if (!expression.descriptionExpression.test(input.description)) {
-    errors.description = 'Description is necessary';
-}
-if (!expression.stockExpression.test(input.stock)) {
-  errors.stock = 'Stock is necessary';
-}
+    }
+    if (!expression.descriptionExpression.test(input.description)) {
+      errors.description = 'Description is necessary';
+    }
+    if (!expression.stockExpression.test(input.stock)) {
+      errors.stock = 'Stock is necessary';
+    }
     return errors
   }
 
   const handleChangeName = (e) => {
-    setErrors("")  
+    setErrors("")
     setErrors(validator({ ...data, [e.target.name]: e.target.value }));
-    
-        setData({ ...data, [e.target.name]: e.target.value });
+
+    setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const handleChangePrice = (e) => {
-    setErrors("")  
+    setErrors("")
     setErrors(validator({ ...data, [e.target.name]: e.target.value }));
-    
-        setData({ ...data, [e.target.name]: e.target.value });
+
+    setData({ ...data, [e.target.name]: e.target.value });
   };
   const handleChangeDescription = (e) => {
-    setErrors("")  
+    setErrors("")
     setErrors(validator({ ...data, [e.target.name]: e.target.value }));
-    
-        setData({ ...data, [e.target.name]: e.target.value });
+
+    setData({ ...data, [e.target.name]: e.target.value });
   };
   const handleChangeStock = (e) => {
-    setErrors("")  
+    setErrors("")
     setErrors(validator({ ...data, [e.target.name]: e.target.value }));
-    
-        setData({ ...data, [e.target.name]: e.target.value });
+
+    setData({ ...data, [e.target.name]: e.target.value });
   };
   const handleDeleteCat = (name, event) => {
     event.preventDefault();
@@ -108,7 +108,6 @@ if (!expression.stockExpression.test(input.stock)) {
   return (
     <div className="container-login">
       <div className="sellProductCard">
-        {console.log(data.categories)}
         <h2>Post Product</h2>
 
         <form onSubmit={handleSubmit} className="sellProductForm">
@@ -122,7 +121,7 @@ if (!expression.stockExpression.test(input.stock)) {
               value={data.name}
             />
           </div>
-           {errors.name && ( <p className='error-input'>{errors.name}</p> )}
+          {errors.name && (<p className='error-input'>{errors.name}</p>)}
 
           <div className="divInputUser">
             <input
@@ -134,7 +133,7 @@ if (!expression.stockExpression.test(input.stock)) {
               value={data.price}
             />
           </div>
-          {errors.price && ( <p className='error-input'>{errors.price}</p> )}
+          {errors.price && (<p className='error-input'>{errors.price}</p>)}
           <div className="divInputUser">
             <textarea
               cols="30"
@@ -145,9 +144,9 @@ if (!expression.stockExpression.test(input.stock)) {
               onChange={handleChangeDescription}
               required
               value={data.description}
-            ></textarea>  
+            ></textarea>
           </div>
-          {errors.description && ( <p className='error-input'>{errors.description}</p> )}
+          {errors.description && (<p className='error-input'>{errors.description}</p>)}
           <select onChange={handleChangeCat} className="divInputUser">
             <option value="" hidden className="divInputUser">
               Categories
@@ -196,7 +195,7 @@ if (!expression.stockExpression.test(input.stock)) {
               value={data.stock}
             />
           </div>
-          {errors.stock && ( <p className='error-input'>{errors.stock}</p> )}
+          {errors.stock && (<p className='error-input'>{errors.stock}</p>)}
           <div className="btn-login">
             <input type="submit" value="Send" disabled={errors} className="input-submit" />
           </div>
