@@ -5,6 +5,7 @@ import {Formik} from "formik"
 import { Link, Redirect } from "react-router-dom";
 import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 
+
 export default function LogInForm() {
   
   const [redirect, setRedirect] = useState(false);

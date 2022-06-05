@@ -4,6 +4,7 @@ const passport = require("passport");
 const { auth } = require("../middlewares/password_utils");
 const { genPassword } = require("../middlewares/password_utils");
 const { User, Product } = require("../db");
+const {validateInputUser} = require("../middlewares/middlewares")
 
 router.get("/findUser", async (req, res) => {
   const { email } = req.body;
@@ -145,21 +146,18 @@ router.get("/details/:id", async (req, res) => {
 // Update User
 router.put("/details/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, lastname, email, password, address, image, payment } = req.body;
+  const { name, email } = req.body;
 
-  let errors = validateInputUser(name, lastname, email, password);
+  let errors = validateInputUser(name,email);
   if (errors.length) return res.status(400).send({ msg: errors });
 
   try {
     const updatedUser = await User.update(
       {
         name: name,
-        lastname: lastname,
+       
         email: email,
-        password: password,
-        address: address,
-        image: image,
-        payment: payment,
+     
       },
       { where: { id: id } }
     );
