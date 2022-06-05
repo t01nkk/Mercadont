@@ -9,9 +9,11 @@ const nodemailer = require("nodemailer");
 
 const modifyStockStripe = async (local) => {
   let updateProduct;
+  console.log("local in modifyStockStripe:", local);
   try {
     for (let i = 0; i < local.length; i++) {
       const findProduct = await Product.findByPk(local[i].id);
+      console.log("findProduct:", findProduct)
       if (findProduct.stock - local[i].amount > 0) {
         updateProduct = await Product.update(
           { stock: findProduct.stock - local[i].amount },
@@ -27,15 +29,17 @@ const modifyStockStripe = async (local) => {
           msg: "There's not enough products to fulfill this purchase",
         });
       }
+      console.log("Iteracion:", i)
     }
     // console.log(updateProduct);
-    return { msg: "compra realizada" };
+    return updateProduct
+    // return { msg: "compra realizada" };
   } catch (error) {
-    return error;
+    return error.msg;
   }
 };
 
-const modifyStockPaypal = async (orderId,userId) => {
+const modifyStockPaypal = async (orderId) => {
   let updateProduct;
   // console.log("orderId:", typeof orderId)
   // console.log("userId:", typeof userId)
@@ -44,7 +48,6 @@ const modifyStockPaypal = async (orderId,userId) => {
       where:
         {
           orderId,
-          userId
         }
     });
     // console.log("modifyStockPaypal-findProducts:", findProducts)
