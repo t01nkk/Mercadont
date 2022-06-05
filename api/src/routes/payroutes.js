@@ -26,11 +26,12 @@ router.post("/card", async (req,res)=>{
     })
     let updatedStock = await modifyStockStripe(local)
     let created = await createPurchaseOrder(id,userId,local,"completed")
-    console.log("created:",created)
-    console.log("updatedStock:",updatedStock)
+    // console.log("Ruta Post CARD / created:",created)
+    // console.log("Ruta Post CARD / updatedStock:",updatedStock)
+    // console.log("Ruta Post CARD / payment:",payment)
     return res.status(200).send(payment)
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     return res.status(400).send(error)
   }
 })

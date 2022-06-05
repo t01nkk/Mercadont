@@ -9,18 +9,6 @@ const createOrder = async (req, res) => {
   // console.log("createOrder / local:", local)
   try {
     const order = {
-      // intent: "CAPTURE", // Requerido. Es lo que se va a hacer con la compra. Si paga al instante o no.
-      // purchase_units: [
-      //   //^ Requerido. Es... Bueno, lo que está comprando.
-      //   {
-      //     amount: {
-      //       //^ Requerido.
-      //       currency_code: "USD", //Requerido. El código de 3 letras de la moneda en la que se cobra el pago. SIEMPRE es 3 letras. Estándar ISO-4217.
-      //       value: "10", //Requerido. Precio total. Y es una string. Ojete al piojete.
-      //       //Se puede poner un objeto breakdown: {} para dar más info de todo el pago y bla bla, pero no es requerido.
-      //     },
-      //     description: "Girasol en rama.", //No requerido. Max: 128 caracteres.
-      //   },
       intent: "CAPTURE",
       purchase_units: purchase_units,
       application_context: {
@@ -95,7 +83,7 @@ const captureOrder = async (req, res) => {
   // console.log("user.datavalues.id in captureOrder:",req.user.dataValues.id)
   // completedOrder = createPurchaseCompleted(data.id, req.user?.dataValues?.id)
   completedOrder = createPurchaseCompleted(data.id)
-  console.log("completedOrder:", completedOrder)
+  // console.log("completedOrder:", completedOrder)
   modifyStockPaypal(data.id)
   mailPayPal();
   // purchaseOrder(id,userId,local)
@@ -110,8 +98,7 @@ const cancelOrder = (req, res) => {
   // console.log("user.datavalues.id in captureOrder:",req.user.dataValues.id)
   // canceledOrder = createPurchaseCanceled(req.query?.token,req.user?.dataValues?.id)
   canceledOrder = createPurchaseCanceled(req.query?.token)
-  console.log("canceledOrder:", canceledOrder)
-  // res.status(200).send("Pathetic.");
+  // console.log("canceledOrder:", canceledOrder)
   res.status(200).redirect(`http://localhost:3000/home`);
 };
 

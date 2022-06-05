@@ -5,7 +5,6 @@ import axios from "axios"
 import { totalPrice } from '../Cart/actionsCart'
 import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
 
-
 export const SendBuys = () => {
     const stripe = useStripe()
     const elements = useElements()
@@ -41,28 +40,6 @@ export const SendBuys = () => {
             }
             localStorage.removeItem("myCart")
         }
-
-        // if(selectBuys === "paypal"){
-        //     console.log("ENTRE AL PAYPAL")
-        //     const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/payPal/create-order`, {
-        //         purchase_units: [
-        //             //   //^ Requerido. Es... Bueno, lo que está comprando.
-        //                 {
-        //                 amount: {
-        //                   currency_code: "USD", //Requerido. El código de 3 letras de la moneda en la que se cobra el pago. SIEMPRE es 3 letras. Estándar ISO-4217.
-        //                   value: ""+priceTotal, //Requerido. Precio total. Y es una string. Ojete al piojete.
-        //                   //Se puede poner un objeto breakdown: {} para dar más info de todo el pago y bla bla, pero no es requerido.
-        //                 },
-        //                 description: "Girasol en rama.", //No requerido. Max: 128 caracteres.
-        //                 }
-        //             ],
-        //         user ,
-        //         local 
-        //     }) 
-        //     console.log("purchasePayPal:", purchase)
-        //     setRedirect(purchase.data)
-        //     localStorage.removeItem("myCart")
-        // }
     }
 
     const handelClik = async (e)=>{
@@ -82,7 +59,7 @@ export const SendBuys = () => {
                             value: ""+priceTotal, //Requerido. Precio total. Y es una string. Ojete al piojete.
                             //Se puede poner un objeto breakdown: {} para dar más info de todo el pago y bla bla, pero no es requerido.
                         },
-                        description: "Girasol en rama.", //No requerido. Max: 128 caracteres.
+                        description: "Compra PayPal", //No requerido. Max: 128 caracteres.
                         }
                     ],
                 user ,
@@ -128,8 +105,6 @@ export const SendBuys = () => {
             <p>Choose your payment method</p>
             <button onClick={e=>handelClik(e)}>card</button>
             <button onClick={e=>handelClik(e)} type='submit'>paypal</button>
-            {/* <div onClick={e=>handelClik(e)}>card</div>
-            <div onClick={e=>handelClik(e)}>paypal</div> */}
         </div>
         { 
             <div>

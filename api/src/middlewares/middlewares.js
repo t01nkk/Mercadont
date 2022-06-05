@@ -9,19 +9,21 @@ const nodemailer = require("nodemailer");
 
 const modifyStockStripe = async (local) => {
   let updateProduct;
-  console.log("local in modifyStockStripe:", local);
+  // console.log("local in modifyStockStripe:", local);
   try {
     for (let i = 0; i < local.length; i++) {
+      // console.log("Iteracion:", i)
+      // console.log("local[i].id:", local[i].id);
       const findProduct = await Product.findByPk(local[i].id);
-      console.log("findProduct:", findProduct)
-      if (findProduct.stock - local[i].amount > 0) {
+      // console.log("findProduct:", findProduct)
+      if (findProduct.stock - local[i].quantity > 0) {
         updateProduct = await Product.update(
-          { stock: findProduct.stock - local[i].amount },
+          { stock: findProduct.stock - local[i].quantity },
           { where: { id: local[i].id } }
         );
-      } else if (findProduct.stock - local[i].amount === 0) {
+      } else if (findProduct.stock - local[i].quantity === 0) {
         updateProduct = await Product.update(
-          { stock: findProduct.stock - local[i].amount, status: "inactive" },
+          { stock: findProduct.stock - local[i].quantity, status: "inactive" },
           { where: { id: local[i].id } }
         );
       } else {
@@ -29,13 +31,14 @@ const modifyStockStripe = async (local) => {
           msg: "There's not enough products to fulfill this purchase",
         });
       }
-      console.log("Iteracion:", i)
+
     }
     // console.log(updateProduct);
     return updateProduct
     // return { msg: "compra realizada" };
   } catch (error) {
-    return error.msg;
+    // console.log("modifyStockStripe:",error.message)
+    return error.message;
   }
 };
 
