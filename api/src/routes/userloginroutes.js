@@ -30,20 +30,9 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-<<<<<<< HEAD
-router.get("/Profile/auth", auth, (req, res, next) => {
-  //Create auth
-  // console.log("this is REQ SESSION", req.session)
-  console.log(req.session)
-  res.send(req.session);
-});
-
-router.get("/fail", (req, res) => {
-=======
 router.post("/login", async (req, res, next) => {
   // const { email, password } = req.body;
-  const { name, email, image,id } = req.body;
->>>>>>> 24277bac5a3df1a9ac8e45d6b8c6e829c7629f2c
+  const { name, email, image, id } = req.body;
   try {
     const userExist = await User.findOrCreate({
       where: { id: id }, defaults: {
