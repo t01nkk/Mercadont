@@ -5,12 +5,6 @@ const { auth } = require("../middlewares/password_utils");
 const { genPassword } = require("../middlewares/password_utils");
 const { User, Product } = require("../db");
 
-router.get("/findUser", async (req, res) => {
-  const { email } = req.body;
-  let find = await User.findOne({ where: { email: email } });
-  if (find) res.send(find);
-  else res.status(404).send({ msg: "This user doesn't exist" });
-});
 
 router.post("/register", async (req, res, next) => {
   // const { email, password } = req.body;
@@ -58,23 +52,6 @@ router.post("/login", async (req, res, next) => {
   }
   catch (err) {
     console.log(err)
-  }
-});
-
-
-router.post("/findUser", async (req, res) => {
-  const { id } = req.body;
-  let userInfo = await User.findOne({ where: { id: id } });
-  if (userInfo) res.send(userInfo);
-  else res.status(404).send({ msg: "This user doesn't exist" });
-});
-
-router.get("/findAll", async (req, res) => {
-  const all = await User.findAll();
-  try {
-    return res.send(all);
-  } catch (err) {
-    console.log(err);
   }
 });
 
