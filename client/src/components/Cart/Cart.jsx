@@ -65,7 +65,7 @@ export const Cart = () => {
           Total price: 
           {`${accounting.formatMoney(priceTotal, "U$D ", 0)}`}
         </p>
-        <div>
+        <div className="container">
           {storageCart && storageCart.length > 0 ? (
             storageCart.map((el, index) => (
               <ProductCart
