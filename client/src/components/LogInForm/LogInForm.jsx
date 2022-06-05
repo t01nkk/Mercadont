@@ -7,13 +7,20 @@ import { Formik } from "formik";
 import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 export default function LogInForm() {
   const [redirect, setRedirect] = useState(false);
-  const { login } = useAuth();
+  const { login, loginWithGoogle, resetPassword } = useAuth();
 
   const handleLogin = async (values) => {
     try {
       
       const userCredentials = await login(values.email, values.password);
-      console.log("User Credentials:");
+      console.log("User Credentials:", userCredentials);
+      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+        id: userCredentials.user.uid,
+        name: userCredentials.user.displayName,
+        email: userCredentials.user.email,
+        image: userCredentials.user.photoURL,
+        isVerified: userCredentials.user.emailVerified
+      })
 
       if (userCredentials.user.uid) {
         localStorage.setItem(
@@ -22,23 +29,46 @@ export default function LogInForm() {
         );
         setRedirect(true);
       }
+
     } catch (err) {
       alert(err);
     }
   };
-  const checkGoogleLogin = () => {
-    const params = new URLSearchParams(window.location.search); // id=123
-    let id = params.get("id");
-    if (id) {
-      localStorage.setItem("myUser", JSON.stringify(id));
-      console.log(id);
-      setRedirect(true);
-    }
-  };
-  useEffect(() => {
-    // 123
-    checkGoogleLogin();
-  }, []);
+ const handleGoogleSignin = async()=>{
+   try {
+     const userCredentials = await loginWithGoogle()
+     console.log(userCredentials)
+     await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+       id: userCredentials.user.uid,
+       name: userCredentials.user.displayName,
+       email: userCredentials.user.email,
+       image: userCredentials.user.photoURL,
+       isVerified: userCredentials.user.emailVerified
+     })
+     if (userCredentials.user.uid) localStorage.setItem("myUser",JSON.stringify(userCredentials.user.uid))
+
+    setRedirect(true)
+
+   } catch (err){
+     console.log(err)
+   }
+ }
+
+ //RESET PASSWORD FORMIK
+  /*
+ const handleResetPassword = async (values)=>{
+   console.log(values.email)
+   if (!values.email) return console.log("Please Enter Your Email")
+   try {
+    await resetPassword(values.email)
+     alert("Check your email inbox to reset your password")
+   }
+   catch (err){
+     alert(err.message)
+   }
+ }
+*/
+
   return (
     <div className="container-login">
       <Formik
@@ -115,9 +145,12 @@ export default function LogInForm() {
                   className="input-submit"
                 />
               </div>
+              {/*<div>
+                <input type="submit" value="Forgot Your Password?"/>
+              </div>*/}
             </form>
             <div className="createUser-container">
-              {/* <button onClick={handleGoogleLogin}> Login With Google</button> */}
+              <button onClick={handleGoogleSignin}> Login With Google</button>
               {/* <GoogleLoginButton />
           <GoogleLogin
             clientId={process.env.GOOGLE_CLIENT_ID}

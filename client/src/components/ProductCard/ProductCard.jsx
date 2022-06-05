@@ -30,6 +30,7 @@ export default function ProductCard({
   const postFavorite = () => {
     let person = JSON.parse(localStorage.getItem("myUser"));
     if (!person) {
+      alert("You  must be logged in to add items to your Favorites list")
       history.push("/logIn");
       return;
     }

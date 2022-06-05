@@ -1,10 +1,12 @@
 .header-logo {
   text-align: center;
   height: 10vh;
+  font-size: 8vw;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
 .header-nav {

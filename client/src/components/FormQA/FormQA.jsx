@@ -1,12 +1,14 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useStore } from '../../context/store';
+import {useHistory} from "react-router-dom";
 
 export const FormQA = ({productId}) => {
     const [data, setData] = useState({
         question: "",
     });
     const [state] = useStore();
+    const history = useHistory()
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
@@ -16,6 +18,11 @@ export const FormQA = ({productId}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { question } = data;
+        if(!state.user) {
+            alert("You must be logged In to ask questions")
+            history.push("/login")
+            return
+        }
         try {
             // console.log("productId:", productId)
             await axios.post(`${process.env.REACT_APP_DOMAIN}/qa/${productId}/question`, {
