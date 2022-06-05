@@ -2,24 +2,28 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 const productos = require("../../productsCats.json");
 const users = require("../../users.json");
-const { Product, User, Category } = require("../db");
+const { Product, User, Category, PurchaseOrder } = require("../db");
 const { Op } = require("sequelize");
 const { genPassword } = require('./password_utils');
 const nodemailer = require("nodemailer");
 
-const modifyStock = async (local) => {
+const modifyStockStripe = async (local) => {
   let updateProduct;
+  // console.log("local in modifyStockStripe:", local);
   try {
     for (let i = 0; i < local.length; i++) {
+      // console.log("Iteracion:", i)
+      // console.log("local[i].id:", local[i].id);
       const findProduct = await Product.findByPk(local[i].id);
-      if (findProduct.stock - local[i].amount > 0) {
+      // console.log("findProduct:", findProduct)
+      if (findProduct.stock - local[i].quantity > 0) {
         updateProduct = await Product.update(
-          { stock: findProduct.stock - local[i].amount },
+          { stock: findProduct.stock - local[i].quantity },
           { where: { id: local[i].id } }
         );
-      } else if (findProduct.stock - local[i].amount === 0) {
+      } else if (findProduct.stock - local[i].quantity === 0) {
         updateProduct = await Product.update(
-          { stock: findProduct.stock - local[i].amount, status: "inactive" },
+          { stock: findProduct.stock - local[i].quantity, status: "inactive" },
           { where: { id: local[i].id } }
         );
       } else {
@@ -27,10 +31,54 @@ const modifyStock = async (local) => {
           msg: "There's not enough products to fulfill this purchase",
         });
       }
+
     }
-    console.log(updateProduct);
-    return { msg: "compra realizada" };
+    // console.log(updateProduct);
+    return updateProduct
+    // return { msg: "compra realizada" };
   } catch (error) {
+    // console.log("modifyStockStripe:",error.message)
+    return error.message;
+  }
+};
+
+const modifyStockPaypal = async (orderId) => {
+  let updateProduct;
+  // console.log("orderId:", typeof orderId)
+  // console.log("userId:", typeof userId)
+  try {
+    const findProducts = await PurchaseOrder.findAll({
+      where:
+        {
+          orderId,
+        }
+    });
+    // console.log("modifyStockPaypal-findProducts:", findProducts)
+    for (let product of findProducts) {
+      // console.log("product:",product)
+      // console.log("product.purchaseOrder:",product.purchaseOrder)
+      // console.log("product.dataValues:",product.dataValues)
+      // console.log("product.dataValues.productId:",product.dataValues.productId)
+      const findProduct = await Product.findByPk(product.dataValues.productId);
+      if (findProduct.stock - product.dataValues.productQuantity > 0) {
+        updateProduct = await Product.update(
+          { stock: findProduct.stock - product.dataValues.productQuantity },
+          { where: { id: product.dataValues.productId } }
+        );
+      } else if (findProduct.stock - product.dataValues.productQuantity === 0) {
+        updateProduct = await Product.update(
+          { stock: findProduct.stock - product.dataValues.productQuantity, status: "inactive" },
+          { where: { id: product.dataValues.productId } }
+        );
+      } else {
+        throw new Error({
+          msg: "There's not enough products to fulfill this purchase",
+        });
+      }
+    }
+    return { msg: "stock updated" };
+  } catch (error) {
+    // console.log(error)
     return error;
   }
 };
@@ -169,7 +217,8 @@ module.exports = {
     getProducts,
     validateInputUser,
     validateInputProduct,
-    modifyStock,
+    modifyStockStripe,
+    modifyStockPaypal,
     checkAuthenticated,
     checkNotAuthenticated,
     mailPayPal,

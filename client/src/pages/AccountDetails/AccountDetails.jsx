@@ -12,12 +12,7 @@ export default function AccountDetails() {
 
   const fetchUser = async () => {
     try {
-      const userDB = await axios.post(
-        `${process.env.REACT_APP_DOMAIN}/user/findUser`,
-        {
-          id: state.user,
-        }
-      );
+      const userDB = await axios.get(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`)
       setUser(userDB.data);
     } catch (err) {
       console.log(err);

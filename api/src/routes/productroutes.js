@@ -224,7 +224,7 @@ router.delete("/delete/:id", async (req, res) => {
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params
-  const { name, price, description, image, stock, categories, sizes,status } = req.body
+  const { name, price, description, image, stock, categories, sizes, status } = req.body
 
   const errors = validateInputProduct(
     name,
@@ -260,7 +260,8 @@ router.put("/update/:id", async (req, res) => {
         image,
         stock,
         sizes,
-        status     },
+        status
+      },
       {
         where: { id: id },
       }
@@ -286,7 +287,7 @@ router.post("/buys", async (req, res) => {
     modifyStock(local);
 
     // console.log("local:", local)
-    for(let product of local){
+    for (let product of local) {
       const db = await PurchaseOrder.create({
         orderId: id,
         userId: userId,

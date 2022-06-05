@@ -8,7 +8,7 @@
   border: none;
   width: 100%;
   cursor: pointer;
-  transition: transform 200ms ease-in;
+  transition: transform 50ms ease-out;
   margin: 0.5rem;
   position: relative;
 }
@@ -67,7 +67,7 @@
 }
 
 .card-info-details-admin p {
-  width: 100%;
+  width: 85%;
 }
 /* .card-rating-admin {
 } */
@@ -80,62 +80,22 @@
 .btn-edit-admin {
   position: absolute;
   left: 90%;
-  bottom: 50%;
-}
-.button--atlas {
-  font-family: signo, sans-serif;
-  font-weight: 500;
-}
-
-.button--atlas > span {
-  display: inline-block;
-}
-
-.button--atlas:hover > span {
-  opacity: 0;
-}
-
-.marquee {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.marquee__inner {
-  width: fit-content;
+  bottom: 45%;
+  width: 7rem;
+  height: 3rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(54, 54, 54, 0.6);
+  font-weight: 600;
+  outline: none;
+  border-radius: 50px;
   display: flex;
-  position: relative;
-  --offset: 1rem;
-  --move-initial: calc(-25% + var(--offset));
-  --move-final: calc(-50% + var(--offset));
-  transform: translate3d(var(--move-initial), 0, 0);
-  animation: marquee 1s linear infinite;
-  animation-play-state: paused;
-  opacity: 0;
-}
-
-.button--atlas:hover .marquee__inner {
-  animation-play-state: running;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 45px;
+  width: 130px;
   opacity: 1;
-  transition-duration: 0.4s;
 }
-
-.marquee span {
-  text-align: center;
-  white-space: nowrap;
-  font-style: italic;
-  padding: 1.5rem 0.5rem;
-}
-
-@keyframes marquee {
-  0% {
-    transform: translate3d(var(--move-initial), 0, 0);
-  }
-
-  100% {
-    transform: translate3d(var(--move-final), 0, 0);
-  }
+.btn-edit-admin:hover {
+  background-color: #e6ccb23a;
 }

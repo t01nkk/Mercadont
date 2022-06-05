@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./ProductCart.css";
 import { totalPrice } from "../Cart/actionsCart";
 import accounting from "accounting";
@@ -51,24 +51,14 @@ export const ProductCart = ({
     setPriceTotal(totalPrice());
   };
 
-  //FUNCION PARA VER EL STORAGE, NO BORRAR
-  const mostra = () => {
-    let miStorage = window.localStorage;
-    console.log(yourStorage);
-  };
 
   return (
     <article>
-      <button onClick={() => mostra()}>mostra storage</button>
       <div>
         {/* <button onClick={()=>setDataToEdit(el)}>Editar</button> */}
         {/* {permitMore && <button onClick={()=>oneMore(stock, name, pos)}>+</button>}*/}
         {/* <p>{price * count}</p> */}
-        {count !== stock ? (
-          <button onClick={() => oneMore(stock, name, price)}>+</button>
-        ) : (
-          console.log("hola")
-        )}
+
         {/* {<button onClick={()=>oneMore(stock, name, price)}>+</button>}                         */}
 
         {/* {permitLess && <button onClick={()=>oneLess(stock, name)}>-</button>} */}
@@ -78,7 +68,13 @@ export const ProductCart = ({
           console.log("chau")
         )}
         <span>{storageCart[pos].quantity}</span>
-        <p>{price * count}</p>
+        {count !== stock ? (
+            <button onClick={() => oneMore(stock, name, price)}>+</button>
+        ) : (
+            console.log("hola")
+        )}
+
+        <p>U$D {price * count}</p>
 
         <button onClick={() => deleteDatatoStorage(name)}>Eliminar</button>
         <button onClick={() => viewProduct(id)}>Ver</button>
@@ -86,7 +82,7 @@ export const ProductCart = ({
           <img src={image} alt={name} className={"DOWNSIZE"} />
         </picture>
         <p>{name}</p>
-        <p>{price}</p>
+        <p> U$D {price}</p>
       </div>
     </article>
   );
