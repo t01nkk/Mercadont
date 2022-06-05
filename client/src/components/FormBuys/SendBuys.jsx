@@ -38,7 +38,7 @@ export const SendBuys = () => {
                 })
                 console.log("purchase:", purchase)
             }
-            localStorage.removeItem("myCart")
+            localStorage.removeItem(user)
         }
     }
 
@@ -66,7 +66,7 @@ export const SendBuys = () => {
                 local 
             }) 
             setRedirect(purchase.data)
-            localStorage.removeItem("myCart")
+            localStorage.removeItem(user)
         }        
     }
 

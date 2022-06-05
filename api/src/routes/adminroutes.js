@@ -11,30 +11,30 @@ const router = Router();
 
 //Working - Users needs to be logged-in to create. Credencials only check is user is logged-in, not if the user has admin credencials.
 //Register a new Admin user
-router.post("/register", async (req, res) => {
-  const { name, lastname, email, password } = req.body;
-  // let errors = validateInputUser(name,lastname,email,password)
-  // if(errors.length) return res.status(400).send({ msg: errors});
-  const exists = await User.findOne({ where: { email: email } });
+// router.post("/register", async (req, res) => {
+//   const { name, lastname, email, password } = req.body;
+//   // let errors = validateInputUser(name,lastname,email,password)
+//   // if(errors.length) return res.status(400).send({ msg: errors});
+//   const exists = await User.findOne({ where: { email: email } });
 
-  try {
-    if (!exists) {
-      const hashPass = await bcrypt.hash(password, 10);
-      await User.create({
-        name,
-        lastname,
-        email,
-        password: hashPass,
-        isAdmin: true,
-      });
-      res.status(201).send("New Admin User Created");
-    } else {
-      res.status(400).send({ msg: "This user already exists" });
-    }
-  } catch (error) {
-    res.status(401).send(error);
-  }
-});
+//   try {
+//     if (!exists) {
+//       const hashPass = await bcrypt.hash(password, 10);
+//       await User.create({
+//         name,
+//         lastname,
+//         email,
+//         password: hashPass,
+//         isAdmin: true,
+//       });
+//       res.status(201).send("New Admin User Created");
+//     } else {
+//       res.status(400).send({ msg: "This user already exists" });
+//     }
+//   } catch (error) {
+//     res.status(401).send(error);
+//   }
+// });
 // Working
 //Get all Users
 router.get("/users", checkAuthenticated, async (req, res) => {
@@ -99,13 +99,13 @@ router.get("/adminUsers", checkAuthenticated, async (req, res) => {
 //Give user Admin credencials
 router.put("/setAdmin", async (req, res) => {
   const { email } = req.body;
-  const setAdmin = true;
+  // const setAdmin = true;
   // const { setAdmin } = req.body;
   if (setAdmin !== undefined || setAdmin !== null) {
     try {
       const isAdmin = await User.update(
         {
-          isAdmin: setAdmin,
+          isAdmin: true,
         },
         { where: { email: email } }
       );

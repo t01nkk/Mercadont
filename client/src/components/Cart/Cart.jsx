@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 // import { FormBuys } from '../FormBuys/FormBuys'
 import { ProductCart } from "../ProductCart/ProductCart";
 import { totalPrice } from "./actionsCart";
@@ -64,10 +64,6 @@ export const Cart = () => {
       <button onClick={() => clearCart()}  disabled={storageCart === null}>Clear Cart</button>
       <section>
         <h2>Welcome your Cart</h2>
-        <p>
-          Total price:
-          {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
-        </p>
         <div>
           {storageCart && storageCart.length > 0 ? (
             storageCart.map((el, index) => (
@@ -85,11 +81,16 @@ export const Cart = () => {
                 setPriceTotal={setPriceTotal}
               />
             ))
-          ) : (
-            <h3>Your Cart is Empty</h3>
-          )}
+          ) : <h3>Your Cart is Empty</h3>
+          }
         </div>
-        <button onClick={makePurchase} disabled={storageCart === null}>Buy</button>
+        <p>
+          Total price:
+          {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
+        </p>
+        {
+          storageCart.length !== 0 && <button onClick={makePurchase} disabled={storageCart === null}>Buy</button> 
+        }
       </section>
 
       {/* <FormBuys priceTotal={priceTotal}/> */}
