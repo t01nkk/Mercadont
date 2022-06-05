@@ -1,8 +1,5 @@
 const { Router } = require("express");
 const router = Router();
-const passport = require("passport");
-const { auth } = require("../middlewares/password_utils");
-const { genPassword } = require("../middlewares/password_utils");
 const { User, Product } = require("../db");
 
 
@@ -37,15 +34,14 @@ router.post("/login", async (req, res, next) => {
   // const { email, password } = req.body;
   const { name, email, image,id } = req.body;
   try {
-    const userExist = await User.findOrCreate({
-      email: email,
-      name: name,
-      image: image,
-      created: true,
-      id: id,
-    }, {
-      where: {id:id},
-    })
+    const userExist = await User.findOrCreate({where: {id:id}, defaults:{
+        email: email,
+        name: name,
+        image: image,
+        created: true,
+        id: id,
+    }}
+      )
     // console.log(userExist ? userExist : null, "HERE BE USER");
 
   res.send({ msg: "User Logged In" });
