@@ -7,7 +7,7 @@ export default function AccountDetailsForm() {
   
   const [state, dispatch] = useStore();
   const [user, setUser] = useState({
-    email: "",
+    email: state.user.email,
     name: "",
     lastname: "",
     address: "",
@@ -16,15 +16,15 @@ export default function AccountDetailsForm() {
 
    
   });
+  let id= localStorage.getItem("myUser")
 
   const fetchUser = async () => {
+    console.log(state.user)
     try {
-      const userDB = await axios.post(
-        `${process.env.REACT_APP_DOMAIN}/user/findUser`,
-        {
-          id: state.user,
-        }
+      const userDB = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`
       );
+      console.log("user",userDB)
       setUser(userDB.data);
     } catch (err) {
       console.log(err);
@@ -36,22 +36,22 @@ export default function AccountDetailsForm() {
     }
   }, []);
  
-  let { id } = useParams();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, name, /* lastname, address, image, password */ } =
+    const { email, name,  lastname,address, image, password  } =
       user;
       console.log(id)
 
     try {
-      const res = await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${id}`, {
+      const res = await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
         email,
          name,
-    /*      lastname,        
-         address, 
+         lastname,        
+       address, 
          image,
-         password */
+         password 
       });
       console.log(user);
     } catch (err) {
@@ -84,7 +84,7 @@ export default function AccountDetailsForm() {
           onChange={handleChange}
         />
       </div>
-      {/*
+      
          
          <div className="divInputUser">
          <p className="title">lastname: </p>
@@ -96,7 +96,7 @@ export default function AccountDetailsForm() {
         />
         
          </div>
-         <div className="divInputUser">
+        <div className="divInputUser">
          <p className="title">address: </p>
         <input
           type="text"
@@ -105,16 +105,16 @@ export default function AccountDetailsForm() {
           onChange={handleChange}
         />         
          </div>  
-         <div className="divInputUser">
+       {/*   <div className="divInputUser">
          <p className="title">password: </p>
         <input
-          type="text"
+          type="password"
           name="password"
           placeholder="Password..."
           value={user.password}
           onChange={handleChange}
         />         
-         </div>  
+         </div> */}  
          <div className="divInputUser">
          <p className="title">Image: </p>
             <input
@@ -124,7 +124,7 @@ export default function AccountDetailsForm() {
               onChange={handleChange}
               value={user.image}
             />
-          </div>  */}      
+          </div>       
         <div className="btn-login">
         <input type="submit"  name="Update info" className="input-submit"/>
         </div>

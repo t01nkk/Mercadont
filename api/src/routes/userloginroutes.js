@@ -79,7 +79,7 @@ router.get("/details/:id", async (req, res) => {
 // Update User
 router.put("/details/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, email } = req.body;
+  const { name, email,lastname,address,image } = req.body;
 
   let errors = validateInputUser(name,email);
   if (errors.length) return res.status(400).send({ msg: errors });
@@ -88,8 +88,10 @@ router.put("/details/:id", async (req, res) => {
     const updatedUser = await User.update(
       {
         name: name,
-       
+        lastname: lastname,       
         email: email,
+        address:address,
+        image:image
      
       },
       { where: { id: id } }
