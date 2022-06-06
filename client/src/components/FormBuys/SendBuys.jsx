@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
-import { Link } from "react-router-dom";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import axios from "axios"
+import { useHistory } from 'react-router-dom'
 import { totalPrice } from '../Cart/actionsCart'
 import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
+import accounting from "accounting";
+import { ToastContainer, toast } from "react-toastify";
+
 
 export const SendBuys = () => {
     const stripe = useStripe()
@@ -14,6 +17,14 @@ export const SendBuys = () => {
     let priceTotal = JSON.parse(localStorage.getItem("myPrice"))
     const [redirect, setRedirect] = useState("")
     const [selectBuys, setSelectBuys] = useState("")
+    const [amountTotal, setAmounTotal] = useState("")
+    const history = useHistory()
+    
+    
+    useEffect(()=>{
+        setAmounTotal(totalPrice())
+      },[])
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -32,10 +43,30 @@ export const SendBuys = () => {
                     userId: user
                 })
             }
-            localStorage.removeItem(user)
+            // loadingBuys()
+
+            if(paymentMethod){
+                localStorage.removeItem(user)
+                history.push("/")
+            }
+            console.log(paymentMethod)
         }
     }
 
+    const loadingBuys = () => {
+        toast.success("Already in cart!", {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      };
+
+    
     const handelClik = async (e) => {
         e.preventDefault()
         if (e.target.textContent === "card") setSelectBuys("card")
@@ -76,7 +107,7 @@ export const SendBuys = () => {
         console.log(products, price);
     };
 
-    return (<form onSubmit={handleSubmit}>
+    return (<form onSubmit={handleSubmit} className="form-buys">
         <div>
             <h2>Product list:</h2>
             <div>
@@ -87,12 +118,13 @@ export const SendBuys = () => {
                     price={el.price}
                     totalPrice={el.totalPrice}
                     image={el.image}
-                    amount={el.amount}
+                    amount={el.quantity}
                 />))
                 }
             </div>
         </div>
         <div>
+            {amountTotal && <p>Total Price:{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
             <p>Choose your payment method</p>
             <button onClick={e => handelClik(e)}>card</button>
             <button onClick={e => handelClik(e)} type='submit'>paypal</button>
