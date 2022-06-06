@@ -55,7 +55,6 @@ export const ProductCart = ({
           <img src={image} alt={name} className="card-img-to d-block w-100" />
         </div>
       </div>
-
         <div className="details-product-cart">
           <p>{name}</p>
           <p> U$D {price}</p>
