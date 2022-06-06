@@ -140,78 +140,81 @@ export default function EditProduct() {
   console.log(product);
   return (
     <div className="container-edit-admin">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form-edit-admin">
         <h2>Edit product</h2>
-        <img src={`${product.image}`} alt="" />
+        <img src={`${product.image}`} alt="" className="img-product" />
+        <div></div>
         <div className="divInputadmin">
-          <label className="title">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={product.name}
-            ontouchstart={handleChangeName}
-            onChange={handleChangeName}
-          />
-          {errors.name && <p className="error-input">{errors.name}</p>}
-        </div>
-        <div className="divInputadmin">
-          <p className="title">Price: </p>
-          <input
-            type="number"
-            name="price"
-            ontouchstart={handleChangePrice}
-            value={product.price}
-            onChange={handleChangePrice}
-          />
-          {errors.price && <p className="error-input">{errors.price}</p>}
-        </div>
-        <div className="divInputadmin">
-          <p className="title">Available stock: </p>
-          <input
-            type="number"
-            name="stock"
-            value={product.stock}
-            onChange={handleChangeStock}
-          />
-          {errors.stock && <p className="error-input">{errors.stock}</p>}
-        </div>
-        <div className="divInputadmin">
-          <p className="title">Status and categories </p>
-          <select name="status" onChange={handleChange}>
-            Status:
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-          <select onChange={handleChangeCat}>
-            <option value="" hidden>
-              Categories
-            </option>
-            {state.categories?.length &&
-              state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
-              state.categories.map((category) => (
-                <option key={category.id} value={category.name || category}>
-                  {category.name}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div className="divInputadmin">
-          {product.categories.length &&
-            product.categories?.map((category, i) => (
-              <div key={i}>
-                <p>{category.name || category}</p>
-                <button onClick={(event) => handleDeleteCat(category, event)}>
-                  x
-                </button>
-              </div>
-            ))}
-        </div>
-        <div className="divInputadmin">
-          <p className="title">Description </p>
+          <div className="duo-inputs">
+            <p>Name:</p>
+            <input
+              type="text"
+              name="name"
+              value={product.name}
+              ontouchstart={handleChangeName}
+              onChange={handleChangeName}
+            />
+            {errors.name && <p className="error-input">{errors.name}</p>}{" "}
+            <p>Price: </p>
+            <input
+              type="number"
+              name="price"
+              ontouchstart={handleChangePrice}
+              value={product.price}
+              onChange={handleChangePrice}
+            />
+            {errors.price && <p className="error-input">{errors.price}</p>}
+          </div>
+          <div className="duo-inputs">
+            <p>Stock: </p>
+            <input
+              type="number"
+              name="stock"
+              value={product.stock}
+              onChange={handleChangeStock}
+            />
+            {errors.stock && <p className="error-input">{errors.stock}</p>}
+            <p>Status:</p>
+            <select name="status" onChange={handleChange}>
+              <p> Status:</p>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+          <div className="selector-cats">
+            <p>Select:</p>
+            <select onChange={handleChangeCat}>
+              <option value="" hidden>
+                Category
+              </option>
+              {state.categories?.length &&
+                state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
+                state.categories.map((category) => (
+                  <option key={category.id} value={category.name || category}>
+                    {category.name}
+                  </option>
+                ))}
+            </select>
+            <div className="select-categories-del">
+              {product.categories.length &&
+                product.categories?.map((category, i) => (
+                  <p key={i} className="cat-name">
+                    {category.name || category}
+                    <button
+                      className="btn-del-edit"
+                      onClick={(event) => handleDeleteCat(category, event)}
+                    >
+                      x
+                    </button>
+                  </p>
+                ))}
+            </div>
+          </div>
+          <p>Description </p>
           <textarea
             name="description"
-            cols="30"
-            rows="10"
+            cols="50"
+            rows="3"
             value={product.description}
             onChange={handleChangeDescription}
           >
@@ -222,7 +225,12 @@ export default function EditProduct() {
           )}
         </div>
         <div classname="btn-login">
-          <input type="submit" name="Update info" className="input-submit" />
+          <input
+            type="submit"
+            name="Update info"
+            value={"Update info"}
+            className="input-submit"
+          />
         </div>
         <div>
           <button onClick={handleDelete}>Delete product</button>
