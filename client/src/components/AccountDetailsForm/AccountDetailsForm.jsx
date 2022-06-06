@@ -11,14 +11,15 @@ export default function AccountDetailsForm() {
   const [user, setUser] = useState({
     email: state.user.email,
     name: "",
-    lastname: "",
-    address: {
-      country:"",
-      province: "",
-      city:"",
-      street:"",
-      postalCode: "",
-    },
+    lastname: "", 
+ /*    address:{
+              country:"",
+              province: "",
+              city:"",
+              street:"",
+              postalCode: ""
+            },    */
+    
     password: "",
     image:"",
 
@@ -33,7 +34,7 @@ export default function AccountDetailsForm() {
       const userDB = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/user/details/${miStorage}`
       );
-      // console.log("user",userDB.data)
+      console.log("user",userDB)
       setUser(userDB.data);
     } catch (err) {
       // console.log(err);
@@ -46,17 +47,19 @@ export default function AccountDetailsForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, name,  lastname,address, image, password  } = user;
+    const { email, name, lastname, image, password } = user;
       // console.log(id)
     try {
       const res = await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
         email,
         name,
-        lastname,        
-        address, 
+        lastname,
         image,
-        password 
+        password,
+        
+      
       });
+      console.log("entre",res)
       // console.log(user);
       return res
     } catch (err) {
@@ -66,7 +69,10 @@ export default function AccountDetailsForm() {
   };
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
+   
   };
+
+ 
 
   const handleResetPassword = async (e)=>{
     e.preventDefault();
@@ -115,14 +121,14 @@ export default function AccountDetailsForm() {
           onChange={handleChange}
         />
       </div>
-
-     {/*  <div className="divInputUser">
+{/* 
+       <div className="divInputUser">
          <p className="title">address: </p>
         <input
           type="text"
           name="address"
           placeholder="City..."
-          value={user.address.city}
+          value={user.address?.city}
           onChange={handleChange}
         />         
          </div> 
@@ -132,7 +138,7 @@ export default function AccountDetailsForm() {
           type="text"
           name="address"
           placeholder="Country..."
-          value={user.address.country}
+          value={user.address?.country}
           onChange={handleChange}
         />         
          </div> 
@@ -142,7 +148,7 @@ export default function AccountDetailsForm() {
           type="text"
           name="address"
           placeholder="postalCode"
-          value={user.address.postalCode}
+          value={user.address?.postalCode}
           onChange={handleChange}
         />         
          </div>    
@@ -152,7 +158,7 @@ export default function AccountDetailsForm() {
           type="text"
           name="address"
           placeholder="Province"
-          value={user.address.province}
+          value={user.address?.province}
           onChange={handleChange}
         />         
          </div> 
@@ -162,11 +168,11 @@ export default function AccountDetailsForm() {
           type="text"
           name="address"
           placeholder="Street..."
-          value={user.address.street}
+          value={user.address?.street}
           onChange={handleChange}
         />         
-         </div>  */}
-      
+         </div>  
+       */}
   
       <div className="">
         <p className="title">password: </p>
