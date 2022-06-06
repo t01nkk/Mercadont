@@ -6,8 +6,8 @@ import { totalPrice } from "./actionsCart";
 import accounting from "accounting";
 
 export const Cart = () => {
-  let user = JSON.parse(localStorage.getItem("myUser"));
-  let yourStorage = JSON.parse(localStorage.getItem(user));
+  let user = JSON.parse(localStorage?.getItem("myUser"));
+  let yourStorage = JSON.parse(localStorage?.getItem(user));
   const [storageCart, setStorageCart] = useState(yourStorage);
   const history = useHistory();
   const [priceTotal, setPriceTotal] = useState(0);
@@ -25,7 +25,7 @@ export const Cart = () => {
   }, []);
 
   const deleteDatatoStorage = (name) => {
-    let newLocalStorage = yourStorage.filter((e) => e.name !== name);
+    let newLocalStorage = yourStorage?.filter((e) => e.name !== name);
     setStorageCart(newLocalStorage);
     console.log(newLocalStorage);
     localStorage.setItem(user, JSON.stringify(newLocalStorage));
@@ -41,7 +41,7 @@ export const Cart = () => {
   // FUNCION PARA VER EL STORAGE, NO BORRAR
   const mostra = () => {
     let miStorage = window.localStorage;
-    console.log(yourStorage);
+    // console.log(yourStorage);
   };
 
   //Funcion para limpiar carro
@@ -50,24 +50,24 @@ export const Cart = () => {
     if(answer){
       setStorageCart([]);
       setPriceTotal(totalPrice())
-      localStorage.removeItem(user);
+      localStorage?.removeItem(user);
     }
   };
 
   const makePurchase = () => {
     // let local = JSON.parse(localStorage.getItem("myCart"))
     // console.log(local, priceTotal)
-    localStorage.setItem("myPrice", JSON.stringify(priceTotal));
+    localStorage?.setItem("myPrice", JSON.stringify(priceTotal));
     history.push("/buysProducts");
   };
 
   return (
     <div>{}
-      <button onClick={() => clearCart()}  disabled={storageCart.length < 1}>Clear Cart</button>
+      <button onClick={() => clearCart()}  disabled={storageCart?.length < 1}>Clear Cart</button>
       <section>
         <h2>Welcome to your Cart</h2>
         <div>
-          {storageCart && storageCart.length > 0 ? (
+          {storageCart && storageCart?.length > 0 ? (
             storageCart.map((el, index) => (
               <ProductCart
                 key={el.name}
@@ -95,7 +95,8 @@ export const Cart = () => {
         : null
         }
         {
-          storageCart.length !== 0 && <button onClick={makePurchase} disabled={storageCart === null}>Buy</button> 
+          storageCart && storageCart?.length !== 0 ? <button onClick={makePurchase} disabled={storageCart === null}>Buy</button> 
+          : null
         }
       </section>
 
