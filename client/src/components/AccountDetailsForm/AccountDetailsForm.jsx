@@ -10,13 +10,19 @@ export default function AccountDetailsForm() {
     email: state.user.email,
     name: "",
     lastname: "",
-    address: "",
+    address: {
+      country:"",
+      province: "",
+      city:"",
+      street:"",
+      postalCode: "",
+    },
     password: "",
     image:"",
 
    
   });
-  let id= localStorage.getItem("myUser")
+
 
   const fetchUser = async () => {
     console.log(state.user)
@@ -42,7 +48,7 @@ export default function AccountDetailsForm() {
     e.preventDefault();
     const { email, name,  lastname,address, image, password  } =
       user;
-      console.log(id)
+     
 
     try {
       const res = await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
@@ -61,6 +67,8 @@ export default function AccountDetailsForm() {
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
+
+
 
   return (
     <div>
@@ -96,15 +104,58 @@ export default function AccountDetailsForm() {
         />
         
          </div>
-        <div className="divInputUser">
+         
+         <div className="divInputUser">
          <p className="title">address: </p>
         <input
           type="text"
-          name="address"
-          value={user.address}
+          name="city"
+          placeholder="City..."
+          value={user.address.city}
           onChange={handleChange}
         />         
-         </div>  
+         </div> 
+         <div className="divInputUser">
+        
+        <input
+          type="text"
+          name="country"
+          placeholder="Country..."
+          value={user.address.country}
+          onChange={handleChange}
+        />         
+         </div> 
+         <div className="divInputUser">
+  
+        <input
+          type="text"
+          name="postalCode"
+          placeholder="postalCode"
+          value={user.address.postalCode}
+          onChange={handleChange}
+        />         
+         </div>    
+         <div className="divInputUser">
+         
+        <input
+          type="text"
+          name="province"
+          placeholder="Province"
+          value={user.address.province}
+          onChange={handleChange}
+        />         
+         </div> 
+         <div className="divInputUser">
+       
+        <input
+          type="text"
+          name="street"
+          placeholder="Street..."
+          value={user.address.street}
+          onChange={handleChange}
+        />         
+         </div>   
+         
        {/*   <div className="divInputUser">
          <p className="title">password: </p>
         <input
