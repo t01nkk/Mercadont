@@ -11,3 +11,13 @@
   gap: 5rem;
   justify-content: center;
 }
+
+.container-loader{
+  height: 45vh;
+  /* grid-column: 1/; */
+  margin: auto;
+  align-items: flex-end;
+  width: 65vw;
+  display: flex;
+  justify-content: center;
+}
