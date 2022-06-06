@@ -12,6 +12,8 @@ export const Cart = () => {
   const history = useHistory();
   const [priceTotal, setPriceTotal] = useState(0);
 
+  console.log("user:", user)
+  console.log("yourStorage:", yourStorage)
   // let yourStorage = JSON.parse(localStorage.getItem("myCart"))
   // const [storageCart, setStorageCart] = useState(yourStorage)
   // const history = useHistory()
@@ -61,9 +63,9 @@ export const Cart = () => {
 
   return (
     <div>{}
-      <button onClick={() => clearCart()}  disabled={storageCart === null}>Clear Cart</button>
+      <button onClick={() => clearCart()}  disabled={storageCart.length < 1}>Clear Cart</button>
       <section>
-        <h2>Welcome your Cart</h2>
+        <h2>Welcome to your Cart</h2>
         <div>
           {storageCart && storageCart.length > 0 ? (
             storageCart.map((el, index) => (
@@ -81,13 +83,17 @@ export const Cart = () => {
                 setPriceTotal={setPriceTotal}
               />
             ))
-          ) : <h3>Your Cart is Empty</h3>
+          )  
+          : <h3>Your Cart is Empty</h3>
           }
         </div>
-        <p>
+        {storageCart && storageCart.length > 0 ?
+          <p>
           Total price:
           {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
         </p>
+        : null
+        }
         {
           storageCart.length !== 0 && <button onClick={makePurchase} disabled={storageCart === null}>Buy</button> 
         }
