@@ -74,7 +74,7 @@ const captureOrder = async (req, res) => {
   );
   completedOrder = createPurchaseCompleted(data.id)
   modifyStockPaypal(data.id)
-  mailPayPal();
+  // mailPayPal();
   res.status(200).redirect(`${process.env.HOST}${process.env.PORT_FRONT}/home`);
 };
 
