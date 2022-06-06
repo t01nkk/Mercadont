@@ -4,6 +4,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import { ProductCart } from "../ProductCart/ProductCart";
 import { totalPrice } from "./actionsCart";
 import accounting from "accounting";
+import "../Favorites/Favorite.css"
 
 export const Cart = () => {
   let user = JSON.parse(localStorage.getItem("myUser"));
@@ -60,11 +61,11 @@ export const Cart = () => {
   };
 
   return (
-    <div>{}
+    <div>
       <button onClick={() => clearCart()}  disabled={storageCart === null}>Clear Cart</button>
       <section>
         <h2>Welcome your Cart</h2>
-        <div>
+        <div className='container container-product-cart'>
           {storageCart && storageCart.length > 0 ? (
             storageCart.map((el, index) => (
               <ProductCart

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./ProductCart.css";
 import { totalPrice } from "../Cart/actionsCart";
+// import "../Favorites/Favorite.css"
 import accounting from "accounting";
+import "../Cart/Cart.css"
 export const ProductCart = ({
   name,
   stock,
@@ -20,11 +22,6 @@ export const ProductCart = ({
   const [permitLess, setPermitLess] = useState(false);
   const [permitMore, setPermitMore] = useState(true);
   const [count, setCount] = useState(storageCart[pos].quantity);
-  // const [count, setCount] = useState(0);
-
-  // useEffect(() => {
-  //   totalPrice();
-  // }, [count]);
 
   const oneMore = (stock, name, price) => {
     setCount(count + 1);
@@ -53,37 +50,37 @@ export const ProductCart = ({
 
 
   return (
-    <article>
-      <div>
-        {/* <button onClick={()=>setDataToEdit(el)}>Editar</button> */}
-        {/* {permitMore && <button onClick={()=>oneMore(stock, name, pos)}>+</button>}*/}
-        {/* <p>{price * count}</p> */}
-
-        {/* {<button onClick={()=>oneMore(stock, name, price)}>+</button>}                         */}
-
-        {/* {permitLess && <button onClick={()=>oneLess(stock, name)}>-</button>} */}
-        {count !== 1 ? (
-          <button onClick={() => oneLess(stock, name, price)}>-</button>
-        ) : (
-          console.log("chau")
-        )}
-        <span>{storageCart[pos].quantity}</span>
-        {count !== stock ? (
-            <button onClick={() => oneMore(stock, name, price)}>+</button>
-        ) : (
-            console.log("hola")
-        )}
-
-        <p>U$D {price * count}</p>
-
-        <button onClick={() => deleteDatatoStorage(name)}>Eliminar</button>
-        <button onClick={() => viewProduct(id)}>Ver</button>
-        <picture>
-          <img src={image} alt={name} className={"DOWNSIZE"} />
-        </picture>
-        <p>{name}</p>
-        <p> U$D {price}</p>
+    <article className="article-product-cart">
+       <div className="container-img">
+        <div className="col-sm-5 containe-img-cart">
+          <img src={image} alt={name} className="card-img-to d-block w-100" />
+        </div>
       </div>
+
+        <div className="details-product-cart">
+          <p>{name}</p>
+          <p> U$D {price}</p>
+          <p>TOTAL: U$D {price * count}</p>
+          <div>
+            {count !== 1 ? (
+              <button className="btn btn-primary btn-sm" onClick={() => oneLess(stock, name, price)}>-</button>
+            ) : (
+              console.log("chau")
+              )}
+            <span>{storageCart[pos].quantity}</span>
+            {count !== stock ? (
+                <button className="btn btn-primary btn-sm" onClick={() => oneMore(stock, name, price)}>+</button>
+            ) : (
+                console.log("hola")
+            )}
+          </div>
+          
+          <div>
+            <button className="del-view-product-cart" onClick={() => deleteDatatoStorage(name)}>Eliminar</button>
+            <button className="del-view-product-cart" onClick={() => viewProduct(id)}>Ver</button>
+        </div>
+          </div>
+
     </article>
   );
 };
