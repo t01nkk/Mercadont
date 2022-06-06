@@ -1,9 +1,13 @@
 const axios = require("axios");
 const { mailPayPal, modifyStockPaypal } = require("../middlewares/middlewares");
-const { createPurchaseOrder, createPurchaseCompleted, createPurchaseCanceled } = require("./purchase_order");
+const {
+  createPurchaseOrder,
+  createPurchaseCompleted,
+  createPurchaseCanceled,
+} = require("./purchase_order");
 
 const createOrder = async (req, res) => {
-  const { purchase_units, user, local } = req.body
+  const { purchase_units, user, local } = req.body;
   try {
     const order = {
       intent: "CAPTURE",
@@ -42,10 +46,10 @@ const createOrder = async (req, res) => {
         },
       }
     );
-    createPurchaseOrder(data.id, user, local)
+    createPurchaseOrder(data.id, user, local);
     res.status(200).send(data.links[1].href);
   } catch (error) {
-    console.log("error:", error)
+    console.log("error:", error);
     return res
       .status(500)
       .send(
@@ -68,15 +72,15 @@ const captureOrder = async (req, res) => {
       },
     }
   );
-  completedOrder = createPurchaseCompleted(data.id)
-  modifyStockPaypal(data.id)
-  mailPayPal();
+  completedOrder = createPurchaseCompleted(data.id);
+  modifyStockPaypal(data.id);
+  // mailPayPal();
   res.status(200).redirect(`http://localhost:3000/home`);
 };
 
 const cancelOrder = (req, res) => {
   let canceledOrder;
-  canceledOrder = createPurchaseCanceled(req.query?.token)
+  canceledOrder = createPurchaseCanceled(req.query?.token);
   res.status(200).redirect(`http://localhost:3000/home`);
 };
 
