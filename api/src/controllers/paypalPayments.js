@@ -72,16 +72,16 @@ const captureOrder = async (req, res) => {
       },
     }
   );
-  completedOrder = createPurchaseCompleted(data.id);
-  modifyStockPaypal(data.id);
+  completedOrder = createPurchaseCompleted(data.id)
+  modifyStockPaypal(data.id)
   // mailPayPal();
-  res.status(200).redirect(`http://localhost:3000/home`);
+  res.status(200).redirect(`${process.env.HOST}${process.env.PORT_FRONT}/home`);
 };
 
 const cancelOrder = (req, res) => {
   let canceledOrder;
-  canceledOrder = createPurchaseCanceled(req.query?.token);
-  res.status(200).redirect(`http://localhost:3000/home`);
+  canceledOrder = createPurchaseCanceled(req.query?.token)
+  res.status(200).redirect(`${process.env.HOST}${process.env.PORT_FRONT}/home`);
 };
 
 module.exports = {

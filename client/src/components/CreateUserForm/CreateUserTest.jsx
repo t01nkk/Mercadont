@@ -3,7 +3,7 @@ import axios from "axios";
 import { Formik } from "formik";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
-
+import "./CreateUserForm.css";
 export default function LogInForm() {
   const history = useHistory();
   // const handleChange = (e) => {
@@ -24,7 +24,8 @@ export default function LogInForm() {
       history.push("/login");
     } catch (err) {
       if (err.code === "auth/internal-error") setError("Correo Invalido");
-      if (err.code === "auth/email-already-in-use") setError("El correo ya se encuentra en uso");
+      if (err.code === "auth/email-already-in-use")
+        setError("El correo ya se encuentra en uso");
     }
   };
 
@@ -48,9 +49,7 @@ export default function LogInForm() {
           if (!values.password) {
             errors.password = "Password required.";
           } else if (
-            !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(
-              values.password
-            )
+            !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(values.password)
           ) {
             errors.password =
               "Your password must be 8 to 16 characters long long and must contain both uppercase and lowercase letters, and at least one number.";
@@ -89,7 +88,7 @@ export default function LogInForm() {
                   />
                   <small style={{ color: "red" }}>
                     {touched.email && errors.email ? (
-                      <p>{errors.email}</p>
+                      <p className="error-style">{errors.email}</p>
                     ) : (
                       ""
                     )}
@@ -114,7 +113,7 @@ export default function LogInForm() {
                   />
                   <small style={{ color: "red" }}>
                     {touched.password && errors.password ? (
-                      <p>{errors.password}</p>
+                      <p className="error-style">{errors.password}</p>
                     ) : (
                       ""
                     )}
@@ -125,7 +124,7 @@ export default function LogInForm() {
                     disabled={isSubmitting}
                     type="submit"
                     value="Create User"
-                    className="input-submit"
+                    className="input-submit-create"
                   />
                 </div>
               </form>
@@ -135,5 +134,4 @@ export default function LogInForm() {
       </Formik>
     </div>
   );
-};
-
+}

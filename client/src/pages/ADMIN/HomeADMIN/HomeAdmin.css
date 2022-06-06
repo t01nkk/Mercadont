@@ -4,3 +4,24 @@
   width: 80%;
   margin: 5rem 10%;
 }
+
+.filter-admin-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+}
+.filter-admin-wrapper select {
+  width: 4rem;
+}
+.page-btns-wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+.page-btns-wrapper button {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  margin-bottom: 5rem;
+  background-color: #fff;
+  border: solid 1px black;
+}

@@ -10,21 +10,22 @@ import {
   CATEGORIES_PRODUCT,
   SORTED_PRICE_PRODUCTS,
   ADMIN_SESSION,
-  GET_FAVORITES
+  GET_FAVORITES,
+  FILTER_PRODUCTS_ADMIN,
 } from "../actions/actionTypes";
 
 export const initialState = {
   products: [],
   searchedProducts: [],
   filter: [],
-  filterCategory:[],
+  filterCategory: [],
   categories: [],
   user: "",
   session: false,
   admin: {},
   sessionAdmin: false,
-  favorites:"",
-  adminPorductList: [],
+  favorites: "",
+  filterProductsAdmin: [],
 };
 
 export function reducer(state = initialState, action) {
@@ -149,11 +150,19 @@ export function reducer(state = initialState, action) {
         sessionAdmin: action.payload.sessionAdmin,
       };
     }
-    case GET_FAVORITES:{
-      return{
+
+    case GET_FAVORITES: {
+      return {
         ...state,
-        favorites:action.payload
-      }
+        favorites: action.payload,
+      };
+    }
+
+    case FILTER_PRODUCTS_ADMIN: {
+      return {
+        ...state,
+        filterProductsAdmin: action.payload,
+      };
     }
     default:
       return state;
