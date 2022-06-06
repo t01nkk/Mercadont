@@ -2,48 +2,51 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useStore } from "../../context/store";
-// import "./AccountDetails.css"
+import "./AccountDetails.css";
 // import {mostrarFrente} from "./js/main.js"
 
 export default function AccountDetails() {
   const [user, setUser] = useState("");
   const [state, dispatch] = useStore();
 
-
   const fetchUser = async () => {
+    let userCookie = JSON.parse(localStorage.getItem("myUser"));
+    console.log(userCookie);
     try {
-      const userDB = await axios.get(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`)
+      const userDB = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/user/details/${userCookie}`
+      );
       setUser(userDB.data);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
-    if (state.user) {
-      fetchUser();
-    }
+    fetchUser();
   }, []);
 
-  let mostrarFrente = (e) => {
-    console.log(e);
-  };
-
   return (
-    <>
+    <div className="profile-wrapper">
       {/* <script src="https://kit.fontawesome.com/2c36e9b7b1.js"></script> */}
       {/* <script src="./js/main.js"></script> */}
-      <Link to="/accountDetails/editProfile">
-     
-        <button>Edit your profile</button>
-      </Link>
-      <div>
-        <p>Your Info:</p>
-        <p>Email:{user?.email}</p>
-        <p>Name:{user?.name}</p>
-        <p>Lastname:{user?.lastname}</p>
-        <p>Adress:{user?.adress}</p>
+      <div className="profile-container">
+        <div className="profile-info">
+          <p className="profile-title">Your Info:</p>
+          <p className="profile-title">Email:</p>
+          <p>{user?.email}</p>
+          <p className="profile-title">Name:</p>
+          <p>{user?.name}</p>
+          <p className="profile-title">Lastname:</p>
+          <p>{user?.lastname}</p>
+          <p className="profile-title">Adress:</p>
+          <p>{user?.adress}</p>
+
+          <Link to="/accountDetails/editProfile">
+            <button className="input-edit-profile">Edit your profile</button>
+          </Link>
+        </div>
       </div>
-      <div>
+      {/* <div>
         <h3>Yours Cads:</h3>
         <div>
           Iria un div por cada tarjeta que tenga el usuario con boton de
@@ -55,7 +58,7 @@ export default function AccountDetails() {
         <button>Add new card:</button>
       </div>
 
-      {/* <div>
+      <div>
         <section className="tarjeta" id="tarjeta">
           <div className="front">
             <div className="logo">
@@ -83,6 +86,6 @@ export default function AccountDetails() {
 
         </section>
       </div> */}
-    </>
+    </div>
   );
 }
