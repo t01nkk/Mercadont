@@ -18,7 +18,6 @@ export default function ProductDetails() {
     fetchProductById();
   }, []);
 
-  console.log(product);
   return (
     <div className="product-details-container">
       {product && (

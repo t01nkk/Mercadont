@@ -32,7 +32,6 @@ export const ProductCart = ({
 
   //Funcion para restar producto al carro
   const oneLess = (stock, name, price) => {
-    console.log(count);
     setCount(count - 1);
     if (count - 1 < 2) setPermitLess(false);
     if (count - 1 < stock) setPermitMore(true);

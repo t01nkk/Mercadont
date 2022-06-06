@@ -43,7 +43,6 @@ router.get("/", async (req, res) => {
 // Get all products
 router.get("/search", async (req, res) => {
   const { name } = req.query;
-  console.log("name:", name);
   try {
     const allProducts = await Product.findAll({
       include: [
@@ -124,7 +123,6 @@ router.post("/filter", async (req, res) => {
         });
       return res.send(products);
     } catch (err) {
-      console.log(err);
       return res.status(400).send(err);
     }
   }
@@ -157,7 +155,6 @@ router.get("/:id", async (req, res) => {
         id: id,
       },
     });
-    console.log("product:", product);
     if (!product) {
       return res.status(404).send("Product Not Found");
     }
@@ -195,7 +192,6 @@ router.post("/create", async (req, res) => {
     })
     for (var i = 0; i < categories.length; i++) {
       let category = await Category.findOne({ where: { name: categories[i] } });
-      console.log(category);
       if (!category) {
         return res.status(401).send({
           msg: "This isn't a valid category, you might have misspeled it or you can choose to create a new one",
@@ -268,7 +264,6 @@ router.put("/update/:id", async (req, res) => {
     );
     return res.status(202).send("Product Updated");
   } catch (err) {
-    console.log("error:", err);
     return res.status(400).send(err);
   }
 });
@@ -286,7 +281,6 @@ router.post("/buys", async (req, res) => {
     });
     modifyStock(local);
 
-    // console.log("local:", local)
     for (let product of local) {
       const db = await PurchaseOrder.create({
         orderId: id,
@@ -294,7 +288,6 @@ router.post("/buys", async (req, res) => {
         productId: product.id,
         productQuantity: product.quantity,
       });
-      // console.log("db:", db)
     }
     return res.status(200).send(payment);
   } catch (error) {

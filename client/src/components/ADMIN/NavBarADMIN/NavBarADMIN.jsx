@@ -24,7 +24,6 @@ export default function NavBarADMIN() {
         <div className="header-logo">
           <img src={logo} alt="" />
         </div>
-        {console.log("SESSION:", state.sessionAdmin, "ADMIN:", state.admin)}
         {state.sessionAdmin ? <LoggedAdmin /> : <UnloggedAdmin />}
       </header>
     </div>
