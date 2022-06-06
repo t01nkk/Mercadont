@@ -20,9 +20,21 @@ router.post("/register", async (req, res, next) => {
         id: id,
       });
 
-      res.send({ msg: "User Registered" });
+      return res.send({ msg: "User Registered" });
     } else {
-      res.status(401).send("Username is already taken");
+      await User.update(
+          {
+            name: name,
+            lastname: lastname,
+            email: email,
+            address:address,
+            image:image,
+            id:id
+          },
+          { where: { email: email } }
+      );
+
+      return res.status(200).send("Existing user updated");
     }
   } catch (err) {
     next(err);

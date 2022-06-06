@@ -23,9 +23,10 @@ export default function LogInForm() {
       });
       history.push("/login");
     } catch (err) {
-      if (err.code === "auth/internal-error") setError("Correo Invalido");
-      if (err.code === "auth/email-already-in-use")
-        setError("El correo ya se encuentra en uso");
+      if (err.code === "auth/internal-error") alert("Invalid Email. Please Try Again");
+      if (err.code === "auth/email-already-in-use") alert("The email is already in use. Please Try Again");
+      history.push("/login")
+
     }
   };
 
@@ -60,8 +61,9 @@ export default function LogInForm() {
           return errors;
         }}
         onSubmit={(values, { setErrors }) => {
-          return handleSubmitt(values).catch(() => {
+          return handleSubmitt(values, ).catch(() => {
             setErrors("email", "This email is not valid");
+
           });
         }}
       >
