@@ -14,7 +14,7 @@ export default function SellProductForm() {
     price: "",
     description: "",
     image:
-      "https://t2.uc.ltmcdn.com/es/posts/7/7/5/como_hacer_choripan_42577_orig.jpg",
+      "https://static.zara.net/photos///2022/V/1/1/p/6469/910/060/2/w/850/6469910060_6_4_1.jpg?ts=1651057109246",
     status: "inactive",
     stock: "",
     address: {
