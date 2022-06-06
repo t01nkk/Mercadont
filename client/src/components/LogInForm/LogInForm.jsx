@@ -11,15 +11,14 @@ export default function LogInForm() {
 
   const handleLogin = async (values) => {
     try {
-      
       const userCredentials = await login(values.email, values.password);
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
         id: userCredentials.user.uid,
         name: userCredentials.user.displayName,
         email: userCredentials.user.email,
         image: userCredentials.user.photoURL,
-        isVerified: userCredentials.user.emailVerified
-      })
+        isVerified: userCredentials.user.emailVerified,
+      });
 
       if (userCredentials.user.uid) {
         localStorage.setItem(
@@ -28,29 +27,31 @@ export default function LogInForm() {
         );
         setRedirect(true);
       }
-
     } catch (err) {
       alert(err);
     }
   };
   const handleGoogleSignin = async () => {
     try {
-      const userCredentials = await loginWithGoogle()
+      const userCredentials = await loginWithGoogle();
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
         id: userCredentials.user.uid,
         name: userCredentials.user.displayName,
         email: userCredentials.user.email,
         image: userCredentials.user.photoURL,
-        isVerified: userCredentials.user.emailVerified
-      })
-      if (userCredentials.user.uid) localStorage.setItem("myUser", JSON.stringify(userCredentials.user.uid))
+        isVerified: userCredentials.user.emailVerified,
+      });
+      if (userCredentials.user.uid)
+        localStorage.setItem(
+          "myUser",
+          JSON.stringify(userCredentials.user.uid)
+        );
 
-      setRedirect(true)
-
+      setRedirect(true);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   //RESET PASSWORD FORMIK
   /*
@@ -115,7 +116,7 @@ export default function LogInForm() {
                   onChange={handleChange}
                 />
                 <small style={{ color: "red" }}>
-                  {touched.email && errors.email ? <p>{errors.email}</p> : ""}
+                  {touched.email && errors.email ? <p className="error-style">{errors.email}</p> : ""}
                 </small>
               </div>
               <div className="divInputUser">
@@ -129,7 +130,7 @@ export default function LogInForm() {
               </div>
               <small style={{ color: "red" }}>
                 {touched.password && errors.password ? (
-                  <p>{errors.password}</p>
+                  <p className="error-style">{errors.password}</p>
                 ) : (
                   ""
                 )}
@@ -148,8 +149,14 @@ export default function LogInForm() {
               </div>*/}
             </form>
             <div className="createUser-container">
-              <button onClick={handleGoogleSignin}> Login With Google</button>
-              {/* <GoogleLoginButton />
+              <button
+                onClick={handleGoogleSignin}
+                className="btn btn-primary google-plus"
+              >
+                Login With Google
+              </button>
+              {/* 
+              <GoogleLoginButton />
           <GoogleLogin
             clientId={process.env.GOOGLE_CLIENT_ID}
             buttonText="Log in with Google"
