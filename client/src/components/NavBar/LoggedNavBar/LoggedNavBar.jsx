@@ -8,9 +8,11 @@ import "./LoggedNavBar.css";
 import { useAuth } from "../../../context/authContext";
 export default function LoggedNavBar() {
   const [state, dispatch] = useStore();
-
+  let myUser = JSON.parse(localStorage.getItem("myUser"));
+  let myCart = JSON.parse(localStorage.getItem(myUser));
   useEffect(() => {
     let myUser = JSON.parse(localStorage.getItem("myUser"));
+    // console.log(myCart.length)
     if (myUser) {
       getFavorites(dispatch, myUser);
     }
@@ -47,7 +49,7 @@ export default function LoggedNavBar() {
             <a onClick={logoutSesion}>Log Out</a>
           </div>
         </div>
-        <Link to="/cart">Cart</Link>
+        <Link to="/cart">Cart {myCart && myCart.length!==0? <span>{myCart.length}</span>: ""}</Link>
       </div>
     </div>
   );
