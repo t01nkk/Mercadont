@@ -79,8 +79,8 @@ router.get("/details/:id", async (req, res) => {
 // Update User
 router.put("/details/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, email,lastname,address,image } = req.body;
-
+  const { name, email,lastname,image,address } = req.body;
+console.log(req.body.address)
   let errors = validateInputUser(name,email);
   if (errors.length) return res.status(400).send({ msg: errors });
 
