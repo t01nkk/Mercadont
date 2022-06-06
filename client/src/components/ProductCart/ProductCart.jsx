@@ -57,8 +57,8 @@ export const ProductCart = ({
       </div>
         <div className="details-product-cart">
           <p>{name}</p>
-          <p> U$D {price}</p>
-          <p>TOTAL: U$D {price * count}</p>
+          <p> U$D {accounting.formatMoney(price, "U$D ", 0)}</p>
+          <p>TOTAL: U$D {accounting.formatMoney(price * count, "U$D ", 0)}</p>
           <div>
             {count !== 1 ? (
               <button className="btn btn-primary btn-sm" onClick={() => oneLess(stock, name, price)}>-</button>
