@@ -1,23 +1,43 @@
 .container-login {
-  height: 80vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-
+.form-container {
+  width: 50%;
+}
 .loginCard {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
   background-color: #fff;
-  width: 35%;
-  padding: 25px 30px;
+  width: 40%;
+  margin: 4rem 30%;
+
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
-
+.google-plus {
+  width: 40%;
+  margin: 0 35% 10px;
+  align-self: auto;
+  margin-left: 30%;
+  background: white;
+  border: 1px solid dodgerblue;
+  color: dodgerblue;
+}
+.google-plus:hover {
+  background: dodgerblue;
+}
+.loginCard form {
+  width: 100%;
+}
+.loginCard h2 {
+  padding: 0 15%;
+}
 .input-submit {
   background-color: black;
   border: none;
@@ -74,17 +94,17 @@ form .btn-login input:hover {
 }
 .btn-createUser {
   font-weight: 600;
-  padding-top: 7px;
+  padding-bottom: 15px;
 }
 .divInputUser {
-  margin-bottom: 15px;
-
-  width: calc(100% / 2 - 20px);
+  width: 100%;
+  padding: 2vh 2vw;
 }
 
 .divInputUser input {
   height: 45px;
-  width: 400px;
+  width: 80%;
+  margin: 0 10%;
   outline: none;
   font-size: 16px;
   border-radius: 5px;
@@ -94,6 +114,14 @@ form .btn-login input:hover {
   transition: all 0.3s ease;
 }
 
-small{
+small {
   font-size: 12px;
+}
+.error-style {
+  margin: 0 10%;
+}
+
+.create-container{
+  display: flex;
+  flex-direction: column;
 }
