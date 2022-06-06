@@ -78,7 +78,6 @@ export default function Categories() {
     });
   };
   const handleSaveCart = (name, price, image, id, stock) => {
-    console.log(name, price, image, id, stock);
     let quantity = 1;
     let totalPrice = price;
     let products = { name, price, image, id, stock, quantity, totalPrice };
@@ -117,7 +116,6 @@ export default function Categories() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    console.log(state);
     let filter = state.filterCategory;
     if (min) {
       filter = filter.filter((product) => product.price >= min);
@@ -137,7 +135,6 @@ export default function Categories() {
       type: FILTER_BY_PRICE_CATEGORY,
       payload: filter,
     });
-    console.log(state);
   };
 
   useEffect(() => {
@@ -155,7 +152,6 @@ export default function Categories() {
     localStorage.setItem(user, JSON.stringify(cart));
   }, [cart]);
 
-  console.log(state.products);
   useEffect(() => {
     if (person) {
       getFavorites(dispatch, person);
@@ -202,25 +198,25 @@ export default function Categories() {
       <div className="section-products">
         {state.products && state.favorites
           ? React.Children.toArray(
-              state.products.map((product) => {
-                if (product.status === "active") {
-                  return (
-                    <ProductCard
-                      id={product.id}
-                      name={product.name}
-                      stock={product.stock}
-                      price={product.price}
-                      image={product.image}
-                      handleSaveCart={handleSaveCart}
-                      handleSaveFavorite={handleSaveFavorite}
-                      handleDeleteFavorite={handleDeleteFavorite}
-                      isAdd={state.favorites.find((e) => e.id === product.id)}
-                    />
-                  );
-                }
-                return null;
-              })
-            )
+            state.products.map((product) => {
+              if (product.status === "active") {
+                return (
+                  <ProductCard
+                    id={product.id}
+                    name={product.name}
+                    stock={product.stock}
+                    price={product.price}
+                    image={product.image}
+                    handleSaveCart={handleSaveCart}
+                    handleSaveFavorite={handleSaveFavorite}
+                    handleDeleteFavorite={handleDeleteFavorite}
+                    isAdd={state.favorites.find((e) => e.id === product.id)}
+                  />
+                );
+              }
+              return null;
+            })
+          )
           : console.log("Aca vendría el loader")}
         <ToastContainer />
       </div>

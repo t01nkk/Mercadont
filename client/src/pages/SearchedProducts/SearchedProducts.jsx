@@ -128,7 +128,6 @@ export default function SearchedProducts() {
       type: FILTER_BY_PRICE,
       payload: filter,
     });
-    console.log(state);
   };
   const handleOrder = (e) => {
     e.preventDefault();
@@ -204,7 +203,6 @@ export default function SearchedProducts() {
           React.Children.toArray(
             state.searchedProducts.map((product) => {
               if (product.status === "active") {
-                console.log(product.status);
                 return (
                   <ProductCard
                     id={product.id}

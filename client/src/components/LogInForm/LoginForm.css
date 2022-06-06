@@ -1,5 +1,5 @@
 .container-login {
-  height: 100%;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,14 +12,10 @@
   justify-content: center;
   align-content: center;
   background-color: #fff;
+  width: 35%;
   padding: 25px 30px;
   border-radius: 5px;
-  border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
 }
 
 .input-submit {
@@ -96,4 +92,8 @@ form .btn-login input:hover {
   border: 1px solid #ccc;
   border-bottom-width: 2px;
   transition: all 0.3s ease;
+}
+
+small{
+  font-size: 12px;
 }

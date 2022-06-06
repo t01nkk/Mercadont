@@ -17,12 +17,12 @@ export default function EditProduct() {
     var expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
 
     if (!expression.test(value)) {
-        setError("Name is nessesary");
+      setError("Name is nessesary");
     } else if (value === "") {
-        setError('')
+      setError('')
     }
   }
- 
+
 
   useEffect(() => {
     fetchCategories(dispatch);
@@ -36,19 +36,18 @@ export default function EditProduct() {
         name,
       });
       alert("category update successfully");
-      console.log(product);
     } catch (err) {
       console.log(err);
     }
   };
   const handleChange = (e) => {
-    setError('')   
-    const {  name } = e.target;    
+    setError('')
+    const { name } = e.target;
     if (name === 'name') {
-        validate(product.name)
+      validate(product.name)
     }
 
-  setProduct({ ...product, [e.target.name]: e.target.value });
+    setProduct({ ...product, [e.target.name]: e.target.value });
   };
   const handleDelete = async () => {
     try {
@@ -63,15 +62,15 @@ export default function EditProduct() {
     <div>
       <form onSubmit={handleSubmit}>
         <input
-          
+
           type="text"
           name="name"
           placeholder={product.name}
           value={product.name}
           onChange={handleChange}
-         
+
         />
-         {!error ? null : <div className="error" >{error}</div>}
+        {!error ? null : <div className="error" >{error}</div>}
         <div className="btn-addCat">
           <input type="submit" name="Update info" disabled={error} className="input-submit" />
         </div>

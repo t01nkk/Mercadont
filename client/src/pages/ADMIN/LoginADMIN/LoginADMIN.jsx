@@ -9,7 +9,6 @@ export default function LoginADMIN() {
   const { login } = useAuth();
   const handleLogin = async (values) => {
     try {
-      console.log("entre en el try");
       const user = await axios({
         method: "POST",
         data: {

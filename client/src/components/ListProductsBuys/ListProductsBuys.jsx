@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./ListProductsBuys.css";
 import accounting from "accounting";
+
 export const ListProductsBuys = ({
   image,
   name,
@@ -9,13 +10,13 @@ export const ListProductsBuys = ({
   amount,
 }) => {
   return (
-    <article>
-      <div className="articleBuys">
-        <h3>{name}</h3>
-        <div>
-          <p>Price: {`${accounting.formatMoney(price, "U$D ", 0)}`}</p>
-          <p>Amount: {amount}</p>
-          <p>Total per Product:{totalPrice}</p>
+    <article className="articleBuys">
+      <div>
+        <p>{name}</p>
+        <div className="container-details-buys">
+          <p>Price: <span>{`${accounting.formatMoney(price, "U$D ", 0)}`}</span></p>
+          <p>Amount: <span>{amount}</span></p>
+          <p>Total per Product: <span>{`${accounting.formatMoney(totalPrice, "U$D ", 0)}`}</span></p>
         </div>
       </div>
     </article>

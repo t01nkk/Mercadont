@@ -8,7 +8,6 @@ export default function LoggedAdmin() {
     localStorage.clear();
   };
   const adminName = state.admin.data.name;
-  console.log(state.admin.data);
   return (
     <div className="header-nav">
       <div className="container-actions-user">

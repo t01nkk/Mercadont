@@ -10,6 +10,8 @@ import {
 import "./Home.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Loader } from "../../components/Loader/Loader.jsx"
+
 
 export default function Home() {
   const [user, setUser] = useState([]);
@@ -45,6 +47,7 @@ export default function Home() {
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
     let totalPrice = price;
+    // let price = accounting.formatMoney(price, "U$D ", 0)
     let products = { name, price, image, id, stock, quantity, totalPrice };
     let value = cart.find((e) => e.name === name);
     if (value) {
@@ -132,7 +135,7 @@ export default function Home() {
               return null;
             })
           )
-        : console.log("Aca vendría el loader")}{" "}
+        : <div className="container-loader"><Loader/></div>}
       <ToastContainer />
     </section>
   );

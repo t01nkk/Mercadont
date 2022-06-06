@@ -1,12 +1,13 @@
 const axios = require("axios");
 const { mailPayPal, modifyStockPaypal } = require("../middlewares/middlewares");
-const { createPurchaseOrder, createPurchaseCompleted, createPurchaseCanceled } = require("./purchase_order");
+const {
+  createPurchaseOrder,
+  createPurchaseCompleted,
+  createPurchaseCanceled,
+} = require("./purchase_order");
 
 const createOrder = async (req, res) => {
-  const {purchase_units, user, local} = req.body
-  // console.log("createOrder / purchase_units:", purchase_units)
-  // console.log("createOrder / user:", user)
-  // console.log("createOrder / local:", local)
+  const { purchase_units, user, local } = req.body;
   try {
     const order = {
       intent: "CAPTURE",
@@ -45,14 +46,10 @@ const createOrder = async (req, res) => {
         },
       }
     );
-    // console.log("purchase_units:", purchase_units)
-    // console.log("user:", user)
-    // console.log("local:", local)
-    // console.log("data:", data.id)
-    createPurchaseOrder(data.id,user,local)
+    createPurchaseOrder(data.id, user, local);
     res.status(200).send(data.links[1].href);
   } catch (error) {
-    console.log("error:", error)
+    console.log("error:", error);
     return res
       .status(500)
       .send(
@@ -75,30 +72,15 @@ const captureOrder = async (req, res) => {
       },
     }
   );
-  // console.log("req.user in captureOrder:",req.user)
-  // console.log("req in captureOrder:",req)
-  // console.log("data in captureOrder:",data)
-  // console.log("data.id in captureOrder:",data.id)
-  // console.log("data.status in captureOrder:",data.status)
-  // console.log("user.datavalues.id in captureOrder:",req.user.dataValues.id)
-  // completedOrder = createPurchaseCompleted(data.id, req.user?.dataValues?.id)
   completedOrder = createPurchaseCompleted(data.id)
-  // console.log("completedOrder:", completedOrder)
   modifyStockPaypal(data.id)
   mailPayPal();
-  // purchaseOrder(id,userId,local)
   res.status(200).redirect(`${process.env.HOST}${process.env.PORT_FRONT}/home`);
 };
 
 const cancelOrder = (req, res) => {
   let canceledOrder;
-  // console.log("req in cancelOrder:",req)
-  // console.log("req.query.token:",req.query.token)
-  // console.log("req.route.Route.path:",req.route.Route.path)
-  // console.log("user.datavalues.id in captureOrder:",req.user.dataValues.id)
-  // canceledOrder = createPurchaseCanceled(req.query?.token,req.user?.dataValues?.id)
   canceledOrder = createPurchaseCanceled(req.query?.token)
-  // console.log("canceledOrder:", canceledOrder)
   res.status(200).redirect(`${process.env.HOST}${process.env.PORT_FRONT}/home`);
 };
 

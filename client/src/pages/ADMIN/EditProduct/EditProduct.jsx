@@ -17,57 +17,57 @@ export default function EditProduct() {
     categories: [],
     status: "",
   });
-  const expression = {	
-		nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+  const expression = {
+    nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
     priceExpression: /^\d{1,14}$/,
     descriptionExpression: /^[a-zA-ZÀ-ÿ\s]{1,200}$/,
     stockExpression: /^\d{1,14}$/,
   }
-  
+
   function validator(input) {
-    let errors = {};    
-    
+    let errors = {};
+
     if (!expression.nameExpression.test(input.name)) {
-        errors.name = 'Name is necessary';
+      errors.name = 'Name is necessary';
     }
     if (!expression.priceExpression.test(input.price)) {
       errors.price = 'Price is necessary';
-  }
-  if (!expression.descriptionExpression.test(input.description)) {
-    errors.description = 'Description is necessary';
-}
-if (!expression.stockExpression.test(input.stock)) {
-  errors.stock = 'Stock is necessary';
-}
+    }
+    if (!expression.descriptionExpression.test(input.description)) {
+      errors.description = 'Description is necessary';
+    }
+    if (!expression.stockExpression.test(input.stock)) {
+      errors.stock = 'Stock is necessary';
+    }
     return errors
   }
 
   const handleChangeName = (e) => {
-    setErrors("")  
+    setErrors("")
     setErrors(validator({ ...product, [e.target.name]: e.target.value }));
-    
-        setProduct({ ...product, [e.target.name]: e.target.value });
+
+    setProduct({ ...product, [e.target.name]: e.target.value });
   };
 
   const handleChangePrice = (e) => {
-    setErrors("")  
+    setErrors("")
     setErrors(validator({ ...product, [e.target.name]: e.target.value }));
-    
-        setProduct({ ...product, [e.target.name]: e.target.value });
+
+    setProduct({ ...product, [e.target.name]: e.target.value });
   };
   const handleChangeDescription = (e) => {
-    setErrors("")  
+    setErrors("")
     setErrors(validator({ ...product, [e.target.name]: e.target.value }));
-    
-        setProduct({ ...product, [e.target.name]: e.target.value });
+
+    setProduct({ ...product, [e.target.name]: e.target.value });
   };
   const handleChangeStock = (e) => {
-    setErrors("")  
-    (validator({ ...product, [e.target.name]: e.target.value }));
-    
-        setProduct({ ...product, [e.target.name]: e.target.value });
+    setErrors("")
+      (validator({ ...product, [e.target.name]: e.target.value }));
+
+    setProduct({ ...product, [e.target.name]: e.target.value });
   };
-  
+
   const handleDeleteCat = (name, event) => {
     event.preventDefault();
     const filterCat = product.categories.filter((cat) => cat !== name);
@@ -92,10 +92,8 @@ if (!expression.stockExpression.test(input.stock)) {
       const { name } = cats;
       destructuringCats.push(name);
     }
-    console.log(destructuringCats, "soy el array");
     fetchedProduct.data.categories = destructuringCats;
     setProduct(fetchedProduct.data);
-    console.log(fetchedProduct.data.categories, "soy el fetch");
   };
 
   useEffect(() => {
@@ -117,7 +115,6 @@ if (!expression.stockExpression.test(input.stock)) {
         status,
         categories,
       });
-      console.log(product);
     } catch (err) {
       console.log(err);
     }
@@ -135,96 +132,95 @@ if (!expression.stockExpression.test(input.stock)) {
   };
   return (
     <div className="container-login">
-      {console.log(product.categories.length)}
-      
-        <h2>Edit product</h2>
-      <form onSubmit={handleSubmit}>
-      <img src={`${product.image}`} height={"500px"} width={"300px"} alt="" />
 
-      <div className="divInputUser">
-      <label className="title">Name</label>
-        <input
-          type="text"
-          name="name"
-          value={product.name}
-          ontouchstart={handleChangeName}
-          onChange={handleChangeName}
-        />
-          {errors.name && ( <p className='error-input'>{errors.name}</p> )}
-          </div>
-          <div className="divInputUser">
-          <p className="title">Price: </p>
-        <input
-          type="number"
-          name="price"
-          ontouchstart={handleChangePrice}
-          value={product.price}
-          onChange={handleChangePrice}
-        />
-         {errors.price && ( <p className='error-input'>{errors.price}</p> )}
-         </div>
-         <div className="divInputUser">
-         <p className="title">Available stock: </p>
-        <input
-          type="number"
-          name="stock"
-          value={product.stock}
-          onChange={handleChangeStock}
-        />
-         {errors.stock && ( <p className='error-input'>{errors.stock}</p> )}
-         </div>
-         <div className="divInputUser">
-         <p className="title">Status and categories </p>
-        <select name="status" onChange={handleChange}>
-          Status:
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
-        <select onChange={handleChangeCat}>
-          <option value="" hidden>
-            Categories
-          </option>
-          {state.categories?.length &&
-            state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
-            state.categories.map((category) => (
-              <option key={category.id} value={category.name || category}>
-                {category.name}
-              </option>
-            ))}
-        </select>
+      <h2>Edit product</h2>
+      <form onSubmit={handleSubmit}>
+        <img src={`${product.image}`} height={"500px"} width={"300px"} alt="" />
+
+        <div className="divInputUser">
+          <label className="title">Name</label>
+          <input
+            type="text"
+            name="name"
+            value={product.name}
+            ontouchstart={handleChangeName}
+            onChange={handleChangeName}
+          />
+          {errors.name && (<p className='error-input'>{errors.name}</p>)}
         </div>
         <div className="divInputUser">
-        {product.categories.length &&
-          product.categories?.map((category, i) => (
-            <div key={i}>
-              <p>{category.name || category}</p>
-              <button onClick={(event) => handleDeleteCat(category, event)}>
-                x
-              </button>
-            </div>
-          ))}
-          </div>
-          <div className="divInputUser">
-          <p className="title">Description </p>
-        <textarea
-          name="description"
-          cols="30"
-          rows="10"
-          value={product.description}
-          onChange={handleChangeDescription}
-        >
-          {product.description}
-        </textarea>
-        {errors.description && ( <p className='error-input'>{errors.description}</p> )
-        }</div>
-        <div classname="btn-login">
-        <input type="submit"  name="Update info" className="input-submit"/>
+          <p className="title">Price: </p>
+          <input
+            type="number"
+            name="price"
+            ontouchstart={handleChangePrice}
+            value={product.price}
+            onChange={handleChangePrice}
+          />
+          {errors.price && (<p className='error-input'>{errors.price}</p>)}
         </div>
-        
+        <div className="divInputUser">
+          <p className="title">Available stock: </p>
+          <input
+            type="number"
+            name="stock"
+            value={product.stock}
+            onChange={handleChangeStock}
+          />
+          {errors.stock && (<p className='error-input'>{errors.stock}</p>)}
+        </div>
+        <div className="divInputUser">
+          <p className="title">Status and categories </p>
+          <select name="status" onChange={handleChange}>
+            Status:
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+          <select onChange={handleChangeCat}>
+            <option value="" hidden>
+              Categories
+            </option>
+            {state.categories?.length &&
+              state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
+              state.categories.map((category) => (
+                <option key={category.id} value={category.name || category}>
+                  {category.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        <div className="divInputUser">
+          {product.categories.length &&
+            product.categories?.map((category, i) => (
+              <div key={i}>
+                <p>{category.name || category}</p>
+                <button onClick={(event) => handleDeleteCat(category, event)}>
+                  x
+                </button>
+              </div>
+            ))}
+        </div>
+        <div className="divInputUser">
+          <p className="title">Description </p>
+          <textarea
+            name="description"
+            cols="30"
+            rows="10"
+            value={product.description}
+            onChange={handleChangeDescription}
+          >
+            {product.description}
+          </textarea>
+          {errors.description && (<p className='error-input'>{errors.description}</p>)
+          }</div>
+        <div classname="btn-login">
+          <input type="submit" name="Update info" className="input-submit" />
+        </div>
+
       </form>
-      
+
       <button onClick={handleDelete}>Delete product</button>
     </div>
-    
+
   );
 }
