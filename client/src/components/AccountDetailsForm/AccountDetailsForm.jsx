@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useStore } from "../../context/store";
 import {} from "react-router-dom";
+import { useAuth } from "../../context/authContext";
 export default function AccountDetailsForm() {
   
+  const { resetPassword } = useAuth();
   const [state, dispatch] = useStore();
   const [user, setUser] = useState({
     email: state.user.email,
@@ -18,31 +20,27 @@ export default function AccountDetailsForm() {
       postalCode: "",
     },
     password: "",
-    image:"",
-
-   
+    image:"",  
   });
 
 
   const fetchUser = async () => {
-    console.log(state.user)
+    // console.log(state.user)
     try {
+      let miStorage = JSON.parse(localStorage.getItem("myUser"));
       const userDB = await axios.get(
-        `${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`
+        `${process.env.REACT_APP_DOMAIN}/user/details/${miStorage}`
       );
-      console.log("user",userDB)
+      // console.log("user",userDB.data)
       setUser(userDB.data);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+      return err
     }
   };
   useEffect(() => {
-    if (state.user) {
-      fetchUser();
-    }
+    fetchUser();
   }, []);
- 
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,22 +51,37 @@ export default function AccountDetailsForm() {
     try {
       const res = await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
         email,
-         name,
-         lastname,        
-       address, 
-         image,
-         password 
+        name,
+        lastname,        
+        address, 
+        image,
+        password 
       });
-      console.log(user);
+      // console.log(user);
+      return res
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+      return err
     }
   };
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-
+  const handleResetPassword = async (e)=>{
+    e.preventDefault();
+    // console.log("handleResetPassword USER:",user)
+    const answer = window.confirm("Are you sure you want to change your password?")
+    if(answer){
+      try {
+        await resetPassword(user.email)
+        alert("Check your email inbox to reset your password")
+      }
+      catch (err){
+        alert(err.message)
+      }
+    } 
+  }
 
   return (
     <div>
@@ -92,10 +105,9 @@ export default function AccountDetailsForm() {
           onChange={handleChange}
         />
       </div>
-      
-         
-         <div className="divInputUser">
-         <p className="title">lastname: </p>
+        
+      <div className="divInputUser">
+        <p className="title">lastname: </p>
         <input
           type="text"
           name="lastname"
