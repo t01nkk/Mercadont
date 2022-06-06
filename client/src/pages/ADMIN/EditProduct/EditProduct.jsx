@@ -140,8 +140,17 @@ export default function EditProduct() {
   console.log(product);
   return (
     <div className="container-edit-admin">
+      <div className="delete-product">
+        <button onClick={handleDelete}>Delete product</button>
+      </div>
       <form onSubmit={handleSubmit} className="form-edit-admin">
-        <h2>Edit product</h2>
+        <input
+          type="submit"
+          name="Update info"
+          value={"Update info"}
+          className="btn-update-info"
+        />
+
         <img src={`${product.image}`} alt="" className="img-product" />
         <div></div>
         <div className="divInputadmin">
@@ -181,6 +190,19 @@ export default function EditProduct() {
               <option value="inactive">Inactive</option>
             </select>
           </div>
+          <p>Description </p>
+          <textarea
+            name="description"
+            cols="50"
+            rows="3"
+            value={product.description}
+            onChange={handleChangeDescription}
+          >
+            {product.description}
+          </textarea>
+          {errors.description && (
+            <p className="error-input">{errors.description}</p>
+          )}
           <div className="selector-cats">
             <p>Select:</p>
             <select onChange={handleChangeCat}>
@@ -210,30 +232,6 @@ export default function EditProduct() {
                 ))}
             </div>
           </div>
-          <p>Description </p>
-          <textarea
-            name="description"
-            cols="50"
-            rows="3"
-            value={product.description}
-            onChange={handleChangeDescription}
-          >
-            {product.description}
-          </textarea>
-          {errors.description && (
-            <p className="error-input">{errors.description}</p>
-          )}
-        </div>
-        <div classname="btn-login">
-          <input
-            type="submit"
-            name="Update info"
-            value={"Update info"}
-            className="input-submit"
-          />
-        </div>
-        <div>
-          <button onClick={handleDelete}>Delete product</button>
         </div>
       </form>
     </div>

@@ -78,5 +78,37 @@
   margin-left: 5px;
 }
 .btn-del-edit:hover {
-  background-color: bisque;
+  background-color: #e6ccb274;
+}
+.select-categories-del {
+  height: 25rem;
+}
+.btn-update-info {
+  margin: 2.5rem 0;
+  background-color: #fff;
+  color: black;
+  font-size: 1.3rem;
+  border: 0.5px solid black;
+  width: 20rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+}
+.btn-update-info:hover {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  background-color: #e6ccb23b;
+}
+.delete-product {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.delete-product button {
+  background-color: rgba(255, 255, 255, 0.68);
+  border: 2px solid rgb(143, 0, 0);
+  border-radius: 50px;
+  width: 15rem;
+  text-transform: uppercase;
+}
+.delete-product button:hover {
+  background-color: rgba(255, 0, 0, 0.103);
 }
