@@ -43,7 +43,7 @@ export const SendBuys = () => {
                     userId: user
                 })
             }
-            loadingBuys()
+            // loadingBuys()
 
             if(paymentMethod){
                 localStorage.removeItem(user)

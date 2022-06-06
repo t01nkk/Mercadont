@@ -10,7 +10,8 @@ import {
 import "./Home.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import accounting from "accounting";
+import { Loader } from "../../components/Loader/Loader.jsx"
+
 
 export default function Home() {
   const [user, setUser] = useState([]);
@@ -147,7 +148,7 @@ export default function Home() {
               return null;
             })
           )
-        : console.log("Aca vendría el loader")}{" "}
+        : <div className="container-loader"><Loader/></div>}
       <ToastContainer />
     </section>
   );
