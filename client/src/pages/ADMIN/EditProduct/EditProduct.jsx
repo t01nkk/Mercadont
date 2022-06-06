@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
 import { fetchCategories } from "../../../redux/actions/actions.js";
-
+import "./EditProduct.css";
 export default function EditProduct() {
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
@@ -139,12 +139,11 @@ export default function EditProduct() {
   };
   console.log(product);
   return (
-    <div className="container-login">
-      <h2>Edit product</h2>
+    <div className="container-edit-admin">
       <form onSubmit={handleSubmit}>
-        <img src={`${product.image}`} height={"500px"} width={"300px"} alt="" />
-
-        <div className="divInputUser">
+        <h2>Edit product</h2>
+        <img src={`${product.image}`} alt="" />
+        <div className="divInputadmin">
           <label className="title">Name</label>
           <input
             type="text"
@@ -155,7 +154,7 @@ export default function EditProduct() {
           />
           {errors.name && <p className="error-input">{errors.name}</p>}
         </div>
-        <div className="divInputUser">
+        <div className="divInputadmin">
           <p className="title">Price: </p>
           <input
             type="number"
@@ -166,7 +165,7 @@ export default function EditProduct() {
           />
           {errors.price && <p className="error-input">{errors.price}</p>}
         </div>
-        <div className="divInputUser">
+        <div className="divInputadmin">
           <p className="title">Available stock: </p>
           <input
             type="number"
@@ -176,7 +175,7 @@ export default function EditProduct() {
           />
           {errors.stock && <p className="error-input">{errors.stock}</p>}
         </div>
-        <div className="divInputUser">
+        <div className="divInputadmin">
           <p className="title">Status and categories </p>
           <select name="status" onChange={handleChange}>
             Status:
@@ -196,7 +195,7 @@ export default function EditProduct() {
               ))}
           </select>
         </div>
-        <div className="divInputUser">
+        <div className="divInputadmin">
           {product.categories.length &&
             product.categories?.map((category, i) => (
               <div key={i}>
@@ -207,7 +206,7 @@ export default function EditProduct() {
               </div>
             ))}
         </div>
-        <div className="divInputUser">
+        <div className="divInputadmin">
           <p className="title">Description </p>
           <textarea
             name="description"
@@ -225,9 +224,10 @@ export default function EditProduct() {
         <div classname="btn-login">
           <input type="submit" name="Update info" className="input-submit" />
         </div>
+        <div>
+          <button onClick={handleDelete}>Delete product</button>
+        </div>
       </form>
-
-      <button onClick={handleDelete}>Delete product</button>
     </div>
   );
 }
