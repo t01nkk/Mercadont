@@ -30,7 +30,10 @@ export default function AccountDetails() {
 
   return (
     <>
-      <Link to="/editProfile">
+      {/* <script src="https://kit.fontawesome.com/2c36e9b7b1.js"></script> */}
+      {/* <script src="./js/main.js"></script> */}
+      <Link to="/accountDetails/editProfile">
+     
         <button>Edit your profile</button>
       </Link>
       <div>

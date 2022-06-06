@@ -26,7 +26,6 @@ export default function LoggedNavBar() {
     history.push("/");
   };
 
-
   return (
     <div className="header-nav">
       <div className="container-actions-user">

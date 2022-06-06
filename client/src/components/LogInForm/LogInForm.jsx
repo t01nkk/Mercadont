@@ -13,7 +13,6 @@ export default function LogInForm() {
     try {
       
       const userCredentials = await login(values.email, values.password);
-      console.log("User Credentials:", userCredentials);
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
         id: userCredentials.user.uid,
         name: userCredentials.user.displayName,
@@ -34,27 +33,26 @@ export default function LogInForm() {
       alert(err);
     }
   };
- const handleGoogleSignin = async()=>{
-   try {
-     const userCredentials = await loginWithGoogle()
-     console.log(userCredentials)
-     await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
-       id: userCredentials.user.uid,
-       name: userCredentials.user.displayName,
-       email: userCredentials.user.email,
-       image: userCredentials.user.photoURL,
-       isVerified: userCredentials.user.emailVerified
-     })
-     if (userCredentials.user.uid) localStorage.setItem("myUser",JSON.stringify(userCredentials.user.uid))
+  const handleGoogleSignin = async () => {
+    try {
+      const userCredentials = await loginWithGoogle()
+      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+        id: userCredentials.user.uid,
+        name: userCredentials.user.displayName,
+        email: userCredentials.user.email,
+        image: userCredentials.user.photoURL,
+        isVerified: userCredentials.user.emailVerified
+      })
+      if (userCredentials.user.uid) localStorage.setItem("myUser", JSON.stringify(userCredentials.user.uid))
 
-    setRedirect(true)
+      setRedirect(true)
 
-   } catch (err){
-     console.log(err)
-   }
- }
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
- //RESET PASSWORD FORMIK
+  //RESET PASSWORD FORMIK
   /*
  const handleResetPassword = async (values)=>{
    console.log(values.email)

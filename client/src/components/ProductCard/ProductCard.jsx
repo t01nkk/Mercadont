@@ -24,7 +24,6 @@ export default function ProductCard({
 
   useEffect(() => {
     setChangeButton(isAdd);
-    // console.log(isAdd)
   }, [isAdd]);
 
   const postFavorite = () => {

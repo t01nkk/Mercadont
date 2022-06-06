@@ -60,8 +60,6 @@ passport.serializeUser(async (user, done) => {
     const UserId = await User.findOne({
       where: { email: user.emails[0]?.value },
     });
-    // console.log("serializeUser", UserId); //usuario logueado
-    // console.log("soy userid", user.id); //id hgenerado en la tabla
     done(null, UserId.dataValues.id);
   } else {
     done(null, user.id);

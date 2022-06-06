@@ -35,7 +35,6 @@ export const ProductCart = ({
 
   //Funcion para restar producto al carro
   const oneLess = (stock, name, price) => {
-    console.log(count);
     setCount(count - 1);
     if (count - 1 < 2) setPermitLess(false);
     if (count - 1 < stock) setPermitMore(true);
@@ -69,9 +68,9 @@ export const ProductCart = ({
         )}
         <span>{storageCart[pos].quantity}</span>
         {count !== stock ? (
-            <button onClick={() => oneMore(stock, name, price)}>+</button>
+          <button onClick={() => oneMore(stock, name, price)}>+</button>
         ) : (
-            console.log("hola")
+          console.log("hola")
         )}
 
         <p>U$D {price * count}</p>

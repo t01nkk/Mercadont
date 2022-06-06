@@ -9,13 +9,9 @@ const nodemailer = require("nodemailer");
 
 const modifyStockStripe = async (local) => {
   let updateProduct;
-  // console.log("local in modifyStockStripe:", local);
   try {
     for (let i = 0; i < local.length; i++) {
-      // console.log("Iteracion:", i)
-      // console.log("local[i].id:", local[i].id);
       const findProduct = await Product.findByPk(local[i].id);
-      // console.log("findProduct:", findProduct)
       if (findProduct.stock - local[i].quantity > 0) {
         updateProduct = await Product.update(
           { stock: findProduct.stock - local[i].quantity },
@@ -33,32 +29,22 @@ const modifyStockStripe = async (local) => {
       }
 
     }
-    // console.log(updateProduct);
     return updateProduct
-    // return { msg: "compra realizada" };
   } catch (error) {
-    // console.log("modifyStockStripe:",error.message)
     return error.message;
   }
 };
 
 const modifyStockPaypal = async (orderId) => {
   let updateProduct;
-  // console.log("orderId:", typeof orderId)
-  // console.log("userId:", typeof userId)
   try {
     const findProducts = await PurchaseOrder.findAll({
       where:
-        {
-          orderId,
-        }
+      {
+        orderId,
+      }
     });
-    // console.log("modifyStockPaypal-findProducts:", findProducts)
     for (let product of findProducts) {
-      // console.log("product:",product)
-      // console.log("product.purchaseOrder:",product.purchaseOrder)
-      // console.log("product.dataValues:",product.dataValues)
-      // console.log("product.dataValues.productId:",product.dataValues.productId)
       const findProduct = await Product.findByPk(product.dataValues.productId);
       if (findProduct.stock - product.dataValues.productQuantity > 0) {
         updateProduct = await Product.update(
@@ -78,7 +64,6 @@ const modifyStockPaypal = async (orderId) => {
     }
     return { msg: "stock updated" };
   } catch (error) {
-    // console.log(error)
     return error;
   }
 };
@@ -213,13 +198,13 @@ async function mailPayPal() {
 
 module.exports = {
   // initialize
-    getUsers,
-    getProducts,
-    validateInputUser,
-    validateInputProduct,
-    modifyStockStripe,
-    modifyStockPaypal,
-    checkAuthenticated,
-    checkNotAuthenticated,
-    mailPayPal,
+  getUsers,
+  getProducts,
+  validateInputUser,
+  validateInputProduct,
+  modifyStockStripe,
+  modifyStockPaypal,
+  checkAuthenticated,
+  checkNotAuthenticated,
+  mailPayPal,
 }

@@ -5,7 +5,7 @@ const {
   cancelOrder,
 } = require("../controllers/paypalPayments.js");
 const Stripe = require("stripe")
-const {modifyStockStripe} = require("../middlewares/middlewares");
+const { modifyStockStripe } = require("../middlewares/middlewares");
 const { createPurchaseOrder } = require("../controllers/purchase_order.js");
 const stripe = new Stripe("sk_test_51L4snIL7xpNkb3eJIsYUyZ8SYO4cHXX3GyMVVgp1lJ56KTEq6Mc8qtENUNlam4mslm4pwNXq48uFQYLrDPldNso900jpNAxL5e")
 const router = Router();
@@ -14,24 +14,20 @@ const router = Router();
 // STRIPE METHODS
 // ************************
 //CART - Buy Product
-router.post("/card", async (req,res)=>{
+router.post("/card", async (req, res) => {
   try {
-    const {id, amount, local, userId} = req.body;
+    const { id, amount, local, userId } = req.body;
     const payment = await stripe.paymentIntents.create({
       amount,
       currency: "USD",
-      description:"Compra",
-      payment_method:id,
-      confirm:true
+      description: "Compra",
+      payment_method: id,
+      confirm: true
     })
     let updatedStock = await modifyStockStripe(local)
-    let created = await createPurchaseOrder(id,userId,local,"completed")
-    // console.log("Ruta Post CARD / created:",created)
-    // console.log("Ruta Post CARD / updatedStock:",updatedStock)
-    // console.log("Ruta Post CARD / payment:",payment)
+    let created = await createPurchaseOrder(id, userId, local, "completed")
     return res.status(200).send(payment)
   } catch (error) {
-    // console.log(error)
     return res.status(400).send(error)
   }
 })

@@ -16,7 +16,6 @@ export const fetchProducts = async (dispatch) => {
     payload: fetchedProducts.data,
   });
 };
-console.log("here be env", process.env.REACT_APP_DOMAIN);
 export const fetchCategories = async (dispatch) => {
   const fetchedProducts = await axios.get(
     `${process.env.REACT_APP_DOMAIN}/categories/`
@@ -70,22 +69,22 @@ export const checkSessionADMIN = (dispatch) => {
     });
   }
 };
-export const getFavorites = async (dispatch,id)=>{
-  if(!id){
+export const getFavorites = async (dispatch, id) => {
+  if (!id) {
     dispatch({
       type: GET_FAVORITES,
       payload: []
-    }); 
+    });
   }
-  else{
-    const giveMeFavorites = await axios(`http://localhost:3001/user/favorite/${id}`)
+  else {
+    const giveMeFavorites = await axios(`${process.env.REACT_APP_DOMAIN}/user/favorite/${id}`)
     try {
       dispatch({
         type: GET_FAVORITES,
         payload: giveMeFavorites.data
       });
     } catch (error) {
-        console.log(error)
+      console.log(error)
     }
   }
 }
