@@ -21,15 +21,16 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
 .google-plus {
-  width: 30%;
-  margin: 0 35%;
-  margin-bottom: 10px;
-  background: #db4c3e;
-  border: 1px solid #db4c3e;
-  border: none;
+  width: 40%;
+  margin: 0 35% 10px;
+  align-self: auto;
+  margin-left: 30%;
+  background: white;
+  border: 1px solid dodgerblue;
+  color: dodgerblue;
 }
 .google-plus:hover {
-  background: #000000;
+  background: dodgerblue;
 }
 .loginCard form {
   width: 100%;
@@ -118,4 +119,9 @@ small {
 }
 .error-style {
   margin: 0 10%;
+}
+
+.create-container{
+  display: flex;
+  flex-direction: column;
 }
