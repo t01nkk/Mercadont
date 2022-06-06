@@ -4,7 +4,6 @@ import { Link, Redirect } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import axios from "axios";
 import { Formik } from "formik";
-import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 export default function LogInForm() {
   const [redirect, setRedirect] = useState(false);
   const { login, loginWithGoogle, resetPassword } = useAuth();
@@ -28,7 +27,14 @@ export default function LogInForm() {
         setRedirect(true);
       }
     } catch (err) {
-      alert(err);
+      let error
+      console.log(err)
+      if (err.code === "auth/internal-error") error = ("Invalid Email");
+      if (err.code === "auth/user-not-found") error = ("Email doesn't belong to a user");
+      if (err.code === "auth/wrong-password") error = ("Wrong Password");
+
+
+      alert(error);
     }
   };
   const handleGoogleSignin = async () => {
@@ -72,7 +78,6 @@ export default function LogInForm() {
     <div className="container-login">
       <Formik
         initialValues={{
-          name: "",
           email: "",
           password: "",
         }}
@@ -87,11 +92,6 @@ export default function LogInForm() {
           }
           if (!values.password) {
             errors.password = "Password required.";
-          } else if (
-            !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(values.password)
-          ) {
-            errors.password =
-              "Your password must be 8 to 16 characters long and must contain both uppercase and lowercase letters, and at least one number.";
           }
 
           return errors;
@@ -149,12 +149,11 @@ export default function LogInForm() {
               </div>*/}
             </form>
             <div className="createUser-container">
-              <button
-                onClick={handleGoogleSignin}
-                className="btn btn-primary google-plus"
-              >
-                Login With Google
-              </button>
+              <div>
+                <button onClick={handleGoogleSignin} className="btn btn-primary google-plus">
+                  <img height="25px" src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt="Google Logo"/>  Login With Google
+                </button>
+              </div>
               {/* 
               <GoogleLoginButton />
           <GoogleLogin
@@ -164,9 +163,11 @@ export default function LogInForm() {
             onFailure={handleLoginGoogle}
             cookiePolicy={"single_host_origin"}
           /> */}
+              <div className="create-container">
               <p>Not a user yet?</p>
-              <div className="btn-createUser">
-                <Link to="/createUser">Create User</Link>
+                <div className="btn-createUser">
+                  <Link to="/createUser">Create User</Link>
+                </div>
               </div>
             </div>
           </div>
