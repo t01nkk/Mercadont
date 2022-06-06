@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
 import { fetchCategories } from "../../../redux/actions/actions.js";
-
+import "./EditProduct.css";
 export default function EditProduct() {
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
@@ -139,80 +139,62 @@ export default function EditProduct() {
   };
   console.log(product);
   return (
-    <div className="container-login">
-      <h2>Edit product</h2>
-      <form onSubmit={handleSubmit}>
-        <img src={`${product.image}`} height={"500px"} width={"300px"} alt="" />
+    <div className="container-edit-admin">
+      <div className="delete-product">
+        <button onClick={handleDelete}>Delete product</button>
+      </div>
+      <form onSubmit={handleSubmit} className="form-edit-admin">
+        <input
+          type="submit"
+          name="Update info"
+          value={"Update info"}
+          className="btn-update-info"
+        />
 
-        <div className="divInputUser">
-          <label className="title">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={product.name}
-            ontouchstart={handleChangeName}
-            onChange={handleChangeName}
-          />
-          {errors.name && <p className="error-input">{errors.name}</p>}
-        </div>
-        <div className="divInputUser">
-          <p className="title">Price: </p>
-          <input
-            type="number"
-            name="price"
-            ontouchstart={handleChangePrice}
-            value={product.price}
-            onChange={handleChangePrice}
-          />
-          {errors.price && <p className="error-input">{errors.price}</p>}
-        </div>
-        <div className="divInputUser">
-          <p className="title">Available stock: </p>
-          <input
-            type="number"
-            name="stock"
-            value={product.stock}
-            onChange={handleChangeStock}
-          />
-          {errors.stock && <p className="error-input">{errors.stock}</p>}
-        </div>
-        <div className="divInputUser">
-          <p className="title">Status and categories </p>
-          <select name="status" onChange={handleChange}>
-            Status:
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-          <select onChange={handleChangeCat}>
-            <option value="" hidden>
-              Categories
-            </option>
-            {state.categories?.length &&
-              state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
-              state.categories.map((category) => (
-                <option key={category.id} value={category.name || category}>
-                  {category.name}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div className="divInputUser">
-          {product.categories.length &&
-            product.categories?.map((category, i) => (
-              <div key={i}>
-                <p>{category.name || category}</p>
-                <button onClick={(event) => handleDeleteCat(category, event)}>
-                  x
-                </button>
-              </div>
-            ))}
-        </div>
-        <div className="divInputUser">
-          <p className="title">Description </p>
+        <img src={`${product.image}`} alt="" className="img-product" />
+        <div></div>
+        <div className="divInputadmin">
+          <div className="duo-inputs">
+            <p>Name:</p>
+            <input
+              type="text"
+              name="name"
+              value={product.name}
+              ontouchstart={handleChangeName}
+              onChange={handleChangeName}
+            />
+            {errors.name && <p className="error-input">{errors.name}</p>}{" "}
+            <p>Price: </p>
+            <input
+              type="number"
+              name="price"
+              ontouchstart={handleChangePrice}
+              value={product.price}
+              onChange={handleChangePrice}
+            />
+            {errors.price && <p className="error-input">{errors.price}</p>}
+          </div>
+          <div className="duo-inputs">
+            <p>Stock: </p>
+            <input
+              type="number"
+              name="stock"
+              value={product.stock}
+              onChange={handleChangeStock}
+            />
+            {errors.stock && <p className="error-input">{errors.stock}</p>}
+            <p>Status:</p>
+            <select name="status" onChange={handleChange}>
+              <p> Status:</p>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+          <p>Description </p>
           <textarea
             name="description"
-            cols="30"
-            rows="10"
+            cols="50"
+            rows="3"
             value={product.description}
             onChange={handleChangeDescription}
           >
@@ -221,13 +203,37 @@ export default function EditProduct() {
           {errors.description && (
             <p className="error-input">{errors.description}</p>
           )}
-        </div>
-        <div classname="btn-login">
-          <input type="submit" name="Update info" className="input-submit" />
+          <div className="selector-cats">
+            <p>Select:</p>
+            <select onChange={handleChangeCat}>
+              <option value="" hidden>
+                Category
+              </option>
+              {state.categories?.length &&
+                state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
+                state.categories.map((category) => (
+                  <option key={category.id} value={category.name || category}>
+                    {category.name}
+                  </option>
+                ))}
+            </select>
+            <div className="select-categories-del">
+              {product.categories.length &&
+                product.categories?.map((category, i) => (
+                  <p key={i} className="cat-name">
+                    {category.name || category}
+                    <button
+                      className="btn-del-edit"
+                      onClick={(event) => handleDeleteCat(category, event)}
+                    >
+                      x
+                    </button>
+                  </p>
+                ))}
+            </div>
+          </div>
         </div>
       </form>
-
-      <button onClick={handleDelete}>Delete product</button>
     </div>
   );
 }
