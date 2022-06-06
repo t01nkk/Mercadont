@@ -1,0 +1,91 @@
+.cardsContainer {
+  height: 50px;
+  width: 200px;
+  display: grid;
+  align-self: center;
+  margin: 0%;
+  text-align: center;
+}
+.create {
+  padding: 4px 0 0 0;
+  margin: 0 0 0 0;
+  height: 39px;
+  width: 80px;
+  margin-right: 20px;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: gainsboro;
+  transition: 0.3s;
+}
+
+.add-button-div {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin-left: 12px;
+  float: right;
+}
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions button {
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 0 0 0;
+  padding: 0 7px 0 2px;
+}
+
+.input-submit {
+  background-color: black;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  align-items: center;
+  font-size: 1.14rem;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+.btn-createUser {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+}
+form .btn-login input:hover {
+  background: gray;
+}
+.input-submit:link,
+.input-submit:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 40px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.input-submit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.input-submit:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}

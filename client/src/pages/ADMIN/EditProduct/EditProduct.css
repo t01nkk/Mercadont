@@ -1,0 +1,114 @@
+.container-edit-admin {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+}
+.container-edit-admin p {
+  font-size: 1.32rem;
+  font-weight: 300;
+}
+.form-edit-admin h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.form-edit-admin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+  margin: 0 20%;
+  align-items: center;
+}
+.duo-inputs {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.duo-inputs-selector {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.selector-cats {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+.selector-cats p {
+  margin: 2px 0;
+}
+.cat-name {
+  font-size: 1rem;
+  display: flex;
+}
+.img-product {
+  height: auto;
+  width: 22%;
+}
+.divInputadmin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.divInputadmin select {
+  width: 15rem;
+  text-align: center;
+  margin: 5px;
+  height: 1.42rem;
+}
+.divInputadmin input {
+  width: 15rem;
+  text-align: center;
+  height: 1.42rem;
+  margin: 5px;
+}
+
+.btn-del-edit {
+  font-size: 1rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  background-color: #fff;
+  border: solid 1px black;
+  margin-top: 3px;
+  margin-left: 5px;
+}
+.btn-del-edit:hover {
+  background-color: #e6ccb274;
+}
+.select-categories-del {
+  height: 25rem;
+}
+.btn-update-info {
+  margin: 2.5rem 0;
+  background-color: #fff;
+  color: black;
+  font-size: 1.3rem;
+  border: 0.5px solid black;
+  width: 20rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+}
+.btn-update-info:hover {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  background-color: #e6ccb23b;
+}
+.delete-product {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.delete-product button {
+  background-color: rgba(255, 255, 255, 0.68);
+  border: 2px solid rgb(143, 0, 0);
+  border-radius: 50px;
+  width: 15rem;
+  text-transform: uppercase;
+}
+.delete-product button:hover {
+  background-color: rgba(255, 0, 0, 0.103);
+}

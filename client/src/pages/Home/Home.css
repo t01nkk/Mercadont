@@ -1,7 +1,23 @@
-.section-products {
+/* .section-products {
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+} */
+.section-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(2rem, 20rem));
+  gap: 3.5rem;
+  justify-content: center;
+}
+
+.container-loader{
+  height: 45vh;
+  /* grid-column: 1/; */
+  margin: auto;
+  align-items: flex-end;
+  width: 65vw;
+  display: flex;
+  justify-content: center;
 }

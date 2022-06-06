@@ -28,20 +28,31 @@ let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].s
 sequelize.models = Object.fromEntries(capsEntries);
 
 
-const { User, Product, Category } = sequelize.models;
+const { User, Product, Category, Review, Qa, PurchaseOrder } = sequelize.models;
 
-// User.hasMany(Product); //RELACION PARA 
-// Product.belongsTo(User);// VENDEDOR
+Product.belongsToMany(User, { through: 'favorites' }); //Relation for
+User.belongsToMany(Product, { through: 'favorites' });// favorites
 
-Product.belongsToMany(User, { through: 'bought' }); //RELACION PARA 
-User.belongsToMany(Product, { through: 'bought' });// COMPRADOR 
+// Product.belongsToMany(PurchaseOrder, { through: 'purchases' })
+// PurchaseOrder.belongsToMany(Product, { through: 'purchases' })
 
-Category.belongsToMany(Product, { through: 'productCategories' })
-Product.belongsToMany(Category, { through: 'productCategories' })
+// User.belongsToMany(PurchaseOrder, { through: 'purchases' })
+// PurchaseOrder.belongsToMany(User, { through: 'purchases' })
 
-// Product.belongsToMany(User, { through: 'Bought' }); 
-// User.belongsToMany(Product, { through: 'Bought' });
+Category.belongsToMany(Product, { through: 'productCategories' }); //Relation for
+Product.belongsToMany(Category, { through: 'productCategories' }); //categories
 
+Product.belongsToMany(Qa, { through: 'productQAs' }); //Relation for questions and answers
+Qa.belongsTo(Product);
+
+User.belongsToMany(Qa, { through: 'userQAs' });
+Qa.belongsTo(User);
+
+Product.belongsToMany(Review, { through: 'productReviews' }); //Relation for reviews
+Review.belongsTo(Product);
+
+User.belongsToMany(Review, { through: 'userReviews' });
+Review.belongsTo(User);
 
 module.exports = {
     ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

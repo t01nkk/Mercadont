@@ -1,0 +1,35 @@
+.articleBuys{
+    display: flex;
+    width: 100%;
+    height: 8vh;
+}
+
+.articleBuys h3{width: 35%;
+}
+
+.articleBuys>div{
+    width: 100%;    
+    display: grid;
+    grid-template-columns: repeat(12,1fr);
+    grid-template-rows: inherit;
+}
+
+.articleBuys>div>p{
+    grid-column: 1/5;
+    font-weight: 600;
+    margin-left: 5%;
+}
+
+.articleBuys>div>.container-details-buys{
+    grid-column: 5/13;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.articleBuys>div>.container-details-buys>p>span{
+    font-weight: 600;
+}
+
+.cardElement{
+    width: 100%;
+}
