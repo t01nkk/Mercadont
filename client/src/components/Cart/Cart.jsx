@@ -27,7 +27,6 @@ export const Cart = () => {
   const deleteDatatoStorage = (name) => {
     let newLocalStorage = yourStorage?.filter((e) => e.name !== name);
     setStorageCart(newLocalStorage);
-    console.log(newLocalStorage);
     localStorage.setItem(user, JSON.stringify(newLocalStorage));
     setPriceTotal(totalPrice());
     // totalPrice()
@@ -47,7 +46,7 @@ export const Cart = () => {
   //Funcion para limpiar carro
   const clearCart = (e) => {
     const answer = window.confirm("Are you sure you want to clear your cart?")
-    if(answer){
+    if (answer) {
       setStorageCart([]);
       setPriceTotal(totalPrice())
       localStorage?.removeItem(user);
@@ -62,8 +61,8 @@ export const Cart = () => {
   };
 
   return (
-    <div>{}
-      <button onClick={() => clearCart()}  disabled={storageCart?.length < 1}>Clear Cart</button>
+    <div>{ }
+      <button onClick={() => clearCart()} disabled={storageCart?.length < 1}>Clear Cart</button>
       <section>
         <h2>Welcome to your Cart</h2>
         <div>
@@ -83,20 +82,20 @@ export const Cart = () => {
                 setPriceTotal={setPriceTotal}
               />
             ))
-          )  
-          : <h3>Your Cart is Empty</h3>
+          )
+            : <h3>Your Cart is Empty</h3>
           }
         </div>
         {storageCart && storageCart.length > 0 ?
           <p>
-          Total price:
-          {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
-        </p>
-        : null
+            Total price:
+            {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
+          </p>
+          : null
         }
         {
-          storageCart && storageCart?.length !== 0 ? <button onClick={makePurchase} disabled={storageCart === null}>Buy</button> 
-          : null
+          storageCart && storageCart?.length !== 0 ? <button onClick={makePurchase} disabled={storageCart === null}>Buy</button>
+            : null
         }
       </section>
 

@@ -9,7 +9,6 @@ router.post("/register", async (req, res, next) => {
   const { name, lastname, email, address, image, payment, id } = req.body;
   try {
     const userExist = await User.findOne({ where: { email: email } });
-    // console.log(userExist ? userExist : null, "HERE BE USER");
     if (!userExist) {
       await User.create({
         email: email,
@@ -33,19 +32,20 @@ router.post("/register", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
   // const { email, password } = req.body;
-  const { name, email, image,id } = req.body;
+  const { name, email, image, id } = req.body;
   try {
-    const userExist = await User.findOrCreate({where: {id:id}, defaults:{
+    const userExist = await User.findOrCreate({
+      where: { id: id }, defaults: {
         email: email,
         name: name,
         image: image,
         created: true,
         id: id,
-    }}
-      )
-    // console.log(userExist ? userExist : null, "HERE BE USER");
+      }
+    }
+    )
 
-  res.send({ msg: "User Logged In" });
+    res.send({ msg: "User Logged In" });
   }
   catch (err) {
     console.log(err)
@@ -149,7 +149,6 @@ router.get("/favorite/:id", async (req, res) => {
     }
     return res.status(200).send(userFavorites.products);
   } catch (error) {
-    // console.log("error:",error)
     return res.status(404).send(error);
   }
 });
