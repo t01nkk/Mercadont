@@ -20,9 +20,11 @@ export default function AccountDetailsForm() {
       postalCode: "",
     },
     password: "",
-    image:"",  
-  });
+    image:"",
 
+   
+  }); 
+  let id= localStorage.getItem("myUser")
 
   const fetchUser = async () => {
     // console.log(state.user)
@@ -44,10 +46,8 @@ export default function AccountDetailsForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, name,  lastname,address, image, password  } =
-      user;
-     
-
+    const { email, name,  lastname,address, image, password  } = user;
+      // console.log(id)
     try {
       const res = await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
         email,
@@ -114,14 +114,13 @@ export default function AccountDetailsForm() {
           value={user.lastname}
           onChange={handleChange}
         />
-        
-         </div>
-         
-         <div className="divInputUser">
+      </div>
+
+     {/*  <div className="divInputUser">
          <p className="title">address: </p>
         <input
           type="text"
-          name="city"
+          name="address"
           placeholder="City..."
           value={user.address.city}
           onChange={handleChange}
@@ -131,7 +130,7 @@ export default function AccountDetailsForm() {
         
         <input
           type="text"
-          name="country"
+          name="address"
           placeholder="Country..."
           value={user.address.country}
           onChange={handleChange}
@@ -141,7 +140,7 @@ export default function AccountDetailsForm() {
   
         <input
           type="text"
-          name="postalCode"
+          name="address"
           placeholder="postalCode"
           value={user.address.postalCode}
           onChange={handleChange}
@@ -151,7 +150,7 @@ export default function AccountDetailsForm() {
          
         <input
           type="text"
-          name="province"
+          name="address"
           placeholder="Province"
           value={user.address.province}
           onChange={handleChange}
@@ -161,33 +160,29 @@ export default function AccountDetailsForm() {
        
         <input
           type="text"
-          name="street"
+          name="address"
           placeholder="Street..."
           value={user.address.street}
           onChange={handleChange}
         />         
-         </div>   
-         
-       {/*   <div className="divInputUser">
-         <p className="title">password: </p>
-        <input
-          type="password"
-          name="password"
-          placeholder="Password..."
-          value={user.password}
-          onChange={handleChange}
-        />         
-         </div> */}  
-         <div className="divInputUser">
-         <p className="title">Image: </p>
-            <input
-              type="text"
-              name="image"
-              placeholder="Image..."
-              onChange={handleChange}
-              value={user.image}
-            />
-          </div>       
+         </div>  */}
+      
+  
+      <div className="">
+        <p className="title">password: </p>
+        <button onClick={(e) => handleResetPassword(e)}>Change Password</button>       
+      </div>
+
+      <div className="divInputUser">
+        <p className="title">Image: </p>
+          <input
+            type="text"
+            name="image"
+            placeholder="Image..."
+            onChange={handleChange}
+            value={user.image}
+          />
+      </div>       
         <div className="btn-login">
         <input type="submit"  name="Update info" className="input-submit"/>
         </div>
