@@ -9,8 +9,8 @@ export const ListProductsBuys = ({
   amount,
 }) => {
   return (
-    <article>
-      <div className="articleBuys">
+    <article className="articleBuys">
+      <div>
         <h3>{name}</h3>
         <div>
           <p>Price: {`${accounting.formatMoney(price, "U$D ", 0)}`}</p>
