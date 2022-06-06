@@ -17,7 +17,6 @@ router.post("/register", async (req, res, next) => {
         address: address,
         image: image,
         payment: payment,
-        created: true,
         id: id,
       });
 
@@ -39,7 +38,6 @@ router.post("/login", async (req, res, next) => {
         email: email,
         name: name,
         image: image,
-        created: true,
         id: id,
       }
     }

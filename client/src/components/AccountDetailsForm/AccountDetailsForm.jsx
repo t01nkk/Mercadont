@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import { useStore } from "../../context/store";
 import {} from "react-router-dom";
 import { useAuth } from "../../context/authContext";
@@ -8,6 +8,7 @@ export default function AccountDetailsForm() {
   
   const { resetPassword } = useAuth();
   const [state, dispatch] = useStore();
+  const history = useHistory()
   const [user, setUser] = useState({
     email: state.user.email,
     name: "",
@@ -61,7 +62,8 @@ export default function AccountDetailsForm() {
       });
       console.log("entre",res)
       // console.log(user);
-      return res
+      history.push("/")
+      return
     } catch (err) {
       // console.log(err);
       return err
@@ -93,16 +95,7 @@ export default function AccountDetailsForm() {
     <div>
       <h2>Edit profile</h2>
       <form onSubmit={handleSubmit}>
-      <div className="divInputUser">
-      <label className="title">Email</label>
-        <input
-          type="email"
-          name="email"
-          value={user.email}        
-          onChange={handleChange}
-        />
-        </div>
-          <div className="divInputUser">
+        <div className="divInputUser">
           <p className="title">Name: </p>
         <input
           type="text"
@@ -190,7 +183,7 @@ export default function AccountDetailsForm() {
           />
       </div>       
         <div className="btn-login">
-        <input type="submit"  name="Update info" className="input-submit"/>
+        <input type="submit"  name="Update info" className="input-submit" />
         </div>
         
       </form>
