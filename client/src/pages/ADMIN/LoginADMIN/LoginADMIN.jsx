@@ -9,25 +9,7 @@ export default function LoginADMIN() {
   const { login } = useAuth();
   const handleLogin = async (values) => {
     try {
-      const user = await axios({
-        method: "POST",
-        data: {
-          email: values.email,
-          password: values.password,
-        },
-        withCredentials: true,
-        url: `${process.env.REACT_APP_DOMAIN}/user/login`,
-      });
-
-      // const user = await axios({
-      //   method: "POST",
-      //   data: {
-      //     email: data.email,
-      //     password: data.password,
-      //   },
-      //   withCredentials: true,
-      //   url: `${process.env.REACT_APP_DOMAIN}/user/login`,
-      // });
+      console.log("entre en el try", values);
       const userCredentials = await login(values.email, values.password);
 
       if (userCredentials.user.uid) {
@@ -57,7 +39,6 @@ export default function LoginADMIN() {
     <div className="container-login">
       <Formik
         initialValues={{
-          name: "",
           email: "",
           password: "",
         }}

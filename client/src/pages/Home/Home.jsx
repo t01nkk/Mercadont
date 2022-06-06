@@ -20,7 +20,7 @@ export default function Home() {
   let person = JSON.parse(localStorage.getItem("myUser"));
   const alertAddedToCart = () => {
     toast.success("Added to cart!", {
-      position: "bottom-center",
+      position: "bottom-left",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -30,9 +30,21 @@ export default function Home() {
       theme: "dark",
     });
   };
+
+  const [input, setInput] = useState({
+    name: "",
+    tuMama: "",
+    address: {
+      country: "",
+      province: "",
+      city: "",
+      street: "",
+      postalCode: "",
+    },
+  });
   const alertAlreadyInCart = () => {
-    toast.success("Already in cart!", {
-      position: "bottom-center",
+    toast.warn("Already in cart!", {
+      position: "bottom-left",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -57,9 +69,10 @@ export default function Home() {
       alertAddedToCart();
     }
   };
- 
+
   const handleSaveFavorite = async (id) => {
-    if (!person) return  alert("You must be Logged In to add items to your favorites list")
+    if (!person)
+      return alert("You must be Logged In to add items to your favorites list");
     try {
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
         idUser: person,

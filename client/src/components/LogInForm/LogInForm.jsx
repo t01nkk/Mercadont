@@ -11,6 +11,7 @@ export default function LogInForm() {
 
   const handleLogin = async (values) => {
     try {
+      
       const userCredentials = await login(values.email, values.password);
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
         id: userCredentials.user.uid,
