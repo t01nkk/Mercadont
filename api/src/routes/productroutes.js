@@ -167,7 +167,8 @@ router.get("/:id", async (req, res) => {
 // Working
 //Create Product
 router.post("/create", async (req, res) => {
-  let { name, price, description, status, image, stock, categories, sizes } = req.body
+  let { name, price, description, status, image, stock, categories, sizes } =
+    req.body;
   let exists = await Product.findOne({ where: { name: name } });
 
   if (exists)
@@ -188,8 +189,15 @@ router.post("/create", async (req, res) => {
 
   try {
     const newProduct = await Product.create({
-      name, price, description, status, image, stock, created: true, sizes
-    })
+      name,
+      price,
+      description,
+      status,
+      image,
+      stock,
+      created: true,
+      sizes,
+    });
     for (var i = 0; i < categories.length; i++) {
       let category = await Category.findOne({ where: { name: categories[i] } });
       if (!category) {
@@ -219,15 +227,16 @@ router.delete("/delete/:id", async (req, res) => {
 // Working
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/update/:id", async (req, res) => {
-  const { id } = req.params
-  const { name, price, description, image, stock, categories, sizes, status } = req.body
+  const { id } = req.params;
+  const { name, price, description, image, stock, categories, sizes, status } =
+    req.body;
 
   const errors = validateInputProduct(
     name,
-    price,
+    parseInt(price),
     description,
     image,
-    stock,
+    parseInt(stock),
     categories,
     status
   );
@@ -256,7 +265,7 @@ router.put("/update/:id", async (req, res) => {
         image,
         stock,
         sizes,
-        status
+        status,
       },
       {
         where: { id: id },
@@ -293,6 +302,6 @@ router.post("/buys", async (req, res) => {
   } catch (error) {
     return res.send(error);
   }
-})
+});
 
-module.exports = router
+module.exports = router;

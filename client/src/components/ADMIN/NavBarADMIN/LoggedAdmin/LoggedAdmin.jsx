@@ -12,12 +12,6 @@ export default function LoggedAdmin() {
     <div className="header-nav">
       <div className="container-actions-user">
         {/* <Link to="/">Home</Link> */}
-        <div className="dropdown">
-          <a className="dropbtn">Categories</a>
-          <div className="dropdown-content-categories">
-            <FilterCategories />
-          </div>
-        </div>
       </div>
       <div className="container-actions-user">
         <div className="dropdown">
@@ -29,7 +23,9 @@ export default function LoggedAdmin() {
             <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/sellProduct">
               Sell
             </Link>
-            <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/addCategories">Create Categories</Link>
+            <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/addCategories">
+              Create Categories
+            </Link>
             <Link
               onClick={logOutSession}
               to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/login"

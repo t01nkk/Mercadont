@@ -56,7 +56,7 @@ $radius: 0.2rem; */
 }
 
 .card-image {
-  height: 30rem;
+  height: 27rem;
   width: 100%;
   object-fit: cover;
   transition: transform 200ms ease-in;

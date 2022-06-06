@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
 import { fetchCategories } from "../../../redux/actions/actions.js";
 
-
 export default function EditProduct() {
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
@@ -22,48 +21,48 @@ export default function EditProduct() {
     priceExpression: /^\d{1,14}$/,
     descriptionExpression: /^[a-zA-ZÀ-ÿ\s]{1,200}$/,
     stockExpression: /^\d{1,14}$/,
-  }
+  };
 
   function validator(input) {
     let errors = {};
 
     if (!expression.nameExpression.test(input.name)) {
-      errors.name = 'Name is necessary';
+      errors.name = "Name is necessary";
     }
     if (!expression.priceExpression.test(input.price)) {
-      errors.price = 'Price is necessary';
+      errors.price = "Price is necessary";
     }
     if (!expression.descriptionExpression.test(input.description)) {
-      errors.description = 'Description is necessary';
+      errors.description = "Description is necessary";
     }
     if (!expression.stockExpression.test(input.stock)) {
-      errors.stock = 'Stock is necessary';
+      errors.stock = "Stock is necessary";
     }
-    return errors
+    return errors;
   }
 
   const handleChangeName = (e) => {
-    setErrors("")
+    setErrors("");
     setErrors(validator({ ...product, [e.target.name]: e.target.value }));
 
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
 
   const handleChangePrice = (e) => {
-    setErrors("")
+    setErrors("");
     setErrors(validator({ ...product, [e.target.name]: e.target.value }));
 
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
   const handleChangeDescription = (e) => {
-    setErrors("")
+    setErrors("");
     setErrors(validator({ ...product, [e.target.name]: e.target.value }));
 
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
   const handleChangeStock = (e) => {
-    setErrors("")
-      (validator({ ...product, [e.target.name]: e.target.value }));
+    setErrors("");
+    setErrors(validator({ ...product, [e.target.name]: e.target.value }));
 
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
@@ -85,7 +84,9 @@ export default function EditProduct() {
   let { id } = useParams();
 
   const fetchProductById = async () => {
-    let fetchedProduct = await axios.get(`${process.env.REACT_APP_DOMAIN}/product/${id}`);
+    let fetchedProduct = await axios.get(
+      `${process.env.REACT_APP_DOMAIN}/product/${id}`
+    );
     const destructuringCats = [];
     const { categories } = fetchedProduct.data;
     for (const cats of categories) {
@@ -106,15 +107,19 @@ export default function EditProduct() {
     const { name, description, price, stock, image, categories, status } =
       product;
     try {
-      const res = await axios.put(`${process.env.REACT_APP_DOMAIN}/product/update/${id}`, {
-        name,
-        description,
-        price,
-        stock,
-        image,
-        status,
-        categories,
-      });
+      const res = await axios.put(
+        `${process.env.REACT_APP_DOMAIN}/product/update/${id}`,
+        {
+          name,
+          description,
+          price,
+          stock,
+          image,
+          status,
+          categories,
+        }
+      );
+      console.log("LOGRE EDITARLO ", res);
     } catch (err) {
       console.log(err);
     }
@@ -124,15 +129,17 @@ export default function EditProduct() {
   };
   const handleDelete = async () => {
     try {
-      await axios.delete(`${process.env.REACT_APP_DOMAIN}/product/delete/${id}`);
+      await axios.delete(
+        `${process.env.REACT_APP_DOMAIN}/product/delete/${id}`
+      );
       alert("product deleted successfully");
     } catch (err) {
       console.log(err);
     }
   };
+  console.log(product);
   return (
     <div className="container-login">
-
       <h2>Edit product</h2>
       <form onSubmit={handleSubmit}>
         <img src={`${product.image}`} height={"500px"} width={"300px"} alt="" />
@@ -146,7 +153,7 @@ export default function EditProduct() {
             ontouchstart={handleChangeName}
             onChange={handleChangeName}
           />
-          {errors.name && (<p className='error-input'>{errors.name}</p>)}
+          {errors.name && <p className="error-input">{errors.name}</p>}
         </div>
         <div className="divInputUser">
           <p className="title">Price: </p>
@@ -157,7 +164,7 @@ export default function EditProduct() {
             value={product.price}
             onChange={handleChangePrice}
           />
-          {errors.price && (<p className='error-input'>{errors.price}</p>)}
+          {errors.price && <p className="error-input">{errors.price}</p>}
         </div>
         <div className="divInputUser">
           <p className="title">Available stock: </p>
@@ -167,7 +174,7 @@ export default function EditProduct() {
             value={product.stock}
             onChange={handleChangeStock}
           />
-          {errors.stock && (<p className='error-input'>{errors.stock}</p>)}
+          {errors.stock && <p className="error-input">{errors.stock}</p>}
         </div>
         <div className="divInputUser">
           <p className="title">Status and categories </p>
@@ -211,16 +218,16 @@ export default function EditProduct() {
           >
             {product.description}
           </textarea>
-          {errors.description && (<p className='error-input'>{errors.description}</p>)
-          }</div>
+          {errors.description && (
+            <p className="error-input">{errors.description}</p>
+          )}
+        </div>
         <div classname="btn-login">
           <input type="submit" name="Update info" className="input-submit" />
         </div>
-
       </form>
 
       <button onClick={handleDelete}>Delete product</button>
     </div>
-
   );
 }
