@@ -25,13 +25,11 @@ addressUser?.map(e=>{
 
   const fetchUser = async () => {
     let userCookie = JSON.parse(localStorage.getItem("myUser"));
-    console.log(userCookie);
     try {
       const userDB = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/user/details/${userCookie}`
       );
       setUser(userDB.data);
-      console.log(user)
     } catch (err) {
       console.log(err);
     }
@@ -47,9 +45,9 @@ addressUser?.map(e=>{
       <div className="profile-container">
         <div className="profile-info">
           <p className="profile-title">Your Info:</p>
-          {user?.image?
-          <img src={user?.image} alt="No Image"/>:
-          <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" alt="No Image" height="40px"/>
+          {user?.image ?
+            <img src={user?.image} alt="No Image" /> :
+            <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" alt="No Image" height="40px" />
           }
           <p className="profile-title">Email:</p>
           <p>{user?.email}</p>

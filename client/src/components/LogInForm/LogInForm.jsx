@@ -59,21 +59,6 @@ export default function LogInForm() {
     }
   };
 
-  //RESET PASSWORD FORMIK
-  /*
- const handleResetPassword = async (values)=>{
-   console.log(values.email)
-   if (!values.email) return console.log("Please Enter Your Email")
-   try {
-    await resetPassword(values.email)
-     alert("Check your email inbox to reset your password")
-   }
-   catch (err){
-     alert(err.message)
-   }
- }
-*/
-
   return (
     <div className="container-login">
       <Formik
@@ -151,7 +136,7 @@ export default function LogInForm() {
             <div className="createUser-container">
               <div>
                 <button onClick={handleGoogleSignin} className="btn btn-primary google-plus">
-                  <img height="25px" src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt="Google Logo"/>  Login With Google
+                  <img height="25px" src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt="Google Logo" />  Login With Google
                 </button>
               </div>
               {/* 
@@ -164,7 +149,7 @@ export default function LogInForm() {
             cookiePolicy={"single_host_origin"}
           /> */}
               <div className="create-container">
-              <p>Not a user yet?</p>
+                <p>Not a user yet?</p>
                 <div className="btn-createUser">
                   <Link to="/createUser">Create User</Link>
                 </div>

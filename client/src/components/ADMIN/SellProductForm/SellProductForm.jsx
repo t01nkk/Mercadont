@@ -90,7 +90,6 @@ export default function SellProductForm() {
     setData({ ...data, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
-    console.log("ENTRE EN EL TRY");
     e.preventDefault();
     const { name, price, description, image, status, stock, categories } = data;
     try {

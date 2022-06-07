@@ -1,11 +1,9 @@
 const { Router } = require("express");
 const router = Router();
 const { User, Product } = require("../db");
-const {validateInputUser} = require("../middlewares/middlewares")
 
 
 router.post("/register", async (req, res, next) => {
-  // const { email, password } = req.body;
   const { name, lastname, email, address, image, payment, id } = req.body;
   try {
     const userExist = await User.findOne({ where: { email: email } });
@@ -23,15 +21,15 @@ router.post("/register", async (req, res, next) => {
       return res.send({ msg: "User Registered" });
     } else {
       await User.update(
-          {
-            name: name,
-            lastname: lastname,
-            email: email,
-            address:address,
-            image:image,
-            id:id
-          },
-          { where: { email: email } }
+        {
+          name: name,
+          lastname: lastname,
+          email: email,
+          address: address,
+          image: image,
+          id: id
+        },
+        { where: { email: email } }
       );
 
       return res.status(200).send("Existing user updated");
@@ -40,6 +38,8 @@ router.post("/register", async (req, res, next) => {
     next(err);
   }
 });
+
+//CURRENT LOGIN 
 
 router.post("/login", async (req, res, next) => {
   // const { email, password } = req.body;
@@ -70,7 +70,6 @@ router.post("/login", async (req, res, next) => {
 // Get User
 router.get("/details/:id", async (req, res) => {
   const { id } = req.params;
-
   try {
     const user = await User.findOne({
       where: { id: id },
@@ -101,7 +100,7 @@ console.log(req.body.address)
     const updatedUser = await User.update(
       {
         name: name,
-        lastname: lastname,       
+        lastname: lastname,
         email: email,
         address:JSON.stringify({country,province, city, street, postalCode}),
         image:image
