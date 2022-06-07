@@ -12,7 +12,7 @@ export default function GuestNavBar() {
         <Link to="/">Home</Link>
         <div className="dropdown">
           <a className="dropbtn">Categories</a>
-          <div className="dropdown-content">
+          <div className="dropdown-content-categories">
             <FilterCategoies />
           </div>
         </div>

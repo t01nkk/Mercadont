@@ -62,6 +62,18 @@ export default function FilerCategories() {
     fetchCategories(dispatch);
   }, []);
 
+  async function resetFilters(){
+    document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
+    setFilter({
+      categories: [],
+    });
+    const allProducts = await axios.get(`${process.env.REACT_APP_DOMAIN}/product`)
+    dispatch({
+      type: FETCH_PRODUCTS,
+      payload: allProducts.data
+    })
+  }
+
   return (
     <div>
       {redirect ? <Redirect push to="/categories" /> : null}
@@ -70,12 +82,11 @@ export default function FilerCategories() {
           handleSearch(e);
         }}
       >
-        <div className="form-checkbox-container">
-          <div className="from-checkbox-grid">
+        <div>
+          <div>
             {state.categories.map((categories) => (
-              <div key={categories.name} className="from-checkbox">
-                <div className="from-checkbox-input">
-                  <label htmlFor={categories.name}>{categories.name}</label>
+              <div className="dropdown-item p-l-2" key={categories.name}>
+                <div>
                   <input
                     value={categories.name}
                     type="checkbox"
@@ -84,13 +95,14 @@ export default function FilerCategories() {
                       handleSelect(e);
                     }}
                   />
+                  <label htmlFor={categories.name} >{categories.name}</label>
                 </div>
               </div>
             ))}
           </div>
         </div>
-
-        <button type="submit">buscar</button>
+        <button className="btn-dark" >Search</button>
+        <button onClick={resetFilters}  className="btn-danger">Reset Filters</button>
       </form>
     </div>
   );

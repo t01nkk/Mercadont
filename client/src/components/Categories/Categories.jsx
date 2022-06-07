@@ -124,8 +124,10 @@ export default function Categories() {
       filter = filter.filter((product) => product.price <= max);
     }
     if (max && min && parseInt(max) < parseInt(min)) {
-      setError("Please select valid numbers for the min and max inputs");
-      filter = [];
+      alert("Please select valid numbers for the min and max inputs");
+      setMax("")
+      setMin("")
+      filter = state.filterCategory;
     }
     if (error) {
       alert("Please Add Valid inputs");
@@ -159,40 +161,49 @@ export default function Categories() {
     handleRedirect();
   }, []);
   return (
-    <div>
-      <div className="selectF">
-        <div>
-          <select
-            defaultValue=""
-            onChange={(e) => {
-              handleOrder(e);
-            }}
-          >
-            <option value="">Sort !</option>
-            <option value="ASCENDING">⬇</option>
-            <option value="DESCENDING">⬆ </option>
-          </select>
+    <div >
+      <div className="input-group-lg">
+        <div className="d-inline-flex align-items-center justify-content-center">
+
+
+          <form className="form-filter-price" onSubmit={handleSearch}>
+            <label htmlFor="">Price Range: </label>
+            <input
+                id="filter2"
+                type="number"
+                value={min}
+                placeholder="min..."
+                min={0}
+                onChange={handleChangeMin}
+            />
+          </form>
+          -
+          <form className="form-filter-price" onSubmit={handleSearch}>
+            <input
+                id="filter"
+                type="number"
+                value={max}
+                placeholder="max..."
+                min={0}
+               onChange={handleChangeMax}
+            />
+          </form>
+          <button onClick={handleSearch}> Filter By Price</button>
+          <div>
+            <select  className="dropdown"
+                     defaultValue=""
+                     onChange={(e) => {
+
+                       handleOrder(e);
+                     }}
+            >
+              <option value="" className="dropdown">Sort</option>
+              <option value="ASCENDING" className="dropdown-item">⬇</option>
+              <option value="DESCENDING" className="dropdown-item">⬆ </option>
+            </select>
+          </div>
         </div>
 
-        <form className="form-filter-price" onSubmit={handleSearch}>
-          <input
-            id="filter2"
-            type="text"
-            value={min}
-            placeholder="min..."
-            onChange={handleChangeMin}
-          />
-        </form>
-        <form onSubmit={handleSearch}>
-          <input
-            id="filter"
-            type="text"
-            value={max}
-            placeholder="max..."
-            onChange={handleChangeMax}
-          />
-        </form>
-        {error && <p>{error}</p>}
       </div>
       {redirect ? <Redirect push to="/home" /> : null}
       <div className="section-products">
