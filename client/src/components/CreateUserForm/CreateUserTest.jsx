@@ -1,14 +1,41 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Formik } from "formik";
-import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import {useHistory} from 'react-router-dom'
 import { useAuth } from "../../context/authContext";
-
 export default function LogInForm() {
   const history = useHistory();
+
   // const handleChange = (e) => {
   //   setData({ ...data, [e.target.name]: e.target.value });
   // };
+
+  const alertUserRegistered = () => {
+    toast.success('User registered correctly!', {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark"
+    })
+  }
+
+  const alertMailError = (cadenita) => {
+    toast.warning(cadenita, {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark"
+    })
+  }
 
   const { signup } = useAuth();
   const [error, setError] = useState();
@@ -21,10 +48,19 @@ export default function LogInForm() {
         name: values.name,
         email: values.email,
       });
-      history.push("/login");
+      alertUserRegistered()
+      setTimeout(() => {
+         history.push("/login");
+      }, 4000)
     } catch (err) {
-      if (err.code === "auth/internal-error") setError("Correo Invalido");
-      if (err.code === "auth/email-already-in-use") setError("El correo ya se encuentra en uso");
+      if (err.code === "auth/internal-error") {
+        alertMailError('Mail provided is not supported. Please choose another one.')     
+      }
+        
+      if (err.code === "auth/email-already-in-use") {
+alertMailError('Mail is already being used. Please choose another one.') 
+      }
+      
     }
   };
 
@@ -133,6 +169,7 @@ export default function LogInForm() {
           </div>
         )}
       </Formik>
+      <ToastContainer />
     </div>
   );
 };

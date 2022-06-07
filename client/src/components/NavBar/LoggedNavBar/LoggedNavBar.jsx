@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { useStore } from "../../../context/store";
 import { Link, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import FilterCategories from "../../FilterCategories/FilterCategories";
 import { getFavorites } from "../../../redux/actions/actions.js";
 import SearchBar from "../../SearchBar/SearchBar";
 import "./LoggedNavBar.css";
 import { useAuth } from "../../../context/authContext";
 export default function LoggedNavBar() {
+  const { t } = useTranslation()
   const [state, dispatch] = useStore();
 
   useEffect(() => {
@@ -29,9 +31,9 @@ export default function LoggedNavBar() {
   return (
     <div className="header-nav">
       <div className="container-actions-user">
-        <Link to="/">Home</Link>
+        <Link to="/">{t("loggedNavBar.home") }</Link>
         <div className="dropdown">
-          <a className="dropbtn">Categories</a>
+          <a className="dropbtn">{t("loggedNavBar.categories") }</a>
           <div className="dropdown-content-categories">
             <FilterCategories />
           </div>
@@ -40,14 +42,14 @@ export default function LoggedNavBar() {
       <SearchBar />
       <div className="container-actions-user">
         <div className="dropdown">
-          <a className="dropbtn">Profile</a>
+          <a className="dropbtn">{t("loggedNavBar.profile") }</a>
           <div className="dropdown-content">
-            <Link to="/accountDetails"> Account Details </Link>
-            <Link to="/favorites">Favorites</Link>
-            <a onClick={logoutSesion}>Log Out</a>
+            <Link to="/accountDetails">{t("loggedNavBar.accountDetails") }</Link>
+            <Link to="/favorites">{t("loggedNavBar.favorites") }</Link>
+            <a onClick={logoutSesion}>{t("loggedNavBar.logOut") }</a>
           </div>
         </div>
-        <Link to="/cart">Cart</Link>
+        <Link to="/cart">{t("loggedNavBar.cart") }</Link>
       </div>
     </div>
   );

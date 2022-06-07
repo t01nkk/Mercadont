@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
-import { Link } from "react-router-dom";
+import {  CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import axios from "axios"
-import { totalPrice } from '../Cart/actionsCart'
 import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
+import { useTranslation } from 'react-i18next';
 
 export const SendBuys = () => {
+    const { t } = useTranslation()
     const stripe = useStripe()
     const elements = useElements()
 
@@ -25,7 +25,7 @@ export const SendBuys = () => {
 
             if (!error) {
                 const { id } = paymentMethod
-                const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
+                await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
                     id,
                     amount: priceTotal * 100,
                     local,
@@ -38,8 +38,8 @@ export const SendBuys = () => {
 
     const handelClik = async (e) => {
         e.preventDefault()
-        if (e.target.textContent === "card") setSelectBuys("card")
-        if (e.target.textContent === "paypal") {
+        if (e.target.id === "card") setSelectBuys("card")
+        if (e.target.id === "paypal") {
             setSelectBuys("paypal")
             const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/payPal/create-order`, {
                 purchase_units: [
@@ -78,7 +78,7 @@ export const SendBuys = () => {
 
     return (<form onSubmit={handleSubmit}>
         <div>
-            <h2>Product list:</h2>
+            <h2>{t("sendBuys.productsList") }</h2>
             <div>
                 {products && products.map((el, index) =>
                 (<ListProductsBuys
@@ -93,16 +93,16 @@ export const SendBuys = () => {
             </div>
         </div>
         <div>
-            <p>Choose your payment method</p>
-            <button onClick={e => handelClik(e)}>card</button>
-            <button onClick={e => handelClik(e)} type='submit'>paypal</button>
+            <p>{t("sendBuys.paymentMethod") }</p>
+            <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card") }</button>
+            <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal") }</button>
         </div>
         {
             <div>
                 {selectBuys === "card" ?
                     <>
                         <CardElement className='cardElement' />
-                        <button type='submit'>Pay</button>
+                        <button type='submit'>{t("sendBuys.cardPay") }</button>
                     </>
                     : null}
             </div>
@@ -110,8 +110,8 @@ export const SendBuys = () => {
         {selectBuys === "paypal" ?
             <button type='submit'>
                 {redirect ?
-                    <a href={redirect}>Continue on PayPal</a>
-                    : <p>Cargando link...</p>
+                    <a href={redirect}>{t("sendBuys.paypalConfirm") }</a>
+                    : <p>{t("sendBuys.paypalProcessing") }</p>
                 }
             </button>
             : null}

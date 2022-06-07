@@ -2,10 +2,27 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useStore } from "../../context/store";
-import {} from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "../../context/authContext";
+import { useTranslation } from "react-i18next";
 export default function AccountDetailsForm() {
-  
+  const { t } = useTranslation()
+  const history = useHistory()
+ // 'User information updated successfully'
+  const alertUserUpdated = (msg) => {
+    toast.info(msg, {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark"
+    })
+  }
+
   const { resetPassword } = useAuth();
   const [state, dispatch] = useStore();
   const [user, setUser] = useState({
@@ -50,18 +67,18 @@ export default function AccountDetailsForm() {
     const { email, name, lastname, image, password } = user;
       // console.log(id)
     try {
-      const res = await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
+      await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
         email,
         name,
         lastname,
         image,
         password,
-        
-      
       });
-      console.log("entre",res)
       // console.log(user);
-      return res
+      alertUserUpdated(t("accountDetailsForm.toastInfo"))
+      setTimeout(() => {
+        history.push('/accountDetails')
+      }, 4000);
     } catch (err) {
       // console.log(err);
       return err
@@ -77,11 +94,11 @@ export default function AccountDetailsForm() {
   const handleResetPassword = async (e)=>{
     e.preventDefault();
     // console.log("handleResetPassword USER:",user)
-    const answer = window.confirm("Are you sure you want to change your password?")
+    const answer = window.confirm(t("accountDetailsForm.askPasswordChange"))
     if(answer){
       try {
         await resetPassword(user.email)
-        alert("Check your email inbox to reset your password")
+        alert(t("accountDetailsForm.confirmPasswordChange"))
       }
       catch (err){
         alert(err.message)
@@ -91,10 +108,10 @@ export default function AccountDetailsForm() {
 
   return (
     <div>
-      <h2>Edit profile</h2>
+      <h2>{t("accountDetailsForm.updateInfo")}</h2>
       <form onSubmit={handleSubmit}>
       <div className="divInputUser">
-      <label className="title">Email</label>
+      <label className="title">{t("accountDetailsForm.email")}: </label>
         <input
           type="email"
           name="email"
@@ -103,7 +120,7 @@ export default function AccountDetailsForm() {
         />
         </div>
           <div className="divInputUser">
-          <p className="title">Name: </p>
+          <p className="title">{t("accountDetailsForm.name")}: </p>
         <input
           type="text"
           name="name"         
@@ -113,7 +130,7 @@ export default function AccountDetailsForm() {
       </div>
         
       <div className="divInputUser">
-        <p className="title">lastname: </p>
+        <p className="title">{t("accountDetailsForm.lastname")}: </p>
         <input
           type="text"
           name="lastname"
@@ -175,12 +192,12 @@ export default function AccountDetailsForm() {
        */}
   
       <div className="">
-        <p className="title">password: </p>
-        <button onClick={(e) => handleResetPassword(e)}>Change Password</button>       
+        <p className="title">{t("accountDetailsForm.password")}: </p>
+        <button onClick={(e) => handleResetPassword(e)}>{t("accountDetailsForm.changePassword")}</button>       
       </div>
 
       <div className="divInputUser">
-        <p className="title">Image: </p>
+        <p className="title">{t("accountDetailsForm.image")}: </p>
           <input
             type="text"
             name="image"
@@ -194,7 +211,7 @@ export default function AccountDetailsForm() {
         </div>
         
       </form>
-
+       <ToastContainer />
     </div>
   )
 }

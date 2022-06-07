@@ -2,10 +2,13 @@ import React, {useState,useEffect} from 'react'
 import { useStore } from "../../context/store.js";
 import { ArticleFavorites } from './ArticleFavorites';
 import { getFavorites } from '../../redux/actions/actions';
+import { useTranslation } from 'react-i18next';
 // import "./Favorite.css"
 
+
 export const Favorites = () => {
-    const [state, dispatch] = useStore();
+  const { t } = useTranslation()  
+  const [state, dispatch] = useStore();
     const [favorites, setFavorites] = useState([])
 
     let id = JSON.parse(localStorage.getItem("myUser"))
@@ -16,7 +19,7 @@ export const Favorites = () => {
 
 
     <div>
-        <h3>favorite</h3>
+      <h3>{ t("favorites.favorites")}</h3>
       <div className='container container-all-favorites'>
 
         {/* <div className='card float-left'> */}

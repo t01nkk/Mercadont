@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useStore } from "../../context/store";
+import { useTranslation } from "react-i18next";
 // import "./AccountDetails.css"
 // import {mostrarFrente} from "./js/main.js"
-
+import { ToastContainer, toast } from "react-toastify";
 export default function AccountDetails() {
+  const { t } = useTranslation()
   const [user, setUser] = useState("");
   const [state, dispatch] = useStore();
 
@@ -34,27 +36,27 @@ export default function AccountDetails() {
       {/* <script src="./js/main.js"></script> */}
       <Link to="/accountDetails/editProfile">
      
-        <button>Edit your profile</button>
+        <button>{t("accountDetails.btnEditProfile") }</button>
       </Link>
       <div>
-        <p>Your Info:</p>
-        <p>Email:{user?.email}</p>
-        <p>Name:{user?.name}</p>
-        <p>Lastname:{user?.lastname}</p>
-        <p>Adress:{user?.adress}</p>
+        <p>{t("accountDetails.info") }</p>
+        <p>{t("accountDetails.email") }{user?.email}</p>
+        <p>{t("accountDetails.name")}{user?.name}</p>
+        <p>{t("accountDetails.lastname")}{user?.lastname}</p>
+        <p>{t("accountDetails.address")}{user?.adress}</p>
       </div>
-      <div>
+      {/* <div>
         <h3>Yours Cads:</h3>
         <div>
           Iria un div por cada tarjeta que tenga el usuario con boton de
           eliminar
         </div>
-      </div>
+      </div> 
 
       <div>
         <button>Add new card:</button>
       </div>
-
+      */}
       {/* <div>
         <section className="tarjeta" id="tarjeta">
           <div className="front">
