@@ -9,6 +9,20 @@ export default function AccountDetails() {
   const [user, setUser] = useState("");
   const [state, dispatch] = useStore();
 
+ 
+  const address=user?.address
+ let exp =new RegExp(`"`,"g")
+  
+  console.log("address", address?.length)
+ /*  console.log("address Hola", address.split(","))
+  console.log("address", typeof address) */
+const addressUser=address?.substring(1,address.length-1).replace(exp," ").split(",")
+let addressObj={}
+addressUser?.map(e=>{
+  let split=e.split(':')
+  addressObj[split[0].trim()]=split[1].trim()
+})
+
   const fetchUser = async () => {
     let userCookie = JSON.parse(localStorage.getItem("myUser"));
     try {
@@ -41,8 +55,13 @@ export default function AccountDetails() {
           <p>{user?.name}</p>
           <p className="profile-title">Lastname:</p>
           <p>{user?.lastname}</p>
-          {/*<p className="profile-title">Adress:</p>
-          <p>{user?.adress}</p>*/}
+          <p className="profile-title">Address:</p>
+          {console.log(user?.address)}
+          <p>Country:  {addressObj && addressObj.country}</p>
+          <p>City:  {addressObj && addressObj.city}</p>
+          <p>Province:  {addressObj && addressObj.province}</p>
+          <p>Street:  {addressObj && addressObj.street}</p>
+          <p>PostalCode:  {addressObj && addressObj.postalCode}</p>
 
           <Link to="/accountDetails/editProfile">
             <button className="input-edit-profile">Edit your profile</button>
@@ -56,11 +75,9 @@ export default function AccountDetails() {
           eliminar
         </div>
       </div>
-
       <div>
         <button>Add new card:</button>
       </div>
-
       <div>
         <section className="tarjeta" id="tarjeta">
           <div className="front">
@@ -77,7 +94,6 @@ export default function AccountDetails() {
                   <p className="label">Name Card</p>
                   <p className="name">Jhon Doe</p>
                 </div>
-
                 <div className="group" id="expiration">
                   <p className="label">Expiration</p>
                   <p className="expiration"><span className="mount">MM</span>/<span className="year">AA</span></p>
@@ -86,7 +102,6 @@ export default function AccountDetails() {
               </div>
             </div>
           </div>
-
         </section>
       </div> */}
     </div>

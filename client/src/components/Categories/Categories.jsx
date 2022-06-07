@@ -118,12 +118,15 @@ export default function Categories() {
   const handleSearch = async (e) => {
     e.preventDefault();
     let filter = state.filterCategory;
+   
+  
     if (min) {
       filter = filter.filter((product) => product.price >= min);
     }
     if (max) {
       filter = filter.filter((product) => product.price <= max);
     }
+  
     if (max && min && parseInt(max) < parseInt(min)) {
       setError("Please select valid numbers for the min and max inputs");
       filter = [];

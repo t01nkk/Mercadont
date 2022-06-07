@@ -12,7 +12,7 @@ router.post("/register", async (req, res, next) => {
         email: email,
         name: name,
         lastname: lastname,
-        address: address,
+        address:JSON.parse( address),
         image: image,
         payment: payment,
         id: id,
@@ -75,10 +75,13 @@ router.get("/details/:id", async (req, res) => {
       where: { id: id },
       include: { all: true },
     });
+   
     if (!user) {
       return res.status(404).send("User Not Found");
     }
+ 
     return res.status(200).send(user);
+   
   } catch (error) {
     console.log("error:", error);
     res.status(404).send(error);
@@ -88,7 +91,10 @@ router.get("/details/:id", async (req, res) => {
 // Update User
 router.put("/details/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, email, lastname, image, address } = req.body;
+  const { name, email,lastname,image,country,province, city, street, postalCode } = req.body;
+console.log(req.body.address)
+ // let errors = validateInputUser(name,email);
+ // if (errors.length) return res.status(400).send({ msg: errors });
 
   try {
     const updatedUser = await User.update(
@@ -96,9 +102,9 @@ router.put("/details/:id", async (req, res) => {
         name: name,
         lastname: lastname,
         email: email,
-        address: address,
-        image: image
-
+        address:JSON.stringify({country,province, city, street, postalCode}),
+        image:image
+     
       },
       { where: { id: id } }
     );

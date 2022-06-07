@@ -13,14 +13,11 @@ export default function AccountDetailsForm() {
     email: state.user.email,
     name: "",
     lastname: "",
-    /*    address:{
-                 country:"",
-                 province: "",
-                 city:"",
-                 street:"",
-                 postalCode: ""
-               },    */
-
+    country: "",
+    province: "",
+    city: "",
+    street: "",
+    postalCode: "",
     password: "",
     image: "",
 
@@ -29,13 +26,16 @@ export default function AccountDetailsForm() {
   let id = localStorage.getItem("myUser")
 
   const fetchUser = async () => {
+    // console.log(state.user)
     try {
       let miStorage = JSON.parse(localStorage.getItem("myUser"));
       const userDB = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/user/details/${miStorage}`
       );
+      console.log("user", userDB)
       setUser(userDB.data);
     } catch (err) {
+      // console.log(err);
       return err
     }
   };
@@ -45,7 +45,8 @@ export default function AccountDetailsForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, name, lastname, image, password } = user;
+    const { email, name, lastname, image, password,country,province, city, street, postalCode } = user;
+    // console.log(id)
     try {
       const res = await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
         email,
@@ -53,12 +54,25 @@ export default function AccountDetailsForm() {
         lastname,
         image,
         password,
+        country,
+        province,
+        city,
+        street,
+        postalCode
 
 
       });
+      console.log(country,
+        province,
+        city,
+        street,
+        postalCode)
+      console.log("entre", res)
+      // console.log(user);
       history.push("/")
       return
     } catch (err) {
+      // console.log(err);
       return err
     }
   };
@@ -71,6 +85,7 @@ export default function AccountDetailsForm() {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
+    // console.log("handleResetPassword USER:",user)
     const answer = window.confirm("Are you sure you want to change your password?")
     if (answer) {
       try {
@@ -106,12 +121,12 @@ export default function AccountDetailsForm() {
             onChange={handleChange}
           />
         </div>
-        {/* 
+     
        <div className="divInputUser">
          <p className="title">address: </p>
         <input
           type="text"
-          name="address"
+          name="city"
           placeholder="City..."
           value={user.address?.city}
           onChange={handleChange}
@@ -121,7 +136,7 @@ export default function AccountDetailsForm() {
         
         <input
           type="text"
-          name="address"
+          name="country"
           placeholder="Country..."
           value={user.address?.country}
           onChange={handleChange}
@@ -131,7 +146,7 @@ export default function AccountDetailsForm() {
   
         <input
           type="text"
-          name="address"
+          name="postalCode"
           placeholder="postalCode"
           value={user.address?.postalCode}
           onChange={handleChange}
@@ -141,7 +156,7 @@ export default function AccountDetailsForm() {
          
         <input
           type="text"
-          name="address"
+          name="province"
           placeholder="Province"
           value={user.address?.province}
           onChange={handleChange}
@@ -151,13 +166,13 @@ export default function AccountDetailsForm() {
        
         <input
           type="text"
-          name="address"
+          name="street"
           placeholder="Street..."
           value={user.address?.street}
           onChange={handleChange}
         />         
          </div>  
-       */}
+  
 
         <div className="">
           <p className="title">password: </p>
