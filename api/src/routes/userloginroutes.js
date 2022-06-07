@@ -93,8 +93,8 @@ router.put("/details/:id", async (req, res) => {
   const { id } = req.params;
   const { name, email,lastname,image,country,province, city, street, postalCode } = req.body;
 console.log(req.body.address)
-  let errors = validateInputUser(name,email);
-  if (errors.length) return res.status(400).send({ msg: errors });
+ // let errors = validateInputUser(name,email);
+ // if (errors.length) return res.status(400).send({ msg: errors });
 
   try {
     const updatedUser = await User.update(
