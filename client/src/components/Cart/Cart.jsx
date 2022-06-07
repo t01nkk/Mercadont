@@ -6,6 +6,7 @@ import { totalPrice } from "./actionsCart";
 import accounting from "accounting";
 import { ToastContainer, toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import "../Favorites/Favorite.css"
 
 export const Cart = () => {
   const { t } = useTranslation()
@@ -15,16 +16,9 @@ export const Cart = () => {
   const history = useHistory();
   const [priceTotal, setPriceTotal] = useState(0);
 
-  console.log("user:", user)
-  console.log("yourStorage:", yourStorage)
-  // let yourStorage = JSON.parse(localStorage.getItem("myCart"))
-  // const [storageCart, setStorageCart] = useState(yourStorage)
-  // const history = useHistory()
-  // const [priceTotal, setPriceTotal] = useState(0)
 
   useEffect(() => {
     setPriceTotal(totalPrice());
-    // totalPrice()
   }, []);
 
   const alertProductRemovedFromCart = (msg) => {
@@ -70,7 +64,6 @@ export const Cart = () => {
   // FUNCION PARA VER EL STORAGE, NO BORRAR
   const mostra = () => {
     let miStorage = window.localStorage;
-    // console.log(yourStorage);
   };
 
   //Funcion para limpiar carro
@@ -88,8 +81,6 @@ export const Cart = () => {
   };
 
   const makePurchase = () => {
-    // let local = JSON.parse(localStorage.getItem("myCart"))
-    // console.log(local, priceTotal)
     localStorage?.setItem("myPrice", JSON.stringify(priceTotal));
     history.push("/buysProducts");
   };
@@ -99,7 +90,7 @@ export const Cart = () => {
       <button onClick={() => clearCart()} disabled={storageCart?.length < 1}>{t("cart.emptyTheCart")}</button>
       <section>
         <h2>{t("cart.welcome")}</h2>
-        <div>
+        <div className='container container-product-cart'>
           {storageCart && storageCart?.length > 0 ? (
             React.Children.toArray(storageCart.map((el, index) => (
               <ProductCart

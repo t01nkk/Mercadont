@@ -1,43 +1,10 @@
-const { SESSION_SECRET } = process.env;
 const { User } = require("../db");
 const { Router } = require("express");
-const bcrypt = require("bcrypt");
-const passport = require("passport");
-const {
-  validateInputUser,
-  checkAuthenticated,
-} = require("../middlewares/middlewares");
 const router = Router();
 
-//Working - Users needs to be logged-in to create. Credencials only check is user is logged-in, not if the user has admin credencials.
-//Register a new Admin user
-// router.post("/register", async (req, res) => {
-//   const { name, lastname, email, password } = req.body;
-//   // let errors = validateInputUser(name,lastname,email,password)
-//   // if(errors.length) return res.status(400).send({ msg: errors});
-//   const exists = await User.findOne({ where: { email: email } });
-
-//   try {
-//     if (!exists) {
-//       const hashPass = await bcrypt.hash(password, 10);
-//       await User.create({
-//         name,
-//         lastname,
-//         email,
-//         password: hashPass,
-//         isAdmin: true,
-//       });
-//       res.status(201).send("New Admin User Created");
-//     } else {
-//       res.status(400).send({ msg: "This user already exists" });
-//     }
-//   } catch (error) {
-//     res.status(401).send(error);
-//   }
-// });
 // Working
 //Get all Users
-router.get("/users", checkAuthenticated, async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     const user = await User.findAll();
     if (!user) {
@@ -48,6 +15,7 @@ router.get("/users", checkAuthenticated, async (req, res) => {
     res.status(404).send(error);
   }
 });
+
 // Working
 //Get User details
 router.get("/users/:id", async (req, res) => {
@@ -67,7 +35,7 @@ router.get("/users/:id", async (req, res) => {
 });
 
 //Get Banned Users
-router.get("/bannedUsers", checkAuthenticated, async (req, res) => {
+router.get("/bannedUsers", async (req, res) => {
   try {
     const user = await User.findAll({
       where: { banned: true },
@@ -82,7 +50,7 @@ router.get("/bannedUsers", checkAuthenticated, async (req, res) => {
 });
 
 //Get Admin Users
-router.get("/adminUsers", checkAuthenticated, async (req, res) => {
+router.get("/adminUsers", async (req, res) => {
   try {
     const user = await User.findAll({
       where: { isAdmin: true },
@@ -117,7 +85,7 @@ router.put("/setAdmin", async (req, res) => {
 });
 
 //Ban user
-router.put("/ban/:id", checkAuthenticated, async (req, res) => {
+router.put("/ban/:id", async (req, res) => {
   const { id } = req.params;
   const { setBan } = req.body;
 

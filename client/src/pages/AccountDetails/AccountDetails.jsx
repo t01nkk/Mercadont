@@ -11,39 +11,64 @@ export default function AccountDetails() {
   const [user, setUser] = useState("");
   const [state, dispatch] = useStore();
 
+ 
+  const address=user?.address
+ let exp =new RegExp(`"`,"g")
+  
+  console.log("address", address?.length)
+ /*  console.log("address Hola", address.split(","))
+  console.log("address", typeof address) */
+const addressUser=address?.substring(1,address.length-1).replace(exp," ").split(",")
+let addressObj={}
+addressUser?.map(e=>{
+  let split=e.split(':')
+  addressObj[split[0].trim()]=split[1].trim()
+})
 
   const fetchUser = async () => {
+    let userCookie = JSON.parse(localStorage.getItem("myUser"));
     try {
-      const userDB = await axios.get(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`)
+      const userDB = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/user/details/${userCookie}`
+      );
       setUser(userDB.data);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
-    if (state.user) {
-      fetchUser();
-    }
+    fetchUser();
   }, []);
 
-  let mostrarFrente = (e) => {
-    console.log(e);
-  };
-
   return (
-    <>
+    <div className="profile-wrapper">
       {/* <script src="https://kit.fontawesome.com/2c36e9b7b1.js"></script> */}
       {/* <script src="./js/main.js"></script> */}
-      <Link to="/accountDetails/editProfile">
-     
-        <button>{t("accountDetails.btnEditProfile") }</button>
-      </Link>
-      <div>
-        <p>{t("accountDetails.info") }</p>
-        <p>{t("accountDetails.email") }{user?.email}</p>
-        <p>{t("accountDetails.name")}{user?.name}</p>
-        <p>{t("accountDetails.lastname")}{user?.lastname}</p>
-        <p>{t("accountDetails.address")}{user?.adress}</p>
+      <div className="profile-container">
+        <div className="profile-info">
+          <p className="profile-title">{t("accountDetails.info")}</p>
+          {user?.image ?
+            <img src={user?.image} alt="No Image" /> :
+            <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" alt="No Image" height="40px" />
+          }
+          <p className="profile-title">{user?.email}</p>
+          <p>{user?.email}</p>
+          <p className="profile-title">{user?.name}</p>
+          <p>{user?.name}</p>
+          <p className="profile-title">{user?.lastname}</p>
+          <p>{user?.lastname}</p>
+          <p className="profile-title">{user?.adress}</p>
+          {console.log(user?.address)}
+          <p>Country:  {addressObj && addressObj.country}</p>
+          <p>City:  {addressObj && addressObj.city}</p>
+          <p>Province:  {addressObj && addressObj.province}</p>
+          <p>Street:  {addressObj && addressObj.street}</p>
+          <p>PostalCode:  {addressObj && addressObj.postalCode}</p>
+
+          <Link to="/accountDetails/editProfile">
+            <button className="input-edit-profile">{t("accountDetails.btnEditProfile") }</button>
+          </Link>
+        </div>
       </div>
       {/* <div>
         <h3>Yours Cads:</h3>
@@ -51,13 +76,11 @@ export default function AccountDetails() {
           Iria un div por cada tarjeta que tenga el usuario con boton de
           eliminar
         </div>
-      </div> 
-
+      </div>
       <div>
         <button>Add new card:</button>
       </div>
-      */}
-      {/* <div>
+      <div>
         <section className="tarjeta" id="tarjeta">
           <div className="front">
             <div className="logo">
@@ -73,7 +96,6 @@ export default function AccountDetails() {
                   <p className="label">Name Card</p>
                   <p className="name">Jhon Doe</p>
                 </div>
-
                 <div className="group" id="expiration">
                   <p className="label">Expiration</p>
                   <p className="expiration"><span className="mount">MM</span>/<span className="year">AA</span></p>
@@ -82,9 +104,8 @@ export default function AccountDetails() {
               </div>
             </div>
           </div>
-
         </section>
       </div> */}
-    </>
+    </div>
   );
 }

@@ -1,14 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import { useStore } from "../../context/store";
-import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "../../context/authContext";
 import { useTranslation } from "react-i18next";
 export default function AccountDetailsForm() {
   const { t } = useTranslation()
   const history = useHistory()
+
  // 'User information updated successfully'
   const alertUserUpdated = (msg) => {
     toast.info(msg, {
@@ -28,21 +28,18 @@ export default function AccountDetailsForm() {
   const [user, setUser] = useState({
     email: state.user.email,
     name: "",
-    lastname: "", 
- /*    address:{
-              country:"",
-              province: "",
-              city:"",
-              street:"",
-              postalCode: ""
-            },    */
-    
+    lastname: "",
+    country: "",
+    province: "",
+    city: "",
+    street: "",
+    postalCode: "",
     password: "",
-    image:"",
+    image: "",
 
-   
-  }); 
-  let id= localStorage.getItem("myUser")
+
+  });
+  let id = localStorage.getItem("myUser")
 
   const fetchUser = async () => {
     // console.log(state.user)
@@ -51,7 +48,7 @@ export default function AccountDetailsForm() {
       const userDB = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/user/details/${miStorage}`
       );
-      console.log("user",userDB)
+      console.log("user", userDB)
       setUser(userDB.data);
     } catch (err) {
       // console.log(err);
@@ -64,8 +61,8 @@ export default function AccountDetailsForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, name, lastname, image, password } = user;
-      // console.log(id)
+    const { email, name, lastname, image, password,country,province, city, street, postalCode } = user;
+    // console.log(id)
     try {
       await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
         email,
@@ -73,8 +70,12 @@ export default function AccountDetailsForm() {
         lastname,
         image,
         password,
-      });
-      // console.log(user);
+        country,
+        province,
+        city,
+        street,
+        postalCode
+      })
       alertUserUpdated(t("accountDetailsForm.toastInfo"))
       setTimeout(() => {
         history.push('/accountDetails')
@@ -86,12 +87,11 @@ export default function AccountDetailsForm() {
   };
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-   
   };
 
- 
 
-  const handleResetPassword = async (e)=>{
+
+  const handleResetPassword = async (e) => {
     e.preventDefault();
     // console.log("handleResetPassword USER:",user)
     const answer = window.confirm(t("accountDetailsForm.askPasswordChange"))
@@ -100,10 +100,10 @@ export default function AccountDetailsForm() {
         await resetPassword(user.email)
         alert(t("accountDetailsForm.confirmPasswordChange"))
       }
-      catch (err){
+      catch (err) {
         alert(err.message)
       }
-    } 
+    }
   }
 
   return (
@@ -138,12 +138,12 @@ export default function AccountDetailsForm() {
           onChange={handleChange}
         />
       </div>
-{/* 
+        
        <div className="divInputUser">
          <p className="title">address: </p>
         <input
           type="text"
-          name="address"
+          name="city"
           placeholder="City..."
           value={user.address?.city}
           onChange={handleChange}
@@ -153,7 +153,7 @@ export default function AccountDetailsForm() {
         
         <input
           type="text"
-          name="address"
+          name="country"
           placeholder="Country..."
           value={user.address?.country}
           onChange={handleChange}
@@ -163,7 +163,7 @@ export default function AccountDetailsForm() {
   
         <input
           type="text"
-          name="address"
+          name="postalCode"
           placeholder="postalCode"
           value={user.address?.postalCode}
           onChange={handleChange}
@@ -173,7 +173,7 @@ export default function AccountDetailsForm() {
          
         <input
           type="text"
-          name="address"
+          name="province"
           placeholder="Province"
           value={user.address?.province}
           onChange={handleChange}
@@ -183,14 +183,13 @@ export default function AccountDetailsForm() {
        
         <input
           type="text"
-          name="address"
+          name="street"
           placeholder="Street..."
           value={user.address?.street}
           onChange={handleChange}
         />         
          </div>  
-       */}
-  
+
       <div className="">
         <p className="title">{t("accountDetailsForm.password")}: </p>
         <button onClick={(e) => handleResetPassword(e)}>{t("accountDetailsForm.changePassword")}</button>       
@@ -205,11 +204,11 @@ export default function AccountDetailsForm() {
             onChange={handleChange}
             value={user.image}
           />
-      </div>       
-        <div className="btn-login">
-        <input type="submit"  name="Update info" className="input-submit"/>
         </div>
-        
+        <div className="btn-login">
+          <input type="submit" name="Update info" className="input-submit" />
+        </div>
+
       </form>
        <ToastContainer />
     </div>

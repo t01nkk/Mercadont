@@ -11,6 +11,8 @@ import "./Home.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
+import { Loader } from "../../components/Loader/Loader.jsx"
+
 
 export default function Home() {
   const { t, i18n } = useTranslation()
@@ -49,6 +51,7 @@ export default function Home() {
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
     let totalPrice = price;
+    // let price = accounting.formatMoney(price, "U$D ", 0)
     let products = { name, price, image, id, stock, quantity, totalPrice };
     let value = cart.find((e) => e.name === name);
     if (value) {
@@ -61,7 +64,7 @@ export default function Home() {
       alertSuccess(t("home.altAddToCart"));
     }
   };
- 
+
   const handleSaveFavorite = async (id) => {
     if (!person) alert(t("home.mustBeLoggedIn"))
     try {
@@ -109,36 +112,36 @@ export default function Home() {
     localStorage.setItem(user, JSON.stringify(cart));
   }, [cart]);
 
-  const mostra = () => {
-    let miStorage = JSON.parse(localStorage.getItem("myUser"));
-    console.log(miStorage);
-  };
+  // const mostra = () => {
+  //   let miStorage = JSON.parse(localStorage.getItem("myUser"));
+  //   console.log(miStorage);
+  // };
 
   return (
     <section className="section-products">
       {/* <button onClick={() => mostra()}>mostra storage</button> */}
       {state.products && state.favorites
         ? React.Children.toArray(
-            state.products.map((product) => {
-              if (product.status === "active") {
-                return (
-                  <ProductCard
-                    id={product.id}
-                    name={product.name}
-                    stock={product.stock}
-                    price={product.price}
-                    image={product.image}
-                    handleSaveCart={handleSaveCart}
-                    handleSaveFavorite={handleSaveFavorite}
-                    handleDeleteFavorite={handleDeleteFavorite}
-                    isAdd={state.favorites.find((e) => e.id === product.id)}
-                  />
-                );
-              }
-              return null;
-            })
-          )
-        : console.log("Aca vendría el loader")}{" "}
+          state.products.map((product) => {
+            if (product.status === "active") {
+              return (
+                <ProductCard
+                  id={product.id}
+                  name={product.name}
+                  stock={product.stock}
+                  price={product.price}
+                  image={product.image}
+                  handleSaveCart={handleSaveCart}
+                  handleSaveFavorite={handleSaveFavorite}
+                  handleDeleteFavorite={handleDeleteFavorite}
+                  isAdd={state.favorites.find((e) => e.id === product.id)}
+                />
+              );
+            }
+            return null;
+          })
+        )
+        : <div className="container-loader"><Loader /></div>}
       <ToastContainer />
       <p>{t(i18n.languages[0]) }</p>
     </section>

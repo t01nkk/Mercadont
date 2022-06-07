@@ -4,7 +4,6 @@ import { Link, Redirect } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import axios from "axios";
 import { Formik } from "formik";
-import { GoogleLoginButton } from "./GoogleLogin/GoogleLogin";
 export default function LogInForm() {
   const [redirect, setRedirect] = useState(false);
   const { login, loginWithGoogle, resetPassword } = useAuth();
@@ -17,8 +16,8 @@ export default function LogInForm() {
         name: userCredentials.user.displayName,
         email: userCredentials.user.email,
         image: userCredentials.user.photoURL,
-        isVerified: userCredentials.user.emailVerified
-      })
+        isVerified: userCredentials.user.emailVerified,
+      });
 
       if (userCredentials.user.uid) {
         localStorage.setItem(
@@ -27,50 +26,43 @@ export default function LogInForm() {
         );
         setRedirect(true);
       }
-
     } catch (err) {
-      alert(err);
+      let error
+      console.log(err)
+      if (err.code === "auth/internal-error") error = ("Invalid Email");
+      if (err.code === "auth/user-not-found") error = ("Email doesn't belong to a user");
+      if (err.code === "auth/wrong-password") error = ("Wrong Password");
+
+
+      alert(error);
     }
   };
   const handleGoogleSignin = async () => {
     try {
-      const userCredentials = await loginWithGoogle()
+      const userCredentials = await loginWithGoogle();
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
         id: userCredentials.user.uid,
         name: userCredentials.user.displayName,
         email: userCredentials.user.email,
         image: userCredentials.user.photoURL,
-        isVerified: userCredentials.user.emailVerified
-      })
-      if (userCredentials.user.uid) localStorage.setItem("myUser", JSON.stringify(userCredentials.user.uid))
+        isVerified: userCredentials.user.emailVerified,
+      });
+      if (userCredentials.user.uid)
+        localStorage.setItem(
+          "myUser",
+          JSON.stringify(userCredentials.user.uid)
+        );
 
-      setRedirect(true)
-
+      setRedirect(true);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-
-  //RESET PASSWORD FORMIK
-  /*
- const handleResetPassword = async (values)=>{
-   console.log(values.email)
-   if (!values.email) return console.log("Please Enter Your Email")
-   try {
-    await resetPassword(values.email)
-     alert("Check your email inbox to reset your password")
-   }
-   catch (err){
-     alert(err.message)
-   }
- }
-*/
+  };
 
   return (
     <div className="container-login">
       <Formik
         initialValues={{
-          name: "",
           email: "",
           password: "",
         }}
@@ -85,11 +77,6 @@ export default function LogInForm() {
           }
           if (!values.password) {
             errors.password = "Password required.";
-          } else if (
-            !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(values.password)
-          ) {
-            errors.password =
-              "Your password must be 8 to 16 characters long and must contain both uppercase and lowercase letters, and at least one number.";
           }
 
           return errors;
@@ -114,7 +101,7 @@ export default function LogInForm() {
                   onChange={handleChange}
                 />
                 <small style={{ color: "red" }}>
-                  {touched.email && errors.email ? <p>{errors.email}</p> : ""}
+                  {touched.email && errors.email ? <p className="error-style">{errors.email}</p> : ""}
                 </small>
               </div>
               <div className="divInputUser">
@@ -128,7 +115,7 @@ export default function LogInForm() {
               </div>
               <small style={{ color: "red" }}>
                 {touched.password && errors.password ? (
-                  <p>{errors.password}</p>
+                  <p className="error-style">{errors.password}</p>
                 ) : (
                   ""
                 )}
@@ -147,8 +134,13 @@ export default function LogInForm() {
               </div>*/}
             </form>
             <div className="createUser-container">
-              <button onClick={handleGoogleSignin}> Login With Google</button>
-              {/* <GoogleLoginButton />
+              <div>
+                <button onClick={handleGoogleSignin} className="btn btn-primary google-plus">
+                  <img height="25px" src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt="Google Logo" />  Login With Google
+                </button>
+              </div>
+              {/* 
+              <GoogleLoginButton />
           <GoogleLogin
             clientId={process.env.GOOGLE_CLIENT_ID}
             buttonText="Log in with Google"
@@ -156,9 +148,11 @@ export default function LogInForm() {
             onFailure={handleLoginGoogle}
             cookiePolicy={"single_host_origin"}
           /> */}
-              <p>Not a user yet?</p>
-              <div className="btn-createUser">
-                <Link to="/createUser">Create User</Link>
+              <div className="create-container">
+                <p>Not a user yet?</p>
+                <div className="btn-createUser">
+                  <Link to="/createUser">Create User</Link>
+                </div>
               </div>
             </div>
           </div>

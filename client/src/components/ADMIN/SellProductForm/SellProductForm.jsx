@@ -4,7 +4,6 @@ import axios from "axios";
 import { fetchCategories } from "../../../redux/actions/actions";
 import { useStore } from "../../../context/store";
 
-
 export default function SellProductForm() {
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
@@ -15,57 +14,64 @@ export default function SellProductForm() {
     price: "",
     description: "",
     image:
-      "https://t2.uc.ltmcdn.com/es/posts/7/7/5/como_hacer_choripan_42577_orig.jpg",
+      "https://static.zara.net/photos///2022/V/1/1/p/6469/910/060/2/w/850/6469910060_6_4_1.jpg?ts=1651057109246",
     status: "inactive",
     stock: "",
+    address: {
+      country: "",
+      province: "",
+      city: "",
+      street: "",
+      postalCode: "",
+    },
     categories: [],
   });
   const expression = {
     nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
     priceExpression: /^\d{1,14}$/,
     descriptionExpression: /^[a-zA-ZÀ-ÿ\s]{1,200}$/,
-    stockExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-  }
+    stockExpression: /^\d{1,14}$/,
+  };
 
   function validator(input) {
     let errors = {};
 
     if (!expression.nameExpression.test(input.name)) {
-      errors.name = 'Name is necessary';
+      errors.name = "Name is necessary";
     }
     if (!expression.priceExpression.test(input.price)) {
-      errors.price = 'Price is necessary';
+      errors.price = "Price is necessary";
     }
     if (!expression.descriptionExpression.test(input.description)) {
-      errors.description = 'Description is necessary';
+      errors.description = "Description is necessary";
     }
     if (!expression.stockExpression.test(input.stock)) {
-      errors.stock = 'Stock is necessary';
+      errors.stock = "Stock is necessary";
     }
-    return errors
+    return errors;
   }
 
   const handleChangeName = (e) => {
-    setErrors("")
+    setErrors("");
     setErrors(validator({ ...data, [e.target.name]: e.target.value }));
 
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const handleChangePrice = (e) => {
-    setErrors("")
+    setErrors("");
     setErrors(validator({ ...data, [e.target.name]: e.target.value }));
 
     setData({ ...data, [e.target.name]: e.target.value });
   };
   const handleChangeDescription = (e) => {
-    setErrors("")
+    setErrors("");
     setErrors(validator({ ...data, [e.target.name]: e.target.value }));
 
     setData({ ...data, [e.target.name]: e.target.value });
   };
   const handleChangeStock = (e) => {
-    setErrors("")
+    setErrors("");
     setErrors(validator({ ...data, [e.target.name]: e.target.value }));
 
     setData({ ...data, [e.target.name]: e.target.value });
@@ -121,7 +127,7 @@ export default function SellProductForm() {
               value={data.name}
             />
           </div>
-          {errors.name && (<p className='error-input'>{errors.name}</p>)}
+          {errors.name && <p className="error-input">{errors.name}</p>}
 
           <div className="divInputUser">
             <input
@@ -133,7 +139,7 @@ export default function SellProductForm() {
               value={data.price}
             />
           </div>
-          {errors.price && (<p className='error-input'>{errors.price}</p>)}
+          {errors.price && <p className="error-input">{errors.price}</p>}
           <div className="divInputUser">
             <textarea
               cols="30"
@@ -146,7 +152,9 @@ export default function SellProductForm() {
               value={data.description}
             ></textarea>
           </div>
-          {errors.description && (<p className='error-input'>{errors.description}</p>)}
+          {errors.description && (
+            <p className="error-input">{errors.description}</p>
+          )}
           <select onChange={handleChangeCat} className="divInputUser">
             <option value="" hidden className="divInputUser">
               Categories
@@ -195,9 +203,9 @@ export default function SellProductForm() {
               value={data.stock}
             />
           </div>
-          {errors.stock && (<p className='error-input'>{errors.stock}</p>)}
+          {errors.stock && <p className="error-input">{errors.stock}</p>}
           <div className="btn-login">
-            <input type="submit" value="Send" disabled={errors} className="input-submit" />
+            <input type="submit" value="Send" className="input-submit" />
           </div>
         </form>
       </div>

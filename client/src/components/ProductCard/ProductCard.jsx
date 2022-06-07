@@ -48,6 +48,7 @@ export default function ProductCard({
       history.push("/logIn");
       return;
     }
+    let price = accounting.formatMoney(price, "U$D ", 0)
     handleSaveCart(name, price, image, id, stock);
   };
 
@@ -55,7 +56,7 @@ export default function ProductCard({
     <div className="card-clothe">
       <Link to={`/home/${id}`}>
         <div className="card-body">
-          <img className="card-image" src={`${image}`} alt={`${name}`} />
+          <img className="card-image" src={`${image}`} alt={`${name}`}/>
           <p className="card-title">{name}</p>
           <p className="card-rating">{rating}</p>
         </div>
@@ -65,7 +66,7 @@ export default function ProductCard({
           className="card-btn"
           onClick={() => handleSaveCart(name, price, image, id, stock)}
         >
-          <img className="cart-btn" src={shoppingCart} alt="add-cart" />
+          <img className="cart-btn" src={shoppingCart} alt="add-cart"/>
         </button>
         {/* {changeButton ? (
         <button className="shoppingCart-btn" onClick={() => deleteFavorite()}>

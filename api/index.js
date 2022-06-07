@@ -37,6 +37,6 @@ conn.sync({ force: true }).then(() => {
   server.listen(3001, async () => {
     await getProducts();
     // await getUsers();
-    console.log("%s Happy Hacking!"); // eslint-disable-line no-console
+    console.log("%s Happy Hacking! UWU :3"); // eslint-disable-line no-console
   });
 });

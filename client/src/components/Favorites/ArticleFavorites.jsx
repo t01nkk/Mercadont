@@ -69,8 +69,6 @@ export const ArticleFavorites = ({ id, name, price, rating, image }) => {
       <div className="col-sm-5 container-img-favorite">
         <img className="d-block w-100 img-favorite" src={image} alt=""/>
       </div>
-    
-
   </div>
 
   )

@@ -50,25 +50,9 @@ const useStyles = makeStyles((theme) =>
 
 export const GoogleLoginButton = (setRedirect) => {
   const classes = useStyles({});
-  // const handleLoginGoogle = async () => {
-  //   try {
-  //     console.log("entre en el try");
-  //     const user = await axios.get(
-  //       `${process.env.REACT_APP_DOMAIN}/user/login/google`
-  //     );
-  //     console.log(user);
-  //     if (user) {
-  //       localStorage.setItem("myUser", JSON.stringify(user.data.passport.user));
-  //       setRedirect(true);
-  //     }
-  //   } catch (err) {
-  //     alert(err);
-  //   }
-  // };
 
   return (
     <a
-      // onClick={handleLoginGoogle}
       href={`${process.env.REACT_APP_DOMAIN}/user/login/google`}
       className={classes.button}
     >

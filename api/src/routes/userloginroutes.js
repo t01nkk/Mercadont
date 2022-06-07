@@ -1,11 +1,9 @@
 const { Router } = require("express");
 const router = Router();
 const { User, Product } = require("../db");
-const {validateInputUser} = require("../middlewares/middlewares")
 
 
 router.post("/register", async (req, res, next) => {
-  // const { email, password } = req.body;
   const { name, lastname, email, address, image, payment, id } = req.body;
   try {
     const userExist = await User.findOne({ where: { email: email } });
@@ -14,21 +12,34 @@ router.post("/register", async (req, res, next) => {
         email: email,
         name: name,
         lastname: lastname,
-        address: address,
+        address:JSON.parse( address),
         image: image,
         payment: payment,
-        created: true,
         id: id,
       });
 
-      res.send({ msg: "User Registered" });
+      return res.send({ msg: "User Registered" });
     } else {
-      res.status(401).send("Username is already taken");
+      await User.update(
+        {
+          name: name,
+          lastname: lastname,
+          email: email,
+          address: address,
+          image: image,
+          id: id
+        },
+        { where: { email: email } }
+      );
+
+      return res.status(200).send("Existing user updated");
     }
   } catch (err) {
     next(err);
   }
 });
+
+//CURRENT LOGIN 
 
 router.post("/login", async (req, res, next) => {
   // const { email, password } = req.body;
@@ -39,7 +50,6 @@ router.post("/login", async (req, res, next) => {
         email: email,
         name: name,
         image: image,
-        created: true,
         id: id,
       }
     }
@@ -60,16 +70,18 @@ router.post("/login", async (req, res, next) => {
 // Get User
 router.get("/details/:id", async (req, res) => {
   const { id } = req.params;
-
   try {
     const user = await User.findOne({
       where: { id: id },
       include: { all: true },
     });
+   
     if (!user) {
       return res.status(404).send("User Not Found");
     }
+ 
     return res.status(200).send(user);
+   
   } catch (error) {
     console.log("error:", error);
     res.status(404).send(error);
@@ -79,18 +91,18 @@ router.get("/details/:id", async (req, res) => {
 // Update User
 router.put("/details/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, email,lastname,image,address } = req.body;
+  const { name, email,lastname,image,country,province, city, street, postalCode } = req.body;
 console.log(req.body.address)
-  let errors = validateInputUser(name,email);
-  if (errors.length) return res.status(400).send({ msg: errors });
+ // let errors = validateInputUser(name,email);
+ // if (errors.length) return res.status(400).send({ msg: errors });
 
   try {
     const updatedUser = await User.update(
       {
         name: name,
-        lastname: lastname,       
+        lastname: lastname,
         email: email,
-        address:address,
+        address:JSON.stringify({country,province, city, street, postalCode}),
         image:image
      
       },
