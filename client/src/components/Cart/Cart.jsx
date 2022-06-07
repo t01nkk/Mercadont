@@ -13,9 +13,6 @@ export const Cart = () => {
   const history = useHistory();
   const [priceTotal, setPriceTotal] = useState(0);
 
-  console.log("user:", user)
-  console.log("yourStorage:", yourStorage)
-
 
   useEffect(() => {
     setPriceTotal(totalPrice());
@@ -37,7 +34,6 @@ export const Cart = () => {
   // FUNCION PARA VER EL STORAGE, NO BORRAR
   const mostra = () => {
     let miStorage = window.localStorage;
-    // console.log(yourStorage);
   };
 
   //Funcion para limpiar carro
@@ -51,8 +47,6 @@ export const Cart = () => {
   };
 
   const makePurchase = () => {
-    // let local = JSON.parse(localStorage.getItem("myCart"))
-    // console.log(local, priceTotal)
     localStorage?.setItem("myPrice", JSON.stringify(priceTotal));
     history.push("/buysProducts");
   };

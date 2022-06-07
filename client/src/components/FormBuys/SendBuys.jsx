@@ -19,11 +19,11 @@ export const SendBuys = () => {
     const [selectBuys, setSelectBuys] = useState("")
     const [amountTotal, setAmounTotal] = useState("")
     const history = useHistory()
-    
-    
-    useEffect(()=>{
+
+
+    useEffect(() => {
         setAmounTotal(totalPrice())
-      },[])
+    }, [])
 
 
     const handleSubmit = async (e) => {
@@ -45,28 +45,27 @@ export const SendBuys = () => {
             }
             // loadingBuys()
 
-            if(paymentMethod){
+            if (paymentMethod) {
                 localStorage.removeItem(user)
                 history.push("/")
             }
-            console.log(paymentMethod)
         }
     }
 
     const loadingBuys = () => {
         toast.success("Already in cart!", {
-          position: "bottom-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
         });
-      };
+    };
 
-    
+
     const handelClik = async (e) => {
         e.preventDefault()
         if (e.target.textContent === "card") setSelectBuys("card")
@@ -104,7 +103,6 @@ export const SendBuys = () => {
     }, [])
 
     const mostra = () => {
-        console.log(products, price);
     };
 
     return (<form onSubmit={handleSubmit} className="form-buys">

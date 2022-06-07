@@ -10,6 +10,7 @@ import axios from "axios";
 import { getFavorites } from "../../redux/actions/actions.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Loader } from "../Loader/Loader";
 
 export default function Categories() {
   // let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
@@ -217,7 +218,7 @@ export default function Categories() {
               return null;
             })
           )
-          : console.log("Aca vendría el loader")}
+          : <div className="container-loader"><Loader /></div>}
         <ToastContainer />
       </div>
     </div>
