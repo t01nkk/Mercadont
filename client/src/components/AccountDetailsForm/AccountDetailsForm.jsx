@@ -1,32 +1,29 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {useHistory, useParams} from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useStore } from "../../context/store";
-import {} from "react-router-dom";
+import { } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 export default function AccountDetailsForm() {
-  
+
   const { resetPassword } = useAuth();
   const [state, dispatch] = useStore();
   const history = useHistory()
   const [user, setUser] = useState({
     email: state.user.email,
     name: "",
-    lastname: "", 
- /*    address:{
-              country:"",
-              province: "",
-              city:"",
-              street:"",
-              postalCode: ""
-            },    */
-    
+    lastname: "",
+    country: "",
+    province: "",
+    city: "",
+    street: "",
+    postalCode: "",
     password: "",
-    image:"",
+    image: "",
 
-   
-  }); 
-  let id= localStorage.getItem("myUser")
+
+  });
+  let id = localStorage.getItem("myUser")
 
   const fetchUser = async () => {
     // console.log(state.user)
@@ -35,7 +32,7 @@ export default function AccountDetailsForm() {
       const userDB = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/user/details/${miStorage}`
       );
-      console.log("user",userDB)
+      console.log("user", userDB)
       setUser(userDB.data);
     } catch (err) {
       // console.log(err);
@@ -48,8 +45,8 @@ export default function AccountDetailsForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, name, lastname, image, password } = user;
-      // console.log(id)
+    const { email, name, lastname, image, password,country,province, city, street, postalCode } = user;
+    // console.log(id)
     try {
       const res = await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
         email,
@@ -57,10 +54,20 @@ export default function AccountDetailsForm() {
         lastname,
         image,
         password,
-        
-      
+        country,
+        province,
+        city,
+        street,
+        postalCode
+
+
       });
-      console.log("entre",res)
+      console.log(country,
+        province,
+        city,
+        street,
+        postalCode)
+      console.log("entre", res)
       // console.log(user);
       history.push("/")
       return
@@ -71,24 +78,24 @@ export default function AccountDetailsForm() {
   };
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-   
+
   };
 
- 
 
-  const handleResetPassword = async (e)=>{
+
+  const handleResetPassword = async (e) => {
     e.preventDefault();
     // console.log("handleResetPassword USER:",user)
     const answer = window.confirm("Are you sure you want to change your password?")
-    if(answer){
+    if (answer) {
       try {
         await resetPassword(user.email)
         alert("Check your email inbox to reset your password")
       }
-      catch (err){
+      catch (err) {
         alert(err.message)
       }
-    } 
+    }
   }
 
   return (
@@ -97,29 +104,29 @@ export default function AccountDetailsForm() {
       <form onSubmit={handleSubmit}>
         <div className="divInputUser">
           <p className="title">Name: </p>
-        <input
-          type="text"
-          name="name"         
-          value={user.name}
-          onChange={handleChange}
-        />
-      </div>
-        
-      <div className="divInputUser">
-        <p className="title">lastname: </p>
-        <input
-          type="text"
-          name="lastname"
-          value={user.lastname}
-          onChange={handleChange}
-        />
-      </div>
-{/* 
+          <input
+            type="text"
+            name="name"
+            value={user.name}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="divInputUser">
+          <p className="title">lastname: </p>
+          <input
+            type="text"
+            name="lastname"
+            value={user.lastname}
+            onChange={handleChange}
+          />
+        </div>
+     
        <div className="divInputUser">
          <p className="title">address: </p>
         <input
           type="text"
-          name="address"
+          name="city"
           placeholder="City..."
           value={user.address?.city}
           onChange={handleChange}
@@ -129,7 +136,7 @@ export default function AccountDetailsForm() {
         
         <input
           type="text"
-          name="address"
+          name="country"
           placeholder="Country..."
           value={user.address?.country}
           onChange={handleChange}
@@ -139,7 +146,7 @@ export default function AccountDetailsForm() {
   
         <input
           type="text"
-          name="address"
+          name="postalCode"
           placeholder="postalCode"
           value={user.address?.postalCode}
           onChange={handleChange}
@@ -149,7 +156,7 @@ export default function AccountDetailsForm() {
          
         <input
           type="text"
-          name="address"
+          name="province"
           placeholder="Province"
           value={user.address?.province}
           onChange={handleChange}
@@ -159,21 +166,21 @@ export default function AccountDetailsForm() {
        
         <input
           type="text"
-          name="address"
+          name="street"
           placeholder="Street..."
           value={user.address?.street}
           onChange={handleChange}
         />         
          </div>  
-       */}
   
-      <div className="">
-        <p className="title">password: </p>
-        <button onClick={(e) => handleResetPassword(e)}>Change Password</button>       
-      </div>
 
-      <div className="divInputUser">
-        <p className="title">Image: </p>
+        <div className="">
+          <p className="title">password: </p>
+          <button onClick={(e) => handleResetPassword(e)}>Change Password</button>
+        </div>
+
+        <div className="divInputUser">
+          <p className="title">Image: </p>
           <input
             type="text"
             name="image"
@@ -181,11 +188,11 @@ export default function AccountDetailsForm() {
             onChange={handleChange}
             value={user.image}
           />
-      </div>       
-        <div className="btn-login">
-        <input type="submit"  name="Update info" className="input-submit" />
         </div>
-        
+        <div className="btn-login">
+          <input type="submit" name="Update info" className="input-submit" />
+        </div>
+
       </form>
 
     </div>
