@@ -17,13 +17,24 @@ router.post("/register", async (req, res, next) => {
         address: address,
         image: image,
         payment: payment,
-        created: true,
         id: id,
       });
 
-      res.send({ msg: "User Registered" });
+      return res.send({ msg: "User Registered" });
     } else {
-      res.status(401).send("Username is already taken");
+      await User.update(
+          {
+            name: name,
+            lastname: lastname,
+            email: email,
+            address:address,
+            image:image,
+            id:id
+          },
+          { where: { email: email } }
+      );
+
+      return res.status(200).send("Existing user updated");
     }
   } catch (err) {
     next(err);
@@ -39,7 +50,6 @@ router.post("/login", async (req, res, next) => {
         email: email,
         name: name,
         image: image,
-        created: true,
         id: id,
       }
     }
