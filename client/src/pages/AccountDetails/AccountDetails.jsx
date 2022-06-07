@@ -17,6 +17,7 @@ export default function AccountDetails() {
         `${process.env.REACT_APP_DOMAIN}/user/details/${userCookie}`
       );
       setUser(userDB.data);
+      console.log(user)
     } catch (err) {
       console.log(err);
     }
@@ -32,14 +33,18 @@ export default function AccountDetails() {
       <div className="profile-container">
         <div className="profile-info">
           <p className="profile-title">Your Info:</p>
+          {user?.image?
+          <img src={user?.image} alt="No Image"/>:
+          <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" alt="No Image" height="40px"/>
+          }
           <p className="profile-title">Email:</p>
           <p>{user?.email}</p>
           <p className="profile-title">Name:</p>
           <p>{user?.name}</p>
           <p className="profile-title">Lastname:</p>
           <p>{user?.lastname}</p>
-          <p className="profile-title">Adress:</p>
-          <p>{user?.adress}</p>
+          {/*<p className="profile-title">Adress:</p>
+          <p>{user?.adress}</p>*/}
 
           <Link to="/accountDetails/editProfile">
             <button className="input-edit-profile">Edit your profile</button>
