@@ -57,15 +57,15 @@ export const ProductCart = ({
       </div>
         <div className="details-product-cart">
           <p>{name}</p>
-          <p> U$D {accounting.formatMoney(price, "U$D ", 0)}</p>
-          <p>TOTAL: U$D {accounting.formatMoney(price * count, "U$D ", 0)}</p>
+          <p>Price: <span className="span-product-cart">{accounting.formatMoney(price, "U$D ", 0)}</span></p>
+          <p>TOTAL: <span className="span-product-cart">{accounting.formatMoney(price * count, "U$D ", 0)}</span></p>
           <div>
             {count !== 1 ? (
               <button className="btn btn-primary btn-sm" onClick={() => oneLess(stock, name, price)}>-</button>
             ) : (
               console.log("chau")
               )}
-            <span>{storageCart[pos].quantity}</span>
+            <span className="amount-product-cart">{storageCart[pos].quantity}</span>
             {count !== stock ? (
                 <button className="btn btn-primary btn-sm" onClick={() => oneMore(stock, name, price)}>+</button>
             ) : (
