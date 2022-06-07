@@ -11,6 +11,7 @@ export default function LoggedNavBar() {
   let myUser = JSON.parse(localStorage.getItem("myUser"));
   let myCart = JSON.parse(localStorage.getItem(myUser));
   useEffect(() => {
+    
     let myUser = JSON.parse(localStorage.getItem("myUser"));
     // console.log(myCart.length)
     if (myUser) {
@@ -46,12 +47,13 @@ export default function LoggedNavBar() {
           <div className="dropdown-content">
             <Link to="/accountDetails"> Account Details </Link>
             <Link to="/favorites">Favorites</Link>
+            <Link to="/history">History</Link>
             <a onClick={logoutSesion}>Log Out</a>
           </div>
         </div>
-        {/* <Link to="/cart">Cart {myCart && myCart.length!==0? <span>{myCart.length}</span>: ""}</Link> */} 
+        <Link to="/cart">Cart {myCart && myCart.length!==0? <span>{myCart.length}</span>: ""}</Link> 
         {/* No borrar linea de arriba, prueba para mostrar cantidad de productos en carrito. Saludos atte: Pablo Bonito */}
-        <Link to="/cart">Cart</Link>
+        {/* <Link to="/cart">Cart</Link> */}
       </div>
     </div>
   );
