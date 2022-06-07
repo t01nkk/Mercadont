@@ -3,19 +3,19 @@ import { Redirect, useHistory } from "react-router-dom";
 // import { FormBuys } from '../FormBuys/FormBuys'
 import { ProductCart } from "../ProductCart/ProductCart";
 import { totalPrice } from "./actionsCart";
+import { totalCount } from "../../redux/actions/actions";
 import accounting from "accounting";
 import "../Favorites/Favorite.css"
+import { useStore } from "../../context/store.js";
 
 export const Cart = () => {
   let user = JSON.parse(localStorage?.getItem("myUser"));
+  let local = JSON.parse(localStorage.getItem(user))
   let yourStorage = JSON.parse(localStorage?.getItem(user));
   const [storageCart, setStorageCart] = useState(yourStorage);
   const history = useHistory();
   const [priceTotal, setPriceTotal] = useState(0);
-
-  console.log("user:", user)
-  console.log("yourStorage:", yourStorage)
-
+  const [state, dispatch] = useStore();
 
   useEffect(() => {
     setPriceTotal(totalPrice());
@@ -26,7 +26,7 @@ export const Cart = () => {
     setStorageCart(newLocalStorage);
     localStorage.setItem(user, JSON.stringify(newLocalStorage));
     setPriceTotal(totalPrice());
-    // totalPrice()
+    totalCount(dispatch)
   };
 
   //Funcion para ver detalle del producto por id

@@ -9,4 +9,3 @@ export const totalPrice = () => {
     return total
   }
 }
-

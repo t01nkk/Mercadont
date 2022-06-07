@@ -14,8 +14,21 @@ export const History = () => {
 
   const getHistory = async()=>{
     let arrayHistory = await axios(`http://localhost:3001/user/history/${myUser}`)
-    setHistory(arrayHistory)
-    console.log(arrayHistory)
+    //  let nuevoArray = arrayHistory.data.filter((val, i)=>{           
+    //     if((arrayHistory.data.includes(val, i + 1))){
+    //       if(val == val[i])             
+    //        return val
+    //       }
+    //     })
+    //     console.log(nuevoArray)
+
+    // for(let i = 0; i < arrayHistory.data.length; i++){
+    //   let arrayTemporal = arrayHistory.data[i].filter()
+    // }
+    
+    // let groupHistory = arrayHistory.data.filter((e,index) => e)
+    // setHistory(arrayHistory)
+    // console.log(arrayHistory)
   }
 
   return (
