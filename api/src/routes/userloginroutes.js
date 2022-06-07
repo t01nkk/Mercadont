@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { User, Product } = require("../db");
+const { User, Product, PurchaseOrder } = require("../db");
 const {validateInputUser} = require("../middlewares/middlewares")
 
 
@@ -158,6 +158,29 @@ router.get("/favorite/:id", async (req, res) => {
       return res.status(404).send("User Not Found");
     }
     return res.status(200).send(userFavorites.products);
+  } catch (error) {
+    return res.status(404).send(error);
+  }
+});
+
+/*-------------------------------------------------------------- */
+/*---------------------Purchase History--------------------------*/
+
+// Get User's purchase history
+router.get("/history/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const userHistory = await PurchaseOrder.findAll({
+      where: { 
+        userId: id,
+        status: "completed" 
+      },
+    });
+    if (!userHistory.length) {
+      return res.status(200).send("Purhcase history empty");
+    }
+    return res.status(200).send(userHistory);
   } catch (error) {
     return res.status(404).send(error);
   }
