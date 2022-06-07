@@ -3,15 +3,17 @@ import axios from "axios"
 
 export const History = () => {
     const [history, setHistory] = useState([])
-  useEffect(() => {
+
     let myUser = JSON.parse(localStorage.getItem("myUser"));
+
+  useEffect(() => {
     if (myUser) {
       getHistory()
     }
   }, []);
 
   const getHistory = async()=>{
-    let arrayHistory = await axios(`http://localhost:3001/user/history/:${myUser}`)
+    let arrayHistory = await axios(`http://localhost:3001/user/history/${myUser}`)
     setHistory(arrayHistory)
     console.log(arrayHistory)
   }
