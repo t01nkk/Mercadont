@@ -67,3 +67,6 @@
   transition: 0.5s;
   transition-delay: 0;
 }
+.language-list {
+  list-style: none;
+}

@@ -218,7 +218,17 @@ i18n
         },
       },
       en: {
-        translation: {},
+        translation: {
+          loggedNavBar: {
+            home: "Pene",
+            categories: "De",
+            profile: "Goma",
+            accountDetails: "Enorme",
+            favorites: "Y",
+            logOut: "Venoso",
+            cart: "Carrito",
+          },
+        },
       },
     },
   });
