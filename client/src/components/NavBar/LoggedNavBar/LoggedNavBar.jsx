@@ -103,6 +103,9 @@ export default function LoggedNavBar() {
                 <li className="dropdown-item category-list-item">
                   <Link to="/favorites">{t("loggedNavBar.favorites")}</Link>
                 </li>
+                <li className="dropdown-item category-list-item">
+                  <Link to="/history">History</Link>
+                </li>
                 <li className="dropdown-item category-list-item log-out">
                   <a onClick={logoutSesion}>{t("loggedNavBar.logOut")}</a>
                 </li>

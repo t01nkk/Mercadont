@@ -44,7 +44,6 @@ export const SendBuys = () => {
                 })
             }
             // loadingBuys()
-
             if (paymentMethod) {
                 localStorage.removeItem(user)
                 history.push("/cart")
