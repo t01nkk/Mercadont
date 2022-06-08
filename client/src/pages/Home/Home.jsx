@@ -120,36 +120,36 @@ export default function Home() {
     totalCount(dispatch)
   }, [cart]);
 
-  const mostra = () => {
-    let miStorage = JSON.parse(localStorage.getItem("myUser"));
-    console.log(miStorage);
-  };
+  // const mostra = () => {
+  //   let miStorage = JSON.parse(localStorage.getItem("myUser"));
+  //   console.log(miStorage);
+  // };
 
   return (
     <section className="section-products">
       {/* <button onClick={() => mostra()}>mostra storage</button> */}
       {state.products && state.favorites
         ? React.Children.toArray(
-            state.products.map((product) => {
-              if (product.status === "active") {
-                return (
-                  <ProductCard
-                    id={product.id}
-                    name={product.name}
-                    stock={product.stock}
-                    price={product.price}
-                    image={product.image}
-                    handleSaveCart={handleSaveCart}
-                    handleSaveFavorite={handleSaveFavorite}
-                    handleDeleteFavorite={handleDeleteFavorite}
-                    isAdd={state.favorites.find((e) => e.id === product.id)}
-                  />
-                );
-              }
-              return null;
-            })
-          )
-        : <div className="container-loader"><Loader/></div>}
+          state.products.map((product) => {
+            if (product.status === "active") {
+              return (
+                <ProductCard
+                  id={product.id}
+                  name={product.name}
+                  stock={product.stock}
+                  price={product.price}
+                  image={product.image}
+                  handleSaveCart={handleSaveCart}
+                  handleSaveFavorite={handleSaveFavorite}
+                  handleDeleteFavorite={handleDeleteFavorite}
+                  isAdd={state.favorites.find((e) => e.id === product.id)}
+                />
+              );
+            }
+            return null;
+          })
+        )
+        : <div className="container-loader"><Loader /></div>}
       <ToastContainer />
     </section>
   );

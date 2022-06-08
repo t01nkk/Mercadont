@@ -1,10 +1,8 @@
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcrypt");
-const productos = require("../../productsCats.json");
+const productos = require("../../productscats.json");
 const users = require("../../users.json");
 const { Product, User, Category, PurchaseOrder } = require("../db");
 const { Op } = require("sequelize");
-const { genPassword } = require('./password_utils');
+// const { genPassword } = require('./password_utils');
 const nodemailer = require("nodemailer");
 
 const modifyStockStripe = async (local) => {
@@ -67,30 +65,6 @@ const modifyStockPaypal = async (orderId) => {
     return error;
   }
 };
-
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/user/login");
-}
-
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    res.redirect("/user");
-  }
-  next();
-}
-
-function validateInputUser(name, lastname, email, password) {
-  let errors = [];
-  // if (!/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) errors.push("Email address is not valid");
-  // if (!name || name.length > 30) errors.push("Name is not valid");
-  // if (!lastname || lastname.length > 30) errors.push("Last name is not valid");
-  // if (!/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/.test(password)) errors.push("Password must have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long");
-  //VALIDATE PAYMENT AND ADDRESS???????????
-  return errors;
-}
 
 function validateInputProduct(
   name,
@@ -200,11 +174,11 @@ module.exports = {
   // initialize
   getUsers,
   getProducts,
-  validateInputUser,
+  // validateInputUser,
   validateInputProduct,
   modifyStockStripe,
   modifyStockPaypal,
-  checkAuthenticated,
-  checkNotAuthenticated,
+  // checkAuthenticated,
+  // checkNotAuthenticated,
   mailPayPal,
 }

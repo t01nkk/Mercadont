@@ -48,18 +48,4 @@ router.put("/:questionId/answer", async (req, res) => {
     }
 })
 
-// router.put("/:questionId/resolved", async (req, res) => {
-//     const { questionId } = req.params
-//     try {
-//         await Qa.update({
-//             resolved: true,
-//         }, { where: { id: questionId } })
-
-//         return res.status(200).send("Answer Resolved")
-//     }
-//     catch (err) {
-//         res.status(400).send(err)
-//     }
-// })
-
 module.exports = router;

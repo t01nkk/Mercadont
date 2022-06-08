@@ -119,7 +119,6 @@ export default function EditProduct() {
           categories,
         }
       );
-      console.log("LOGRE EDITARLO ", res);
     } catch (err) {
       console.log(err);
     }
@@ -137,7 +136,6 @@ export default function EditProduct() {
       console.log(err);
     }
   };
-  console.log(product);
   return (
     <div className="container-edit-admin">
       <div className="delete-product">

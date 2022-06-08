@@ -9,7 +9,6 @@ export default function LoginADMIN() {
   const { login } = useAuth();
   const handleLogin = async (values) => {
     try {
-      console.log("entre en el try", values);
       const userCredentials = await login(values.email, values.password);
 
       if (userCredentials.user.uid) {
