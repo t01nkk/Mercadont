@@ -5,6 +5,7 @@ import { useStore } from "../../context/store";
 import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "../../context/authContext";
 import { useTranslation } from "react-i18next";
+import "./accountDetails.css";
 export default function AccountDetailsForm() {
   const { t } = useTranslation();
   const history = useHistory();
@@ -116,7 +117,7 @@ export default function AccountDetailsForm() {
   };
 
   return (
-    <div>
+    <div className="navPush-accountDetails">
       <h2>{t("accountDetailsForm.updateInfo")}</h2>
       <form onSubmit={handleSubmit}>
         <div className="divInputUser">

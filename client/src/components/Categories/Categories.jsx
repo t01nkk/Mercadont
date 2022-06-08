@@ -11,7 +11,7 @@ import { getFavorites } from "../../redux/actions/actions.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader/Loader";
-
+import "./categories.css";
 export default function Categories() {
   // let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
@@ -118,15 +118,14 @@ export default function Categories() {
   const handleSearch = async (e) => {
     e.preventDefault();
     let filter = state.filterCategory;
-   
-  
+
     if (min) {
       filter = filter.filter((product) => product.price >= min);
     }
     if (max) {
       filter = filter.filter((product) => product.price <= max);
     }
-  
+
     if (max && min && parseInt(max) < parseInt(min)) {
       setError("Please select valid numbers for the min and max inputs");
       filter = [];
@@ -163,7 +162,7 @@ export default function Categories() {
     handleRedirect();
   }, []);
   return (
-    <div>
+    <div className="navPush-categories">
       <div className="selectF">
         <div>
           <select
@@ -199,8 +198,8 @@ export default function Categories() {
       </div>
       {redirect ? <Redirect push to="/home" /> : null}
       <div className="section-products">
-        {state.products && state.favorites
-          ? React.Children.toArray(
+        {state.products && state.favorites ? (
+          React.Children.toArray(
             state.products.map((product) => {
               if (product.status === "active") {
                 return (
@@ -220,7 +219,11 @@ export default function Categories() {
               return null;
             })
           )
-          : <div className="container-loader"><Loader /></div>}
+        ) : (
+          <div className="container-loader">
+            <Loader />
+          </div>
+        )}
         <ToastContainer />
       </div>
     </div>
