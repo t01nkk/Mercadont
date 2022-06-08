@@ -15,7 +15,7 @@ export const History = () => {
   const getHistory = async()=>{
     let arrayHistory = await axios(`http://localhost:3001/user/history/${myUser}`)
     setHistory(arrayHistory)
-    console.log(arrayHistory)
+    console.log(arrayHistory.data) 
   }
 
   return (
