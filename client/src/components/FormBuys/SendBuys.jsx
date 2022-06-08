@@ -69,8 +69,8 @@ export const SendBuys = () => {
     
     const handelClik = async (e) => {
         e.preventDefault()
-        if (e.target.textContent === "card") setSelectBuys("card")
-        if (e.target.textContent === "paypal") {
+        if (e.target.id === "card") setSelectBuys("card")
+        if (e.target.id === "paypal") {
             setSelectBuys("paypal")
             const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/payPal/create-order`, {
                 purchase_units: [
@@ -126,8 +126,8 @@ export const SendBuys = () => {
         <div>
             {amountTotal && <p>Total Price:{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
             <p>Choose your payment method</p>
-            <button onClick={e => handelClik(e)}>card</button>
-            <button onClick={e => handelClik(e)} type='submit'>paypal</button>
+            <button id='card' onClick={e => handelClik(e)}>card</button>
+            <button id='paypal' onClick={e => handelClik(e)} type='submit'>paypal</button>
         </div>
         {
             <div>
