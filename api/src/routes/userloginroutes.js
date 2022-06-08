@@ -189,7 +189,6 @@ router.get("/history/:id", async (req, res) => {
     }
     order.orderNumber === userHistory[0].orderId
     for(let item of userHistory){
-      console.log("order:", order)
       if(order.orderNumber === item.orderId) {
         order.products.push(
           {
@@ -214,10 +213,7 @@ router.get("/history/:id", async (req, res) => {
     }
     orders.push(order)
     return res.status(200).send(orders);
-    // console.log("userHistory:", userHistory.length)
-    // return res.status(200).send(userHistory);
   } catch (error) {
-    console.log("error:", error)
     return res.status(404).send(error);
   }
 });
