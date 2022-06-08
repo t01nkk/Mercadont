@@ -22,14 +22,15 @@ export default function ProductDetailsInfo({
         <img src={image} alt={` ${name}`} className="product-img" />
       </div>
       <div className="product-info">
-        <p className="title">{name}</p>
+        <p className="titleDetails">{name}</p>
+        <p className="title">Description: </p>
+        <p className="description">{description}</p>
         <p className="title">Categories:</p>
         {categories.map((category) => (
           <p key={category.name}>{category.name}</p>
         ))}
 
-        <p className="title">Description: </p>
-        <p className="description">{description}</p>
+      
         <p className="title">Available stock: </p>
         <p>{stock}</p>
         <p className="title">Price: </p>
@@ -49,8 +50,10 @@ export default function ProductDetailsInfo({
             } 
           </div>
         ))}</p>
+            <div ><FormQA productId={id}/></div>
       </div>
-      <div><FormQA productId={id}/></div>
+
+
     </div>
   );
 }
