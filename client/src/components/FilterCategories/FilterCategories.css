@@ -1,0 +1,55 @@
+.filter-search-btn {
+  max-width: 260px;
+  width: 90%;
+  margin: 0 5%;
+  padding: 0.8em 1.4em;
+  border: 2px solid #e6ccb2;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1rem;
+  transition: 0.3s;
+  z-index: 1;
+  font-family: inherit;
+  color: #eabd8f;
+  border-radius: 5px;
+}
+.filter-search-btn::before {
+  content: "";
+  width: 0;
+  height: 600%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: #000000;
+  transition: 0.5s ease;
+  display: block;
+  z-index: -1;
+}
+.filter-search-btn:hover::before {
+  width: 105%;
+}
+.filter-search-btn:hover {
+  color: #f0b479;
+}
+.dropdown-item:active {
+  background-color: #e6ccb29f;
+  color: #000000;
+}
+
+.checkbox-category::after {
+  background-color: #fff;
+}
+.checkbox-category::before {
+  background-color: black;
+  color: #f0b479;
+}
+.category-list-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}

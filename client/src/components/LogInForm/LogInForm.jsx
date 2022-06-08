@@ -4,10 +4,24 @@ import { Link, Redirect } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import axios from "axios";
 import { Formik } from "formik";
+import { toast, ToastContainer } from "react-toastify";
 export default function LogInForm() {
+  let errorMsg = "";
   const [redirect, setRedirect] = useState(false);
   const { login, loginWithGoogle, resetPassword } = useAuth();
 
+  const errorAlert = () => {
+    toast.error(errorMsg, {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
   const handleLogin = async (values) => {
     try {
       const userCredentials = await login(values.email, values.password);
@@ -27,14 +41,12 @@ export default function LogInForm() {
         setRedirect(true);
       }
     } catch (err) {
-      let error
-      console.log(err)
-      if (err.code === "auth/internal-error") error = ("Invalid Email");
-      if (err.code === "auth/user-not-found") error = ("Email doesn't belong to a user");
-      if (err.code === "auth/wrong-password") error = ("Wrong Password");
-
-
-      alert(error);
+      console.log(err);
+      if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
+      if (err.code === "auth/user-not-found")
+        errorMsg = "Email doesn't belong to a user";
+      if (err.code === "auth/wrong-password") errorMsg = "Wrong Password";
+      errorAlert();
     }
   };
   const handleGoogleSignin = async () => {
@@ -116,7 +128,11 @@ export default function LogInForm() {
                   onChange={handleChange}
                 />
                 <small style={{ color: "red" }}>
-                  {touched.email && errors.email ? <p className="error-style">{errors.email}</p> : ""}
+                  {touched.email && errors.email ? (
+                    <p className="error-style">{errors.email}</p>
+                  ) : (
+                    ""
+                  )}
                 </small>
               </div>
               <div className="divInputUser">
@@ -150,8 +166,16 @@ export default function LogInForm() {
             </form>
             <div className="createUser-container">
               <div>
-                <button onClick={handleGoogleSignin} className="btn btn-primary google-plus">
-                  <img height="25px" src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt="Google Logo"/>  Login With Google
+                <button
+                  onClick={handleGoogleSignin}
+                  className="btn btn-primary google-plus"
+                >
+                  <img
+                    height="25px"
+                    src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
+                    alt="Google Logo"
+                  />{" "}
+                  Login With Google
                 </button>
               </div>
               {/* 
@@ -164,7 +188,7 @@ export default function LogInForm() {
             cookiePolicy={"single_host_origin"}
           /> */}
               <div className="create-container">
-              <p>Not a user yet?</p>
+                <p>Not a user yet?</p>
                 <div className="btn-createUser">
                   <Link to="/createUser">Create User</Link>
                 </div>
@@ -173,6 +197,7 @@ export default function LogInForm() {
           </div>
         )}
       </Formik>
+      <ToastContainer />
     </div>
   );
 }

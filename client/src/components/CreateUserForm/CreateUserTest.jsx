@@ -4,6 +4,7 @@ import { Formik } from "formik";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import "./CreateUserForm.css";
+import { toast, ToastContainer } from "react-toastify";
 export default function LogInForm() {
   const history = useHistory();
   // const handleChange = (e) => {
@@ -12,7 +13,19 @@ export default function LogInForm() {
 
   const { signup } = useAuth();
   const [error, setError] = useState();
-
+  let errMsg = "";
+  const errorAlert = () => {
+    toast.error(errMsg, {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
   const handleSubmitt = async (values) => {
     try {
       const userCredentials = await signup(values.email, values.password);
@@ -23,10 +36,14 @@ export default function LogInForm() {
       });
       history.push("/login");
     } catch (err) {
-      if (err.code === "auth/internal-error") alert("Invalid Email. Please Try Again");
-      if (err.code === "auth/email-already-in-use") alert("The email is already in use. Please Try Again");
-      history.push("/login")
+      if (err.code === "auth/internal-error") {
+        errMsg = "Invalid Email. Please Try Again";
+      }
 
+      if (err.code === "auth/email-already-in-use") {
+        errMsg = "The email is already in use. Please Try Again";
+      }
+      errorAlert();
     }
   };
 
@@ -61,9 +78,8 @@ export default function LogInForm() {
           return errors;
         }}
         onSubmit={(values, { setErrors }) => {
-          return handleSubmitt(values, ).catch(() => {
+          return handleSubmitt(values).catch(() => {
             setErrors("email", "This email is not valid");
-
           });
         }}
       >
@@ -134,6 +150,7 @@ export default function LogInForm() {
           </div>
         )}
       </Formik>
+      <ToastContainer />
     </div>
   );
 }

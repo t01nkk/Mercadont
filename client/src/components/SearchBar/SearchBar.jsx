@@ -11,23 +11,20 @@ export default function SearchBar() {
   const [error, setError] = useState(false);
   const [input, setInput] = useState("");
 
-
-
-
   function validate(value) {
     var expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
 
     if (!expression.test(value)) {
-        setError('you can use letters spaces and accents');
+      setError("you can use letters spaces and accents");
     } else if (value === "") {
-        setError('')
+      setError("");
     }
-}
+  }
   const handleChange = (e) => {
-    setError('')   
-    const {  name } = e.target;    
+    setError("");
+    const { name } = e.target;
     if (name === "search") {
-        validate(input)
+      validate(input);
     }
     setInput(e.target.value);
   };
@@ -51,28 +48,21 @@ export default function SearchBar() {
     setRedirect(false);
   }, []);
   return (
-    <div className="search-gral">
+    <>
       {redirect ? <Redirect push to="/search" /> : null}
-      <form
-        role="search"
-        className="searchBar-container"
-        onSubmit={handleSearch}
-      >
+      <form role="search" className="d-flex" onSubmit={handleSearch}>
         <input
           id="search"
-          type="text"
           name="search"
           value={input}
-          placeholder="Search..."
-          autoFocus
+          className="form-control search-bar "
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
           required
           onChange={handleChange}
         />
-       {/*  {!error ? null : alert(error)} */}
-        <button type="submit"  className="searchBar-container-button">
-          <img src={icon} alt="" />
-        </button>
       </form>
-    </div>
+    </>
   );
 }
