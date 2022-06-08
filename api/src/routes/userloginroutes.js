@@ -12,7 +12,7 @@ router.post("/register", async (req, res, next) => {
         email: email,
         name: name,
         lastname: lastname,
-        address:JSON.parse( address),
+        address: JSON.stringify(address),
         image: image,
         payment: payment,
         id: id,

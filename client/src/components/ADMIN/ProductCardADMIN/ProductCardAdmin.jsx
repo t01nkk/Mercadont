@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./ProductCardAdmin.css";
+import { useTranslation } from "react-i18next";
 export default function ProductCardAdmin({
   name,
   price,
@@ -12,12 +13,13 @@ export default function ProductCardAdmin({
   description,
   categories,
 }) {
+  const { t } = useTranslation()
   return (
     <div className="card-clothe-admin">
       <Link
         to={`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/admin/edit/${id}`}
       >
-        <button className="btn-edit-admin ">Edit</button>
+        <button className="btn-edit-admin ">{t("adminProductCard.edit")}</button>
       </Link>
       {/* to={`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home/${id}`} */}
 
@@ -31,11 +33,11 @@ export default function ProductCardAdmin({
             <div className="card-rating-admin">
               <div>
                 <p>
-                  Rating:
+                  {t("adminProductCard.rating")}
                   <span> 5.0{rating}</span>
                 </p>
                 <p>
-                  Stock:
+                  {t("adminProductCard.stock")}
                   <span>{stock}</span>
                 </p>
               </div>
@@ -45,7 +47,7 @@ export default function ProductCardAdmin({
                   <span>{price}</span>
                 </p>
                 <p>
-                  Status:
+                  {t("adminProductCard.status")}
                   <span>{status}</span>
                 </p>
               </div>

@@ -5,10 +5,13 @@ import { ProductCart } from "../ProductCart/ProductCart";
 import { totalPrice } from "./actionsCart";
 import { totalCount } from "../../redux/actions/actions";
 import accounting from "accounting";
+import { ToastContainer, toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import "../Favorites/Favorite.css"
 import { useStore } from "../../context/store.js";
 
 export const Cart = () => {
+  const { t } = useTranslation()
   let user = JSON.parse(localStorage?.getItem("myUser"));
   let local = JSON.parse(localStorage.getItem(user))
   let yourStorage = JSON.parse(localStorage?.getItem(user));
@@ -30,12 +33,27 @@ export const Cart = () => {
     }
   },[search])
 
+  const alertInfo = (msg) => {
+    toast.info(msg, {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark"
+    })
+  }
+
   const deleteDatatoStorage = (name) => {
     let newLocalStorage = yourStorage?.filter((e) => e.name !== name);
     setStorageCart(newLocalStorage);
     localStorage.setItem(user, JSON.stringify(newLocalStorage));
     setPriceTotal(totalPrice());
     totalCount(dispatch)
+    alertInfo(t("cart.removeFromCart"))
+    // totalPrice()
   };
 
   //Funcion para ver detalle del producto por id
@@ -57,6 +75,16 @@ export const Cart = () => {
       localStorage?.removeItem(user);
       totalCount(dispatch)
     // }
+    const answer = window.confirm(t("cart.confirmClearCart"))
+    if (answer) {
+      setStorageCart([]);
+      setPriceTotal(totalPrice())
+      localStorage?.removeItem(user);
+      alertInfo(t("cart.removeEverythingFromCart"))
+      setTimeout(() => {
+        history.push('/home')
+      }, 4000);
+    }
   };
 
   const makePurchase = () => {
@@ -65,15 +93,14 @@ export const Cart = () => {
   };
 
   return (
-    <div>
-      <button onClick={() => clearCart()} disabled={storageCart?.length < 1}>Clear Cart</button>
+    <div>{ }
+      <button onClick={() => clearCart()} disabled={storageCart?.length < 1}>{t("cart.emptyTheCart")}</button>
       <section>
-        <h2>Welcome to your Cart</h2>
+        <h2>{t("cart.welcome")}</h2>
         <div className='container container-product-cart'>
           {storageCart && storageCart?.length > 0 ? (
-            storageCart.map((el, index) => (
+            React.Children.toArray(storageCart.map((el, index) => (
               <ProductCart
-                key={el.name}
                 name={el.name}
                 stock={el.stock}
                 price={el.price}
@@ -85,26 +112,27 @@ export const Cart = () => {
                 totalPrice={totalPrice}
                 setPriceTotal={setPriceTotal}
               />
-            ))
+            )))
           )
-            : <h3>Your Cart is Empty</h3>
+            : <h3>{t("cart.emptyCart")}</h3>
           }
         </div>
         {storageCart && storageCart.length > 0 ?
           <p>
-            Total price:
+            {t("cart.totalPrice")}
             {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
           </p>
           : null
         }
         {
-          storageCart && storageCart?.length !== 0 ? <button onClick={makePurchase} disabled={storageCart === null}>Buy</button>
+          storageCart && storageCart?.length !== 0 ? <button onClick={makePurchase} disabled={storageCart === null}>{t("cart.buy")}</button>
             : null
         }
       </section>
 
       {/* <FormBuys priceTotal={priceTotal}/> */}
       <br />
+      <ToastContainer />
     </div>
   );
 };
