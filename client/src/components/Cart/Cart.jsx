@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 // import { FormBuys } from '../FormBuys/FormBuys'
 import { ProductCart } from "../ProductCart/ProductCart";
 import { totalPrice } from "./actionsCart";
@@ -17,9 +17,19 @@ export const Cart = () => {
   const [priceTotal, setPriceTotal] = useState(0);
   const [state, dispatch] = useStore();
 
+  
   useEffect(() => {
     setPriceTotal(totalPrice());
-  }, []);
+  }, [])
+  
+  let { search } = useLocation()
+  useEffect(()=>{
+    if(search == "?buy=false"){ console.log("Aca iria una alerta de qeu la compra fue cancelada")}
+    if(search == "?buy=true"){
+      localStorage.removeItem(user)
+      setStorageCart([]);
+    }
+  },[search])
 
   const deleteDatatoStorage = (name) => {
     let newLocalStorage = yourStorage?.filter((e) => e.name !== name);

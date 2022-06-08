@@ -93,8 +93,10 @@ export const getFavorites = async (dispatch, id) => {
 export const totalCount = (dispatch)=>{
   let user = JSON.parse(localStorage.getItem("myUser"))
   let local = JSON.parse(localStorage.getItem(user));
-  dispatch({
-    type: CHANGE_COUNT_PRODUCT,
+  if(local){
+    dispatch({
+      type: CHANGE_COUNT_PRODUCT,
     payload: local.length
   })
+}
 }

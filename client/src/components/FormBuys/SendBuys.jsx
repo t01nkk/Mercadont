@@ -47,7 +47,7 @@ export const SendBuys = () => {
 
             if(paymentMethod){
                 localStorage.removeItem(user)
-                history.push("/")
+                history.push("/cart")
             }
             console.log(paymentMethod)
         }
@@ -88,7 +88,7 @@ export const SendBuys = () => {
                 local
             })
             setRedirect(purchase.data)
-            localStorage.removeItem(user)
+            // localStorage.removeItem(user)
         }
     }
 
