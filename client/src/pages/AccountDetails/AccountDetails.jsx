@@ -52,18 +52,14 @@ addressUser?.map(e=>{
             <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" alt="No Image" height="40px" />
           }
           <p className="profile-title">{user?.email}</p>
-          <p>{user?.email}</p>
           <p className="profile-title">{user?.name}</p>
-          <p>{user?.name}</p>
           <p className="profile-title">{user?.lastname}</p>
-          <p>{user?.lastname}</p>
           <p className="profile-title">{user?.adress}</p>
-          {console.log(user?.address)}
-          <p>Country:  {addressObj && addressObj.country}</p>
-          <p>City:  {addressObj && addressObj.city}</p>
-          <p>Province:  {addressObj && addressObj.province}</p>
-          <p>Street:  {addressObj && addressObj.street}</p>
-          <p>PostalCode:  {addressObj && addressObj.postalCode}</p>
+          <p>{t("accountDetails.country")}{addressObj && addressObj.country}</p>
+          <p>{t("accountDetails.city")}{addressObj && addressObj.city}</p>
+          <p>{t("accountDetails.province")}{addressObj && addressObj.province}</p>
+          <p>{t("accountDetails.street")}{addressObj && addressObj.street}</p>
+          <p>{t("accountDetails.postalCode")}{addressObj && addressObj.postalCode}</p>
 
           <Link to="/accountDetails/editProfile">
             <button className="input-edit-profile">{t("accountDetails.btnEditProfile") }</button>

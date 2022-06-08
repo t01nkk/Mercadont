@@ -4,8 +4,6 @@ import axios from "axios"
 import { useHistory } from 'react-router-dom'
 import { totalPrice } from '../Cart/actionsCart'
 import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
-import accounting from "accounting";
-import { ToastContainer, toast } from "react-toastify";
 import { useTranslation } from 'react-i18next';
 
 export const SendBuys = () => {
@@ -53,20 +51,6 @@ export const SendBuys = () => {
         }
     }
 
-    const loadingBuys = () => {
-        toast.success("Already in cart!", {
-            position: "bottom-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    };
-
-
     const handelClik = async (e) => {
         e.preventDefault()
         if (e.target.id === "card") setSelectBuys("card")
@@ -110,15 +94,14 @@ export const SendBuys = () => {
         <div>
             <h2>{t("sendBuys.productsList") }</h2>
             <div>
-                {products && products.map((el, index) =>
+                {React.Children.toArray(products && products.map((el) =>
                 (<ListProductsBuys
-                    key={el.name}
                     name={el.name}
                     price={el.price}
                     totalPrice={el.totalPrice}
                     image={el.image}
                     amount={el.quantity}
-                />))
+                />)))
                 }
             </div>
         </div>

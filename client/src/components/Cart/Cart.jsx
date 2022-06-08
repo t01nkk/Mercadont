@@ -21,20 +21,7 @@ export const Cart = () => {
     setPriceTotal(totalPrice());
   }, []);
 
-  const alertProductRemovedFromCart = (msg) => {
-    toast.info(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    })
-  }
-
-  const alertEmptiedCart = (msg) => {
+  const alertInfo = (msg) => {
     toast.info(msg, {
       position: "bottom-center",
       autoClose: 3000,
@@ -52,7 +39,7 @@ export const Cart = () => {
     setStorageCart(newLocalStorage);
     localStorage.setItem(user, JSON.stringify(newLocalStorage));
     setPriceTotal(totalPrice());
-    alertProductRemovedFromCart(t("cart.removeFromCart"))
+    alertInfo(t("cart.removeFromCart"))
     // totalPrice()
   };
 
@@ -73,7 +60,7 @@ export const Cart = () => {
       setStorageCart([]);
       setPriceTotal(totalPrice())
       localStorage?.removeItem(user);
-      alertEmptiedCart(t("cart.removeEverythingFromCart"))
+      alertInfo(t("cart.removeEverythingFromCart"))
       setTimeout(() => {
         history.push('/home')
       }, 4000);

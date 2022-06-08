@@ -140,11 +140,11 @@ export default function AccountDetailsForm() {
       </div>
         
        <div className="divInputUser">
-         <p className="title">address: </p>
+         <p className="title">{t("accountDetailsForm.address")}</p>
         <input
           type="text"
           name="city"
-          placeholder="City..."
+          placeholder={t("accountDetailsForm.city")}
           value={user.address?.city}
           onChange={handleChange}
         />         
@@ -154,7 +154,7 @@ export default function AccountDetailsForm() {
         <input
           type="text"
           name="country"
-          placeholder="Country..."
+          placeholder={t("accountDetailsForm.country")}
           value={user.address?.country}
           onChange={handleChange}
         />         
@@ -164,7 +164,7 @@ export default function AccountDetailsForm() {
         <input
           type="text"
           name="postalCode"
-          placeholder="postalCode"
+          placeholder={t("accountDetailsForm.postalCode")}
           value={user.address?.postalCode}
           onChange={handleChange}
         />         
@@ -174,7 +174,7 @@ export default function AccountDetailsForm() {
         <input
           type="text"
           name="province"
-          placeholder="Province"
+          placeholder={t("accountDetailsForm.province")}
           value={user.address?.province}
           onChange={handleChange}
         />         
@@ -184,7 +184,7 @@ export default function AccountDetailsForm() {
         <input
           type="text"
           name="street"
-          placeholder="Street..."
+          placeholder={t("accountDetailsForm.street")}
           value={user.address?.street}
           onChange={handleChange}
         />         
