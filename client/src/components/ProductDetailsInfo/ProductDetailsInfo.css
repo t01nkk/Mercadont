@@ -1,9 +1,8 @@
 .details-container {
   padding: 30px 30px;
-
   text-align: center;
   display: flex;
-  flex-direction: column;
+ 
 }
 .details-container button {
   position: relative;
@@ -13,6 +12,7 @@
   text-align: center;
   margin-bottom: 10px;
 }
+
 .product-img {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   width: 500px;
@@ -20,8 +20,17 @@
 }
 .product-info {
   margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 100%;
+
 }
 
+.img-container{
+  display: flex;
+  
+}
 .title {
   letter-spacing: 4px;
   padding: 20px 0;
@@ -31,9 +40,9 @@
   flex-direction: column;
 }
 .description {
-  display: inline-block;
-  width: 40%;
-
-  text-align: justify;
-  text-justify: inter-word;
+  letter-spacing: 4px;
+  padding: 20px 0;
+  
+  display: flex;
+  flex-direction: column;
 }
