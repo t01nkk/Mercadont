@@ -6,7 +6,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+}
+.navbar-toggler {
+  line-height: 0.5;
+  color: #ffbb77;
+  background-color: #ffffff;
+  border-color: #e6ccb29f;
 }
 
 .header-nav {

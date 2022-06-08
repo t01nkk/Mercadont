@@ -5,11 +5,25 @@ import { useAuth } from "../../context/authContext";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Formik } from "formik";
+import { toast, ToastContainer } from "react-toastify";
 export default function LogInForm() {
+  let errorMsg = "";
   const { t } = useTranslation()
   const [redirect, setRedirect] = useState(false);
   const { login, loginWithGoogle, resetPassword } = useAuth();
 
+  const errorAlert = () => {
+    toast.error(errorMsg, {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
   const handleLogin = async (values) => {
     try {
       const userCredentials = await login(values.email, values.password);
@@ -29,14 +43,12 @@ export default function LogInForm() {
         setRedirect(true);
       }
     } catch (err) {
-      let error
-      console.log(err)
-      if (err.code === "auth/internal-error") error = ("Invalid Email");
-      if (err.code === "auth/user-not-found") error = ("Email doesn't belong to a user");
-      if (err.code === "auth/wrong-password") error = ("Wrong Password");
-
-
-      alert(error);
+      console.log(err);
+      if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
+      if (err.code === "auth/user-not-found")
+        errorMsg = "Email doesn't belong to a user";
+      if (err.code === "auth/wrong-password") errorMsg = "Wrong Password";
+      errorAlert();
     }
   };
   const handleGoogleSignin = async () => {
@@ -103,7 +115,11 @@ export default function LogInForm() {
                   onChange={handleChange}
                 />
                 <small style={{ color: "red" }}>
-                  {touched.email && errors.email ? <p className="error-style">{errors.email}</p> : ""}
+                  {touched.email && errors.email ? (
+                    <p className="error-style">{errors.email}</p>
+                  ) : (
+                    ""
+                  )}
                 </small>
               </div>
               <div className="divInputUser">
@@ -158,6 +174,7 @@ export default function LogInForm() {
           </div>
         )}
       </Formik>
+      <ToastContainer />
     </div>
   );
 }
