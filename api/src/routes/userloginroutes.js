@@ -194,7 +194,7 @@ router.get("/history/:id", async (req, res) => {
       if(order.orderNumber === item.orderId) {
         order.products.push(
           {
-            product: item.productId, 
+            product: item.productId,
             productQuantity: item.productQuantity
           }
         )

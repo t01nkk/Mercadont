@@ -12,6 +12,7 @@ import "./Home.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../../components/Loader/Loader.jsx"
+import { handleDeleteFavorite } from "../../components/Cart/actionsCart.js";
 
 
 export default function Home() {
@@ -85,21 +86,21 @@ export default function Home() {
       console.log(error);
     }
   };
-  const handleDeleteFavorite = async (id) => {
-    try {
-      await axios.delete(
-        `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
-        {
-          data: {
-            idUser: person,
-            idProduct: id,
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleDeleteFavorite = async (id) => {
+  //   try {
+  //     await axios.delete(
+  //       `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
+  //       {
+  //         data: {
+  //           idUser: person,
+  //           idProduct: id,
+  //         },
+  //       }
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     let myUser = JSON.parse(localStorage.getItem("myUser"));
