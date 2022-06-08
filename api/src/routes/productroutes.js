@@ -276,32 +276,5 @@ router.put("/update/:id", async (req, res) => {
     return res.status(400).send(err);
   }
 });
-//CART - Buy Product
-router.post("/buys", async (req, res) => {
-  try {
-    const { id, amount, local, userId } = req.body;
-
-    const payment = await stripe.paymentIntents.create({
-      amount,
-      currency: "USD",
-      description: "Compra",
-      payment_method: id,
-      confirm: true,
-    });
-    modifyStock(local);
-
-    for (let product of local) {
-      const db = await PurchaseOrder.create({
-        orderId: id,
-        userId: userId,
-        productId: product.id,
-        productQuantity: product.quantity,
-      });
-    }
-    return res.status(200).send(payment);
-  } catch (error) {
-    return res.send(error);
-  }
-});
 
 module.exports = router;
