@@ -93,7 +93,7 @@ export const Cart = () => {
   };
 
   return (
-    <div>{ }
+    <div className="wrapper-cart">
       <button onClick={() => clearCart()} disabled={storageCart?.length < 1}>{t("cart.emptyTheCart")}</button>
       <section>
         <h2>{t("cart.welcome")}</h2>

@@ -74,7 +74,7 @@ export default function LogInForm() {
   };
 
   return (
-    <div className="container-login">
+    <div className="container-login spaceNavTop">
       <Formik
         initialValues={{
           email: "",

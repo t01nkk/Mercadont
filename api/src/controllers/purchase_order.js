@@ -1,6 +1,6 @@
 const { PurchaseOrder } = require("../db");
 
-const createPurchaseOrder = async (orderId,userId,local,status) => {
+const createPurchaseOrder = async (orderId,userId,local,amount,status) => {
     let created;
     for(let product of local){
         created = await PurchaseOrder.create({
@@ -8,6 +8,7 @@ const createPurchaseOrder = async (orderId,userId,local,status) => {
             userId,
             productId: product.id,
             productQuantity: product.quantity,
+            totalAmount: amount,
             status
         })
     }
