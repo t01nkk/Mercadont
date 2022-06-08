@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useStore } from "../../context/store";
-import "./AccountDetails.css";
+import { useTranslation } from "react-i18next";
+// import "./AccountDetails.css"
 // import {mostrarFrente} from "./js/main.js"
-
+import { ToastContainer, toast } from "react-toastify";
 export default function AccountDetails() {
+  const { t } = useTranslation()
   const [user, setUser] = useState("");
   const [state, dispatch] = useStore();
 
@@ -44,27 +46,23 @@ addressUser?.map(e=>{
       {/* <script src="./js/main.js"></script> */}
       <div className="profile-container">
         <div className="profile-info">
-          <p className="profile-title">Your Info:</p>
+          <p className="profile-title">{t("accountDetails.info")}</p>
           {user?.image ?
             <img src={user?.image} alt="No Image" /> :
             <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" alt="No Image" height="40px" />
           }
-          <p className="profile-title">Email:</p>
-          <p>{user?.email}</p>
-          <p className="profile-title">Name:</p>
-          <p>{user?.name}</p>
-          <p className="profile-title">Lastname:</p>
-          <p>{user?.lastname}</p>
-          <p className="profile-title">Address:</p>
-          {console.log(user?.address)}
-          <p>Country:  {addressObj && addressObj.country}</p>
-          <p>City:  {addressObj && addressObj.city}</p>
-          <p>Province:  {addressObj && addressObj.province}</p>
-          <p>Street:  {addressObj && addressObj.street}</p>
-          <p>PostalCode:  {addressObj && addressObj.postalCode}</p>
+          <p className="profile-title">{user?.email}</p>
+          <p className="profile-title">{user?.name}</p>
+          <p className="profile-title">{user?.lastname}</p>
+          <p className="profile-title">{user?.adress}</p>
+          <p>{t("accountDetails.country")}{addressObj && addressObj.country}</p>
+          <p>{t("accountDetails.city")}{addressObj && addressObj.city}</p>
+          <p>{t("accountDetails.province")}{addressObj && addressObj.province}</p>
+          <p>{t("accountDetails.street")}{addressObj && addressObj.street}</p>
+          <p>{t("accountDetails.postalCode")}{addressObj && addressObj.postalCode}</p>
 
           <Link to="/accountDetails/editProfile">
-            <button className="input-edit-profile">Edit your profile</button>
+            <button className="input-edit-profile">{t("accountDetails.btnEditProfile") }</button>
           </Link>
         </div>
       </div>

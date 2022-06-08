@@ -6,56 +6,49 @@ import {
   fetchProducts,
   fetchCategories,
   getFavorites,
+  totalCount,
 } from "../../redux/actions/actions.js";
 import "./Home.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 import { Loader } from "../../components/Loader/Loader.jsx"
+import { handleDeleteFavorite } from "../../components/Cart/actionsCart.js";
 
 
 export default function Home() {
+  const { t, i18n } = useTranslation()
   const [user, setUser] = useState([]);
   const [state, dispatch] = useStore();
-  // const [error, setError] = useState();
   const [cart, setCart] = useState([]);
   const [inCart, setInCart] = useState(false);
   let person = JSON.parse(localStorage.getItem("myUser"));
-  const alertAddedToCart = () => {
-    toast.success("Added to cart!", {
-      position: "bottom-left",
+  const alertSuccess = (msg) => {
+    toast.success(msg, {
+      position: "bottom-center",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
+      pauseOnHover: false,
+      draggable: false,
       progress: undefined,
-      theme: "dark",
+      theme: "dark"
+    });
+  };
+  const alertInfo = (msg) => {
+    toast.info(msg, {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark"
     });
   };
 
-  const [input, setInput] = useState({
-    name: "",
-    tuMama: "",
-    address: {
-      country: "",
-      province: "",
-      city: "",
-      street: "",
-      postalCode: "",
-    },
-  });
-  const alertAlreadyInCart = () => {
-    toast.warn("Already in cart!", {
-      position: "bottom-left",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
+ 
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
     let totalPrice = price;
@@ -64,23 +57,23 @@ export default function Home() {
     let value = cart.find((e) => e.name === name);
     if (value) {
       setInCart(false);
-      alertAlreadyInCart();
+      alertInfo(t("home.altAlreadyInCart"));
       return;
     } else {
       setInCart(true);
       setCart((cart) => [...cart, products]);
-      alertAddedToCart();
+      alertSuccess(t("home.altAddToCart"));
     }
   };
 
   const handleSaveFavorite = async (id) => {
-    if (!person)
-      return alert("You must be Logged In to add items to your favorites list");
+    if (!person) alert(t("home.mustBeLoggedIn"))
     try {
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
         idUser: person,
         idProduct: id,
       });
+      alertSuccess(t("home.altAddToFavs"))
     } catch (error) {
       console.log(error);
     }
@@ -96,6 +89,7 @@ export default function Home() {
           },
         }
       );
+      alertInfo(t("home.altRemoveFromFavorites"))
     } catch (error) {
       console.log(error);
     }
@@ -117,6 +111,7 @@ export default function Home() {
 
   useEffect(() => {
     localStorage.setItem(user, JSON.stringify(cart));
+    totalCount(dispatch)
   }, [cart]);
 
   // const mostra = () => {
@@ -150,6 +145,7 @@ export default function Home() {
         )
         : <div className="container-loader"><Loader /></div>}
       <ToastContainer />
+      <p>{t(i18n.languages[0]) }</p>
     </section>
   );
 }
