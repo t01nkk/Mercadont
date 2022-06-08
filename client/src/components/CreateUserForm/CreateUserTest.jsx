@@ -99,7 +99,7 @@ export default function LogInForm() {
           }}
         >
           {({ errors, handleSubmit, handleChange, isSubmitting, touched }) => (
-            <div className="container-login">
+            <div className="container-login spaceNavTop">
               <div className="loginCard">
                 <h2>{t("createUserTest.createAccount")}</h2>
                 <form onSubmit={handleSubmit}>

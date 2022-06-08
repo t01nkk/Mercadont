@@ -121,7 +121,7 @@ small {
   margin: 0 10%;
 }
 
-.create-container{
+.create-container {
   display: flex;
   flex-direction: column;
 }

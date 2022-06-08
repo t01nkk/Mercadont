@@ -28,7 +28,7 @@ export const Favorites = () => {
     } 
 
   return (
-    <div>
+    <div className="navPush-favorites">
       <h3>{ t("favorites.favorites")}</h3>
       <div className='container container-all-favorites'>
               {favorites.length !==0 && favorites.map(e =>
