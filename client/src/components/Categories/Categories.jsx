@@ -173,7 +173,6 @@ export default function Categories() {
             <option value="DESCENDING">⬆ </option>
           </select>
         </div>
-
         <form className="form-filter-price" onSubmit={handleSearch}>
           <input
             id="filter2"
