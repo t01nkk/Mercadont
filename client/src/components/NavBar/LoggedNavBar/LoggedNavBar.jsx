@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import { useStore } from "../../../context/store";
 import { Link, useHistory } from "react-router-dom";
 import FilterCategories from "../../FilterCategories/FilterCategories";
@@ -6,18 +6,27 @@ import { getFavorites } from "../../../redux/actions/actions.js";
 import SearchBar from "../../SearchBar/SearchBar";
 import "./LoggedNavBar.css";
 import { useAuth } from "../../../context/authContext";
+import { totalCount } from "../../../redux/actions/actions.js";
+import imgCart from "../../../media/shoppingCart1.png"
+
 export default function LoggedNavBar() {
   const [state, dispatch] = useStore();
   let myUser = JSON.parse(localStorage.getItem("myUser"));
   let myCart = JSON.parse(localStorage.getItem(myUser));
+
   useEffect(() => {
-    
     let myUser = JSON.parse(localStorage.getItem("myUser"));
     // console.log(myCart.length)
     if (myUser) {
       getFavorites(dispatch, myUser);
     }
   }, [state.favorites.length]);
+  
+  useEffect(()=>{
+    if(myCart){
+      totalCount(dispatch)
+    }
+  }, [dispatch, state.countCart])
 
   const { logout } = useAuth();
   const history = useHistory();
@@ -51,9 +60,8 @@ export default function LoggedNavBar() {
             <a onClick={logoutSesion}>Log Out</a>
           </div>
         </div>
-        <Link to="/cart">Cart {myCart && myCart.length!==0? <span>{myCart.length}</span>: ""}</Link> 
-        {/* No borrar linea de arriba, prueba para mostrar cantidad de productos en carrito. Saludos atte: Pablo Bonito */}
-        {/* <Link to="/cart">Cart</Link> */}
+        {/* <Link to="/cart">Cart {state.countCart?<span>{state.countCart}</span>:""}</Link>  */}
+        <Link to="/cart"><img src={imgCart} alt="shoppingCart-img" />{state.countCart?<span>{state.countCart}</span>:""}</Link>
       </div>
     </div>
   );

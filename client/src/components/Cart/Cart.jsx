@@ -1,32 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 // import { FormBuys } from '../FormBuys/FormBuys'
 import { ProductCart } from "../ProductCart/ProductCart";
 import { totalPrice } from "./actionsCart";
+import { totalCount } from "../../redux/actions/actions";
 import accounting from "accounting";
 import "../Favorites/Favorite.css"
+import { useStore } from "../../context/store.js";
 
 export const Cart = () => {
   let user = JSON.parse(localStorage?.getItem("myUser"));
+  let local = JSON.parse(localStorage.getItem(user))
   let yourStorage = JSON.parse(localStorage?.getItem(user));
   const [storageCart, setStorageCart] = useState(yourStorage);
   const history = useHistory();
   const [priceTotal, setPriceTotal] = useState(0);
+  const [state, dispatch] = useStore();
 
-  console.log("user:", user)
-  console.log("yourStorage:", yourStorage)
-
-
+  
   useEffect(() => {
     setPriceTotal(totalPrice());
-  }, []);
+  }, [])
+  
+  let { search } = useLocation()
+  useEffect(()=>{
+    if(search == "?buy=false"){ console.log("Aca iria una alerta de qeu la compra fue cancelada")}
+    if(search == "?buy=true"){
+      localStorage.removeItem(user)
+      setStorageCart([]);
+    }
+  },[search])
 
   const deleteDatatoStorage = (name) => {
     let newLocalStorage = yourStorage?.filter((e) => e.name !== name);
     setStorageCart(newLocalStorage);
     localStorage.setItem(user, JSON.stringify(newLocalStorage));
     setPriceTotal(totalPrice());
-    // totalPrice()
+    totalCount(dispatch)
   };
 
   //Funcion para ver detalle del producto por id
