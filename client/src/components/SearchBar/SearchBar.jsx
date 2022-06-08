@@ -5,7 +5,9 @@ import axios from "axios";
 import { SEARCH_PRODUCT } from "../../redux/actions/actionTypes";
 import { Redirect } from "react-router-dom";
 import { useStore } from "../../context/store";
+import { useTranslation } from "react-i18next";
 export default function SearchBar() {
+  const { t } = useTranslation();
   const [redirect, setRedirect] = useState(false);
   const [state, dispatch] = useStore();
   const [error, setError] = useState(false);
@@ -57,7 +59,7 @@ export default function SearchBar() {
           value={input}
           className="form-control search-bar "
           type="search"
-          placeholder="Search"
+          placeholder={t("searchBar.placeholder")}
           aria-label="Search"
           required
           onChange={handleChange}

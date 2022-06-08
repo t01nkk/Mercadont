@@ -1,21 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import { useStore } from "../../../context/store";
 import { Link, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import FilterCategories from "../../FilterCategories/FilterCategories";
 import { getFavorites } from "../../../redux/actions/actions.js";
 import SearchBar from "../../SearchBar/SearchBar";
 import "./LoggedNavBar.css";
 import { useAuth } from "../../../context/authContext";
 import logo from "../../../media/logonavbar.png";
+import { totalCount } from "../../../redux/actions/actions.js";
+
+
 export default function LoggedNavBar() {
+  const { t } = useTranslation()
   const [state, dispatch] = useStore();
+  let myUser = JSON.parse(localStorage.getItem("myUser"));
+  let myCart = JSON.parse(localStorage.getItem(myUser));
 
   useEffect(() => {
     let myUser = JSON.parse(localStorage.getItem("myUser"));
+    // console.log(myCart.length)
     if (myUser) {
       getFavorites(dispatch, myUser);
     }
   }, [state.favorites.length]);
+  
+  useEffect(()=>{
+    if(myCart){
+      totalCount(dispatch)
+    }
+  }, [dispatch, state.countCart])
 
   const { logout } = useAuth();
   const history = useHistory();
@@ -50,7 +64,7 @@ export default function LoggedNavBar() {
         <div className="collapse navbar-collapse " id="navbarSupportedContent">
           <ul className="navbar-nav  justify-content-center ">
             <li className="nav-item white-text-nav">
-              <Link to="/">Home</Link>
+              <Link to="/">{t("loggedNavBar.home") }</Link>
             </li>
             <li className="nav-item dropdown  white-text-nav">
               <Link
@@ -61,7 +75,7 @@ export default function LoggedNavBar() {
                 data-bs-auto-close="outside"
                 aria-expanded="false"
               >
-                Categories
+                {t("loggedNavBar.categories") }
               </Link>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <FilterCategories />
@@ -77,23 +91,24 @@ export default function LoggedNavBar() {
                 data-bs-auto-close="outside"
                 aria-expanded="false"
               >
-                Profile
+               {t("loggedNavBar.profile") }
               </Link>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li className="dropdown-item category-list-item">
-                  <Link to="/accountDetails"> Account Details </Link>
+                  <Link to="/accountDetails"> {t("loggedNavBar.accountDetails") } </Link>
                 </li>
                 <li className="dropdown-item category-list-item">
-                  <Link to="/favorites">Favorites</Link>
+                  <Link to="/favorites">{t("loggedNavBar.favorites") }</Link>
                 </li>
                 <li className="dropdown-item category-list-item log-out">
-                  <a onClick={logoutSesion}>Log Out</a>
+                  <a onClick={logoutSesion}>{t("loggedNavBar.logOut") }</a>
                 </li>
               </ul>
             </li>
             <li className="nav-item white-text-nav">
               <Link className="" to="/cart">
                 Cart
+                {state.countCart?<span>{state.countCart}</span>:""}
               </Link>
             </li>
           </ul>

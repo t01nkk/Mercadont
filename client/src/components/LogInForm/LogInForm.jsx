@@ -3,10 +3,12 @@ import "./LoginForm.css";
 import { Link, Redirect } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 import { Formik } from "formik";
 import { toast, ToastContainer } from "react-toastify";
 export default function LogInForm() {
   let errorMsg = "";
+  const { t } = useTranslation()
   const [redirect, setRedirect] = useState(false);
   const { login, loginWithGoogle, resetPassword } = useAuth();
 
@@ -81,14 +83,14 @@ export default function LogInForm() {
         validate={(values) => {
           const errors = {};
           if (!values.email) {
-            errors.email = "Required email";
+            errors.email = `${t("logInForm.errors_mail_required")}`;
           } else if (
             !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
           ) {
-            errors.email = "Invalid email";
+            errors.email = `$${t("logInForm.errors_mail_invalid")}`;
           }
           if (!values.password) {
-            errors.password = "Password required.";
+            errors.password = `$${t("logInForm.errors_password")}`;
           }
 
           return errors;
@@ -102,13 +104,13 @@ export default function LogInForm() {
         {({ errors, handleSubmit, handleChange, isSubmitting, touched }) => (
           <div className="loginCard">
             {redirect ? <Redirect push to="/home" /> : null}
-            <h2>Log In</h2>
+            <h2>{t("logInForm.logIn")}</h2>
             <form onSubmit={handleSubmit}>
               <div className="divInputUser">
                 <input
                   type="text"
                   required
-                  placeholder="Email ..."
+                  placeholder={t("logInForm.mail")}
                   name="email"
                   onChange={handleChange}
                 />
@@ -124,7 +126,7 @@ export default function LogInForm() {
                 <input
                   type="password"
                   required
-                  placeholder="Password..."
+                  placeholder={t("logInForm.password")}
                   name="password"
                   onChange={handleChange}
                 />
@@ -132,16 +134,14 @@ export default function LogInForm() {
               <small style={{ color: "red" }}>
                 {touched.password && errors.password ? (
                   <p className="error-style">{errors.password}</p>
-                ) : (
-                  ""
-                )}
+                ) : null}
               </small>
 
               <div className="btn-login">
                 <input
                   disabled={isSubmitting}
                   type="submit"
-                  value="Log In"
+                  value={t("logInForm.submit")}
                   className="input-submit"
                 />
               </div>
@@ -152,7 +152,7 @@ export default function LogInForm() {
             <div className="createUser-container">
               <div>
                 <button onClick={handleGoogleSignin} className="btn btn-primary google-plus">
-                  <img height="25px" src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt="Google Logo" />  Login With Google
+                  <img height="25px" src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt="Google Logo" />  {t("logInForm.logInGoogle")}
                 </button>
               </div>
               {/* 
@@ -165,9 +165,9 @@ export default function LogInForm() {
             cookiePolicy={"single_host_origin"}
           /> */}
               <div className="create-container">
-                <p>Not a user yet?</p>
+                <p>{t("logInForm.notUser")}</p>
                 <div className="btn-createUser">
-                  <Link to="/createUser">Create User</Link>
+                  <Link to="/createUser">{t("logInForm.newUser")}</Link>
                 </div>
               </div>
             </div>
