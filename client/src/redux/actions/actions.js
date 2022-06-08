@@ -96,7 +96,13 @@ export const totalCount = (dispatch)=>{
   if(local){
     dispatch({
       type: CHANGE_COUNT_PRODUCT,
-    payload: local.length
+      payload: local.length
+    })
+  }
+else{
+  dispatch({
+    type: CHANGE_COUNT_PRODUCT,
+    payload: 0
   })
 }
 }

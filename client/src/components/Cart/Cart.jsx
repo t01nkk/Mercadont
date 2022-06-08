@@ -50,12 +50,13 @@ export const Cart = () => {
 
   //Funcion para limpiar carro
   const clearCart = (e) => {
-    const answer = window.confirm("Are you sure you want to clear your cart?")
-    if (answer) {
+    // const answer = window.confirm("Are you sure you want to clear your cart?")
+    // // if (answer) {
       setStorageCart([]);
       setPriceTotal(totalPrice())
       localStorage?.removeItem(user);
-    }
+      totalCount(dispatch)
+    // }
   };
 
   const makePurchase = () => {
