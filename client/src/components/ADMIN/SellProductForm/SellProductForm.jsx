@@ -3,8 +3,10 @@ import "./SellProductForm.css";
 import axios from "axios";
 import { fetchCategories } from "../../../redux/actions/actions";
 import { useStore } from "../../../context/store";
+import { useTranslation } from "react-i18next";
 
 export default function SellProductForm() {
+  const { t } = useTranslation()
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
   const [selected, setSelected] = useState([]);
@@ -37,16 +39,16 @@ export default function SellProductForm() {
     let errors = {};
 
     if (!expression.nameExpression.test(input.name)) {
-      errors.name = "Name is necessary";
+      errors.name = `${t("adminSellProduct.errors_name")}`;
     }
     if (!expression.priceExpression.test(input.price)) {
-      errors.price = "Price is necessary";
+      errors.price = `${t("adminSellProduct.errors_price")}`;
     }
     if (!expression.descriptionExpression.test(input.description)) {
-      errors.description = "Description is necessary";
+      errors.description = `${t("adminSellProduct.errors_description")}`;
     }
     if (!expression.stockExpression.test(input.stock)) {
-      errors.stock = "Stock is necessary";
+      errors.stock = `${t("adminSellProduct.errors_stock")}`;
     }
     return errors;
   }
@@ -114,14 +116,14 @@ export default function SellProductForm() {
   return (
     <div className="container-login">
       <div className="sellProductCard">
-        <h2>Post Product</h2>
+        <h2>{t("adminSellProduct.postProduct")}</h2>
 
         <form onSubmit={handleSubmit} className="sellProductForm">
           <div className="divInputUser">
             <input
               type="text"
               name="name"
-              placeholder="Product Name ..."
+              placeholder={t("adminSellProduct.name")}
               onChange={handleChangeName}
               required
               value={data.name}
@@ -133,7 +135,7 @@ export default function SellProductForm() {
             <input
               type="number"
               name="price"
-              placeholder="Price ..."
+              placeholder={t("adminSellProduct.price")}
               onChange={handleChangePrice}
               required
               value={data.price}
@@ -146,7 +148,7 @@ export default function SellProductForm() {
               rows="15"
               type="textarea"
               name="description"
-              placeholder="Product Description ..."
+              placeholder={t("adminSellProduct.description")}
               onChange={handleChangeDescription}
               required
               value={data.description}
@@ -157,15 +159,19 @@ export default function SellProductForm() {
           )}
           <select onChange={handleChangeCat} className="divInputUser">
             <option value="" hidden className="divInputUser">
-              Categories
+              {t("adminSellProduct.categories")}
             </option>
             {state.categories?.length &&
               state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
-              state.categories.map((category) => (
-                <option key={category.id} value={category.name}>
-                  {category.name}
-                </option>
-              ))}
+              React.Children.toArray(
+                state.categories.map((category) => (
+                  <option key={category.id} value={category.name}>
+                    {category.name}
+                  </option>
+                ))
+
+              )}
+              
           </select>
           {data.categories?.map((category, i) => (
             <div key={i} className="button-x-container">
@@ -182,13 +188,13 @@ export default function SellProductForm() {
             <input
               type="text"
               name="image"
-              placeholder="Image..."
+              placeholder={t("adminSellProduct.image")}
               onChange={handleChange}
               value={data.image}
             />
           </div>
           <div className="divInputUser">
-            <label>Product status:</label>
+            <label>{t("adminSellProduct.status")}</label>
             <select name="status" value={data.status} onChange={handleChange}>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
@@ -198,14 +204,14 @@ export default function SellProductForm() {
             <input
               type="number"
               name="stock"
-              placeholder="Stock..."
+              placeholder={t("adminSellProduct.stock")}
               onChange={handleChangeStock}
               value={data.stock}
             />
           </div>
           {errors.stock && <p className="error-input">{errors.stock}</p>}
           <div className="btn-login">
-            <input type="submit" value="Send" className="input-submit" />
+            <input type="submit" value={t("adminSellProduct.submit")} className="input-submit" />
           </div>
         </form>
       </div>

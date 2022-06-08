@@ -10,14 +10,15 @@
   grid-template-columns: repeat(auto-fit, minmax(2rem, 20rem));
   gap: 3.5rem;
   justify-content: center;
+  margin-top: 5%;
 }
 
-.container-loader{
+.container-loader {
   height: 45vh;
   /* grid-column: 1/; */
   margin: auto;
   align-items: flex-end;
-  width: 65vw;
+  width: 50vw;
   display: flex;
   justify-content: center;
 }

@@ -12,6 +12,7 @@ import {
   ADMIN_SESSION,
   GET_FAVORITES,
   FILTER_PRODUCTS_ADMIN,
+  CHANGE_COUNT_PRODUCT
 } from "../actions/actionTypes";
 
 export const initialState = {
@@ -26,6 +27,7 @@ export const initialState = {
   sessionAdmin: false,
   favorites: "",
   filterProductsAdmin: [],
+  countCart: ""
 };
 
 export function reducer(state = initialState, action) {
@@ -156,6 +158,13 @@ export function reducer(state = initialState, action) {
         ...state,
         favorites: action.payload,
       };
+    }
+
+    case CHANGE_COUNT_PRODUCT:{
+      return {
+        ...state,
+        countCart: action.payload
+      }
     }
 
     case FILTER_PRODUCTS_ADMIN: {

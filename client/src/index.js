@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import "./config/i18next-config"; // Con esto ya está invocado para usarse en cualquier parte.
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { StoreProvider } from "./context/store";
 import { AuthProvider } from "./context/authContext";
 import { initialState } from "./redux/reducer/reducer";
 import reducer from "./redux/reducer/reducer";
-
 
 ReactDOM.render(
   <React.StrictMode>

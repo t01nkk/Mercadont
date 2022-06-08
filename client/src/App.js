@@ -22,6 +22,7 @@ import HomeAdmin from "./pages/ADMIN/HomeADMIN/HomeAdmin";
 import NavBarADMIN from "./components/ADMIN/NavBarADMIN/NavBarADMIN";
 import { Favorites } from "./components/Favorites/Favorites";
 import ProductDetailsAdmin from "./pages/ADMIN/ProductDetailsADMIN/ProductDetailsAdmin";
+import { History } from "./components/History/History.jsx"
 
 //Cualquier ruta que tiene que solo estar disponible a usuario logueado, se le puede envolver en ProtectedRoutes
 // import {ProtectedRoute} from "./components/ProtectedRoute/ProtectedRoute";
@@ -61,6 +62,11 @@ function App() {
           {/* USER CART */}
           <NavBar />
           <UserCart />
+        </Route>
+        <Route path="/history" exact>
+          {/* USER CART */}
+          <NavBar />
+          <History />
         </Route>
         <Route path="/logIn" exact>
           {/* USER LOGIN  */}
