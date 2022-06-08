@@ -26,10 +26,6 @@ export default function HomeAdmin() {
   const page = (numPage) => {
     setCurrentPage(numPage);
   };
-  // const resetFilter = () => {
-  //   setStatus(""), setCategory(""), setAtribute(""), setOrder("ASC");
-  // };
-  console.log(state.products);
   const handleFilter = () => {
     setCurrentPage(1);
     let filterProductsAdmin = [];
@@ -101,7 +97,6 @@ export default function HomeAdmin() {
       });
     }
   };
-  // console.log(category);
   useEffect(() => {
     handleFilter();
   }, [status, state.products, category]);
