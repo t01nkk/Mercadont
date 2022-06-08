@@ -79,7 +79,7 @@ i18n
           formQA: {
             mustLogInToAsk:
               "Necesitas estar registrado para poder realizarle preguntas al vendedor",
-            postedQuestion: "¡Pregunta realizada con éxito!",
+            postedQuestion: "¡Pregunta realizada con exito!",
             askSeller: "Hacerle una pregunta al vendedor",
             askAQuestion: "Pregunta algo...",
             postQuestion: "Realizar la pregunta",
@@ -103,12 +103,12 @@ i18n
           adminAddCategories: {
             update: "¡Categoría actualizada con éxito!",
             delete: "Categoría borrada con éxito",
-              },
-              adminEditProduct: {
-                  delete: "Producto borrado con éxito",
-                  deleteProduct: "Eliminar producto",
-                  update: "Actualizar el producto",
-                  updated: "¡Producto actualizado con éxito!"
+          },
+          adminEditProduct: {
+            delete: "Producto borrado con éxito",
+            deleteProduct: "Eliminar producto",
+            update: "Actualizar el producto",
+            updated: "¡Producto actualizado con éxito!",
           },
           adminProductCard: {
             edit: "Editar",
@@ -137,8 +137,8 @@ i18n
             image: "Imagen del producto...",
             status: "Disponibilidad del producto: ",
             stock: "Cantidad disponible: ",
-              submit: "¡Publicar!",
-            select: "Seleccionar"
+            submit: "¡Publicar!",
+            select: "Seleccionar",
           },
 
           guestNavBar: {
@@ -156,21 +156,21 @@ i18n
             favorites: "Favoritos",
             logOut: "Cerrar sesión",
             cart: "Carrito",
-              },
-              adminHome: {
-                  filter: "Filtrar por:",
-                  name: "Nombre",
-                  stock: "Unidades disponibles",
-                  rating: "Valoración",
-                  price: "Precio",
-                  status: "Disponibilidad:",
-                  active: "Disponible",
-                  inactive: "No disponible",
-                  category: "Categoría:",
-                  order: "Orden:",
-                  valueAsc: "Ascendente",
-                  valueDes: "Descendente",
-                  reset: "Reestablecer los filtros"
+          },
+          adminHome: {
+            filter: "Filtrar por:",
+            name: "Nombre",
+            stock: "Unidades disponibles",
+            rating: "Valoración",
+            price: "Precio",
+            status: "Disponibilidad:",
+            active: "Disponible",
+            inactive: "No disponible",
+            category: "Categoría:",
+            order: "Orden:",
+            valueAsc: "Ascendente",
+            valueDes: "Descendente",
+            reset: "Reestablecer los filtros",
           },
           home: {
             altAddToCart: "¡Añadido al carrito!",
@@ -218,7 +218,17 @@ i18n
         },
       },
       en: {
-        translation: {},
+        translation: {
+          loggedNavBar: {
+            home: "Pene",
+            categories: "De",
+            profile: "Goma",
+            accountDetails: "Enorme",
+            favorites: "Y",
+            logOut: "Venoso",
+            cart: "Carrito",
+          },
+        },
       },
     },
   });

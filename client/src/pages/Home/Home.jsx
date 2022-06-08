@@ -6,19 +6,20 @@ import {
   fetchProducts,
   fetchCategories,
   getFavorites,
+  totalCount,
 } from "../../redux/actions/actions.js";
 import "./Home.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import { Loader } from "../../components/Loader/Loader.jsx"
+import { handleDeleteFavorite } from "../../components/Cart/actionsCart.js";
 
 
 export default function Home() {
   const { t, i18n } = useTranslation()
   const [user, setUser] = useState([]);
   const [state, dispatch] = useStore();
-  // const [error, setError] = useState();
   const [cart, setCart] = useState([]);
   const [inCart, setInCart] = useState(false);
   let person = JSON.parse(localStorage.getItem("myUser"));
@@ -110,6 +111,7 @@ export default function Home() {
 
   useEffect(() => {
     localStorage.setItem(user, JSON.stringify(cart));
+    totalCount(dispatch)
   }, [cart]);
 
   // const mostra = () => {

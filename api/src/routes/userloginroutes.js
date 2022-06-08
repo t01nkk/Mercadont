@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { User, Product } = require("../db");
+const { User, Product, PurchaseOrder } = require("../db");
 
 
 router.post("/register", async (req, res, next) => {
@@ -160,6 +160,61 @@ router.get("/favorite/:id", async (req, res) => {
       return res.status(404).send("User Not Found");
     }
     return res.status(200).send(userFavorites.products);
+  } catch (error) {
+    return res.status(404).send(error);
+  }
+});
+
+/*-------------------------------------------------------------- */
+/*---------------------Purchase History--------------------------*/
+
+// Get User's purchase history
+router.get("/history/:id", async (req, res) => {
+  const { id } = req.params;
+  let orders = [];
+
+  try {
+    const userHistory = await PurchaseOrder.findAll({
+      where: { 
+        userId: id,
+        status: "completed" 
+      },
+      // group: PurchaseOrder.orderId
+    });
+    if (!userHistory.length) {
+      return res.status(200).send("Purhcase history empty");
+    }
+
+    let order = {
+      orderNumber: "",
+      products:[]
+    }
+    order.orderNumber === userHistory[0].orderId
+    for(let item of userHistory){
+      if(order.orderNumber === item.orderId) {
+        order.products.push(
+          {
+            product: item.productId,
+            productQuantity: item.productQuantity
+          }
+        )
+      }else{
+        if(order.orderNumber !== "") orders.push(order)
+        order = {
+          orderNumber: "",
+          products:[]
+        }
+        order.orderNumber = item.orderId
+        order.products.push(
+          {
+            product: item.productId, 
+            productQuantity: item.productQuantity
+          }
+        )
+      }
+    }
+    orders.push(order)
+    return res.status(200).send(orders);
   } catch (error) {
     return res.status(404).send(error);
   }

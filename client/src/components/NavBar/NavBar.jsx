@@ -15,15 +15,5 @@ export default function NavBar() {
   useEffect(() => {
     checkSession(dispatch);
   }, [state.session]);
-  return (
-    <div>
-      <header className="header">
-        <div className="header-logo">
-          <img src={logo} alt="" />
-        </div>
-
-        {state.session ? <LoggedNavBar /> : <GuestNavBar />}
-      </header>
-    </div>
-  );
+  return <>{state.session ? <LoggedNavBar /> : <GuestNavBar />}</>;
 }

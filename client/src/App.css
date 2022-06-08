@@ -48,12 +48,19 @@ body {
   text-transform: uppercase;
   overflow-x: hidden;
 }
-body button{
+body button {
   font-family: "Montserrat", sans-serif;
 }
 a {
   text-decoration: none;
   color: inherit;
+}
+
+a:hover {
+  color: #f0b479;
+}
+.Toastify__toast-body {
+  width: 100000px;
 }
 /* body {
   font-family: "Lato", sans-serif;

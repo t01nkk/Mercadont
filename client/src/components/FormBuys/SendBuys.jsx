@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 import { totalPrice } from '../Cart/actionsCart'
 import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
 import { useTranslation } from 'react-i18next';
+import accounting from 'accounting'
 
 export const SendBuys = () => {
     const { t } = useTranslation()
@@ -46,7 +47,7 @@ export const SendBuys = () => {
 
             if (paymentMethod) {
                 localStorage.removeItem(user)
-                history.push("/")
+                history.push("/cart")
             }
         }
     }
@@ -72,7 +73,7 @@ export const SendBuys = () => {
                 local
             })
             setRedirect(purchase.data)
-            localStorage.removeItem(user)
+            // localStorage.removeItem(user)
         }
     }
 
@@ -106,6 +107,7 @@ export const SendBuys = () => {
             </div>
         </div>
         <div>
+            {amountTotal && <p>Total Price:{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
             <p>{t("sendBuys.paymentMethod") }</p>
             <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card") }</button>
             <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal") }</button>

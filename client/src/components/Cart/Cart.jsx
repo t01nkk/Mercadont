@@ -1,25 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 // import { FormBuys } from '../FormBuys/FormBuys'
 import { ProductCart } from "../ProductCart/ProductCart";
 import { totalPrice } from "./actionsCart";
+import { totalCount } from "../../redux/actions/actions";
 import accounting from "accounting";
 import { ToastContainer, toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import "../Favorites/Favorite.css"
+import { useStore } from "../../context/store.js";
 
 export const Cart = () => {
   const { t } = useTranslation()
   let user = JSON.parse(localStorage?.getItem("myUser"));
+  let local = JSON.parse(localStorage.getItem(user))
   let yourStorage = JSON.parse(localStorage?.getItem(user));
   const [storageCart, setStorageCart] = useState(yourStorage);
   const history = useHistory();
   const [priceTotal, setPriceTotal] = useState(0);
-
+  const [state, dispatch] = useStore();
 
   useEffect(() => {
     setPriceTotal(totalPrice());
-  }, []);
+  }, [])
+  
+  let { search } = useLocation()
+  useEffect(()=>{
+    if(search == "?buy=false"){ console.log("Aca iria una alerta de qeu la compra fue cancelada")}
+    if(search == "?buy=true"){
+      localStorage.removeItem(user)
+      setStorageCart([]);
+    }
+  },[search])
 
   const alertInfo = (msg) => {
     toast.info(msg, {
@@ -39,6 +51,7 @@ export const Cart = () => {
     setStorageCart(newLocalStorage);
     localStorage.setItem(user, JSON.stringify(newLocalStorage));
     setPriceTotal(totalPrice());
+    totalCount(dispatch)
     alertInfo(t("cart.removeFromCart"))
     // totalPrice()
   };
@@ -55,6 +68,13 @@ export const Cart = () => {
 
   //Funcion para limpiar carro
   const clearCart = (e) => {
+    // const answer = window.confirm("Are you sure you want to clear your cart?")
+    // // if (answer) {
+      setStorageCart([]);
+      setPriceTotal(totalPrice())
+      localStorage?.removeItem(user);
+      totalCount(dispatch)
+    // }
     const answer = window.confirm(t("cart.confirmClearCart"))
     if (answer) {
       setStorageCart([]);

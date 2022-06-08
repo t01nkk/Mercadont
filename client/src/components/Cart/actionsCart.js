@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const totalPrice = () => {
   let user = JSON.parse(localStorage.getItem("myUser"))
   let local = JSON.parse(localStorage.getItem(user));
@@ -10,3 +12,19 @@ export const totalPrice = () => {
   }
 }
 
+export const handleDeleteFavorite = async (id) => {
+  let person = JSON.parse(localStorage.getItem("myUser"));
+  try {
+    await axios.delete(
+      `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
+      {
+        data: {
+          idUser: person,
+          idProduct: id,
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
