@@ -3,9 +3,10 @@ import "./SearchBar.css";
 import icon from "../../media/search.png";
 import axios from "axios";
 import { SEARCH_PRODUCT } from "../../redux/actions/actionTypes";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useStore } from "../../context/store";
 import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 export default function SearchBar() {
   const { t } = useTranslation();
   const [redirect, setRedirect] = useState(false);
@@ -22,6 +23,9 @@ export default function SearchBar() {
       setError("");
     }
   }
+  const handleLanguage = (lang) => {
+    i18next.changeLanguage(lang);
+  };
   const handleChange = (e) => {
     setError("");
     const { name } = e.target;
@@ -50,7 +54,7 @@ export default function SearchBar() {
     setRedirect(false);
   }, []);
   return (
-    <>
+    <div className="nav-language-search nav-item">
       {redirect ? <Redirect push to="/search" /> : null}
       <form role="search" className="d-flex" onSubmit={handleSearch}>
         <input
@@ -65,6 +69,30 @@ export default function SearchBar() {
           onChange={handleChange}
         />
       </form>
-    </>
+      <li className="nav-item dropdown white-text-nav-language language-list">
+        <Link
+          to=""
+          className="dropdown-toggle "
+          id="dropdownMenuClickableInside"
+          data-bs-toggle="dropdown"
+          data-bs-auto-close="outside"
+          aria-expanded="false"
+        >
+          Language
+        </Link>
+        <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li className="dropdown-item category-list-item">
+            <Link to="" onClick={() => handleLanguage("en")}>
+              En
+            </Link>
+          </li>
+          <li className="dropdown-item category-list-item">
+            <Link to="" onClick={() => handleLanguage("es")}>
+              Es
+            </Link>
+          </li>
+        </ul>
+      </li>
+    </div>
   );
 }

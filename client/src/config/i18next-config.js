@@ -79,7 +79,7 @@ i18n
           formQA: {
             mustLogInToAsk:
               "Necesitas estar registrado para poder realizarle preguntas al vendedor",
-            postedQuestion: "¡Pregunta realizada con éxito!",
+            postedQuestion: "¡Pregunta realizada con exito!",
             askSeller: "Hacerle una pregunta al vendedor",
             askAQuestion: "Pregunta algo...",
             postQuestion: "Realizar la pregunta",
@@ -218,7 +218,17 @@ i18n
         },
       },
       en: {
-        translation: {},
+        translation: {
+          loggedNavBar: {
+            home: "Pene",
+            categories: "De",
+            profile: "Goma",
+            accountDetails: "Enorme",
+            favorites: "Y",
+            logOut: "Venoso",
+            cart: "Carrito",
+          },
+        },
       },
     },
   });

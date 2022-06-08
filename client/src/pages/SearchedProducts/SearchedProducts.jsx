@@ -158,7 +158,7 @@ export default function SearchedProducts() {
   }, [cart]);
 
   return (
-    <div>
+    <div className="navPush-searchedProducts">
       <div className="filter-wrapper">
         <div>
           <select
