@@ -189,7 +189,6 @@ router.get("/history/:id", async (req, res) => {
       products:[],
       amount: 0,
     }
-    console.log("userHistory:", userHistory)
     order.orderNumber === userHistory[0].orderId
     order.date === userHistory[0].date
     order.amount === userHistory[0].totalAmount
