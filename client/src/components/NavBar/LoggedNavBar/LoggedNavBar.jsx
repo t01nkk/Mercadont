@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { useStore } from "../../../context/store";
 import { Link, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import FilterCategories from "../../FilterCategories/FilterCategories";
 import { getFavorites } from "../../../redux/actions/actions.js";
 import SearchBar from "../../SearchBar/SearchBar";
@@ -10,6 +11,7 @@ import { totalCount } from "../../../redux/actions/actions.js";
 import imgCart from "../../../media/shoppingCart1.png"
 
 export default function LoggedNavBar() {
+  const { t } = useTranslation()
   const [state, dispatch] = useStore();
   let myUser = JSON.parse(localStorage.getItem("myUser"));
   let myCart = JSON.parse(localStorage.getItem(myUser));
@@ -41,9 +43,9 @@ export default function LoggedNavBar() {
   return (
     <div className="header-nav">
       <div className="container-actions-user">
-        <Link to="/">Home</Link>
+        <Link to="/">{t("loggedNavBar.home") }</Link>
         <div className="dropdown">
-          <a className="dropbtn">Categories</a>
+          <a className="dropbtn">{t("loggedNavBar.categories") }</a>
           <div className="dropdown-content-categories">
             <FilterCategories />
           </div>
@@ -52,15 +54,14 @@ export default function LoggedNavBar() {
       <SearchBar />
       <div className="container-actions-user">
         <div className="dropdown">
-          <a className="dropbtn">Profile</a>
+          <a className="dropbtn">{t("loggedNavBar.profile") }</a>
           <div className="dropdown-content">
-            <Link to="/accountDetails"> Account Details </Link>
-            <Link to="/favorites">Favorites</Link>
+            <Link to="/accountDetails">{t("loggedNavBar.accountDetails") }</Link>
+            <Link to="/favorites">{t("loggedNavBar.favorites") }</Link>
             <Link to="/history">History</Link>
-            <a onClick={logoutSesion}>Log Out</a>
+            <a onClick={logoutSesion}>{t("loggedNavBar.logOut") }</a>
           </div>
         </div>
-        {/* <Link to="/cart">Cart {state.countCart?<span>{state.countCart}</span>:""}</Link>  */}
         <Link to="/cart"><img src={imgCart} alt="shoppingCart-img" />{state.countCart?<span>{state.countCart}</span>:""}</Link>
       </div>
     </div>

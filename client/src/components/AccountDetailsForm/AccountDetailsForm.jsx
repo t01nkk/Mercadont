@@ -1,14 +1,30 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import { useStore } from "../../context/store";
-import { } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "../../context/authContext";
+import { useTranslation } from "react-i18next";
 export default function AccountDetailsForm() {
+  const { t } = useTranslation()
+  const history = useHistory()
+
+ // 'User information updated successfully'
+  const alertUserUpdated = (msg) => {
+    toast.info(msg, {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark"
+    })
+  }
 
   const { resetPassword } = useAuth();
   const [state, dispatch] = useStore();
-  const history = useHistory()
   const [user, setUser] = useState({
     email: state.user.email,
     name: "",
@@ -48,7 +64,7 @@ export default function AccountDetailsForm() {
     const { email, name, lastname, image, password,country,province, city, street, postalCode } = user;
     // console.log(id)
     try {
-      const res = await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
+      await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
         email,
         name,
         lastname,
@@ -59,18 +75,11 @@ export default function AccountDetailsForm() {
         city,
         street,
         postalCode
-
-
-      });
-      console.log(country,
-        province,
-        city,
-        street,
-        postalCode)
-      console.log("entre", res)
-      // console.log(user);
-      history.push("/")
-      return
+      })
+      alertUserUpdated(t("accountDetailsForm.toastInfo"))
+      setTimeout(() => {
+        history.push('/accountDetails')
+      }, 4000);
     } catch (err) {
       // console.log(err);
       return err
@@ -78,7 +87,6 @@ export default function AccountDetailsForm() {
   };
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-
   };
 
 
@@ -86,11 +94,11 @@ export default function AccountDetailsForm() {
   const handleResetPassword = async (e) => {
     e.preventDefault();
     // console.log("handleResetPassword USER:",user)
-    const answer = window.confirm("Are you sure you want to change your password?")
-    if (answer) {
+    const answer = window.confirm(t("accountDetailsForm.askPasswordChange"))
+    if(answer){
       try {
         await resetPassword(user.email)
-        alert("Check your email inbox to reset your password")
+        alert(t("accountDetailsForm.confirmPasswordChange"))
       }
       catch (err) {
         alert(err.message)
@@ -100,34 +108,43 @@ export default function AccountDetailsForm() {
 
   return (
     <div>
-      <h2>Edit profile</h2>
+      <h2>{t("accountDetailsForm.updateInfo")}</h2>
       <form onSubmit={handleSubmit}>
-        <div className="divInputUser">
-          <p className="title">Name: </p>
-          <input
-            type="text"
-            name="name"
-            value={user.name}
-            onChange={handleChange}
-          />
+      <div className="divInputUser">
+      <label className="title">{t("accountDetailsForm.email")}: </label>
+        <input
+          type="email"
+          name="email"
+          value={user.email}        
+          onChange={handleChange}
+        />
         </div>
-
-        <div className="divInputUser">
-          <p className="title">lastname: </p>
-          <input
-            type="text"
-            name="lastname"
-            value={user.lastname}
-            onChange={handleChange}
-          />
-        </div>
-     
+          <div className="divInputUser">
+          <p className="title">{t("accountDetailsForm.name")}: </p>
+        <input
+          type="text"
+          name="name"         
+          value={user.name}
+          onChange={handleChange}
+        />
+      </div>
+        
+      <div className="divInputUser">
+        <p className="title">{t("accountDetailsForm.lastname")}: </p>
+        <input
+          type="text"
+          name="lastname"
+          value={user.lastname}
+          onChange={handleChange}
+        />
+      </div>
+        
        <div className="divInputUser">
-         <p className="title">address: </p>
+         <p className="title">{t("accountDetailsForm.address")}</p>
         <input
           type="text"
           name="city"
-          placeholder="City..."
+          placeholder={t("accountDetailsForm.city")}
           value={user.address?.city}
           onChange={handleChange}
         />         
@@ -137,7 +154,7 @@ export default function AccountDetailsForm() {
         <input
           type="text"
           name="country"
-          placeholder="Country..."
+          placeholder={t("accountDetailsForm.country")}
           value={user.address?.country}
           onChange={handleChange}
         />         
@@ -147,7 +164,7 @@ export default function AccountDetailsForm() {
         <input
           type="text"
           name="postalCode"
-          placeholder="postalCode"
+          placeholder={t("accountDetailsForm.postalCode")}
           value={user.address?.postalCode}
           onChange={handleChange}
         />         
@@ -157,7 +174,7 @@ export default function AccountDetailsForm() {
         <input
           type="text"
           name="province"
-          placeholder="Province"
+          placeholder={t("accountDetailsForm.province")}
           value={user.address?.province}
           onChange={handleChange}
         />         
@@ -167,20 +184,19 @@ export default function AccountDetailsForm() {
         <input
           type="text"
           name="street"
-          placeholder="Street..."
+          placeholder={t("accountDetailsForm.street")}
           value={user.address?.street}
           onChange={handleChange}
         />         
          </div>  
-  
 
-        <div className="">
-          <p className="title">password: </p>
-          <button onClick={(e) => handleResetPassword(e)}>Change Password</button>
-        </div>
+      <div className="">
+        <p className="title">{t("accountDetailsForm.password")}: </p>
+        <button onClick={(e) => handleResetPassword(e)}>{t("accountDetailsForm.changePassword")}</button>       
+      </div>
 
-        <div className="divInputUser">
-          <p className="title">Image: </p>
+      <div className="divInputUser">
+        <p className="title">{t("accountDetailsForm.image")}: </p>
           <input
             type="text"
             name="image"
@@ -194,7 +210,7 @@ export default function AccountDetailsForm() {
         </div>
 
       </form>
-
+       <ToastContainer />
     </div>
   )
 }

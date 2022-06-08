@@ -1,7 +1,10 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import "./Favorite.css"
+import { useTranslation } from 'react-i18next'
 export const ArticleFavorites = ({id,name,price,rating,image,removeFavorite}) => {
+  
+    const { t } = useTranslation()
     const history = useHistory()
 
     const viewProduct = (id) => {
@@ -14,15 +17,15 @@ export const ArticleFavorites = ({id,name,price,rating,image,removeFavorite}) =>
         height: "11rem"
       }
   return (  
+  <div>
     <div className="row container-div-favorite">
       <div className="col-sm-7">
         <div className="card-block">
           <h4 className='card-title'>{name}</h4>
-          <p>{price}.</p>
-          <p>{rating}</p>
-          <div>
+          <p>{t("articleFavorites.price")}{price}$USD</p>
+          <p>{t("articleFavorites.rating")}{rating}</p>
           <button className="btn btn-primary btn-sm" onClick={()=> viewProduct(id)}>
-            View Product
+            {t("articleFavorites.productDetails")}
           </button>
           <button className="btn btn-primary btn-sm" onClick={()=> removeFavorite(id)}>
             Remove Favorite

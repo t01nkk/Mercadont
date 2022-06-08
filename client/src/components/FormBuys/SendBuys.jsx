@@ -4,11 +4,11 @@ import axios from "axios"
 import { useHistory } from 'react-router-dom'
 import { totalPrice } from '../Cart/actionsCart'
 import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
-import accounting from "accounting";
-import { ToastContainer, toast } from "react-toastify";
-
+import { useTranslation } from 'react-i18next';
+import accounting from 'accounting'
 
 export const SendBuys = () => {
+    const { t } = useTranslation()
     const stripe = useStripe()
     const elements = useElements()
 
@@ -36,7 +36,7 @@ export const SendBuys = () => {
 
             if (!error) {
                 const { id } = paymentMethod
-                const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
+                await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
                     id,
                     amount: priceTotal * 100,
                     local,
@@ -51,20 +51,6 @@ export const SendBuys = () => {
             }
         }
     }
-
-    const loadingBuys = () => {
-        toast.success("Already in cart!", {
-            position: "bottom-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    };
-
 
     const handelClik = async (e) => {
         e.preventDefault()
@@ -107,32 +93,31 @@ export const SendBuys = () => {
 
     return (<form onSubmit={handleSubmit} className="form-buys">
         <div>
-            <h2>Product list:</h2>
+            <h2>{t("sendBuys.productsList") }</h2>
             <div>
-                {products && products.map((el, index) =>
+                {React.Children.toArray(products && products.map((el) =>
                 (<ListProductsBuys
-                    key={el.name}
                     name={el.name}
                     price={el.price}
                     totalPrice={el.totalPrice}
                     image={el.image}
                     amount={el.quantity}
-                />))
+                />)))
                 }
             </div>
         </div>
         <div>
             {amountTotal && <p>Total Price:{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
-            <p>Choose your payment method</p>
-            <button id='card' onClick={e => handelClik(e)}>card</button>
-            <button id='paypal' onClick={e => handelClik(e)} type='submit'>paypal</button>
+            <p>{t("sendBuys.paymentMethod") }</p>
+            <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card") }</button>
+            <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal") }</button>
         </div>
         {
             <div>
                 {selectBuys === "card" ?
                     <>
                         <CardElement className='cardElement' />
-                        <button type='submit'>Pay</button>
+                        <button type='submit'>{t("sendBuys.cardPay") }</button>
                     </>
                     : null}
             </div>
@@ -140,8 +125,8 @@ export const SendBuys = () => {
         {selectBuys === "paypal" ?
             <button type='submit'>
                 {redirect ?
-                    <a href={redirect}>Continue on PayPal</a>
-                    : <p>Cargando link...</p>
+                    <a href={redirect}>{t("sendBuys.paypalConfirm") }</a>
+                    : <p>{t("sendBuys.paypalProcessing") }</p>
                 }
             </button>
             : null}
