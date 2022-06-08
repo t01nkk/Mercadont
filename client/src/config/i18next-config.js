@@ -79,7 +79,7 @@ i18n
           formQA: {
             mustLogInToAsk:
               "Necesitas estar registrado para poder realizarle preguntas al vendedor",
-            postedQuestion: "¡Pregunta realizada con éxito!",
+            postedQuestion: "¡Pregunta realizada con exito!",
             askSeller: "Hacerle una pregunta al vendedor",
             askAQuestion: "Pregunta algo...",
             postQuestion: "Realizar la pregunta",

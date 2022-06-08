@@ -59,6 +59,9 @@ a {
 a:hover {
   color: #f0b479;
 }
+.Toastify__toast-body {
+  width: 100000px;
+}
 /* body {
   font-family: "Lato", sans-serif;
 } */
