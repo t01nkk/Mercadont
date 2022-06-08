@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import FilterCategories from "../../FilterCategories/FilterCategories";
 import { getFavorites } from "../../../redux/actions/actions.js";
 import SearchBar from "../../SearchBar/SearchBar";
-import "./LoggedNavBar.css";
+import "./responsiveNavBar.css";
 import { useAuth } from "../../../context/authContext";
 import logo from "../../../media/logonavbar.png";
 import { totalCount } from "../../../redux/actions/actions.js";
@@ -108,39 +108,19 @@ export default function LoggedNavBar() {
                 </li>
               </ul>
             </li>
-            <li className="nav-item white-text-nav">
+            <li className="nav-item white-text-nav ">
               <Link className="" to="/cart">
-                Cart
-                {state.countCart ? <span>{state.countCart}</span> : ""}
+                {t("guestNavBar.cart")}
+                {state.countCart ? (
+                  <span className="cart-count">{state.countCart}</span>
+                ) : (
+                  ""
+                )}
               </Link>
             </li>
           </ul>
         </div>
-        <ul></ul>
-        <li className="nav-item dropdown white-text-nav language-list">
-          <Link
-            to=""
-            className="dropdown-toggle "
-            id="dropdownMenuClickableInside"
-            data-bs-toggle="dropdown"
-            data-bs-auto-close="outside"
-            aria-expanded="false"
-          >
-            Language
-          </Link>
-          <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li className="dropdown-item category-list-item">
-              <Link to="" onClick={() => handleLanguage("en")}>
-                En
-              </Link>
-            </li>
-            <li className="dropdown-item category-list-item">
-              <Link to="" onClick={() => handleLanguage("es")}>
-                Es
-              </Link>
-            </li>
-          </ul>
-        </li>
+
         <SearchBar />
       </div>
     </nav>

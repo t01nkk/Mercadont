@@ -62,6 +62,9 @@ a:hover {
 .Toastify__toast-body {
   width: 100000px;
 }
+.spaceNavTop {
+  margin-top: 5%;
+}
 /* body {
   font-family: "Lato", sans-serif;
 } */
