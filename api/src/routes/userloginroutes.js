@@ -181,7 +181,7 @@ router.get("/history/:id", async (req, res) => {
       },
     });
     if (!userHistory.length) {
-      return res.status(200).send("Purhcase history empty");
+      return res.status(200).send([]);
     }
     let order = {
       orderNumber: "",
