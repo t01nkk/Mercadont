@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import "./History.css"
+import axios from 'axios'
 
 export const DateHistory = ({amount,date,count}) => {
     // console.log(count)
@@ -23,8 +24,15 @@ export const DateHistory = ({amount,date,count}) => {
         setcant(total)
     }
 
+  const getDetailsHistory = ()=>{
+      axios.post(`${process.env.REACT_APP_DOMAIN}/product/filter`,
+      {
+        order:idProduct
+      })
+  }
+
   return (
-    <div className='container-data-history'>
+    <div className='container-data-history' onClick={getDetailsHistory}>
         <p>Date of Purchase: <span>{date}</span></p>
         <div>
             <p>Quantity of Product: <span>{cant !== 0 && cant}</span></p>
