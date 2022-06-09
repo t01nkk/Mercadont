@@ -1,11 +1,9 @@
 const { Router } = require("express");
 const router = Router();
-const { User, Product } = require("../db");
-const {validateInputUser} = require("../middlewares/middlewares")
+const { User, Product, PurchaseOrder } = require("../db");
 
 
 router.post("/register", async (req, res, next) => {
-  // const { email, password } = req.body;
   const { name, lastname, email, address, image, payment, id } = req.body;
   try {
     const userExist = await User.findOne({ where: { email: email } });
@@ -14,7 +12,7 @@ router.post("/register", async (req, res, next) => {
         email: email,
         name: name,
         lastname: lastname,
-        address: address,
+        address: JSON.stringify(address),
         image: image,
         payment: payment,
         id: id,
@@ -23,15 +21,15 @@ router.post("/register", async (req, res, next) => {
       return res.send({ msg: "User Registered" });
     } else {
       await User.update(
-          {
-            name: name,
-            lastname: lastname,
-            email: email,
-            address:address,
-            image:image,
-            id:id
-          },
-          { where: { email: email } }
+        {
+          name: name,
+          lastname: lastname,
+          email: email,
+          address: address,
+          image: image,
+          id: id
+        },
+        { where: { email: email } }
       );
 
       return res.status(200).send("Existing user updated");
@@ -40,6 +38,8 @@ router.post("/register", async (req, res, next) => {
     next(err);
   }
 });
+
+//CURRENT LOGIN 
 
 router.post("/login", async (req, res, next) => {
   // const { email, password } = req.body;
@@ -70,16 +70,18 @@ router.post("/login", async (req, res, next) => {
 // Get User
 router.get("/details/:id", async (req, res) => {
   const { id } = req.params;
-
   try {
     const user = await User.findOne({
       where: { id: id },
       include: { all: true },
     });
+   
     if (!user) {
       return res.status(404).send("User Not Found");
     }
+ 
     return res.status(200).send(user);
+   
   } catch (error) {
     console.log("error:", error);
     res.status(404).send(error);
@@ -89,18 +91,18 @@ router.get("/details/:id", async (req, res) => {
 // Update User
 router.put("/details/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, email,lastname,image,address } = req.body;
+  const { name, email,lastname,image,country,province, city, street, postalCode } = req.body;
 console.log(req.body.address)
-  let errors = validateInputUser(name,email);
-  if (errors.length) return res.status(400).send({ msg: errors });
+ // let errors = validateInputUser(name,email);
+ // if (errors.length) return res.status(400).send({ msg: errors });
 
   try {
     const updatedUser = await User.update(
       {
         name: name,
-        lastname: lastname,       
+        lastname: lastname,
         email: email,
-        address:address,
+        address:JSON.stringify({country,province, city, street, postalCode}),
         image:image
      
       },
@@ -158,6 +160,67 @@ router.get("/favorite/:id", async (req, res) => {
       return res.status(404).send("User Not Found");
     }
     return res.status(200).send(userFavorites.products);
+  } catch (error) {
+    return res.status(404).send(error);
+  }
+});
+
+/*-------------------------------------------------------------- */
+/*---------------------Purchase History--------------------------*/
+
+// Get User's purchase history
+router.get("/history/:id", async (req, res) => {
+  const { id } = req.params;
+  let orders = [];
+
+  try {
+    const userHistory = await PurchaseOrder.findAll({
+      where: { 
+        userId: id,
+        status: "completed" 
+      },
+    });
+    if (!userHistory.length) {
+      return res.status(200).send("Purhcase history empty");
+    }
+    let order = {
+      orderNumber: "",
+      date: "",
+      products:[],
+      amount: 0,
+    }
+    console.log("userHistory:", userHistory)
+    order.orderNumber === userHistory[0].orderId
+    order.date === userHistory[0].date
+    order.amount === userHistory[0].totalAmount
+
+    for(let item of userHistory){
+      if(order.orderNumber === item.orderId) {
+        order.products.push(
+          {
+            product: item.productId,
+            productQuantity: item.productQuantity
+          }
+        )
+      }else{
+        if(order.orderNumber !== "") orders.push(order)
+        order = {
+          orderNumber: "",
+          products:[]
+        }
+        order.orderNumber = item.orderId
+        order.date = item.date
+        order.amount = item.totalAmount
+        order.products.push(
+          {
+            product: item.productId, 
+            productQuantity: item.productQuantity
+          }
+        )
+      }
+    }
+    orders.push(order)
+    return res.status(200).send(orders);
   } catch (error) {
     return res.status(404).send(error);
   }

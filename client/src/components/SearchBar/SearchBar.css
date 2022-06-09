@@ -1,89 +1,22 @@
-/* .search-box {
-  height: 1.8rem;
-  width: 15vw;
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.15rem;
-  font-weight: 300;
-  text-align: center;
-  outline-style: none;
+.search-bar {
+  border-radius: 0;
 }
 
-.search-button {
-  height: 1.8rem;
-  margin-left: 5px;
-  padding: 0 15px;
-  font-weight: 600;
-  letter-spacing: 2px;
+.form-control {
+  border: 1px solid #e6ccb2;
 }
-.searchBar-container {
+
+.form-control:focus {
+  box-shadow: 0 1px 5px #e6ccb29f inset, 0 0 6px #e6ccb29f;
+  outline: 0 none;
+}
+.form-control:focus {
+  background-color: #fff;
+  border-color: #e6ccb29f;
+  outline: 0;
+  box-shadow: 0 100px 5px #e6ccb249 inset, 0 0 5px #e6ccb29f;
+}
+.nav-language-search {
   display: flex;
-} */
-.search-gral {
-  align-self: center;
-}
-:root {
-  --rad: 0.12rem;
-  --dur: 0.3s;
-  --color-dark: #2f2f2f;
-  --color-light: #fff;
-  --color-brand: #000000;
-  --font-fam: "Montserrat", sans-serif;
-  --height: 1.9rem;
-  --btn-width: 4rem;
-  --bez: cubic-bezier(0.06, 0.99, 0.35, 0.82);
-}
-
-.searchBar-container {
-  display: flex;
-  position: relative;
-  width: 30rem;
-  background: var(--color-brand);
-  border-radius: var(--rad);
-}
-.searchBar-container input,
-.searchBar-container-button {
-  height: var(--height);
-  font-family: var(--font-fam);
-  border: 0;
-  color: var(--color-dark);
-  font-size: 1.5rem;
-}
-.searchBar-container input[type="text"] {
-  outline: none;
-
-  width: 100%;
-  background: var(--color-light);
-  padding: 0 1.6rem;
-  border-radius: var(--rad);
-  appearance: none;
-  transition: all var(--dur) var(--bez);
-  transition-property: width, border-radius;
-  z-index: 1;
-  position: relative;
-}
-.searchBar-container-button {
-  display: none;
-  width: var(--btn-width);
-  background: var(--color-brand);
-  border-radius: 0 var(--rad) var(--rad) 0;
-}
-.searchBar-container button img {
-  height: 30px;
-  animation: search 0.7s ease-in;
-}
-.searchBar-container input:not(:placeholder-shown) {
-  border-radius: var(--rad) 0 0 var(--rad);
-  width: calc(100% - var(--btn-width));
-}
-.searchBar-container input:not(:placeholder-shown) + button {
-  display: block;
-}
-
-@keyframes search {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+  flex-direction: column;
 }

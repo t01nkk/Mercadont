@@ -12,7 +12,9 @@
   font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
 }
-
+.navPush-searchedProducts {
+  margin-top: 6%;
+}
 .form-filter-price input {
   height: 35px;
   width: 4rem;

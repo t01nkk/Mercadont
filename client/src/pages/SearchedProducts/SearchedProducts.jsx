@@ -11,6 +11,7 @@ import axios from "axios";
 import { getFavorites } from "../../redux/actions/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { handleDeleteFavorite, handleSaveFavorite } from "../../components/Cart/actionsCart";
 export default function SearchedProducts() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
@@ -22,6 +23,20 @@ export default function SearchedProducts() {
   const [inCart, setInCart] = useState(false);
   const [user, setUser] = useState([]);
   let person = JSON.parse(localStorage.getItem("myUser"));
+
+  const alertSuccess = (msg) => {
+    toast.success(msg, {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark"
+    });
+  };
+
   const handleRedirect = () => {
     if (!state.searchedProducts.length) {
       setRedirect(true);
@@ -68,31 +83,31 @@ export default function SearchedProducts() {
     }
   };
 
-  const handleSaveFavorite = async (id) => {
-    try {
-      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
-        idUser: person,
-        idProduct: id,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleDeleteFavorite = async (id) => {
-    try {
-      await axios.delete(
-        `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
-        {
-          data: {
-            idUser: person,
-            idProduct: id,
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleSaveFavorite = async (id) => {
+  //   try {
+  //     await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
+  //       idUser: person,
+  //       idProduct: id,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const handleDeleteFavorite = async (id) => {
+  //   try {
+  //     await axios.delete(
+  //       `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
+  //       {
+  //         data: {
+  //           idUser: person,
+  //           idProduct: id,
+  //         },
+  //       }
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   const handleChangeMax = (e) => {
     setError("");
     if (e.target.value < 0)
@@ -158,7 +173,7 @@ export default function SearchedProducts() {
   }, [cart]);
 
   return (
-    <div>
+    <div className="navPush-searchedProducts">
       <div className="filter-wrapper">
         <div>
           <select
@@ -214,6 +229,7 @@ export default function SearchedProducts() {
                     handleSaveFavorite={handleSaveFavorite}
                     handleDeleteFavorite={handleDeleteFavorite}
                     isAdd={state.favorites.find((e) => e.id === product.id)}
+                    alertSuccess={alertSuccess}
                   />
                 );
               } else {
