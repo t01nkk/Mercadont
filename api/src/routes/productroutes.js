@@ -165,6 +165,44 @@ router.get("/:id", async (req, res) => {
 });
 
 // Working
+//Get MANY Product Details
+router.get("/manyProducts", async (req, res) => {
+  const { arrayProducts } = req.body;
+  let array = [];
+  try {
+
+    for (let item of arrayProducts){
+      const product = await Product.findOne({
+        include: [
+          {
+            model: Category,
+            attributes: ["name"],
+            through: { attributes: [] },
+          },
+          {
+            model: Qa,
+            attributes: ["question", "answer", "resolved"],
+            through: { attributes: [] },
+          },
+          {
+            model: Review,
+            attributes: ["rating", "text"],
+            through: { attributes: [] },
+          },
+        ],
+        where: {
+          id: item,
+        },
+      });
+      array.push(product)
+    }
+    return res.status(200).send(array);
+  } catch (error) {
+    return res.status(400).send({ msg: error.message });
+  }
+});
+
+// Working
 //Create Product
 router.post("/create", async (req, res) => {
   let { name, price, description, status, image, stock, categories, sizes } =

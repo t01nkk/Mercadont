@@ -181,7 +181,7 @@ router.get("/history/:id", async (req, res) => {
       },
     });
     if (!userHistory.length) {
-      return res.status(200).send("Purhcase history empty");
+      return res.status(200).send([]);
     }
     let order = {
       orderNumber: "",
@@ -189,7 +189,6 @@ router.get("/history/:id", async (req, res) => {
       products:[],
       amount: 0,
     }
-    console.log("userHistory:", userHistory)
     order.orderNumber === userHistory[0].orderId
     order.date === userHistory[0].date
     order.amount === userHistory[0].totalAmount

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useStore } from "../../context/store";
 import { useTranslation } from "react-i18next";
 // import "./AccountDetails.css"
@@ -10,11 +10,12 @@ export default function AccountDetails() {
   const { t } = useTranslation();
   const [user, setUser] = useState("");
   const [state, dispatch] = useStore();
+  const history = useHistory()    
 
   const address = user?.address;
   let exp = new RegExp(`"`, "g");
 
-  console.log("address", address?.length);
+  // console.log("address", address?.length);
   /*  console.log("address Hola", address.split(","))
   console.log("address", typeof address) */
   const addressUser = address
@@ -38,6 +39,12 @@ export default function AccountDetails() {
       console.log(err);
     }
   };
+
+  const handleBack = async (e) =>{
+    e.preventDefault();
+    history.push("/home");
+  }
+
   useEffect(() => {
     fetchUser();
   }, []);
@@ -126,6 +133,7 @@ export default function AccountDetails() {
           </div>
         </section>
       </div> */}
+      <button onClick={(e) => handleBack(e)}>Go back to the main page</button>
     </div>
   );
 }
