@@ -17,8 +17,9 @@ export default function ProductCard({
   handleSaveFavorite,
   handleDeleteFavorite,
   isAdd,
+  alertSuccess
 }) {
-  const { t } = useTranslation()
+  const { t,i18n } = useTranslation()
   const [changeButton, setChangeButton] = useState(isAdd);
   const history = useHistory();
   let myUser = JSON.parse(localStorage.getItem("myUser"));
@@ -36,6 +37,7 @@ export default function ProductCard({
     }
     setChangeButton(true);
     handleSaveFavorite(id);
+    alertSuccess(t("home.altAddToFavs"))
   };
 
   const deleteFavorite = () => {
