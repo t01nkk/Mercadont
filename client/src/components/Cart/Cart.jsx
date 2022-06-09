@@ -26,12 +26,28 @@ export const Cart = () => {
   
   let { search } = useLocation()
   useEffect(()=>{
-    if(search == "?buy=false"){ console.log("Aca iria una alerta de qeu la compra fue cancelada")}
+    if(search == "?buy=false"){ 
+      alertInfo("Purchase cancelled successfully");
+    }
     if(search == "?buy=true"){
       localStorage.removeItem(user)
+      alertSuccess("Purchase done successfully");
       setStorageCart([]);
     }
   },[search])
+
+  const alertSuccess = (msg) => {
+    toast.success(msg, {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark"
+    });
+  };
 
   const alertInfo = (msg) => {
     toast.info(msg, {
