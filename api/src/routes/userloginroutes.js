@@ -75,13 +75,13 @@ router.get("/details/:id", async (req, res) => {
       where: { id: id },
       include: { all: true },
     });
-   
+
     if (!user) {
       return res.status(404).send("User Not Found");
     }
- 
+
     return res.status(200).send(user);
-   
+
   } catch (error) {
     console.log("error:", error);
     res.status(404).send(error);
@@ -91,10 +91,10 @@ router.get("/details/:id", async (req, res) => {
 // Update User
 router.put("/details/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, email,lastname,image,country,province, city, street, postalCode } = req.body;
-console.log(req.body.address)
- // let errors = validateInputUser(name,email);
- // if (errors.length) return res.status(400).send({ msg: errors });
+  const { name, email, lastname, image, country, province, city, street, postalCode } = req.body;
+  console.log(req.body.address)
+  // let errors = validateInputUser(name,email);
+  // if (errors.length) return res.status(400).send({ msg: errors });
 
   try {
     const updatedUser = await User.update(
@@ -102,9 +102,9 @@ console.log(req.body.address)
         name: name,
         lastname: lastname,
         email: email,
-        address:JSON.stringify({country,province, city, street, postalCode}),
-        image:image
-     
+        address: JSON.stringify({ country, province, city, street, postalCode }),
+        image: image
+
       },
       { where: { id: id } }
     );
@@ -175,9 +175,9 @@ router.get("/history/:id", async (req, res) => {
 
   try {
     const userHistory = await PurchaseOrder.findAll({
-      where: { 
+      where: {
         userId: id,
-        status: "completed" 
+        status: "completed"
       },
     });
     if (!userHistory.length) {
@@ -186,7 +186,7 @@ router.get("/history/:id", async (req, res) => {
     let order = {
       orderNumber: "",
       date: "",
-      products:[],
+      products: [],
       amount: 0,
     }
     console.log("userHistory:", userHistory)
@@ -194,26 +194,26 @@ router.get("/history/:id", async (req, res) => {
     order.date === userHistory[0].date
     order.amount === userHistory[0].totalAmount
 
-    for(let item of userHistory){
-      if(order.orderNumber === item.orderId) {
+    for (let item of userHistory) {
+      if (order.orderNumber === item.orderId) {
         order.products.push(
           {
             product: item.productId,
             productQuantity: item.productQuantity
           }
         )
-      }else{
-        if(order.orderNumber !== "") orders.push(order)
+      } else {
+        if (order.orderNumber !== "") orders.push(order)
         order = {
           orderNumber: "",
-          products:[]
+          products: []
         }
         order.orderNumber = item.orderId
         order.date = item.date
         order.amount = item.totalAmount
         order.products.push(
           {
-            product: item.productId, 
+            product: item.productId,
             productQuantity: item.productQuantity
           }
         )
@@ -225,5 +225,22 @@ router.get("/history/:id", async (req, res) => {
     return res.status(404).send(error);
   }
 });
+
+router.get('/product/history', async (req, res) => {
+  const { order } = req.body;
+  var foundProducts = [];
+  try {
+    for (var i = 0; i < order.length; i++) {
+      let found = await Product.findOne({ where: { id: order[i] } });
+      if (found) {
+        foundProducts.push(found);
+      }
+    }
+    res.send(foundProducts);
+  } catch (err) {
+    res.status(404).send({ msg: err.message })
+  }
+})
+
 
 module.exports = router;
