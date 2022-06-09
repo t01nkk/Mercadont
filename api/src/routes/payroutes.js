@@ -25,7 +25,7 @@ router.post("/card", async (req, res) => {
       confirm: true
     })
     let updatedStock = await modifyStockStripe(local)
-    let created = await createPurchaseOrder(id, userId, local, "completed")
+    let created = await createPurchaseOrder(id, userId, local, (amount/100), "completed")
     return res.status(200).send(payment)
   } catch (error) {
     return res.status(400).send(error)

@@ -179,17 +179,21 @@ router.get("/history/:id", async (req, res) => {
         userId: id,
         status: "completed" 
       },
-      // group: PurchaseOrder.orderId
     });
     if (!userHistory.length) {
       return res.status(200).send("Purhcase history empty");
     }
-
     let order = {
       orderNumber: "",
-      products:[]
+      date: "",
+      products:[],
+      amount: 0,
     }
+    console.log("userHistory:", userHistory)
     order.orderNumber === userHistory[0].orderId
+    order.date === userHistory[0].date
+    order.amount === userHistory[0].totalAmount
+
     for(let item of userHistory){
       if(order.orderNumber === item.orderId) {
         order.products.push(
@@ -205,6 +209,8 @@ router.get("/history/:id", async (req, res) => {
           products:[]
         }
         order.orderNumber = item.orderId
+        order.date = item.date
+        order.amount = item.totalAmount
         order.products.push(
           {
             product: item.productId, 

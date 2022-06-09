@@ -12,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader/Loader";
 import "./categories.css";
+import { handleDeleteFavorite, handleSaveFavorite } from "../Cart/actionsCart";
 export default function Categories() {
   // let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
@@ -24,31 +25,45 @@ export default function Categories() {
   const [user, setUser] = useState([]);
   let person = JSON.parse(localStorage.getItem("myUser"));
 
-  const handleSaveFavorite = async (id) => {
-    try {
-      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
-        idUser: person,
-        idProduct: id,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  // const handleSaveFavorite = async (id) => {
+  //   try {
+  //     await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
+  //       idUser: person,
+  //       idProduct: id,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const handleDeleteFavorite = async (id) => {
+  //   try {
+  //     await axios.delete(
+  //       `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
+  //       {
+  //         data: {
+  //           idUser: person,
+  //           idProduct: id,
+  //         },
+  //       }
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const alertSuccess = (msg) => {
+    toast.success(msg, {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark"
+    });
   };
-  const handleDeleteFavorite = async (id) => {
-    try {
-      await axios.delete(
-        `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
-        {
-          data: {
-            idUser: person,
-            idProduct: id,
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   const handleRedirect = () => {
     if (!state.products.length) {
       setRedirect(true);
@@ -118,14 +133,12 @@ export default function Categories() {
   const handleSearch = async (e) => {
     e.preventDefault();
     let filter = state.filterCategory;
-
     if (min) {
       filter = filter.filter((product) => product.price >= min);
     }
     if (max) {
       filter = filter.filter((product) => product.price <= max);
     }
-
     if (max && min && parseInt(max) < parseInt(min)) {
       setError("Please select valid numbers for the min and max inputs");
       filter = [];
@@ -163,20 +176,9 @@ export default function Categories() {
   }, []);
   return (
     <div className="navPush-categories">
-      <div className="selectF">
-        <div>
-          <select
-            defaultValue=""
-            onChange={(e) => {
-              handleOrder(e);
-            }}
-          >
-            <option value="">Sort !</option>
-            <option value="ASCENDING">⬇</option>
-            <option value="DESCENDING">⬆ </option>
-          </select>
-        </div>
-        <form className="form-filter-price" onSubmit={handleSearch}>
+      <div className="SortAndReset">
+        <div className="priceRangeText"> Price Range:</div>
+        <form className="minMaxinput" onSubmit={handleSearch}>
           <input
             id="filter2"
             type="text"
@@ -185,7 +187,9 @@ export default function Categories() {
             onChange={handleChangeMin}
           />
         </form>
-        <form onSubmit={handleSearch}>
+        -
+
+        <form className="minMaxinput" onSubmit={handleSearch} >
           <input
             id="filter"
             type="text"
@@ -195,7 +199,22 @@ export default function Categories() {
           />
         </form>
         {error && <p>{error}</p>}
+        <button onClick={handleSearch} className="filterByPriceBtn">Search </button>
+        <div>
+          <select
+              defaultValue=""
+              onChange={(e) => {
+                handleOrder(e);
+              }}
+              className="sortSelector"
+          >
+            <option value="">Sort by</option>
+            <option value="ASCENDING">Highest First</option>
+            <option value="DESCENDING">Lowest First </option>
+          </select>
+        </div>
       </div>
+
       {redirect ? <Redirect push to="/home" /> : null}
       <div className="section-products">
         {state.products && state.favorites ? (

@@ -1,42 +1,64 @@
-.filter-wrapper select {
-  width: 12rem;
-  margin: 0.33rem;
-  padding: 0.33rem;
-  border: none;
-  font-weight: bold;
-  text-align: center;
-  background-color: #000000;
-  color: white;
-  transition: color 0.5s ease-in-out;
-  display: flex;
-  font-family: "Montserrat", sans-serif;
-  text-transform: uppercase;
-}
 .navPush-searchedProducts {
-  margin-top: 6%;
-}
-.form-filter-price input {
-  height: 35px;
-  width: 4rem;
-  outline: none;
-  font-size: 1rem;
-  border-radius: 5px;
-  padding-left: 15px;
-  border: 1px solid #ccc;
-  border-bottom-width: 2px;
-  transition: all 0.3s ease;
+  margin-top: 15vh;
 }
 
-.filter-wrapper p {
-  background: rgb(211, 209, 209);
-  color: black;
-  border-radius: 2px;
-  display: inline-block;
-  height: 30px;
-  padding: 5px;
-  margin-top: 1rem;
-  font-size: 12px;
+.SortAndReset{
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  font-size: 4vh;
+  background: #2d2c2c;
+  color: white;
+  padding-left: 30vw;
 }
+
+.priceRangeText{
+  font-size: 3vh;
+  margin-top: 1vh;
+}
+
+.minMaxinput{
+  max-width: 3.1vw;
+  margin-top: 1vh;
+  margin-left:1vw;
+  margin-right:1vw;
+  padding: 0.2em;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: center;
+  font-size: 2vh;
+  font-family: inherit;
+  color: black;
+}
+.filterByPriceBtn {
+  background: white;
+  margin-top: 1vh;
+  margin-left:1vw;
+  margin-right:1vw;
+  padding: 0.2em;
+  border: 2px solid black;
+  overflow: hidden;
+  text-align: center;
+  font-size: 1.7vh;
+  font-family: inherit;
+  color: black;
+  border-radius: 5px;
+}
+
+.sortSelector{
+  margin-bottom: 1vh;
+  padding: 0.2em;
+  border: 2px solid black;
+  overflow: hidden;
+  background-color: white;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.7vh;
+  font-family: inherit;
+  color: black;
+  border-radius: 5px;
+}
+
 .section-products {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(2rem, 20rem));
