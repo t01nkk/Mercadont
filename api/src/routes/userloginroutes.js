@@ -225,16 +225,18 @@ router.get("/history/:id", async (req, res) => {
   }
 });
 
-router.get('/product/history', async (req, res) => {
+router.post('/product/history', async (req, res) => {
   const { order } = req.body;
   var foundProducts = [];
   try {
     for (var i = 0; i < order.length; i++) {
       let found = await Product.findOne({ where: { id: order[i] } });
-      if (found) {
-        foundProducts.push(found);
+      if (!found) {
+        res.status(404).send({ msg: `The product id:  ${order[i]}  doesn't exist` })
       }
+      foundProducts.push(found);
     }
+    console.log(foundProducts);
     res.send(foundProducts);
   } catch (err) {
     res.status(404).send({ msg: err.message })
