@@ -100,6 +100,6 @@ export default function FilerCategories() {
           buscar
         </button>
       </form>
-    </div>
+    </>
   );
 }

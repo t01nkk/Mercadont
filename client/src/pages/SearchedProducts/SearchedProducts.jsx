@@ -12,6 +12,8 @@ import { getFavorites } from "../../redux/actions/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { handleDeleteFavorite, handleSaveFavorite } from "../../components/Cart/actionsCart";
+
+
 export default function SearchedProducts() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
@@ -174,42 +176,45 @@ export default function SearchedProducts() {
 
   return (
     <div className="navPush-searchedProducts">
-      <div className="filter-wrapper">
-        <div>
-          <select
-            onChange={(e) => {
-              handleOrder(e);
-            }}
-          >
-            <option value="">Order</option>
-            <option value="ASCENDING">ASC</option>
-            <option value="DESCENDING">DESC </option>
-          </select>
-        </div>
+      <div>
+        <div className="SortAndReset">
+          <div className="priceRangeText"> Price Range:</div>
+          <form className="minMaxinput" onSubmit={handleSearch}>
+            <input
+                id="filter2"
+                type="text"
+                value={min}
+                placeholder="min..."
+                onChange={handleChangeMin}
+            />
+          </form>
+          -
 
-        <form className="form-filter-price" onSubmit={handleSearch}>
-          <label htmlFor="">Min: </label>
-          <input
-            id="filter2"
-            type="number"
-            value={min}
-            placeholder="min..."
-            min={0}
-            onChange={handleChangeMin}
-            input
-          />
-        </form>
-        <form className="form-filter-price" onSubmit={handleSearch}>
-          <label htmlFor="">Max: </label>
-          <input
-            id="filter"
-            type="number"
-            value={max}
-            placeholder="max..."
-            min={0}
-            onChange={handleChangeMax}
-          />
-        </form>
+          <form className="minMaxinput" onSubmit={handleSearch} >
+            <input
+                id="filter"
+                type="text"
+                value={max}
+                placeholder="max..."
+                onChange={handleChangeMax}
+            />
+          </form>
+          {error && <p>{error}</p>}
+          <button onClick={handleSearch} className="filterByPriceBtn">Search </button>
+          <div>
+            <select
+                defaultValue=""
+                onChange={(e) => {
+                  handleOrder(e);
+                }}
+                className="sortSelector"
+            >
+              <option value="">Sort by</option>
+              <option value="ASCENDING">Highest First</option>
+              <option value="DESCENDING">Lowest First </option>
+            </select>
+          </div>
+        </div>
         {error && <p>{error}</p>}
       </div>
       {redirect ? <Redirect push to="/home" /> : null}
