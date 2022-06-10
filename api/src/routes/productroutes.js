@@ -165,6 +165,44 @@ router.get("/:id", async (req, res) => {
 });
 
 // Working
+//Get MANY Product Details
+router.get("/manyProducts", async (req, res) => {
+  const { arrayProducts } = req.body;
+  let array = [];
+  try {
+
+    for (let item of arrayProducts){
+      const product = await Product.findOne({
+        include: [
+          {
+            model: Category,
+            attributes: ["name"],
+            through: { attributes: [] },
+          },
+          {
+            model: Qa,
+            attributes: ["question", "answer", "resolved"],
+            through: { attributes: [] },
+          },
+          {
+            model: Review,
+            attributes: ["rating", "text"],
+            through: { attributes: [] },
+          },
+        ],
+        where: {
+          id: item,
+        },
+      });
+      array.push(product)
+    }
+    return res.status(200).send(array);
+  } catch (error) {
+    return res.status(400).send({ msg: error.message });
+  }
+});
+
+// Working
 //Create Product
 router.post("/create", async (req, res) => {
   let { name, price, description, status, image, stock, categories, sizes } =
@@ -274,33 +312,6 @@ router.put("/update/:id", async (req, res) => {
     return res.status(202).send("Product Updated");
   } catch (err) {
     return res.status(400).send(err);
-  }
-});
-//CART - Buy Product
-router.post("/buys", async (req, res) => {
-  try {
-    const { id, amount, local, userId } = req.body;
-
-    const payment = await stripe.paymentIntents.create({
-      amount,
-      currency: "USD",
-      description: "Compra",
-      payment_method: id,
-      confirm: true,
-    });
-    modifyStock(local);
-
-    for (let product of local) {
-      const db = await PurchaseOrder.create({
-        orderId: id,
-        userId: userId,
-        productId: product.id,
-        productQuantity: product.quantity,
-      });
-    }
-    return res.status(200).send(payment);
-  } catch (error) {
-    return res.send(error);
   }
 });
 

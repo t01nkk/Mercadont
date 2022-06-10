@@ -19,6 +19,8 @@ export default function FilerCategories() {
     e.preventDefault();
     const { categories } = filter;
     try {
+      state.filter = categories
+      console.log(state)
       const res = await axios.post(
         `${process.env.REACT_APP_DOMAIN}/product/filter`,
         {
@@ -68,6 +70,11 @@ export default function FilerCategories() {
   }, []);
   useEffect(() => {
     fetchCategories(dispatch);
+    document
+        .querySelectorAll("input[type=checkbox]")
+        .forEach((el) => {
+          if (state.filter.includes(el.value)) el.checked = true
+        });
   }, []);
 
   return (
