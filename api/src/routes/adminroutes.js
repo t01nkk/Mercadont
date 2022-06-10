@@ -126,7 +126,6 @@ router.post("/getAdmin", async (req, res) => {
 
 // Creates many orders to test ORDER PURCHASE ORDERS BY DATE
 router.get("/loadOrders", async (req, res) =>{
-
   try {
     for (order of createdOrders){
       const newOrder = await PurchaseOrder.create({
