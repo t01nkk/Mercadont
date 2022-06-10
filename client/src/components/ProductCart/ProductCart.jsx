@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import "./ProductCart.css";
+import "./ProductCart.scss";
 import { totalPrice } from "../Cart/actionsCart";
-// import "../Favorites/Favorite.css"
 import accounting from "accounting";
-import "../Cart/Cart.css"
+
 export const ProductCart = ({
   name,
   stock,
@@ -47,38 +46,36 @@ export const ProductCart = ({
     setPriceTotal(totalPrice());
   };
 
-
   return (
-    <article className="article-product-cart">
-       <div className="container-img">
-        <div className="col-sm-5 containe-img-cart">
-          <img src={image} alt={name} className="card-img-to d-block w-100" />
-        </div>
-      </div>
-        <div className="details-product-cart">
-          <p>{name}</p>
-          <p> U$D {accounting.formatMoney(price, "U$D ", 0)}</p>
-          <p>TOTAL: U$D {accounting.formatMoney(price * count, "U$D ", 0)}</p>
-          <div>
-            {count !== 1 ? (
-              <button className="btn btn-primary btn-sm" onClick={() => oneLess(stock, name, price)}>-</button>
-            ) : (
-              console.log("chau")
-              )}
-            <span>{storageCart[pos].quantity}</span>
-            {count !== stock ? (
-                <button className="btn btn-primary btn-sm" onClick={() => oneMore(stock, name, price)}>+</button>
-            ) : (
-                console.log("hola")
-            )}
-          </div>
-          
-          <div>
-            <button className="del-view-product-cart" onClick={() => deleteDatatoStorage(name)}>Eliminar</button>
-            <button className="del-view-product-cart" onClick={() => viewProduct(id)}>Ver</button>
-        </div>
-          </div>
-
-    </article>
+    <div className="card-body-cart">
+      <img src={image} alt={name} className="card-image-cart" />
+      <p>{name}</p>
+      <p>{accounting.formatMoney(price, "U$D ", 0)}</p>
+      <p>TOTAL: {accounting.formatMoney(price * count, "U$D ", 0)}</p>
+      {count !== 1 ? (
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => oneLess(stock, name, price)}
+        >
+          -
+        </button>
+      ) : null}
+      <span>{storageCart[pos].quantity}</span>
+      {count !== stock ? (
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => oneMore(stock, name, price)}
+        >
+          +
+        </button>
+      ) : null}
+      <button
+        className="del-view-product-cart"
+        onClick={() => deleteDatatoStorage(name)}
+      >
+        Eliminar
+      </button>
+      <button onClick={() => viewProduct(id)}>Ver</button>
+    </div>
   );
 };

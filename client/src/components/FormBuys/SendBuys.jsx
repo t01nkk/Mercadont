@@ -4,11 +4,11 @@ import axios from "axios"
 import { useHistory } from 'react-router-dom'
 import { totalPrice } from '../Cart/actionsCart'
 import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
-import accounting from "accounting";
-import { ToastContainer, toast } from "react-toastify";
-
+import { useTranslation } from 'react-i18next';
+import accounting from 'accounting'
 
 export const SendBuys = () => {
+    const { t } = useTranslation()
     const stripe = useStripe()
     const elements = useElements()
 
@@ -19,11 +19,11 @@ export const SendBuys = () => {
     const [selectBuys, setSelectBuys] = useState("")
     const [amountTotal, setAmounTotal] = useState("")
     const history = useHistory()
-    
-    
-    useEffect(()=>{
+
+
+    useEffect(() => {
         setAmounTotal(totalPrice())
-      },[])
+    }, [])
 
 
     const handleSubmit = async (e) => {
@@ -36,41 +36,25 @@ export const SendBuys = () => {
 
             if (!error) {
                 const { id } = paymentMethod
-                const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
+                await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
                     id,
-                    amount: priceTotal * 100,
+                    amount: Math.round(priceTotal * 100),
                     local,
                     userId: user
                 })
             }
             // loadingBuys()
-
-            if(paymentMethod){
+            if (paymentMethod) {
                 localStorage.removeItem(user)
-                history.push("/")
+                history.push("/cart?buy=true")
             }
-            console.log(paymentMethod)
         }
     }
 
-    const loadingBuys = () => {
-        toast.success("Already in cart!", {
-          position: "bottom-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-      };
-
-    
     const handelClik = async (e) => {
         e.preventDefault()
-        if (e.target.textContent === "card") setSelectBuys("card")
-        if (e.target.textContent === "paypal") {
+        if (e.target.id === "card") setSelectBuys("card")
+        if (e.target.id === "paypal") {
             setSelectBuys("paypal")
             const purchase = await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/payPal/create-order`, {
                 purchase_units: [
@@ -88,10 +72,14 @@ export const SendBuys = () => {
                 local
             })
             setRedirect(purchase.data)
-            localStorage.removeItem(user)
+            // localStorage.removeItem(user)
         }
     }
 
+    const handleBack = async (e) => {
+        e.preventDefault();
+        history.push("/cart");
+    }
     const [products, setProducts] = useState("")
     const [price, setPrice] = useState("")
 
@@ -104,49 +92,52 @@ export const SendBuys = () => {
     }, [])
 
     const mostra = () => {
-        console.log(products, price);
     };
 
-    return (<form onSubmit={handleSubmit} className="form-buys">
+    return (
         <div>
-            <h2>Product list:</h2>
-            <div>
-                {products && products.map((el, index) =>
-                (<ListProductsBuys
-                    key={el.name}
-                    name={el.name}
-                    price={el.price}
-                    totalPrice={el.totalPrice}
-                    image={el.image}
-                    amount={el.quantity}
-                />))
+            <form onSubmit={handleSubmit} className="form-buys">
+                <div>
+                    <h2>{t("sendBuys.productsList")}</h2>
+                    <div>
+                        {React.Children.toArray(products && products.map((el) =>
+                        (<ListProductsBuys
+                            name={el.name}
+                            price={el.price}
+                            totalPrice={el.totalPrice}
+                            image={el.image}
+                            amount={el.quantity}
+                        />)))
+                        }
+                    </div>
+                </div>
+                <div>
+                    {amountTotal && <p>{t("sendBuys.totalprice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
+                    <p>{t("sendBuys.paymentMethod")}</p>
+                    <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
+                    <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
+                </div>
+                {
+                    <div>
+                        {selectBuys === "card" ?
+                            <>
+                                <CardElement className='cardElement' />
+                                <button type='submit'>{t("sendBuys.cardPay")}</button>
+                            </>
+                            : null}
+                    </div>
                 }
-            </div>
-        </div>
-        <div>
-            {amountTotal && <p>Total Price:{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
-            <p>Choose your payment method</p>
-            <button onClick={e => handelClik(e)}>card</button>
-            <button onClick={e => handelClik(e)} type='submit'>paypal</button>
-        </div>
-        {
-            <div>
-                {selectBuys === "card" ?
-                    <>
-                        <CardElement className='cardElement' />
-                        <button type='submit'>Pay</button>
-                    </>
+                {selectBuys === "paypal" ?
+                    <button type='submit'>
+                        {redirect ?
+                            <a href={redirect}>{t("sendBuys.paypalConfirm")}</a>
+                            : <p>{t("sendBuys.paypalProcessing")}</p>
+                        }
+                    </button>
                     : null}
-            </div>
-        }
-        {selectBuys === "paypal" ?
-            <button type='submit'>
-                {redirect ?
-                    <a href={redirect}>Continue on PayPal</a>
-                    : <p>Cargando link...</p>
-                }
-            </button>
-            : null}
-    </form>
+            </form>
+            <button onClick={(e) => handleBack(e)}>{t("navigation.returnToCart")}</button>
+        </div>
+
     )
 }

@@ -6,13 +6,16 @@ import {
   SORT_BY_PRICE_CAT,
   FILTER_BY_PRICE_CATEGORY,
 } from "../../redux/actions/actionTypes";
-import axios from "axios";
 import { getFavorites } from "../../redux/actions/actions.js";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { Loader } from "../Loader/Loader";
+import "./categories.css";
+import { handleDeleteFavorite, handleSaveFavorite } from "../Cart/actionsCart";
+import { useTranslation } from "react-i18next";
+import { alertInfo, alertSuccess, alertWarning } from '../../helpers/toast'
 export default function Categories() {
   // let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
+  const { t } = useTranslation()
   const [redirect, setRedirect] = useState(false);
   const [state, dispatch] = useStore();
   const [cart, setCart] = useState([]);
@@ -23,60 +26,38 @@ export default function Categories() {
   const [user, setUser] = useState([]);
   let person = JSON.parse(localStorage.getItem("myUser"));
 
-  const handleSaveFavorite = async (id) => {
-    try {
-      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
-        idUser: person,
-        idProduct: id,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleDeleteFavorite = async (id) => {
-    try {
-      await axios.delete(
-        `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
-        {
-          data: {
-            idUser: person,
-            idProduct: id,
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleSaveFavorite = async (id) => {
+  //   try {
+  //     await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
+  //       idUser: person,
+  //       idProduct: id,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const handleDeleteFavorite = async (id) => {
+  //   try {
+  //     await axios.delete(
+  //       `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
+  //       {
+  //         data: {
+  //           idUser: person,
+  //           idProduct: id,
+  //         },
+  //       }
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const handleRedirect = () => {
     if (!state.products.length) {
       setRedirect(true);
     }
   };
-  const alertAddedToCart = () => {
-    toast.success("Added to cart!", {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
-  const alertAlreadyInCart = () => {
-    toast.success("Already in cart!", {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
+
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
     let totalPrice = price;
@@ -84,12 +65,12 @@ export default function Categories() {
     let value = cart.find((e) => e.name === name);
     if (value) {
       setInCart(false);
-      alertAlreadyInCart();
+      alertInfo(t("home.altAlreadyInCart"))
       return;
     } else {
       setInCart(true);
       setCart((cart) => [...cart, products]);
-      alertAddedToCart();
+      alertSuccess(t("home.altAddToCart"));
     }
   };
 
@@ -103,14 +84,14 @@ export default function Categories() {
   const handleChangeMax = (e) => {
     setError("");
     if (e.target.value < 0)
-      setError("Only Positive Numbers are accepted in this field");
+      setError(t("categoriesComp.error_pos_numbers"));
     setMax(e.target.value);
   };
 
   const handleChangeMin = (e) => {
     setError("");
     if (e.target.value < 0)
-      setError("Only Positive Numbers are accepted in this field");
+      setError(t("categoriesComp.error_pos_numbers"));
     setMin(e.target.value);
   };
 
@@ -124,11 +105,11 @@ export default function Categories() {
       filter = filter.filter((product) => product.price <= max);
     }
     if (max && min && parseInt(max) < parseInt(min)) {
-      setError("Please select valid numbers for the min and max inputs");
+      setError(t("categoriesComp.error_valid_numbers"));
       filter = [];
     }
     if (error) {
-      alert("Please Add Valid inputs");
+      alertWarning(t("categoriesComp.error_valid_cats"));
       filter = state.filterCategory;
     }
     dispatch({
@@ -160,44 +141,50 @@ export default function Categories() {
   }, []);
   return (
     <div>
-      <div className="selectF">
+      <div className="SortAndReset">
+        <div className="priceRangeText">{t("categoriesComp.priceRange")}</div>
+        <form className="minMaxinput" onSubmit={handleSearch}>
+          <input
+            id="filter2"
+            type="text"
+            value={min}
+            placeholder={t("categoriesComp.minPrice")}
+            onChange={handleChangeMin}
+          />
+        </form>
+        -
+        <form className="minMaxinput" onSubmit={handleSearch}>
+          <input
+            id="filter"
+            type="text"
+            value={max}
+            placeholder={t("categoriesComp.maxPrice")}
+            onChange={handleChangeMax}
+          />
+        </form>
+        {error && <p>{error}</p>}
+        <button onClick={handleSearch} className="filterByPriceBtn">
+          {t("categoriesComp.search") }{" "}
+        </button>
         <div>
           <select
             defaultValue=""
             onChange={(e) => {
               handleOrder(e);
             }}
+            className="sortSelector"
           >
-            <option value="">Sort !</option>
-            <option value="ASCENDING">⬇</option>
-            <option value="DESCENDING">⬆ </option>
+            <option disabled>{t("categoriesComp.sortBy")}</option>
+            <option value="DESCENDING">{t("categoriesComp.des")}</option>
+            <option value="ASCENDING">{t("categoriesComp.asc")}</option>
           </select>
         </div>
-
-        <form className="form-filter-price" onSubmit={handleSearch}>
-          <input
-            id="filter2"
-            type="text"
-            value={min}
-            placeholder="min..."
-            onChange={handleChangeMin}
-          />
-        </form>
-        <form onSubmit={handleSearch}>
-          <input
-            id="filter"
-            type="text"
-            value={max}
-            placeholder="max..."
-            onChange={handleChangeMax}
-          />
-        </form>
-        {error && <p>{error}</p>}
       </div>
+
       {redirect ? <Redirect push to="/home" /> : null}
       <div className="section-products">
-        {state.products && state.favorites
-          ? React.Children.toArray(
+        {state.products && state.favorites ? (
+          React.Children.toArray(
             state.products.map((product) => {
               if (product.status === "active") {
                 return (
@@ -217,8 +204,11 @@ export default function Categories() {
               return null;
             })
           )
-          : console.log("Aca vendría el loader")}
-        <ToastContainer />
+        ) : (
+          <div className="container-loader">
+            <Loader />
+          </div>
+        )}
       </div>
     </div>
   );

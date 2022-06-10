@@ -1,0 +1,61 @@
+.navPush-categories {
+  margin-top: 15vh;
+}
+
+
+.SortAndReset{
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  font-size: 4vh;
+  background: #2d2c2c;
+  color: white;
+  padding-left: 30vw;
+}
+
+.priceRangeText{
+  font-size: 3vh;
+  margin-top: 1vh;
+}
+
+.minMaxinput{
+  max-width: 3.1vw;
+  margin-top: 1vh;
+  margin-left:1vw;
+  margin-right:1vw;
+  padding: 0.2em;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: center;
+  font-size: 2vh;
+  font-family: inherit;
+  color: black;
+}
+.filterByPriceBtn {
+  background: white;
+  margin-top: 1vh;
+  margin-left:1vw;
+  margin-right:1vw;
+  padding: 0.2em;
+  border: 2px solid black;
+  overflow: hidden;
+  text-align: center;
+  font-size: 1.7vh;
+  font-family: inherit;
+  color: black;
+  border-radius: 5px;
+}
+
+.sortSelector{
+  margin-bottom: 1vh;
+  padding: 0.2em;
+  border: 2px solid black;
+  overflow: hidden;
+  background-color: white;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.7vh;
+  font-family: inherit;
+  color: black;
+  border-radius: 5px;
+}

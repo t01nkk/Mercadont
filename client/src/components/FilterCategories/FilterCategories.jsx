@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useStore } from "../../context/store";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { CATEGORIES_PRODUCT, FETCH_PRODUCTS } from "../../redux/actions/actionTypes";
+import {
+  CATEGORIES_PRODUCT,
+  FETCH_PRODUCTS,
+} from "../../redux/actions/actionTypes";
 import { fetchCategories } from "../../redux/actions/actions.js";
 import axios from "axios";
-
-
+import "./FilterCategories.css";
 export default function FilerCategories() {
   const [state, dispatch] = useStore();
   const [redirect, setRedirect] = useState(false);
@@ -17,9 +19,14 @@ export default function FilerCategories() {
     e.preventDefault();
     const { categories } = filter;
     try {
-      const res = await axios.post(`${process.env.REACT_APP_DOMAIN}/product/filter`, {
-        categories,
-      });
+      state.filter = categories
+      console.log(state)
+      const res = await axios.post(
+        `${process.env.REACT_APP_DOMAIN}/product/filter`,
+        {
+          categories,
+        }
+      );
       if (Array.isArray(res.data)) {
         dispatch({
           type: CATEGORIES_PRODUCT,
@@ -27,19 +34,22 @@ export default function FilerCategories() {
         });
         setRedirect(true);
       } else {
-        document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
+        document
+          .querySelectorAll("input[type=checkbox]")
+          .forEach((el) => (el.checked = false));
         setFilter({
           categories: [],
         });
         alert("No products with those selected categories where found");
-        const allProducts = await axios.get(`${process.env.REACT_APP_DOMAIN}/product`)
+        const allProducts = await axios.get(
+          `${process.env.REACT_APP_DOMAIN}/product`
+        );
         dispatch({
           type: FETCH_PRODUCTS,
-          payload: allProducts.data
-        })
+          payload: allProducts.data,
+        });
       }
-    }
-    catch (err) {
+    } catch (err) {
       alert(err);
     }
   };
@@ -60,38 +70,43 @@ export default function FilerCategories() {
   }, []);
   useEffect(() => {
     fetchCategories(dispatch);
+    document
+        .querySelectorAll("input[type=checkbox]")
+        .forEach((el) => {
+          if (state.filter.includes(el.value)) el.checked = true
+        });
   }, []);
 
   return (
-    <div>
+    <>
       {redirect ? <Redirect push to="/categories" /> : null}
       <form
         onSubmit={(e) => {
           handleSearch(e);
         }}
       >
-        <div className="form-checkbox-container">
-          <div className="from-checkbox-grid">
-            {state.categories.map((categories) => (
-              <div key={categories.name} className="from-checkbox">
-                <div className="from-checkbox-input">
-                  <label htmlFor={categories.name}>{categories.name}</label>
-                  <input
-                    value={categories.name}
-                    type="checkbox"
-                    id={categories.name}
-                    onChange={(e) => {
-                      handleSelect(e);
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <button type="submit">buscar</button>
+        {state.categories.map((categories) => (
+          <label
+            key={categories.name}
+            className="label-category dropdown-item category-list-item "
+          >
+            {categories.name}
+            <input
+              className="checkbox-category"
+              value={categories.name}
+              type="checkbox"
+              id={categories.name}
+              onChange={(e) => {
+                handleSelect(e);
+              }}
+            />
+          </label>
+        ))}
+        <li className="dropdown-divider"></li>
+        <button type="submit" className="filter-search-btn">
+          buscar
+        </button>
       </form>
-    </div>
+    </>
   );
 }

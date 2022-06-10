@@ -3,13 +3,15 @@ import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
 import { Formik } from "formik";
 import { useAuth } from "../../../context/authContext";
-
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 export default function LoginADMIN() {
+  const { t } = useTranslation()
   const [redirect, setRedirect] = useState(false);
   const { login } = useAuth();
   const handleLogin = async (values) => {
+    
     try {
-      console.log("entre en el try", values);
       const userCredentials = await login(values.email, values.password);
 
       if (userCredentials.user.uid) {
@@ -76,7 +78,7 @@ export default function LoginADMIN() {
                 to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home"
               />
             ) : null}
-            <h2>ADMIN LOG In</h2>
+            <h2>{t("loginAdmin.login") }</h2>
             <form
               method="POST"
               action={`${process.env.REACT_APP_DOMAIN}/user/login`}

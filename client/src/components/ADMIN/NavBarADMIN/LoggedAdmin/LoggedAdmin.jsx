@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useStore } from "../../../../context/store";
 import FilterCategories from "../../../FilterCategories/FilterCategories";
+import { useTranslation } from "react-i18next";
 export default function LoggedAdmin() {
-  const [state, dispatch] = useStore();
+  const { t } = useTranslation()
+  const [state] = useStore();
   const logOutSession = () => {
     localStorage.clear();
   };
@@ -18,24 +20,25 @@ export default function LoggedAdmin() {
           <a className="dropbtn">{adminName}</a>
           <div className="dropdown-content">
             <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home">
-              Product List
+              {t("adminLoggedNavBar.inventory")}
             </Link>
+            <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/user" >User</Link>
             <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/sellProduct">
-              Sell
+              {t("adminLoggedNavBar.sell")}
             </Link>
             <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/addCategories">
-              Create Categories
+              {t("adminLoggedNavBar.adminCategories")}
             </Link>
             <Link
               onClick={logOutSession}
               to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/login"
             >
-              Log Out
+              {t("adminLoggedNavBar.logOut")}
             </Link>
           </div>
         </div>
         <Link onClick={logOutSession} to="/home">
-          Switch to Customer
+          {t("adminLoggedNavBar.switch")}
         </Link>
       </div>
     </div>

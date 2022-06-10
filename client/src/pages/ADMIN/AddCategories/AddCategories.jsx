@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store";
 import { fetchCategories } from "../../../redux/actions/actions.js";
 import { MdDeleteForever } from "react-icons/md";
 import "./CategoryCard.css";
+import { alertInfo, alertSuccess } from "../../../helpers/toast";
+import { useTranslation } from "react-i18next";
 export default function EditProduct() {
+  const history = useHistory()
   const [state, dispatch] = useStore();
   let { id } = useParams();
   const [product, setProduct] = useState({
     name: "",
   });
   const [error, setError] = useState('');
+  const { t } = useTranslation()
 
   function validate(value) {
     var expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
 
     if (!expression.test(value)) {
-      setError("Name is nessesary");
+      setError("Name is necessary");
     } else if (value === "") {
       setError('')
     }
   }
-
 
   useEffect(() => {
     fetchCategories(dispatch);
@@ -35,7 +38,10 @@ export default function EditProduct() {
       await axios.put(`${process.env.REACT_APP_DOMAIN}/categories/${id}`, {
         name,
       });
-      alert("category update successfully");
+      alertSuccess(t("adminAddCategories.update"))
+      setTimeout(() => {
+        history.push('/')
+      }, 2000);
     } catch (err) {
       console.log(err);
     }
@@ -52,7 +58,7 @@ export default function EditProduct() {
   const handleDelete = async () => {
     try {
       await axios.delete(`${process.env.REACT_APP_DOMAIN}/categories/${id}`);
-      alert("Category deleted successfully");
+      alertInfo(t("adminAddCategories.delete"))
     } catch (err) {
       console.log(err);
     }

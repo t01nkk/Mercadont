@@ -5,7 +5,7 @@ import shoppingCart from "../../media/shoppingCart.png";
 import imgAddFavorite from "../../media/heart-add-cart.png";
 import imgDeleteFavorite from "../../media/heart-delete-cart.png";
 import accounting from "accounting";
-
+import { useTranslation } from "react-i18next";
 export default function ProductCard({
   name,
   price,
@@ -17,7 +17,9 @@ export default function ProductCard({
   handleSaveFavorite,
   handleDeleteFavorite,
   isAdd,
+  alertSuccess
 }) {
+  const { t,i18n } = useTranslation()
   const [changeButton, setChangeButton] = useState(isAdd);
   const history = useHistory();
   let myUser = JSON.parse(localStorage.getItem("myUser"));
@@ -29,12 +31,13 @@ export default function ProductCard({
   const postFavorite = () => {
     let person = JSON.parse(localStorage.getItem("myUser"));
     if (!person) {
-      alert("You  must be logged in to add items to your Favorites list")
+      alert(t("home.mustBeLoggedIn"))
       history.push("/logIn");
       return;
     }
     setChangeButton(true);
     handleSaveFavorite(id);
+    alertSuccess(t("home.altAddToFavs"))
   };
 
   const deleteFavorite = () => {

@@ -1,31 +1,47 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
-// import { FormBuys } from '../FormBuys/FormBuys'
+import { useHistory, useLocation } from "react-router-dom";
 import { ProductCart } from "../ProductCart/ProductCart";
 import { totalPrice } from "./actionsCart";
+import { totalCount } from "../../redux/actions/actions";
 import accounting from "accounting";
-import "../Favorites/Favorite.css"
+import { useTranslation } from "react-i18next";
+import "./Cart.css";
+import { useStore } from "../../context/store.js";
+import { alertInfo, alertSuccess } from "../../helpers/toast";
 
 export const Cart = () => {
+  const { t } = useTranslation();
   let user = JSON.parse(localStorage?.getItem("myUser"));
+  let local = JSON.parse(localStorage.getItem(user));
   let yourStorage = JSON.parse(localStorage?.getItem(user));
   const [storageCart, setStorageCart] = useState(yourStorage);
   const history = useHistory();
   const [priceTotal, setPriceTotal] = useState(0);
-
-  console.log("user:", user)
-  console.log("yourStorage:", yourStorage)
-
+  const [state, dispatch] = useStore();
 
   useEffect(() => {
     setPriceTotal(totalPrice());
-  }, []);
+  }, [])
+  
+  let { search } = useLocation()
+  useEffect(()=>{
+    if(search == "?buy=false"){ 
+      alertInfo(t("cart.cancelPurchaseSuccess"));
+    }
+    if(search == "?buy=true"){
+      localStorage.removeItem(user)
+      alertSuccess(t("cart.successfullPurchase"));
+      setStorageCart([]);
+    }
+  }, [search]);
 
   const deleteDatatoStorage = (name) => {
     let newLocalStorage = yourStorage?.filter((e) => e.name !== name);
     setStorageCart(newLocalStorage);
     localStorage.setItem(user, JSON.stringify(newLocalStorage));
     setPriceTotal(totalPrice());
+    totalCount(dispatch);
+    alertInfo(t("cart.removeFromCart"));
     // totalPrice()
   };
 
@@ -37,36 +53,40 @@ export const Cart = () => {
   // FUNCION PARA VER EL STORAGE, NO BORRAR
   const mostra = () => {
     let miStorage = window.localStorage;
-    // console.log(yourStorage);
   };
 
   //Funcion para limpiar carro
   const clearCart = (e) => {
-    const answer = window.confirm("Are you sure you want to clear your cart?")
+    setStorageCart([]);
+    setPriceTotal(totalPrice());
+    localStorage?.removeItem(user);
+    totalCount(dispatch);
+    
+    const answer = window.confirm(t("cart.confirmClearCart"));
     if (answer) {
       setStorageCart([]);
-      setPriceTotal(totalPrice())
+      setPriceTotal(totalPrice());
       localStorage?.removeItem(user);
+      alertInfo(t("cart.removeEverythingFromCart"));
+      setTimeout(() => {
+        history.push('/home')
+      }, 2000);
     }
   };
 
   const makePurchase = () => {
-    // let local = JSON.parse(localStorage.getItem("myCart"))
-    // console.log(local, priceTotal)
     localStorage?.setItem("myPrice", JSON.stringify(priceTotal));
     history.push("/buysProducts");
   };
 
   return (
-    <div>
-      <button onClick={() => clearCart()} disabled={storageCart?.length < 1}>Clear Cart</button>
-      <section>
-        <h2>Welcome to your Cart</h2>
-        <div className='container container-product-cart'>
-          {storageCart && storageCart?.length > 0 ? (
+    <section className="cart-container">
+      <h2>{t("cart.welcome")}</h2>
+      <div className="cart-cards">
+        {storageCart && storageCart?.length > 0 ? (
+          React.Children.toArray(
             storageCart.map((el, index) => (
               <ProductCart
-                key={el.name}
                 name={el.name}
                 stock={el.stock}
                 price={el.price}
@@ -80,24 +100,26 @@ export const Cart = () => {
               />
             ))
           )
-            : <h3>Your Cart is Empty</h3>
-          }
-        </div>
-        {storageCart && storageCart.length > 0 ?
-          <p>
-            Total price:
-            {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
-          </p>
-          : null
-        }
-        {
-          storageCart && storageCart?.length !== 0 ? <button onClick={makePurchase} disabled={storageCart === null}>Buy</button>
-            : null
-        }
-      </section>
+        ) : (
+          <h3>{t("cart.emptyCart")}</h3>
+        )}
+      </div>
+      {storageCart && storageCart.length > 0 ? (
+        <p>
+          {t("cart.totalPrice")}
+          {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
+        </p>
+      ) : null}
+      {storageCart && storageCart?.length !== 0 ? (
+        <button onClick={makePurchase} disabled={storageCart === null}>
+          {t("cart.buy")}
+        </button>
+      ) : null}
+      <button onClick={() => clearCart()} disabled={storageCart?.length < 1}>
+        {t("cart.emptyTheCart")}
+      </button>
 
       {/* <FormBuys priceTotal={priceTotal}/> */}
-      <br />
-    </div>
+    </section>
   );
 };

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Formik } from "formik";
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/authContext";
-import "./CreateUserForm.css";
+import { alertSuccess} from "../../helpers/toast";
 export default function LogInForm() {
   const history = useHistory();
+
+  const { t } = useTranslation()
   // const handleChange = (e) => {
   //   setData({ ...data, [e.target.name]: e.target.value });
   // };
@@ -13,22 +16,25 @@ export default function LogInForm() {
   const { signup } = useAuth();
   const [error, setError] = useState();
 
-  const handleSubmitt = async (values) => {
-    try {
-      const userCredentials = await signup(values.email, values.password);
-      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/register`, {
-        id: userCredentials.user.uid,
-        name: values.name,
-        email: values.email,
-      });
-      history.push("/login");
-    } catch (err) {
-      if (err.code === "auth/internal-error") alert("Invalid Email. Please Try Again");
-      if (err.code === "auth/email-already-in-use") alert("The email is already in use. Please Try Again");
-      history.push("/login")
+    const handleSubmitt = async (values) => {
+      try {
+        const userCredentials = await signup(values.email, values.password);
+        await axios.post(`${process.env.REACT_APP_DOMAIN}/user/register`, {
+          id: userCredentials.user.uid,
+          name: values.name,
+          email: values.email,
+        });
+        alertSuccess(t("createUserTest.accountCreated"))
+        setTimeout(() => {
+        history.push("/login");  
+        }, 2000);
+        
+      } catch (err) {
+        if (err.code === "auth/internal-error") setError("Correo Invalido");
+        if (err.code === "auth/email-already-in-use")setError("El correo ya se encuentra en uso");
+      };
 
-    }
-  };
+    } 
 
   return (
     <div>
@@ -41,42 +47,42 @@ export default function LogInForm() {
         validate={(values) => {
           const errors = {};
           if (!values.email) {
-            errors.email = "Required email";
+            errors.email = `${t("createUserTest.errors_mail")}`
           } else if (
             !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
           ) {
-            errors.email = "Invalid email";
+            errors.email = `${t("createUserTest.errors_mail_invalid")}`;
           }
           if (!values.password) {
-            errors.password = "Password required.";
+            errors.password = `${t("createUserTest.errors_password")}`
           } else if (
-            !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(values.password)
+            !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(
+              values.password
+            )
           ) {
-            errors.password =
-              "Your password must be 8 to 16 characters long long and must contain both uppercase and lowercase letters, and at least one number.";
+            errors.password = `${t("createUserTest.errors_password_invalid")}`;
           }
           if (values.password !== values.password2) {
-            errors.password = "Password must be the same";
+            errors.password = `${t("createUserTest.errors_password_match")}`;
           }
           return errors;
         }}
         onSubmit={(values, { setErrors }) => {
-          return handleSubmitt(values, ).catch(() => {
+          return handleSubmitt(values).catch(() => {
             setErrors("email", "This email is not valid");
-
           });
         }}
       >
         {({ errors, handleSubmit, handleChange, isSubmitting, touched }) => (
-          <div className="container-login">
+          <div className="container-login spaceNavTop">
             <div className="loginCard">
-              <h2>Create Account</h2>
+              <h2>{t("createUserTest.createAccount")}</h2>
               <form onSubmit={handleSubmit}>
                 <div className="divInputUser">
                   <input
                     type="text"
                     name="name"
-                    placeholder="First Name ..."
+                    placeholder={t("createUserTest.name")}
                     onChange={handleChange}
                   />
                 </div>
@@ -84,13 +90,13 @@ export default function LogInForm() {
                   <input
                     type="text"
                     required
-                    placeholder="Email ..."
+                    placeholder={t("createUserTest.email")}
                     name="email"
                     onChange={handleChange}
                   />
                   <small style={{ color: "red" }}>
                     {touched.email && errors.email ? (
-                      <p className="error-style">{errors.email}</p>
+                      <p>{errors.email}</p>
                     ) : (
                       ""
                     )}
@@ -100,7 +106,7 @@ export default function LogInForm() {
                   <input
                     type="password"
                     required
-                    placeholder="Password..."
+                    placeholder={t("createUserTest.password")}
                     name="password"
                     onChange={handleChange}
                   />
@@ -109,13 +115,13 @@ export default function LogInForm() {
                   <input
                     type="password"
                     required
-                    placeholder="Confirm Password..."
+                    placeholder={t("createUserTest.confirmPassword")}
                     name="password2"
                     onChange={handleChange}
                   />
                   <small style={{ color: "red" }}>
                     {touched.password && errors.password ? (
-                      <p className="error-style">{errors.password}</p>
+                      <p>{errors.password}</p>
                     ) : (
                       ""
                     )}
@@ -125,8 +131,8 @@ export default function LogInForm() {
                   <input
                     disabled={isSubmitting}
                     type="submit"
-                    value="Create User"
-                    className="input-submit-create"
+                    value={t("createUserTest.createAccount")}
+                    className="input-submit"
                   />
                 </div>
               </form>
@@ -136,4 +142,5 @@ export default function LogInForm() {
       </Formik>
     </div>
   );
-}
+};
+
