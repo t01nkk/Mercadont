@@ -22,8 +22,7 @@
   @media only screen and (max-width: 900px) {
     display: flex;
     flex-direction: column;
-    width: 152%;
-    display: flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
   }
@@ -51,7 +50,6 @@
 }
 .card-title-admin {
   margin-left: 0.5rem;
-  grid-column: 3/7;
   font-size: 1.1rem;
   font-weight: 500;
   display: flex;
