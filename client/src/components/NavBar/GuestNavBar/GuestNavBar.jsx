@@ -33,6 +33,7 @@ export default function GuestNavBar() {
             <li className="nav-item white-text-nav">
               <Link to="/">{t("loggedNavBar.home")}</Link>
             </li>
+            
             <li className="nav-item dropdown  white-text-nav">
               <Link
                 to=""

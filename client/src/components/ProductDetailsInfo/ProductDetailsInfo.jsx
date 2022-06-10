@@ -55,19 +55,20 @@ export default function ProductDetailsInfo({
         <p>{rating}</p> */}
         {/* <p className="title">Reviews:</p>
         <p>{reviews}</p> */}
-        <div className="formQA"> 
-       
+      
+       <div className="scroll">
         <p>{React.Children.toArray(qas.map(qa => (
-          <div>
+          <div className="question">
             <p >{qa.question}</p>
             {
               qa.answer
-                ? <p>{qa.answer}</p>
+                ? <div>{qa.answer}</div>
                 : null
             }
           </div>
-        )))}</p>
-        <FormQA productId={id} />
+        )))}</p></div>
+         <div className="formQA"> 
+          <FormQA productId={id} />
       </div>
       </div>
        
