@@ -9,7 +9,7 @@ const createPurchaseOrder = async (orderId,userId,local,amount,status) => {
             productId: product.id,
             productQuantity: product.quantity,
             totalAmount: amount,
-            status
+            paymentStatus: status
         })
     }
     return created;
@@ -18,7 +18,7 @@ const createPurchaseOrder = async (orderId,userId,local,amount,status) => {
 const createPurchaseCompleted = async (orderId) => {
     let updated;
     await PurchaseOrder.update({
-        status: "completed",
+        paymentStatus: "completed",
     },{
         where:{
             orderId,
@@ -30,7 +30,7 @@ const createPurchaseCompleted = async (orderId) => {
 const createPurchaseCanceled= async (orderId) => {
     let updated;
     await PurchaseOrder.update({
-        status: "canceled",
+        paymentStatus: "canceled",
     },{
         where:{
             orderId,

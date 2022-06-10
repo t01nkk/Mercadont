@@ -170,6 +170,45 @@ async function mailPayPal() {
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 }
 
+function groupPurchaseOrders (purchaseOrders){
+  let orders = [];
+  let order = {
+    orderNumber: "",
+    date: "",
+    products: [],
+    amount: 0,
+  };
+    order.orderNumber === purchaseOrders[0].orderId;
+    order.date === purchaseOrders[0].date;
+    order.amount === purchaseOrders[0].totalAmount;
+
+    for (let item of purchaseOrders) {
+      if (order.orderNumber === item.orderId) {
+        order.products.push({
+          product: item.productId,
+          productQuantity: item.productQuantity,
+        });
+      } else {
+        if (order.orderNumber !== "") orders.push(order);
+        order = {
+          orderNumber: "",
+          date: "",
+          products: [],
+          amount: 0,
+        };
+        order.orderNumber = item.orderId;
+        order.date = item.date;
+        order.amount = item.totalAmount;
+        order.products.push({
+          product: item.productId,
+          productQuantity: item.productQuantity,
+        });
+      }
+    }
+    orders.push(order);
+    return orders;
+}
+
 module.exports = {
   // initialize
   getUsers,
@@ -181,4 +220,5 @@ module.exports = {
   // checkAuthenticated,
   // checkNotAuthenticated,
   mailPayPal,
+  groupPurchaseOrders
 }

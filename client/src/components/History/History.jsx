@@ -19,18 +19,14 @@ export const History = () => {
 
   const getHistory = async()=>{
     let arrayHistory = await axios(`http://localhost:3001/user/history/${myUser}`)
+    console.log("arrayHistory:", arrayHistory.data)
     setHistory(arrayHistory.data)
   }
-
 
   return (
       <div>
         {changeSection?
         <div>
-          <p>a</p>
-          <p>a</p>
-          <p>a</p>
-          <p>Acomoda el NAV WEON CONCHATUMARE</p>
           <div className='container-dateHistory'>
             {history.length > 0 && history.map(e=> (
               <DateHistory
@@ -47,15 +43,11 @@ export const History = () => {
         </div>
         :
         <div>
-          <p>a</p>
-          <p>a</p>
-          <p>a</p>
-          <p>a</p>
           {detailsProduct.length && detailsProduct.map((e,index)=>
             <DetailsBuysHistory
-            date={history[index].date}
+            // date={history[index].date}
             key={e.id}
-            amount={history[index].amount}
+            // amount={history[index].amount}
             name={e.name}
             id={e.id}
             image={e.image}

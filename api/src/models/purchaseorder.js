@@ -25,8 +25,12 @@ module.exports = (sequelize) => {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
         },
-        status: {
+        paymentStatus: {
             type: DataTypes.ENUM("pending", "completed", "canceled"),
+            defaultValue: "pending"
+        },
+        orderStatus: {
+            type: DataTypes.ENUM("pending", "accepted", "rejected"),
             defaultValue: "pending"
         }
     },{timestamps: false}
