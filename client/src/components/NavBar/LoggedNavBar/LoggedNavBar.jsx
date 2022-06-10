@@ -21,9 +21,12 @@ export default function LoggedNavBar() {
   const history = useHistory();
   const logoutSesion = async () => {
     // let user = JSON.parse(localStorage.getItem("myUser"))
-    await logout;
-    localStorage.removeItem("myUser");
-    history.push("/");
+    const answer = window.confirm("Are you sure you want to log out?")
+    if (answer) {
+      await logout;
+      localStorage.removeItem("myUser");
+      history.push("/");
+    }
   };
   const handleLanguage = (lang) => {
     i18next.changeLanguage(lang);
