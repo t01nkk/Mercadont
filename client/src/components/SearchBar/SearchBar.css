@@ -16,3 +16,7 @@
   outline: 0;
   box-shadow: 0 100px 5px #e6ccb249 inset, 0 0 5px #e6ccb29f;
 }
+.nav-language-search {
+  display: flex;
+  flex-direction: column;
+}

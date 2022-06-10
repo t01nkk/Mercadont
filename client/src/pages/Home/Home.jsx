@@ -13,7 +13,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import { Loader } from "../../components/Loader/Loader.jsx"
-import { handleDeleteFavorite } from "../../components/Cart/actionsCart.js";
+import { handleDeleteFavorite, handleSaveFavorite } from "../../components/Cart/actionsCart.js";
+import { useHistory } from "react-router-dom";
 
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
   const [state, dispatch] = useStore();
   const [cart, setCart] = useState([]);
   const [inCart, setInCart] = useState(false);
+  const history = useHistory();
   let person = JSON.parse(localStorage.getItem("myUser"));
   const alertSuccess = (msg) => {
     toast.success(msg, {
@@ -55,6 +57,14 @@ export default function Home() {
     // let price = accounting.formatMoney(price, "U$D ", 0)
     let products = { name, price, image, id, stock, quantity, totalPrice };
     let value = cart.find((e) => e.name === name);
+
+    let person = JSON.parse(localStorage.getItem("myUser"));
+    if (!person) {
+      alert("You need to be logged in to add products to the cart")
+      history.push("/logIn");
+      return;
+    }
+
     if (value) {
       setInCart(false);
       alertInfo(t("home.altAlreadyInCart"));
@@ -63,35 +73,6 @@ export default function Home() {
       setInCart(true);
       setCart((cart) => [...cart, products]);
       alertSuccess(t("home.altAddToCart"));
-    }
-  };
-
-  const handleSaveFavorite = async (id) => {
-    if (!person) alert(t("home.mustBeLoggedIn"))
-    try {
-      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
-        idUser: person,
-        idProduct: id,
-      });
-      alertSuccess(t("home.altAddToFavs"))
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleDeleteFavorite = async (id) => {
-    try {
-      await axios.delete(
-        `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
-        {
-          data: {
-            idUser: person,
-            idProduct: id,
-          },
-        }
-      );
-      alertInfo(t("home.altRemoveFromFavorites"))
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -120,7 +101,7 @@ export default function Home() {
   // };
 
   return (
-    <section className="section-products">
+    <section className="section-products ">
       {/* <button onClick={() => mostra()}>mostra storage</button> */}
       {state.products && state.favorites
         ? React.Children.toArray(
@@ -137,6 +118,7 @@ export default function Home() {
                   handleSaveFavorite={handleSaveFavorite}
                   handleDeleteFavorite={handleDeleteFavorite}
                   isAdd={state.favorites.find((e) => e.id === product.id)}
+                  alertSuccess={alertSuccess}
                 />
               );
             }

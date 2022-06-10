@@ -28,3 +28,15 @@ export const handleDeleteFavorite = async (id) => {
     console.log(error);
   }
 };
+
+export const handleSaveFavorite = async (id) => {
+   let person = JSON.parse(localStorage.getItem("myUser"));
+  try {
+    await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
+      idUser: person,
+      idProduct: id,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
