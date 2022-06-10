@@ -15,7 +15,7 @@ export default function LogInForm() {
   const errorAlert = () => {
     toast.error(errorMsg, {
       position: "bottom-center",
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

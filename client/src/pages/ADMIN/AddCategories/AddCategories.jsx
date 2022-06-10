@@ -19,7 +19,7 @@ export default function EditProduct() {
   const alertSuccess = (msg) => {
     toast.success(msg, {
       position: "bottom-center",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -32,7 +32,7 @@ export default function EditProduct() {
   const alertInfo = (msg) => {
     toast.info(msg, {
       position: "bottom-center",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -67,7 +67,7 @@ export default function EditProduct() {
       alertSuccess(t("adminAddCategories.update"))
       setTimeout(() => {
         history.push('/')
-      }, 3000);
+      }, 2500);
     } catch (err) {
       console.log(err);
     }

@@ -15,7 +15,7 @@ export const FormQA = ({ productId }) => {
     const alertSuccess = (msg) => {
     toast.success(msg, {
       position: "bottom-center",
-      autoClose: 3000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -46,7 +46,7 @@ export const FormQA = ({ productId }) => {
                 alertSuccess(t("formQA.postedQuestion"))
             setTimeout(() => {
                 window.location.reload()
-            }, 4000);
+            }, 2500);
         } catch (err) {
             alert(err);
         }

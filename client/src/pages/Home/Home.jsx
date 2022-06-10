@@ -26,7 +26,7 @@ export default function Home() {
   const alertSuccess = (msg) => {
     toast.success(msg, {
       position: "bottom-center",
-      autoClose: 3000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -38,7 +38,7 @@ export default function Home() {
   const alertInfo = (msg) => {
     toast.info(msg, {
       position: "bottom-center",
-      autoClose: 3000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,

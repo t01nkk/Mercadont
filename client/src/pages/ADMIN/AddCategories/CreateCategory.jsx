@@ -12,7 +12,7 @@ export default function CreateCategory() {
   const alertSuccess = (msg) => {
     toast.success(msg, {
       position: "bottom-center",
-      autoClose: 3000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -60,7 +60,7 @@ export default function CreateCategory() {
       alertSuccess(t("adminCreateCategory.created"))
       setTimeout(() => {
         history.push('CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/categories')
-      }, 4000);
+      }, 2500);
     } catch (err) {
       console.log(err);
     }

@@ -31,7 +31,7 @@ export default function SearchedProducts() {
   const alertAddedToCart = () => {
     toast.success("Added to cart!", {
       position: "bottom-center",
-      autoClose: 3000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -43,7 +43,7 @@ export default function SearchedProducts() {
   const alertAlreadyInCart = () => {
     toast.success("Already in cart!", {
       position: "bottom-center",
-      autoClose: 3000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

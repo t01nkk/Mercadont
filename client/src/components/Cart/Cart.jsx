@@ -36,7 +36,7 @@ export const Cart = () => {
   const alertInfo = (msg) => {
     toast.info(msg, {
       position: "bottom-center",
-      autoClose: 3000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -83,7 +83,7 @@ export const Cart = () => {
       alertInfo(t("cart.removeEverythingFromCart"))
       setTimeout(() => {
         history.push('/home')
-      }, 4000);
+      }, 2500);
     }
   };
 

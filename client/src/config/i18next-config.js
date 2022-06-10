@@ -7,10 +7,14 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: "es", //Lenguaje por defecto si no existe la traducción para X cadena en el lenguaje actual.
+    returnObjects: true,
     resources: {
       //Acá van las traducciones, básicamente.
       es: {
         translation: {
+              categories: [
+                  {name: "Ropa para hombres"},
+              ],
           accountDetails: {
             btnEditProfile: "Actualizar tu información",
             info: "Tu información personal",
@@ -79,7 +83,7 @@ i18n
           formQA: {
             mustLogInToAsk:
               "Necesitas estar registrado para poder realizarle preguntas al vendedor",
-            postedQuestion: "¡Pregunta realizada con exito!",
+            postedQuestion: "¡Pregunta realizada con éxito!",
             askSeller: "Hacerle una pregunta al vendedor",
             askAQuestion: "Pregunta algo...",
             postQuestion: "Realizar la pregunta",
@@ -156,6 +160,7 @@ i18n
             favorites: "Favoritos",
             logOut: "Cerrar sesión",
             cart: "Carrito",
+            language: "Idioma",
           },
           adminHome: {
             filter: "Filtrar por:",
@@ -218,17 +223,7 @@ i18n
         },
       },
       en: {
-        translation: {
-          loggedNavBar: {
-            home: "Pene",
-            categories: "De",
-            profile: "Goma",
-            accountDetails: "Enorme",
-            favorites: "Y",
-            logOut: "Venoso",
-            cart: "Carrito",
-          },
-        },
+        translation: {},
       },
     },
   });

@@ -16,7 +16,7 @@ export default function LogInForm() {
   const alertSuccess = (msg) => {
     toast.success(msg, {
       position: "bottom-center",
-      autoClose: 3000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -29,7 +29,7 @@ export default function LogInForm() {
   const alertMailError = (msg) => {
     toast.warning(msg, {
       position: "bottom-center",
-      autoClose: 3000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -53,7 +53,7 @@ export default function LogInForm() {
         alertSuccess(t("createUserTest.accountCreated"))
         setTimeout(() => {
         history.push("/login");  
-        }, 4000);
+        }, 2500);
         
       } catch (err) {
         if (err.code === "auth/internal-error") setError("Correo Invalido");

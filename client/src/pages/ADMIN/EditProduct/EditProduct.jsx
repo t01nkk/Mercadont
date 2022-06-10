@@ -103,7 +103,7 @@ export default function EditProduct() {
    const alertSuccess = (msg) => {
     toast.success(msg, {
       position: "bottom-center",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -115,7 +115,7 @@ export default function EditProduct() {
   const alertInfo = (msg) => {
     toast.info(msg, {
       position: "bottom-center",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -150,7 +150,7 @@ export default function EditProduct() {
       alertSuccess(t("adminEditProduct.updated"))
       setTimeout(() => {
           alert("Acá debería redirigir.")
-      }, 3000);
+      }, 2500);
     } catch (err) {
       console.log(err);
     }
@@ -166,7 +166,7 @@ export default function EditProduct() {
       alertInfo(t("adminEditProduct.delete"))
       setTimeout(() => {
         alert('Acá tendría que redireccionar.')
-      }, 3000);
+      }, 2500);
     } catch (err) {
       console.log(err);
     }

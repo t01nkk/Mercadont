@@ -13,7 +13,7 @@ export default function AccountDetailsForm() {
   const alertUserUpdated = (msg) => {
     toast.info(msg, {
       position: "bottom-center",
-      autoClose: 3000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -91,7 +91,7 @@ export default function AccountDetailsForm() {
       alertUserUpdated(t("accountDetailsForm.toastInfo"));
       setTimeout(() => {
         history.push("/accountDetails");
-      }, 4000);
+      }, 2500);
     } catch (err) {
       // console.log(err);
       return err;

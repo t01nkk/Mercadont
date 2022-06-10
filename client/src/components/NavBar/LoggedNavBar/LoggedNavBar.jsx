@@ -110,7 +110,7 @@ export default function LoggedNavBar() {
             </li>
             <li className="nav-item white-text-nav">
               <Link className="" to="/cart">
-                Cart
+                {t("loggedNavBar.cart")}
                 {state.countCart ? <span>{state.countCart}</span> : ""}
               </Link>
             </li>
@@ -126,7 +126,7 @@ export default function LoggedNavBar() {
             data-bs-auto-close="outside"
             aria-expanded="false"
           >
-            Language
+            {t("loggedNavBar.language")}
           </Link>
           <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
             <li className="dropdown-item category-list-item">
