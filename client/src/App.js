@@ -11,6 +11,7 @@ import LogInForm from "./components/LogInForm/LogInForm.jsx";
 import Categories from "./components/Categories/Categories.jsx";
 import AddCategories from "./pages/ADMIN/AddCategories/AddCategories";
 import EditProduct from "./pages/ADMIN/EditProduct/EditProduct";
+import AdminUsers from "./pages/ADMIN/AdminUsers/AdminUsers";
 import SearchedProducts from "./pages/SearchedProducts/SearchedProducts";
 import AccountDetails from "./pages/AccountDetails/AccountDetails";
 import AccountDetailsForm from "./components/AccountDetailsForm/AccountDetailsForm";
@@ -152,6 +153,13 @@ function App() {
         >
           <NavBarADMIN />
           <CategoriesCards />
+        </Route>
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/user"
+          exact
+        >
+          <NavBarADMIN />
+          <AdminUsers />
         </Route>
         <Route
           path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/editCategories/:id"

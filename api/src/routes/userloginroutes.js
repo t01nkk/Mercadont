@@ -204,7 +204,9 @@ router.get("/history/:id", async (req, res) => {
         if (order.orderNumber !== "") orders.push(order)
         order = {
           orderNumber: "",
-          products: []
+          date: "",
+          products:[],
+          amount: 0,
         }
         order.orderNumber = item.orderId
         order.date = item.date

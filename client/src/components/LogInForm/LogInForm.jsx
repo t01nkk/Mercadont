@@ -8,7 +8,7 @@ import { Formik } from "formik";
 import { toast, ToastContainer } from "react-toastify";
 export default function LogInForm() {
   let errorMsg = "";
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [redirect, setRedirect] = useState(false);
   const { login, loginWithGoogle, resetPassword } = useAuth();
 
@@ -84,7 +84,7 @@ export default function LogInForm() {
   };
 
   return (
-    <div className="container-login spaceNavTop">
+    <div className="container-login">
       <Formik
         initialValues={{
           email: "",
@@ -161,8 +161,16 @@ export default function LogInForm() {
             </form>
             <div className="createUser-container">
               <div>
-                <button onClick={handleGoogleSignin} className="btn btn-primary google-plus">
-                  <img height="25px" src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt="Google Logo" />  {t("logInForm.logInGoogle")}
+                <button
+                  onClick={handleGoogleSignin}
+                  className="btn btn-primary google-plus"
+                >
+                  <img
+                    height="25px"
+                    src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
+                    alt="Google Logo"
+                  />{" "}
+                  {t("logInForm.logInGoogle")}
                 </button>
               </div>
               {/* 

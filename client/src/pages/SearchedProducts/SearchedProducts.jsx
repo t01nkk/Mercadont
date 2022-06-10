@@ -11,8 +11,10 @@ import axios from "axios";
 import { getFavorites } from "../../redux/actions/actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { handleDeleteFavorite, handleSaveFavorite } from "../../components/Cart/actionsCart";
-
+import {
+  handleDeleteFavorite,
+  handleSaveFavorite,
+} from "../../components/Cart/actionsCart";
 
 export default function SearchedProducts() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
@@ -35,7 +37,7 @@ export default function SearchedProducts() {
       pauseOnHover: false,
       draggable: false,
       progress: undefined,
-      theme: "dark"
+      theme: "dark",
     });
   };
 
@@ -175,39 +177,40 @@ export default function SearchedProducts() {
   }, [cart]);
 
   return (
-    <div className="navPush-searchedProducts">
+    <div>
       <div>
         <div className="SortAndReset">
           <div className="priceRangeText"> Price Range:</div>
           <form className="minMaxinput" onSubmit={handleSearch}>
             <input
-                id="filter2"
-                type="text"
-                value={min}
-                placeholder="min..."
-                onChange={handleChangeMin}
+              id="filter2"
+              type="text"
+              value={min}
+              placeholder="min..."
+              onChange={handleChangeMin}
             />
           </form>
           -
-
-          <form className="minMaxinput" onSubmit={handleSearch} >
+          <form className="minMaxinput" onSubmit={handleSearch}>
             <input
-                id="filter"
-                type="text"
-                value={max}
-                placeholder="max..."
-                onChange={handleChangeMax}
+              id="filter"
+              type="text"
+              value={max}
+              placeholder="max..."
+              onChange={handleChangeMax}
             />
           </form>
           {error && <p>{error}</p>}
-          <button onClick={handleSearch} className="filterByPriceBtn">Search </button>
+          <button onClick={handleSearch} className="filterByPriceBtn">
+            Search{" "}
+          </button>
           <div>
             <select
-                defaultValue=""
-                onChange={(e) => {
-                  handleOrder(e);
-                }}
-                className="sortSelector"
+              defaultValue=""
+              onChange={(e) => {
+                handleOrder(e);
+              }}
+              className="sortSelector"
             >
               <option value="">Sort by</option>
               <option value="ASCENDING">Highest First</option>

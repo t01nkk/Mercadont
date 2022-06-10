@@ -113,14 +113,14 @@ i18n
           adminProductCard: {
             edit: "Editar",
             rating: "Valoración: ",
-            stock: "Unidades disponibles: ",
-            status: "Disponible al público: ",
+            stock: "Disponibles: ",
+            status: "Estado: ",
           },
           adminProductDetails: {
             update: "Actualizar producto",
             categories: "Categorías: ",
             description: "Detalle del producto: ",
-            available: "Unidades disponibles: ",
+            available: "Disponibles: ",
             price: "Precio: ",
           },
           adminSellProduct: {
@@ -220,13 +220,23 @@ i18n
       en: {
         translation: {
           loggedNavBar: {
-            home: "Pene",
-            categories: "De",
-            profile: "Goma",
-            accountDetails: "Enorme",
-            favorites: "Y",
-            logOut: "Venoso",
-            cart: "Carrito",
+            home: "Home",
+            categories: "Categories",
+            profile: "Profile",
+            accountDetails: "Account Details",
+            favorites: "Favorites",
+            logOut: "Log out",
+            cart: "Cart",
+          },
+          guestNavBar: {
+            home: "Home",
+            categories: "Categories",
+            profile: "Profile",
+            accountDetails: "Account Details",
+            favorites: "Favorites",
+            logOut: "Log out",
+            cart: "Cart",
+            logIn: "Login/Register",
           },
         },
       },
