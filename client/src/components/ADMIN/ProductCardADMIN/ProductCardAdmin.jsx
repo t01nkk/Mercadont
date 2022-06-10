@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./ProductCardAdmin.css";
+import "./ProductCardAdmin.scss";
+import { useTranslation } from "react-i18next";
+import { FiEdit } from "react-icons/fi";
+import accounting from "accounting";
 export default function ProductCardAdmin({
   name,
   price,
@@ -12,47 +15,46 @@ export default function ProductCardAdmin({
   description,
   categories,
 }) {
+  const { t } = useTranslation();
   return (
-    <div className="card-clothe-admin">
-      <Link
-        to={`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/admin/edit/${id}`}
-      >
-        <button className="btn-edit-admin ">Edit</button>
-      </Link>
-      {/* to={`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home/${id}`} */}
-
-      <div className="card-body-admin">
-        <img className="card-image-admin" src={`${image}`} alt={`${name}`} />
-        <div className="card-info-wrapper-admin">
+    <div className="card-body-admin">
+      <img className="card-image-admin" src={`${image}`} alt={`${name}`} />
+      <div className="card-info-wrapper-admin">
+        <div className="card-info-details-admin">
           <p className="card-title-admin">{name}</p>
-          <div className="card-info-details-admin">
-            <p>{description}</p>
-
-            <div className="card-rating-admin">
-              <div>
-                <p>
-                  Rating:
-                  <span> 5.0{rating}</span>
-                </p>
-                <p>
-                  Stock:
-                  <span>{stock}</span>
-                </p>
-              </div>
-              <div>
-                <p>
-                  U$D
-                  <span>{price}</span>
-                </p>
-                <p>
-                  Status:
-                  <span>{status}</span>
-                </p>
-              </div>
-            </div>
+          <p className="description">{description}</p>
+        </div>
+        <div className="card-rating-admin">
+          <div className="card-stats">
+            <p className="stat">
+              {t("adminProductCard.rating")}
+              <span> 5.0{rating}</span>
+            </p>
+            <p className="stat">
+              {`U$D `}
+              <span className="price-admin">
+                {accounting.formatMoney(price, "", 0)}
+              </span>
+            </p>
+          </div>
+          <div className="card-stats">
+            <p className="stat">
+              {t("adminProductCard.stock")}
+              <span>{stock}</span>
+            </p>
+            <p className="stat">
+              {t("adminProductCard.status")}
+              <span>{" " + status}</span>
+            </p>
           </div>
         </div>
       </div>
+      <Link
+        className="button-container"
+        to={`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/admin/edit/${id}`}
+      >
+        <FiEdit size={40} />
+      </Link>
     </div>
   );
 }

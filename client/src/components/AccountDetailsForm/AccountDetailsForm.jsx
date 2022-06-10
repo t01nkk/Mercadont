@@ -1,32 +1,97 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {useHistory, useParams} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useStore } from "../../context/store";
-import {} from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "../../context/authContext";
+import { useTranslation } from "react-i18next";
+import "./accountDetails.css";
 export default function AccountDetailsForm() {
-  
+  const { t } = useTranslation();
+  const history = useHistory();
+
+  // 'User information updated successfully'
+  const alertUserUpdated = (msg) => {
+    toast.info(msg, {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
   const { resetPassword } = useAuth();
   const [state, dispatch] = useStore();
-  const history = useHistory()
+  const [errors,setErrors] =useState({})
   const [user, setUser] = useState({
     email: state.user.email,
     name: "",
-    lastname: "", 
- /*    address:{
-              country:"",
-              province: "",
-              city:"",
-              street:"",
-              postalCode: ""
-            },    */
-    
+    lastname: "",
+    address:"",
+    country: "",
+    province: "",
+    city: "",
+    street: "",
+    postalCode: "",
     password: "",
-    image:"",
+    image: "",
+  });
 
+
+
+  const expression = {
+    Expression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+ 
+    
+  };
+
+
+  function validator(input) {
+    let errors = {};
+
+    if (!expression.Expression.test(input.name)) {
+      errors.name = `Name is neccesary`;
+    }else if (input === "") {
+      setErrors("");
+    }
+    if (!expression.Expression.test(input.lastname)) {
+      errors.lastname = `Lastname is neccesary`;
+    }else if (input === "") {
+      setErrors("");
+    }
+    if (!expression.Expression.test(input.country)) {
+      errors.country = `Country is neccesary`;
+    }else if (input === "") {
+      setErrors("");
+    }
+    if (!expression.Expression.test(input.city)) {
+      errors.city = `City is neccesary`;
+    }else if (input === "") {
+      setErrors("");
+    }
+    if (!expression.Expression.test(input.province)) {
+      errors.province = `Province is neccesary`;
+    }else if (input === "") {
+      setErrors("");
+    }
    
-  }); 
-  let id= localStorage.getItem("myUser")
+   
+    
+    return errors;
+  }
+
+  const handleChangeName = (e) => {
+    setErrors("");
+    setErrors(validator({ ...user, [e.target.name]: e.target.value }));
+
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+ console.log(errors)
+  let id = localStorage.getItem("myUser");
 
   const fetchUser = async () => {
     // console.log(state.user)
@@ -35,11 +100,13 @@ export default function AccountDetailsForm() {
       const userDB = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/user/details/${miStorage}`
       );
-      console.log("user",userDB)
+      console.log("user", userDB);
       setUser(userDB.data);
+     
+      console.log(userDB.data)
     } catch (err) {
       // console.log(err);
-      return err
+      return err;
     }
   };
   useEffect(() => {
@@ -48,132 +115,157 @@ export default function AccountDetailsForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, name, lastname, image, password } = user;
-      // console.log(id)
+    const {
+      email,
+      name,
+      lastname,
+      image,
+      password,
+      country,
+      province,
+      city,
+      street,
+      postalCode,
+    } = user;
+    // console.log(id)
     try {
-      const res = await axios.put(`${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`, {
-        email,
-        name,
-        lastname,
-        image,
-        password,
-        
-      
-      });
-      console.log("entre",res)
-      // console.log(user);
-      history.push("/")
-      return
+      await axios.put(
+        `${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`,
+        {
+          email,
+          name,
+          lastname,
+          image,
+          password,
+          country,
+          province,
+          city,
+          street,
+          postalCode,
+        }
+      );
+      alertUserUpdated(t("accountDetailsForm.toastInfo"));
+      setTimeout(() => {
+        history.push("/accountDetails");
+      }, 4000);
     } catch (err) {
       // console.log(err);
-      return err
+      return err;
     }
   };
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-   
   };
 
- 
-
-  const handleResetPassword = async (e)=>{
+  const handleResetPassword = async (e) => {
     e.preventDefault();
     // console.log("handleResetPassword USER:",user)
-    const answer = window.confirm("Are you sure you want to change your password?")
-    if(answer){
+    const answer = window.confirm(t("accountDetailsForm.askPasswordChange"));
+    if (answer) {
       try {
-        await resetPassword(user.email)
-        alert("Check your email inbox to reset your password")
+        await resetPassword(user.email);
+        alert(t("accountDetailsForm.confirmPasswordChange"));
+      } catch (err) {
+        alert(err.message);
       }
-      catch (err){
-        alert(err.message)
-      }
-    } 
-  }
+    }
+  };
 
   return (
-    <div>
-      <h2>Edit profile</h2>
+    <div >
+      <h2>{t("accountDetailsForm.updateInfo")}</h2>
       <form onSubmit={handleSubmit}>
         <div className="divInputUser">
-          <p className="title">Name: </p>
-        <input
-          type="text"
-          name="name"         
-          value={user.name}
-          onChange={handleChange}
-        />
-      </div>
-        
-      <div className="divInputUser">
-        <p className="title">lastname: </p>
-        <input
-          type="text"
-          name="lastname"
-          value={user.lastname}
-          onChange={handleChange}
-        />
-      </div>
-{/* 
-       <div className="divInputUser">
-         <p className="title">address: </p>
-        <input
-          type="text"
-          name="address"
-          placeholder="City..."
-          value={user.address?.city}
-          onChange={handleChange}
-        />         
-         </div> 
-         <div className="divInputUser">
-        
-        <input
-          type="text"
-          name="address"
-          placeholder="Country..."
-          value={user.address?.country}
-          onChange={handleChange}
-        />         
-         </div> 
-         <div className="divInputUser">
-  
-        <input
-          type="text"
-          name="address"
-          placeholder="postalCode"
-          value={user.address?.postalCode}
-          onChange={handleChange}
-        />         
-         </div>    
-         <div className="divInputUser">
-         
-        <input
-          type="text"
-          name="address"
-          placeholder="Province"
-          value={user.address?.province}
-          onChange={handleChange}
-        />         
-         </div> 
-         <div className="divInputUser">
-       
-        <input
-          type="text"
-          name="address"
-          placeholder="Street..."
-          value={user.address?.street}
-          onChange={handleChange}
-        />         
-         </div>  
-       */}
-  
-      <div className="">
-        <p className="title">password: </p>
-        <button onClick={(e) => handleResetPassword(e)}>Change Password</button>       
-      </div>
+          <label className="title">{t("accountDetailsForm.email")}: </label>
+          <input
+            type="email"
+            name="email"
+            value={user.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="divInputUser">
+          <p className="title">{t("accountDetailsForm.name")}: </p>
+          <input
+            type="text"
+            name="name"
+            value={user.name}
+            onChange={handleChangeName}
+          />
+          {errors.name && <p className="error-input">{errors.name}</p>}{" "}
+        </div>
 
-      <div className="divInputUser">
-        <p className="title">Image: </p>
+        <div className="divInputUser">
+          <p className="title">{t("accountDetailsForm.lastname")}: </p>
+          <input
+            type="text"
+            name="lastname"
+            value={user.lastname}
+            onChange={handleChangeName}
+          />
+           {errors.lastname && <p className="error-input">{errors.lastname}</p>}{" "}
+        </div>
+
+        <div className="divInputUser">
+          <p className="title">{t("accountDetailsForm.address")}</p>
+          <input
+            type="text"
+            name="city"
+            placeholder={t("accountDetailsForm.city")}
+            value={user.address?.city}
+            onChange={handleChangeName}
+          />
+             {errors.city && <p className="error-input">{errors.city}</p>}{" "}
+        </div>
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="country"
+            placeholder={t("accountDetailsForm.country")}
+            value={user.address?.country}
+            onChange={handleChangeName}
+          />
+             {errors.country && <p className="error-input">{errors.country}</p>}{" "}
+        </div>
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="postalCode"
+            placeholder={t("accountDetailsForm.postalCode")}
+            value={user.address?.postalCode}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="province"
+            placeholder={t("accountDetailsForm.province")}
+            value={user.address?.province}
+            onChange={handleChangeName}
+          />
+             {errors.province && <p className="error-input">{errors.province}</p>}{" "}
+        </div>
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="street"
+            placeholder={t("accountDetailsForm.street")}
+            value={user.address?.street}
+            onChange={handleChangeName}
+          />
+             {errors.street && <p className="error-input">{errors.street}</p>}{" "}
+        </div>
+
+        <div className="">
+          <p className="title">{t("accountDetailsForm.password")}: </p>
+          <button onClick={(e) => handleResetPassword(e)}>
+            {t("accountDetailsForm.changePassword")}
+          </button>
+        </div>
+
+        <div className="divInputUser">
+          <p className="title">{t("accountDetailsForm.image")}: </p>
           <input
             type="text"
             name="image"
@@ -181,13 +273,13 @@ export default function AccountDetailsForm() {
             onChange={handleChange}
             value={user.image}
           />
-      </div>       
-        <div className="btn-login">
-        <input type="submit"  name="Update info" className="input-submit" />
         </div>
         
+        <div className="btn-login">
+          <input type="submit" name="Update info"  className="input-submit" />
+        </div>
       </form>
-
+      <ToastContainer />  
     </div>
-  )
+  );
 }

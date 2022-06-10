@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { fetchCategories, fetchProducts } from "../../../redux/actions/actions";
 import { useStore } from "../../../context/store.js";
-import "./HomeAdmin.css";
+import "./HomeAdmin.scss";
 import ProductCardAdmin from "../../../components/ADMIN/ProductCardADMIN/ProductCardAdmin";
+import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import {
   FETCH_PRODUCTS,
@@ -10,6 +11,7 @@ import {
 } from "../../../redux/actions/actionTypes";
 import PaginationAdmin from "./PaginationADMIN/PaginationAdmin";
 export default function HomeAdmin() {
+ 
   const [state, dispatch] = useStore();
   const [status, setStatus] = useState("");
   const [category, setCategory] = useState("");
@@ -23,13 +25,12 @@ export default function HomeAdmin() {
     indexFirstProduct,
     indexLastProduct
   );
+
+  const { t } = useTranslation()
+  
   const page = (numPage) => {
     setCurrentPage(numPage);
   };
-  // const resetFilter = () => {
-  //   setStatus(""), setCategory(""), setAtribute(""), setOrder("ASC");
-  // };
-  console.log(state.products);
   const handleFilter = () => {
     setCurrentPage(1);
     let filterProductsAdmin = [];
@@ -101,7 +102,6 @@ export default function HomeAdmin() {
       });
     }
   };
-  // console.log(category);
   useEffect(() => {
     handleFilter();
   }, [status, state.products, category]);
@@ -116,33 +116,33 @@ export default function HomeAdmin() {
     <div className="home-admin-wrapper">
       <div className="filter-admin-wrapper">
         <div className="selectContainer">
-          <label className="labels">Filter:</label>
+          <label className="labels">{t("adminHome.filter") }</label>
           <select
             className="select"
             value={atribute}
             onChange={(e) => setAtribute(e.target.value)}
           >
             <option value="">-</option>
-            <option value="name">Name</option>
-            <option value="stock">Stock</option>
-            <option value="rating">Rating</option>
-            <option value="price">Price</option>
+            <option value="name">{t("adminHome.name") }</option>
+            <option value="stock">{t("adminHome.stock") }</option>
+            <option value="rating">{t("adminHome.rating") }</option>
+            <option value="price">{t("adminHome.price") }</option>
           </select>
         </div>
         <div className="selectContainer">
-          <label className="labels">Status:</label>
+          <label className="labels">{t("adminHome.status") }</label>
           <select
             className="select"
             value={status}
             onChange={(e) => setStatus(e.target.value)}
           >
             <option value="">-</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
+            <option value="active">{t("adminHome.active") }</option>
+            <option value="inactive">{t("adminHome.inactive") }</option>
           </select>
         </div>
         <div className="selectContainer">
-          <label className="labels">Category:</label>
+          <label className="labels">{t("adminHome.category") }</label>
           <select
             className="select"
             value={category}
@@ -150,22 +150,26 @@ export default function HomeAdmin() {
           >
             <option value="">-</option>
 
-            {state.categories?.map((category) => (
-              <option value={category.name} key={category.id} id={category.id}>
-                {category.name}
-              </option>
-            ))}
+            {
+              React.Children.toArray(
+                
+                state.categories?.map((category) => (
+                  <option value={category.name} key={category.id} id={category.id}>
+                    {category.name}
+                  </option>
+                ))
+              )}
           </select>
         </div>
         <div className="selectContainer">
-          <label className="labels">Order:</label>
+          <label className="labels">{t("adminHome.order") }</label>
           <select
             className="select"
             value={order}
             onChange={(e) => setOrder(e.target.value)}
           >
-            <option value="ASC">Asc</option>
-            <option value="DESC">Desc</option>
+            <option value="ASC">{t("adminHome.valueAsc") }</option>
+            <option value="DESC">{t("adminHome.valueDes") }</option>
           </select>
         </div>
         <button
@@ -177,7 +181,7 @@ export default function HomeAdmin() {
             setOrder("ASC");
           }}
         >
-          Reset
+          {t("adminHome.reset")}
         </button>
       </div>
       <div className="section-products-admin">

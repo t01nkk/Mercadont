@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
 import { fetchCategories } from "../../../redux/actions/actions.js";
 import "./EditProduct.css";
+import { useTranslation } from "react-i18next";
+import {ToastContainer, toast} from 'react-toastify'
 export default function EditProduct() {
+  const { t } = useTranslation()
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
   const [product, setProduct] = useState({
@@ -27,16 +30,16 @@ export default function EditProduct() {
     let errors = {};
 
     if (!expression.nameExpression.test(input.name)) {
-      errors.name = "Name is necessary";
+      errors.name = `{t("adminSellProduct.errors.name")}`;
     }
     if (!expression.priceExpression.test(input.price)) {
-      errors.price = "Price is necessary";
+      errors.price = `{t("adminSellProduct.errors.price")}`;
     }
     if (!expression.descriptionExpression.test(input.description)) {
-      errors.description = "Description is necessary";
+      errors.description = `{t("adminSellProduct.errors.description")}`;
     }
     if (!expression.stockExpression.test(input.stock)) {
-      errors.stock = "Stock is necessary";
+      errors.stock = `{t("adminSellProduct.errors.stock")}`;
     }
     return errors;
   }
@@ -97,6 +100,31 @@ export default function EditProduct() {
     setProduct(fetchedProduct.data);
   };
 
+   const alertSuccess = (msg) => {
+    toast.success(msg, {
+      position: "bottom-center",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark"
+    });
+  };
+  const alertInfo = (msg) => {
+    toast.info(msg, {
+      position: "bottom-center",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark"
+    });
+  };
+
   useEffect(() => {
     fetchProductById();
     fetchCategories(dispatch);
@@ -107,7 +135,7 @@ export default function EditProduct() {
     const { name, description, price, stock, image, categories, status } =
       product;
     try {
-      const res = await axios.put(
+      await axios.put(
         `${process.env.REACT_APP_DOMAIN}/product/update/${id}`,
         {
           name,
@@ -119,7 +147,10 @@ export default function EditProduct() {
           categories,
         }
       );
-      console.log("LOGRE EDITARLO ", res);
+      alertSuccess(t("adminEditProduct.updated"))
+      setTimeout(() => {
+          alert("Acá debería redirigir.")
+      }, 3000);
     } catch (err) {
       console.log(err);
     }
@@ -132,22 +163,24 @@ export default function EditProduct() {
       await axios.delete(
         `${process.env.REACT_APP_DOMAIN}/product/delete/${id}`
       );
-      alert("product deleted successfully");
+      alertInfo(t("adminEditProduct.delete"))
+      setTimeout(() => {
+        alert('Acá tendría que redireccionar.')
+      }, 3000);
     } catch (err) {
       console.log(err);
     }
   };
-  console.log(product);
   return (
     <div className="container-edit-admin">
       <div className="delete-product">
-        <button onClick={handleDelete}>Delete product</button>
+        <button onClick={handleDelete}>{t("adminEditProduct.deleteProduct")}</button>
       </div>
       <form onSubmit={handleSubmit} className="form-edit-admin">
         <input
           type="submit"
           name="Update info"
-          value={"Update info"}
+          value={t("adminEditProduct.update")}
           className="btn-update-info"
         />
 
@@ -155,7 +188,7 @@ export default function EditProduct() {
         <div></div>
         <div className="divInputadmin">
           <div className="duo-inputs">
-            <p>Name:</p>
+            <p>{t("adminSellProduct.name")}</p>
             <input
               type="text"
               name="name"
@@ -164,7 +197,7 @@ export default function EditProduct() {
               onChange={handleChangeName}
             />
             {errors.name && <p className="error-input">{errors.name}</p>}{" "}
-            <p>Price: </p>
+            <p>{t("adminSellProduct.price")}</p>
             <input
               type="number"
               name="price"
@@ -175,7 +208,7 @@ export default function EditProduct() {
             {errors.price && <p className="error-input">{errors.price}</p>}
           </div>
           <div className="duo-inputs">
-            <p>Stock: </p>
+            <p>{t("adminSellProduct.stock")}</p>
             <input
               type="number"
               name="stock"
@@ -185,12 +218,12 @@ export default function EditProduct() {
             {errors.stock && <p className="error-input">{errors.stock}</p>}
             <p>Status:</p>
             <select name="status" onChange={handleChange}>
-              <p> Status:</p>
+              <p>{t("adminSellProduct.status")}</p>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
           </div>
-          <p>Description </p>
+          <p>{t("adminSellProduct.description")}</p>
           <textarea
             name="description"
             cols="50"
@@ -204,10 +237,10 @@ export default function EditProduct() {
             <p className="error-input">{errors.description}</p>
           )}
           <div className="selector-cats">
-            <p>Select:</p>
+            <p>{t("adminSellProduct.select")}</p>
             <select onChange={handleChangeCat}>
               <option value="" hidden>
-                Category
+                {t("adminSellProduct.categories")}
               </option>
               {state.categories?.length &&
                 state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
@@ -219,21 +252,21 @@ export default function EditProduct() {
             </select>
             <div className="select-categories-del">
               {product.categories.length &&
-                product.categories?.map((category, i) => (
-                  <p key={i} className="cat-name">
+                React.Children.toArray(product.categories?.map((category) => (
+                  <p className="cat-name">
                     {category.name || category}
                     <button
                       className="btn-del-edit"
                       onClick={(event) => handleDeleteCat(category, event)}
-                    >
-                      x
-                    </button>
+                    >X</button>
                   </p>
-                ))}
+                )))
+                }
             </div>
           </div>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 }

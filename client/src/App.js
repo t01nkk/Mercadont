@@ -11,6 +11,7 @@ import LogInForm from "./components/LogInForm/LogInForm.jsx";
 import Categories from "./components/Categories/Categories.jsx";
 import AddCategories from "./pages/ADMIN/AddCategories/AddCategories";
 import EditProduct from "./pages/ADMIN/EditProduct/EditProduct";
+import AdminUsers from "./pages/ADMIN/AdminUsers/AdminUsers";
 import SearchedProducts from "./pages/SearchedProducts/SearchedProducts";
 import AccountDetails from "./pages/AccountDetails/AccountDetails";
 import AccountDetailsForm from "./components/AccountDetailsForm/AccountDetailsForm";
@@ -22,6 +23,7 @@ import HomeAdmin from "./pages/ADMIN/HomeADMIN/HomeAdmin";
 import NavBarADMIN from "./components/ADMIN/NavBarADMIN/NavBarADMIN";
 import { Favorites } from "./components/Favorites/Favorites";
 import ProductDetailsAdmin from "./pages/ADMIN/ProductDetailsADMIN/ProductDetailsAdmin";
+import { History } from "./components/History/History.jsx"
 
 //Cualquier ruta que tiene que solo estar disponible a usuario logueado, se le puede envolver en ProtectedRoutes
 // import {ProtectedRoute} from "./components/ProtectedRoute/ProtectedRoute";
@@ -61,6 +63,11 @@ function App() {
           {/* USER CART */}
           <NavBar />
           <UserCart />
+        </Route>
+        <Route path="/history" exact>
+          {/* USER CART */}
+          <NavBar />
+          <History />
         </Route>
         <Route path="/logIn" exact>
           {/* USER LOGIN  */}
@@ -146,6 +153,13 @@ function App() {
         >
           <NavBarADMIN />
           <CategoriesCards />
+        </Route>
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/user"
+          exact
+        >
+          <NavBarADMIN />
+          <AdminUsers />
         </Route>
         <Route
           path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/editCategories/:id"

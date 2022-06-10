@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import accounting from "accounting";
+import { useTranslation } from "react-i18next";
 export default function ProductDetailsInfoAdmin({
   id,
   image,
@@ -14,13 +15,14 @@ export default function ProductDetailsInfoAdmin({
   status,
   price,
 }) {
+  const { t } = useTranslation()
   return (
     <div className="details-container">
       <button>
         <Link
           to={`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/admin/edit/${id}`}
         >
-          EDIT PRODUCT
+          {t("adminProductDetails.update")}
         </Link>
       </button>
 
@@ -29,16 +31,16 @@ export default function ProductDetailsInfoAdmin({
       </div>
       <div className="product-info">
         <p className="title">{name}</p>
-        <p className="title">Categories:</p>
-        {categories.map((category) => (
-          <p key={category.name}>{category.name}</p>
-        ))}
+        <p className="title">{t("adminProductDetails.categories")}</p>
+        {React.Children.toArray(categories.map((category) => (
+          <p>{category.name}</p>
+        )))}
 
-        <p className="title">Description: </p>
+        <p className="title">{t("adminProductDetails.description")}</p>
         <p className="description">{description}</p>
-        <p className="title">Available stock: </p>
+        <p className="title">{t("adminProductDetails.available")}</p>
         <p>{stock}</p>
-        <p className="title">Price: </p>
+        <p className="title">{t("adminProductDetails.price")} </p>
         <p>{`${accounting.formatMoney(price, "U$D ", 0)}`}</p>
         {/* <p className="title">Rating: </p>
         <p>{rating}</p> */}

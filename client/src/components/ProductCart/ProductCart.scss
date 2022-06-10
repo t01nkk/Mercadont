@@ -1,0 +1,15 @@
+.card-body-cart {
+  margin-top: 5rem;
+  overflow: hidden;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  border-radius: 5px;
+  border: none;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: transform 200ms ease-in;
+}
+.card-image-cart {
+  width: 20%;
+}

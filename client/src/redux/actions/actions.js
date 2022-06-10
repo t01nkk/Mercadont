@@ -2,9 +2,12 @@ import axios from "axios";
 import {
   FETCH_PRODUCTS,
   FETCH_CATEGORIES,
+  FETCH_ADMIN_USER,
   USER_SESSION,
   ADMIN_SESSION,
-  GET_FAVORITES
+  GET_FAVORITES,
+  CHANGE_COUNT_PRODUCT
+
 } from "./actionTypes";
 
 export const fetchProducts = async (dispatch) => {
@@ -14,6 +17,15 @@ export const fetchProducts = async (dispatch) => {
   dispatch({
     type: FETCH_PRODUCTS,
     payload: fetchedProducts.data,
+  });
+};
+export const fetchUsers = async (dispatch) => {
+  const fetchedUsers = await axios.get(
+    `${process.env.REACT_APP_DOMAIN}/admin/users`
+  );
+  dispatch({
+    type: FETCH_ADMIN_USER,
+    payload: fetchedUsers.data,
   });
 };
 export const fetchCategories = async (dispatch) => {
@@ -86,5 +98,22 @@ export const getFavorites = async (dispatch, id) => {
     } catch (error) {
       console.log(error)
     }
+  }
+}
+
+export const totalCount = (dispatch)=>{
+  let user = JSON.parse(localStorage.getItem("myUser"))
+  let local = JSON.parse(localStorage.getItem(user));
+  if(local){
+    dispatch({
+      type: CHANGE_COUNT_PRODUCT,
+      payload: local.length
+    })
+  }
+  else{
+    dispatch({
+      type: CHANGE_COUNT_PRODUCT,
+      payload: 0
+    })
   }
 }
