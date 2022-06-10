@@ -56,7 +56,7 @@ export const FormQA = ({ productId }) => {
                     />
                 </div>
                 <div className="btn-question">
-                   <button> <BsFillCursorFill color='white'/></button>
+                   <button className='button-qua'> <BsFillCursorFill color='white'/></button>
                 </div>
                </div>
             </form>
