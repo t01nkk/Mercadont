@@ -1,4 +1,4 @@
-const { User, PurchaseOrder } = require("../db");
+const { User, PurchaseOrder, Qa } = require("../db");
 const { Router } = require("express");
 const { Sequelize, Op } = require("sequelize");
 const router = Router();
@@ -204,5 +204,41 @@ router.get("/history", async (req, res) => {
     return res.status(404).send(error);
   }
 });
+
+//Answer Question / Add Answer
+router.put("/:questionId/answer", async (req, res) => {
+  const { questionId } = req.params
+  const { answer } = req.body
+
+  if (!answer || answer.length < 1) {
+      return res.status(404).send("Answer must not be empty")
+  }
+
+  try {
+      await Qa.update({
+          answer,
+          resolved: true,
+      }, { where: { id: questionId } })
+
+      const userMail = await Qa.findOne({
+        // include: { all: true }
+        include:{
+          model: User,
+          through: { attributes: [] }
+        },
+        where:{
+          id: questionId
+        }
+      })
+      console.log("userMail:", userMail.dataValues)
+      console.log("userMail.qa.dataValues.users:", userMail.dataValues.users[0].dataValues.email)
+
+      return res.status(200).send("Answer Added")
+  }
+  catch (err) {
+      console.log(err)
+      res.status(400).send(err)
+  }
+})
 
 module.exports = router;

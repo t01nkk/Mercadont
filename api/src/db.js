@@ -43,10 +43,10 @@ Category.belongsToMany(Product, { through: 'productCategories' }); //Relation fo
 Product.belongsToMany(Category, { through: 'productCategories' }); //categories
 
 Product.belongsToMany(Qa, { through: 'productQAs' }); //Relation for questions and answers
-Qa.belongsTo(Product);
+Qa.belongsToMany(Product, { through: 'productQAs' });
 
 User.belongsToMany(Qa, { through: 'userQAs' });
-Qa.belongsTo(User);
+Qa.belongsToMany(User, { through: 'userQAs' });
 
 Product.belongsToMany(Review, { through: 'productReviews' }); //Relation for reviews
 Review.belongsTo(Product);
