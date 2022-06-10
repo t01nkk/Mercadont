@@ -113,14 +113,14 @@ i18n
           adminProductCard: {
             edit: "Editar",
             rating: "Valoración: ",
-            stock: "Unidades disponibles: ",
-            status: "Disponible al público: ",
+            stock: "Disponibles: ",
+            status: "Estado: ",
           },
           adminProductDetails: {
             update: "Actualizar producto",
             categories: "Categorías: ",
             description: "Detalle del producto: ",
-            available: "Unidades disponibles: ",
+            available: "Disponibles: ",
             price: "Precio: ",
           },
           adminSellProduct: {

@@ -162,7 +162,7 @@ export default function Categories() {
     handleRedirect();
   }, []);
   return (
-    <div className="navPush-categories">
+    <div>
       <div className="selectF">
         <div>
           <select

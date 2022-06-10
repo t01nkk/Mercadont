@@ -43,7 +43,7 @@ export default function AccountDetails() {
   }, []);
 
   return (
-    <div className="profile-wrapper navPush-accountDetails">
+    <div className="profile-wrapper ">
       {/* <script src="https://kit.fontawesome.com/2c36e9b7b1.js"></script> */}
       {/* <script src="./js/main.js"></script> */}
       <div className="profile-container">

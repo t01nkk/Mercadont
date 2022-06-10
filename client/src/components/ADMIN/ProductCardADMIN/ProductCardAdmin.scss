@@ -1,0 +1,132 @@
+.card-body-admin {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  @media only screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.card-image-admin {
+  width: 15%;
+  @media only screen and (max-width: 900px) {
+    width: 100%;
+  }
+}
+.card-info-wrapper-admin {
+  width: 75%;
+  display: flex;
+  @media only screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    width: 152%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.card-info-details-admin {
+  width: 60%;
+  @media only screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.description {
+  grid-column: 1/10;
+  margin-left: 0.5rem;
+  font-weight: 300;
+}
+.button-container {
+  // display: flex;
+  // flex: 1 1;
+  // align-items: center;
+  // justify-content: center;
+  position: absolute;
+  left: calc(100% - 45px);
+  top: 0;
+}
+.card-title-admin {
+  margin-left: 0.5rem;
+  grid-column: 3/7;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+}
+.card-rating-admin {
+  display: flex;
+  margin-left: 20px;
+  width: 40%;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.card-clothe-admin:hover {
+  transform: scale(1.01);
+}
+
+.card-info-details-admin p {
+  width: 85%;
+}
+/* .card-rating-admin {
+} */
+.card-rating-admin p {
+  width: fit-content;
+}
+.card-rating-admin span {
+  font-weight: 600;
+}
+.btn-edit-admin {
+  width: 7rem;
+  height: 3rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(54, 54, 54, 0.6);
+  font-weight: 600;
+  outline: none;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 45px;
+  width: 130px;
+  opacity: 1;
+  @media only screen and (max-width: 900px) {
+    position: relative;
+    align-self: center;
+    left: unset;
+    bottom: unset;
+    margin-bottom: 10px;
+  }
+}
+.btn-edit-admin:hover {
+  background-color: #e6ccb23a;
+}
+
+@media only screen and (max-width: 600px) {
+}
+@media only screen and (max-width: 900px) {
+}
+@media only screen and (max-width: 1200px) {
+}
+@media only screen and (min-width: 1800px) {
+}
+
+.card-stats {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.price-admin {
+  font-weight: 600;
+}
+.stat {
+  display: flex;
+  margin: 10px 10px;
+}
+.stat span {
+  margin-left: 8px;
+}

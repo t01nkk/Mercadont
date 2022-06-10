@@ -117,7 +117,7 @@ export default function AccountDetailsForm() {
   };
 
   return (
-    <div className="navPush-accountDetails">
+    <div >
       <h2>{t("accountDetailsForm.updateInfo")}</h2>
       <form onSubmit={handleSubmit}>
         <div className="divInputUser">

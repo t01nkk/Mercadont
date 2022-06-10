@@ -120,7 +120,7 @@ export default function Home() {
   // };
 
   return (
-    <section className="section-products spaceNavTop">
+    <section className="section-products ">
       {/* <button onClick={() => mostra()}>mostra storage</button> */}
       {state.products && state.favorites
         ? React.Children.toArray(
