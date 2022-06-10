@@ -60,7 +60,7 @@ export default function Categories() {
       pauseOnHover: false,
       draggable: false,
       progress: undefined,
-      theme: "dark"
+      theme: "dark",
     });
   };
 
@@ -175,7 +175,7 @@ export default function Categories() {
     handleRedirect();
   }, []);
   return (
-    <div className="navPush-categories">
+    <div>
       <div className="SortAndReset">
         <div className="priceRangeText"> Price Range:</div>
         <form className="minMaxinput" onSubmit={handleSearch}>
@@ -188,8 +188,7 @@ export default function Categories() {
           />
         </form>
         -
-
-        <form className="minMaxinput" onSubmit={handleSearch} >
+        <form className="minMaxinput" onSubmit={handleSearch}>
           <input
             id="filter"
             type="text"
@@ -199,14 +198,16 @@ export default function Categories() {
           />
         </form>
         {error && <p>{error}</p>}
-        <button onClick={handleSearch} className="filterByPriceBtn">Search </button>
+        <button onClick={handleSearch} className="filterByPriceBtn">
+          Search{" "}
+        </button>
         <div>
           <select
-              defaultValue=""
-              onChange={(e) => {
-                handleOrder(e);
-              }}
-              className="sortSelector"
+            defaultValue=""
+            onChange={(e) => {
+              handleOrder(e);
+            }}
+            className="sortSelector"
           >
             <option value="">Sort by</option>
             <option value="ASCENDING">Highest First</option>

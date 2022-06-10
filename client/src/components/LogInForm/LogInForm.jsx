@@ -8,7 +8,7 @@ import { Formik } from "formik";
 import { toast, ToastContainer } from "react-toastify";
 export default function LogInForm() {
   let errorMsg = "";
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [redirect, setRedirect] = useState(false);
   const { login, loginWithGoogle, resetPassword } = useAuth();
 
@@ -27,6 +27,11 @@ export default function LogInForm() {
   const handleLogin = async (values) => {
     try {
       const userCredentials = await login(values.email, values.password);
+
+      //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
+
+      // if (userCredentials.user.emailVerified) {
+
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
         id: userCredentials.user.uid,
         name: userCredentials.user.displayName,
@@ -42,8 +47,13 @@ export default function LogInForm() {
         );
         setRedirect(true);
       }
+
+
+      //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
+
+      // }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
       if (err.code === "auth/user-not-found")
         errorMsg = "Email doesn't belong to a user";
@@ -74,7 +84,7 @@ export default function LogInForm() {
   };
 
   return (
-    <div className="container-login spaceNavTop">
+    <div className="container-login">
       <Formik
         initialValues={{
           email: "",
@@ -151,8 +161,16 @@ export default function LogInForm() {
             </form>
             <div className="createUser-container">
               <div>
-                <button onClick={handleGoogleSignin} className="btn btn-primary google-plus">
-                  <img height="25px" src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt="Google Logo" />  {t("logInForm.logInGoogle")}
+                <button
+                  onClick={handleGoogleSignin}
+                  className="btn btn-primary google-plus"
+                >
+                  <img
+                    height="25px"
+                    src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
+                    alt="Google Logo"
+                  />{" "}
+                  {t("logInForm.logInGoogle")}
                 </button>
               </div>
               {/* 

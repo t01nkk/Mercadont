@@ -34,8 +34,8 @@ export default function CreateCategory() {
    
   }
   function validator(input) {
-    let errors = {};    
-    
+    let errors = {};   
+
     if (!expression.name.test(input.name)) {
         errors.name = 'Name is necessary';
     }
@@ -44,7 +44,7 @@ export default function CreateCategory() {
   }
   const handleChangeName = (e) => {
     setErrors("")  
-    if (!expression.name.test(data.name))setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+   setErrors(validator({ ...data, [e.target.name]: e.target.value }));
     
         setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -79,7 +79,6 @@ export default function CreateCategory() {
             name="name"
             placeholder={t("adminCreateCategory.name")}
             onChange={handleChangeName }
-            required
             value={data.name}
           />
         </div>
