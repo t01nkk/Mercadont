@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-// import { FormBuys } from '../FormBuys/FormBuys'
+
 import { ProductCart } from "../ProductCart/ProductCart";
 import { totalPrice } from "./actionsCart";
 import { totalCount } from "../../redux/actions/actions";
 import accounting from "accounting";
 import { ToastContainer, toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
-import "../Favorites/Favorite.css";
+import "./Cart.css";
 import { useStore } from "../../context/store.js";
 
 export const Cart = () => {
@@ -95,50 +95,48 @@ export const Cart = () => {
   };
 
   return (
-    <div>
+    <section className="cart-container">
+      <h2>{t("cart.welcome")}</h2>
+      <div className="cart-cards">
+        {storageCart && storageCart?.length > 0 ? (
+          React.Children.toArray(
+            storageCart.map((el, index) => (
+              <ProductCart
+                name={el.name}
+                stock={el.stock}
+                price={el.price}
+                id={el.id}
+                image={el.image}
+                pos={index}
+                viewProduct={viewProduct}
+                deleteDatatoStorage={deleteDatatoStorage}
+                totalPrice={totalPrice}
+                setPriceTotal={setPriceTotal}
+              />
+            ))
+          )
+        ) : (
+          <h3>{t("cart.emptyCart")}</h3>
+        )}
+      </div>
+      {storageCart && storageCart.length > 0 ? (
+        <p>
+          {t("cart.totalPrice")}
+          {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
+        </p>
+      ) : null}
+      {storageCart && storageCart?.length !== 0 ? (
+        <button onClick={makePurchase} disabled={storageCart === null}>
+          {t("cart.buy")}
+        </button>
+      ) : null}
       <button onClick={() => clearCart()} disabled={storageCart?.length < 1}>
         {t("cart.emptyTheCart")}
       </button>
-      <section>
-        <h2>{t("cart.welcome")}</h2>
-        <div className="container container-product-cart">
-          {storageCart && storageCart?.length > 0 ? (
-            React.Children.toArray(
-              storageCart.map((el, index) => (
-                <ProductCart
-                  name={el.name}
-                  stock={el.stock}
-                  price={el.price}
-                  id={el.id}
-                  image={el.image}
-                  pos={index}
-                  viewProduct={viewProduct}
-                  deleteDatatoStorage={deleteDatatoStorage}
-                  totalPrice={totalPrice}
-                  setPriceTotal={setPriceTotal}
-                />
-              ))
-            )
-          ) : (
-            <h3>{t("cart.emptyCart")}</h3>
-          )}
-        </div>
-        {storageCart && storageCart.length > 0 ? (
-          <p>
-            {t("cart.totalPrice")}
-            {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
-          </p>
-        ) : null}
-        {storageCart && storageCart?.length !== 0 ? (
-          <button onClick={makePurchase} disabled={storageCart === null}>
-            {t("cart.buy")}
-          </button>
-        ) : null}
-      </section>
 
       {/* <FormBuys priceTotal={priceTotal}/> */}
-      <br />
+
       <ToastContainer />
-    </div>
+    </section>
   );
 };
