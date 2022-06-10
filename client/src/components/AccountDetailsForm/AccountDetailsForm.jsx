@@ -212,7 +212,7 @@ export default function AccountDetailsForm() {
             type="text"
             name="city"
             placeholder={t("accountDetailsForm.city")}
-            value={user.address?.city}
+            value={user.city}
             onChange={handleChangeName}
           />
              {errors.city && <p className="error-input">{errors.city}</p>}{" "}
@@ -222,7 +222,7 @@ export default function AccountDetailsForm() {
             type="text"
             name="country"
             placeholder={t("accountDetailsForm.country")}
-            value={user.address?.country}
+            value={user.country}
             onChange={handleChangeName}
           />
              {errors.country && <p className="error-input">{errors.country}</p>}{" "}
@@ -232,7 +232,7 @@ export default function AccountDetailsForm() {
             type="text"
             name="postalCode"
             placeholder={t("accountDetailsForm.postalCode")}
-            value={user.address?.postalCode}
+            value={user.postalCode}
             onChange={handleChange}
           />
         </div>
@@ -241,7 +241,7 @@ export default function AccountDetailsForm() {
             type="text"
             name="province"
             placeholder={t("accountDetailsForm.province")}
-            value={user.address?.province}
+            value={user.province}
             onChange={handleChangeName}
           />
              {errors.province && <p className="error-input">{errors.province}</p>}{" "}
@@ -251,7 +251,7 @@ export default function AccountDetailsForm() {
             type="text"
             name="street"
             placeholder={t("accountDetailsForm.street")}
-            value={user.address?.street}
+            value={user.street}
             onChange={handleChangeName}
           />
              {errors.street && <p className="error-input">{errors.street}</p>}{" "}

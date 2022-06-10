@@ -78,7 +78,7 @@ router.put("/setAdmin", async (req, res) => {
       );
       return res.status(200).send(isAdmin);
     } catch (error) {
-      console.log("error:", error);
+      
       return res.status(400).send(error);
     }
   }

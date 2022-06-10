@@ -11,21 +11,7 @@ export default function AccountDetails() {
   const [user, setUser] = useState("");
   const [state, dispatch] = useStore();
 
-  const address = user?.address;
-  let exp = new RegExp(`"`, "g");
-
-  console.log("address", address?.length);
-  /*  console.log("address Hola", address.split(","))
-  console.log("address", typeof address) */
-  const addressUser = address
-    ?.substring(1, address.length - 1)
-    .replace(exp, " ")
-    .split(",");
-  let addressObj = {};
-  addressUser?.map((e) => {
-    let split = e.split(":");
-    addressObj[split[0].trim()] = split[1].trim();
-  });
+ 
 
   const fetchUser = async () => {
     let userCookie = JSON.parse(localStorage.getItem("myUser"));
@@ -64,23 +50,23 @@ export default function AccountDetails() {
           <p className="profile-title">{user?.adress}</p>
           <p>
             {t("accountDetails.country")}
-            {addressObj && addressObj.country}
+            {user?.country}
           </p>
           <p>
             {t("accountDetails.city")}
-            {addressObj && addressObj.city}
+            {user?.city}
           </p>
           <p>
             {t("accountDetails.province")}
-            {addressObj && addressObj.province}
+            {user?.province}
           </p>
           <p>
             {t("accountDetails.street")}
-            {addressObj && addressObj.street}
+            {user?.street}
           </p>
           <p>
             {t("accountDetails.postalCode")}
-            {addressObj && addressObj.postalCode}
+            {user?.postalCode}
           </p>
 
           <Link to="/accountDetails/editProfile">

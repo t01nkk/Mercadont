@@ -102,7 +102,11 @@ console.log(req.body.address)
         name: name,
         lastname: lastname,
         email: email,
-        address:JSON.stringify({country,province, city, street, postalCode}),
+        country: country,
+        province:province, 
+        city:city,
+        street:street,
+        postalCode:postalCode,
         image:image
      
       },

@@ -33,7 +33,7 @@ const { Product, Category } = require("./src/db");
 const { getProducts, getUsers } = require("./src/middlewares/middlewares");
 
 // Syncing all the models at once.
-conn.sync({ force: false}).then(() => {
+conn.sync({ force:false}).then(() => {
   server.listen(3001, async () => {
     await getProducts();
     // await getUsers();
