@@ -133,14 +133,12 @@ export default function Categories() {
   const handleSearch = async (e) => {
     e.preventDefault();
     let filter = state.filterCategory;
-
     if (min) {
       filter = filter.filter((product) => product.price >= min);
     }
     if (max) {
       filter = filter.filter((product) => product.price <= max);
     }
-
     if (max && min && parseInt(max) < parseInt(min)) {
       setError("Please select valid numbers for the min and max inputs");
       filter = [];
@@ -178,20 +176,9 @@ export default function Categories() {
   }, []);
   return (
     <div className="navPush-categories">
-      <div className="selectF">
-        <div>
-          <select
-            defaultValue=""
-            onChange={(e) => {
-              handleOrder(e);
-            }}
-          >
-            <option value="">Sort !</option>
-            <option value="ASCENDING">⬇</option>
-            <option value="DESCENDING">⬆ </option>
-          </select>
-        </div>
-        <form className="form-filter-price" onSubmit={handleSearch}>
+      <div className="SortAndReset">
+        <div className="priceRangeText"> Price Range:</div>
+        <form className="minMaxinput" onSubmit={handleSearch}>
           <input
             id="filter2"
             type="text"
@@ -200,7 +187,9 @@ export default function Categories() {
             onChange={handleChangeMin}
           />
         </form>
-        <form onSubmit={handleSearch}>
+        -
+
+        <form className="minMaxinput" onSubmit={handleSearch} >
           <input
             id="filter"
             type="text"
@@ -210,7 +199,22 @@ export default function Categories() {
           />
         </form>
         {error && <p>{error}</p>}
+        <button onClick={handleSearch} className="filterByPriceBtn">Search </button>
+        <div>
+          <select
+              defaultValue=""
+              onChange={(e) => {
+                handleOrder(e);
+              }}
+              className="sortSelector"
+          >
+            <option value="">Sort by</option>
+            <option value="ASCENDING">Highest First</option>
+            <option value="DESCENDING">Lowest First </option>
+          </select>
+        </div>
       </div>
+
       {redirect ? <Redirect push to="/home" /> : null}
       <div className="section-products">
         {state.products && state.favorites ? (
@@ -228,7 +232,6 @@ export default function Categories() {
                     handleSaveFavorite={handleSaveFavorite}
                     handleDeleteFavorite={handleDeleteFavorite}
                     isAdd={state.favorites.find((e) => e.id === product.id)}
-                    alertSuccess={alertSuccess}
                   />
                 );
               }
