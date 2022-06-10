@@ -1,8 +1,7 @@
 .section-products-admin {
-  display: grid;
-  gap: 1.3;
-  width: 80%;
-  margin: 5rem 10%;
+  display: flex;
+  margin: 0 15%;
+  flex-direction: column;
 }
 
 .filter-admin-wrapper {
@@ -16,6 +15,12 @@
 .page-btns-wrapper {
   display: flex;
   justify-content: space-around;
+  @media only screen and (max-width: 900px) {
+    position: absolute;
+    left: 50%;
+    top: 270px;
+    transform: translate(-50%, 0);
+  }
 }
 .page-btns-wrapper button {
   height: 2.5rem;

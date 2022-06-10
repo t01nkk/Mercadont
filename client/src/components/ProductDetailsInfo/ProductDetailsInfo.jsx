@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./ProductDetailsInfo.css";
 import { useHistory } from "react-router-dom";
 import accounting from "accounting";
@@ -25,27 +25,27 @@ export default function ProductDetailsInfo({
   status,
   price,
 }) {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [state, dispatch] = useStore();
   const [changeButton, setChangeButton] = useState();
-  const history = useHistory()
+  const history = useHistory();
   const [cart, setCart] = useState([]);
   const [inCart, setInCart] = useState(false);
   const [user, setUser] = useState([]);
 
-   let person = JSON.parse(localStorage.getItem("myUser"));
+  let person = JSON.parse(localStorage.getItem("myUser"));
 
-//Funcion para verificar si el elemento se encuentra en el listado de favoritos
-  const inFavorite = (id)=>{
-    let isAdd = ""
-    if(state.favorites.length){
-      isAdd=state.favorites.find((e) => e.id === id)
+  //Funcion para verificar si el elemento se encuentra en el listado de favoritos
+  const inFavorite = (id) => {
+    let isAdd = "";
+    if (state.favorites.length) {
+      isAdd = state.favorites.find((e) => e.id === id);
     }
-    setChangeButton(isAdd)
-  }
-//**********************************************************/
-//------------------Funciones de alertas------------------//
-//**********************************************************/
+    setChangeButton(isAdd);
+  };
+  //**********************************************************/
+  //------------------Funciones de alertas------------------//
+  //**********************************************************/
   const alertSuccess = (msg) => {
     toast.success(msg, {
       position: "bottom-center",
@@ -55,7 +55,7 @@ export default function ProductDetailsInfo({
       pauseOnHover: false,
       draggable: false,
       progress: undefined,
-      theme: "dark"
+      theme: "dark",
     });
   };
   const alertInfo = (msg) => {
@@ -67,13 +67,13 @@ export default function ProductDetailsInfo({
       pauseOnHover: false,
       draggable: false,
       progress: undefined,
-      theme: "dark"
+      theme: "dark",
     });
   };
 
-//**********************************************************/
-//------Funciones para agregar o borrar de favoritos------//
-//**********************************************************/
+  //**********************************************************/
+  //------Funciones para agregar o borrar de favoritos------//
+  //**********************************************************/
   const deleteFavorite = () => {
     setChangeButton(false);
     handleDeleteFavorite(id);
@@ -82,18 +82,18 @@ export default function ProductDetailsInfo({
   const postFavorite = () => {
     let person = JSON.parse(localStorage.getItem("myUser"));
     if (!person) {
-      alert(t("home.mustBeLoggedIn"))
+      alert(t("home.mustBeLoggedIn"));
       history.push("/logIn");
       return;
     }
     setChangeButton(true);
     handleSaveFavorite(id);
-    alertSuccess(t("home.altAddToFavs"))
+    alertSuccess(t("home.altAddToFavs"));
   };
 
-//**********************************************************/
-//-------------Funcion para agregar a carrito-------------//
-//**********************************************************/
+  //**********************************************************/
+  //-------------Funcion para agregar a carrito-------------//
+  //**********************************************************/
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
     let totalPrice = price;
@@ -111,9 +111,9 @@ export default function ProductDetailsInfo({
     }
   };
 
-//**********************************************************/
-//------------------------useEffect------------------------//
-//**********************************************************/
+  //**********************************************************/
+  //------------------------useEffect------------------------//
+  //**********************************************************/
   useEffect(() => {
     let myUser = JSON.parse(localStorage.getItem("myUser"));
     let myCart = JSON.parse(localStorage.getItem(myUser));
@@ -125,76 +125,90 @@ export default function ProductDetailsInfo({
     }
   }, []);
 
-  useEffect(()=>{
-    inFavorite(id)
-  }, [])
+  useEffect(() => {
+    inFavorite(id);
+  }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     localStorage.setItem(user, JSON.stringify(cart));
-    totalCount(dispatch)
+    totalCount(dispatch);
   }, [cart]);
-
 
   return (
     <div className="details-container">
-       <div className="img-container">
-        <img src={image} alt={` ${name}`} className="product-img" />
-      </div>
-      <button
-          className="card-btn"
-          onClick={() => handleSaveCart(name, price, image, id, stock)}
-        >
-          <img className="cart-btn" src={shoppingCart} alt="add-cart"/>
-        </button>
-        {changeButton ? (
-          <button className="card-btn" onClick={() => deleteFavorite()}>
-            <img
-              className="fav-btn"
-              src={imgDeleteFavorite}
-              alt="delete-favorite"
-            />
-          </button>
-        ) : (
-          <button className="card-btn" onClick={() => postFavorite()}>
-            <img className="fav-btn" src={imgAddFavorite} alt="add-favorite" />
-          </button>
-        )} 
+      <img src={image} alt={` ${name}`} className="product-img" />
 
-     
-      <div className="product-info">
-        <p className="title">{name}</p>
-        <p className="title">{t("productDetailsInfo.categories")}</p>
-        {React.Children.toArray(categories.map((category) => (
-          <p>{category.name}</p>
-        )))}
+      <div className="details-info">
+        <div className="product-info">
+          <p className="titleDetails">
+            <button
+              className="card-btn"
+              onClick={() => handleSaveCart(name, price, image, id, stock)}
+            >
+              <img className="cart-btn" src={shoppingCart} alt="add-cart" />
+            </button>
+            {changeButton ? (
+              <button className="card-btn" onClick={() => deleteFavorite()}>
+                <img
+                  className="fav-btn"
+                  src={imgDeleteFavorite}
+                  alt="delete-favorite"
+                />
+              </button>
+            ) : (
+              <button className="card-btn" onClick={() => postFavorite()}>
+                <img
+                  className="fav-btn"
+                  src={imgAddFavorite}
+                  alt="add-favorite"
+                />
+              </button>
+            )}
+            {name}
+          </p>
+          <p className="title">{t("productDetailsInfo.description")}</p>
+          <p className="description">{description}</p>
+          <div className="product-info-details">
+            <div>
+              <p className="title">{t("productDetailsInfo.categories")}</p>
+              {React.Children.toArray(
+                categories.map((category) => <p>{category.name}</p>)
+              )}
+            </div>
+            <div>
+              <p className="title">{t("productDetailsInfo.stock")}</p>
+              <p>{stock}</p>
+            </div>
 
-        <p className="title">{t("productDetailsInfo.description")}</p>
-        <p className="description">{description}</p>
-        <p className="title">{t("productDetailsInfo.stock")}</p>
-        <p>{stock}</p>
-        <p className="title">{t("productDetailsInfo.price")}</p>
-        <p>{`${accounting.formatMoney(price, "U$D ", 0)}`}</p>
-        {/* <p className="title">Rating: </p>
-        <p>{rating}</p> */}
-        {/* <p className="title">Reviews:</p>
-        <p>{reviews}</p> */}
-        <p className="title">{t("productDetailsInfo.qa")}</p>
-        <p>{React.Children.toArray(qas.map(qa => (
-          <div>
-            <p>{qa.question}</p>
-            {
-              qa.answer
-                ? <p>{qa.answer}</p>
-                : null
-            }
+            <div>
+              <p className="title">{t("productDetailsInfo.price")}</p>
+              <p>{`${accounting.formatMoney(price, "U$D ", 0)}`}</p>
+            </div>
           </div>
-        )))}</p>
+          <p className="title">{t("productDetailsInfo.qa")}</p>
+          {/* <p className="title">Rating: </p>
+        <p>{rating}</p> */}
+          {/* <p className="title">Reviews:</p>
+        <p>{reviews}</p> */}
+
+          <div className="scroll">
+            <p>
+              {React.Children.toArray(
+                qas.map((qa) => (
+                  <div className="question">
+                    <p>{qa.question}</p>
+                    {qa.answer ? <div>{qa.answer}</div> : null}
+                  </div>
+                ))
+              )}
+            </p>
+          </div>
+          <div className="formQA">
+            <FormQA productId={id} />
+          </div>
+          <ToastContainer />
+        </div>
       </div>
-      <div><FormQA productId={id} /></div>
-      <ToastContainer />
     </div>
   );
-
 }
-
-
