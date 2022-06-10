@@ -13,7 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import { Loader } from "../../components/Loader/Loader.jsx"
-import { handleDeleteFavorite } from "../../components/Cart/actionsCart.js";
+import { handleDeleteFavorite, handleSaveFavorite } from "../../components/Cart/actionsCart.js";
 
 
 export default function Home() {
@@ -66,35 +66,6 @@ export default function Home() {
     }
   };
 
-  const handleSaveFavorite = async (id) => {
-    if (!person) alert(t("home.mustBeLoggedIn"))
-    try {
-      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
-        idUser: person,
-        idProduct: id,
-      });
-      alertSuccess(t("home.altAddToFavs"))
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleDeleteFavorite = async (id) => {
-    try {
-      await axios.delete(
-        `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
-        {
-          data: {
-            idUser: person,
-            idProduct: id,
-          },
-        }
-      );
-      alertInfo(t("home.altRemoveFromFavorites"))
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     let myUser = JSON.parse(localStorage.getItem("myUser"));
     let myCart = JSON.parse(localStorage.getItem(myUser));
@@ -137,6 +108,7 @@ export default function Home() {
                   handleSaveFavorite={handleSaveFavorite}
                   handleDeleteFavorite={handleDeleteFavorite}
                   isAdd={state.favorites.find((e) => e.id === product.id)}
+                  alertSuccess={alertSuccess}
                 />
               );
             }

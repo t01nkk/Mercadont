@@ -52,9 +52,9 @@ export default function LogInForm() {
         });
         alertSuccess(t("createUserTest.accountCreated"))
         setTimeout(() => {
-        history.push("/login");  
+        history.push("/login");
         }, 4000);
-        
+
       } catch (err) {
         if (err.code === "auth/internal-error") setError("Correo Invalido");
         if (err.code === "auth/email-already-in-use")setError("El correo ya se encuentra en uso");
