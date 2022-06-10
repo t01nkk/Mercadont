@@ -21,7 +21,7 @@ export default function LoggedNavBar() {
   const history = useHistory();
   const logoutSesion = async () => {
     // let user = JSON.parse(localStorage.getItem("myUser"))
-    const answer = window.confirm("Are you sure you want to log out?")
+    const answer = window.confirm("Are you sure you want to log out?");
     if (answer) {
       await logout;
       localStorage.removeItem("myUser");
@@ -109,6 +109,9 @@ export default function LoggedNavBar() {
                   </li>
                   <li className="dropdown-item category-list-item">
                     <Link to="/favorites">{t("loggedNavBar.favorites")}</Link>
+                  </li>
+                  <li className="dropdown-item category-list-item">
+                    <Link to="/history">History</Link>
                   </li>
                   <li className="dropdown-item category-list-item log-out">
                     <a onClick={logoutSesion}>{t("loggedNavBar.logOut")}</a>

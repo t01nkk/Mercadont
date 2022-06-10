@@ -2,7 +2,7 @@ const { User, PurchaseOrder } = require("../db");
 const { Router } = require("express");
 const { Sequelize, Op } = require("sequelize");
 const router = Router();
-const createdOrders = require("../../purchaseOrders.json")
+const createdOrders = require("../../purchaseOrders.json");
 
 // Working
 //Get all Users
@@ -69,20 +69,22 @@ router.get("/adminUsers", async (req, res) => {
 //Give user Admin credencials
 router.put("/setAdmin", async (req, res) => {
   const { email } = req.body;
-  const setAdmin = true;
-  if (setAdmin !== undefined || setAdmin !== null) {
-    try {
-      const isAdmin = await User.update(
-        {
-          isAdmin: true,
-        },
-        { where: { email: email } }
-      );
-      return res.status(200).send(isAdmin);
-    } catch (error) {
-      console.log("error:", error);
-      return res.status(400).send(error);
+  let setAdmin = true;
+  try {
+    const user = await User.findOne({ where: { email: email } });
+    if (user.isAdmin) {
+      setAdmin = false;
     }
+    const isAdmin = await User.update(
+      {
+        isAdmin: setAdmin,
+      },
+      { where: { email: email } }
+    );
+    return res.status(200).send(isAdmin);
+  } catch (error) {
+    console.log("error:", error);
+    return res.status(400).send(error);
   }
 });
 
@@ -123,11 +125,10 @@ router.post("/getAdmin", async (req, res) => {
   }
 });
 
-
 // Creates many orders to test ORDER PURCHASE ORDERS BY DATE
-router.get("/loadOrders", async (req, res) =>{
+router.get("/loadOrders", async (req, res) => {
   try {
-    for (order of createdOrders){
+    for (order of createdOrders) {
       const newOrder = await PurchaseOrder.create({
         orderId: order.orderId,
         userId: order.userId,
@@ -135,15 +136,15 @@ router.get("/loadOrders", async (req, res) =>{
         productQuantity: order.productQuantity,
         totalAmount: order.totalAmount,
         date: order.date,
-        status: order.status
-      })
+        status: order.status,
+      });
       // console.log("newOrder:",newOrder)
     }
-    res.status(200).send("Orders created")
+    res.status(200).send("Orders created");
   } catch (error) {
-    res.status(400).send(error)
+    res.status(400).send(error);
   }
-})
+});
 
 // Get PURCHASE ORDERS by date
 router.get("/history", async (req, res) => {
@@ -152,10 +153,10 @@ router.get("/history", async (req, res) => {
 
   try {
     const userHistory = await PurchaseOrder.findAll({
-      where:{
-        "date": {
-          [Op.between]: [startDate,endDate],
-        }
+      where: {
+        date: {
+          [Op.between]: [startDate, endDate],
+        },
       },
       group: PurchaseOrder.date,
     });
@@ -166,47 +167,42 @@ router.get("/history", async (req, res) => {
     let order = {
       orderNumber: "",
       date: "",
-      products:[],
+      products: [],
       amount: 0,
-    }
-    order.orderNumber === userHistory[0].orderId
-    order.date === userHistory[0].date
-    order.amount === userHistory[0].totalAmount
+    };
+    order.orderNumber === userHistory[0].orderId;
+    order.date === userHistory[0].date;
+    order.amount === userHistory[0].totalAmount;
 
-    for(let item of userHistory){
-      if(order.orderNumber === item.orderId) {
-        order.products.push(
-          {
-            product: item.productId,
-            productQuantity: item.productQuantity
-          }
-        )
-      }else{
-        if(order.orderNumber !== "") orders.push(order)
+    for (let item of userHistory) {
+      if (order.orderNumber === item.orderId) {
+        order.products.push({
+          product: item.productId,
+          productQuantity: item.productQuantity,
+        });
+      } else {
+        if (order.orderNumber !== "") orders.push(order);
         order = {
           orderNumber: "",
           date: "",
-          products:[],
+          products: [],
           amount: 0,
-        }
-        order.orderNumber = item.orderId
-        order.date = item.date
-        order.amount = item.totalAmount
-        order.products.push(
-          {
-            product: item.productId, 
-            productQuantity: item.productQuantity
-          }
-        )
+        };
+        order.orderNumber = item.orderId;
+        order.date = item.date;
+        order.amount = item.totalAmount;
+        order.products.push({
+          product: item.productId,
+          productQuantity: item.productQuantity,
+        });
       }
     }
-    orders.push(order)
+    orders.push(order);
     return res.status(200).send(orders);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(404).send(error);
   }
 });
-
 
 module.exports = router;
