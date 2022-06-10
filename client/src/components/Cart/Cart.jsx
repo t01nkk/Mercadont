@@ -33,6 +33,7 @@ export const Cart = () => {
       localStorage.removeItem(user)
       alertSuccess("Purchase done successfully");
       setStorageCart([]);
+      totalCount(dispatch);
     }
   }, [search]);
 
@@ -86,16 +87,16 @@ export const Cart = () => {
   const clearCart = (e) => {
     // const answer = window.confirm("Are you sure you want to clear your cart?")
     // // if (answer) {
-    setStorageCart([]);
-    setPriceTotal(totalPrice());
-    localStorage?.removeItem(user);
-    totalCount(dispatch);
+    // setStorageCart([]);
+    // setPriceTotal(totalPrice());
+    // localStorage?.removeItem(user);
     // }
     const answer = window.confirm(t("cart.confirmClearCart"));
     if (answer) {
       setStorageCart([]);
       setPriceTotal(totalPrice());
       localStorage?.removeItem(user);
+      totalCount(dispatch);
       alertInfo(t("cart.removeEverythingFromCart"));
       setTimeout(() => {
         history.push("/home");
