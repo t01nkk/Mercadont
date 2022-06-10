@@ -5,7 +5,7 @@ import { useStore } from "../../context/store";
 import { useTranslation } from "react-i18next";
 // import "./AccountDetails.css"
 // import {mostrarFrente} from "./js/main.js"
-import { ToastContainer, toast } from "react-toastify";
+
 export default function AccountDetails() {
   const { t } = useTranslation();
   const [user, setUser] = useState("");
@@ -133,7 +133,7 @@ export default function AccountDetails() {
           </div>
         </section>
       </div> */}
-      <button onClick={(e) => handleBack(e)}>Go back to the main page</button>
+      <button onClick={(e) => handleBack(e)}>{t("navigation.goBack")}</button>
     </div>
   );
 }

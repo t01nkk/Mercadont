@@ -1,29 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./LoginForm.css";
 import { Link, Redirect } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Formik } from "formik";
-import { toast, ToastContainer } from "react-toastify";
+import { alertError } from "../../helpers/toast";
 export default function LogInForm() {
   let errorMsg = "";
   const { t } = useTranslation();
   const [redirect, setRedirect] = useState(false);
   const { login, loginWithGoogle, resetPassword } = useAuth();
 
-  const errorAlert = () => {
-    toast.error(errorMsg, {
-      position: "bottom-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
   const handleLogin = async (values) => {
     try {
       const userCredentials = await login(values.email, values.password);
@@ -58,7 +46,7 @@ export default function LogInForm() {
       if (err.code === "auth/user-not-found")
         errorMsg = "Email doesn't belong to a user";
       if (err.code === "auth/wrong-password") errorMsg = "Wrong Password";
-      errorAlert();
+      alertError(errorMsg)
     }
   };
   const handleGoogleSignin = async () => {
@@ -192,7 +180,6 @@ export default function LogInForm() {
           </div>
         )}
       </Formik>
-      <ToastContainer />
     </div>
   );
 }

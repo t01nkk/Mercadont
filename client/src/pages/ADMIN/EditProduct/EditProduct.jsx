@@ -4,8 +4,8 @@ import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
 import { fetchCategories } from "../../../redux/actions/actions.js";
 import "./EditProduct.css";
+import { alertInfo, alertSuccess } from "../../../helpers/toast.js";
 import { useTranslation } from "react-i18next";
-import {ToastContainer, toast} from 'react-toastify'
 export default function EditProduct() {
   const { t } = useTranslation()
   const [state, dispatch] = useStore();
@@ -100,31 +100,6 @@ export default function EditProduct() {
     setProduct(fetchedProduct.data);
   };
 
-   const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    });
-  };
-  const alertInfo = (msg) => {
-    toast.info(msg, {
-      position: "bottom-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    });
-  };
-
   useEffect(() => {
     fetchProductById();
     fetchCategories(dispatch);
@@ -150,7 +125,7 @@ export default function EditProduct() {
       alertSuccess(t("adminEditProduct.updated"))
       setTimeout(() => {
           alert("Acá debería redirigir.")
-      }, 2500);
+      }, 2000);
     } catch (err) {
       console.log(err);
     }
@@ -166,7 +141,7 @@ export default function EditProduct() {
       alertInfo(t("adminEditProduct.delete"))
       setTimeout(() => {
         alert('Acá tendría que redireccionar.')
-      }, 2500);
+      }, 2000);
     } catch (err) {
       console.log(err);
     }
@@ -216,11 +191,11 @@ export default function EditProduct() {
               onChange={handleChangeStock}
             />
             {errors.stock && <p className="error-input">{errors.stock}</p>}
-            <p>Status:</p>
+            <p>{t("adminEditProduct.status")}</p>
             <select name="status" onChange={handleChange}>
               <p>{t("adminSellProduct.status")}</p>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
+              <option value="active">{t("adminEditProduct.active")}</option>
+              <option value="inactive">{t("adminEditProduct.inactive")}</option>
             </select>
           </div>
           <p>{t("adminSellProduct.description")}</p>
@@ -266,7 +241,6 @@ export default function EditProduct() {
           </div>
         </div>
       </form>
-      <ToastContainer />
     </div>
   );
 }

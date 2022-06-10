@@ -7,14 +7,14 @@ import {
   ORDER_BY_ASCDESC_PRICE,
   FILTER_BY_PRICE,
 } from "../../redux/actions/actionTypes";
-import axios from "axios";
+import { alertSuccess, alertInfo } from "../../helpers/toast";
 import { getFavorites } from "../../redux/actions/actions";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   handleDeleteFavorite,
   handleSaveFavorite,
 } from "../../components/Cart/actionsCart";
+import { t } from "i18next";
 
 export default function SearchedProducts() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
@@ -28,49 +28,12 @@ export default function SearchedProducts() {
   const [user, setUser] = useState([]);
   let person = JSON.parse(localStorage.getItem("myUser"));
 
-  const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
-
   const handleRedirect = () => {
     if (!state.searchedProducts.length) {
       setRedirect(true);
     }
   };
 
-  const alertAddedToCart = () => {
-    toast.success("Added to cart!", {
-      position: "bottom-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
-  const alertAlreadyInCart = () => {
-    toast.success("Already in cart!", {
-      position: "bottom-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
     let totalPrice = price;
@@ -78,12 +41,12 @@ export default function SearchedProducts() {
     let value = cart.find((e) => e.name === name);
     if (value) {
       setInCart(false);
-      alertAlreadyInCart();
+      alertInfo(t("home.altAlreadyInCart"));
       return;
     } else {
       setInCart(true);
       setCart((cart) => [...cart, products]);
-      alertAddedToCart();
+      alertSuccess(t("home.altAddToCart"));
     }
   };
 
@@ -115,14 +78,14 @@ export default function SearchedProducts() {
   const handleChangeMax = (e) => {
     setError("");
     if (e.target.value < 0)
-      setError("Only Positive Numbers are accepted in this field");
+      setError(t("categoriesComp.error_pos_numbers"));
     setMax(e.target.value);
   };
 
   const handleChangeMin = (e) => {
     setError("");
     if (e.target.value < 0)
-      setError("Only Positive Numbers are accepted in this field");
+      setError(t("categoriesComp.error_pos_numbers"));
     setMin(e.target.value);
   };
 
@@ -136,7 +99,7 @@ export default function SearchedProducts() {
       filter = filter.filter((product) => product.price <= max);
     }
     if (max && min && parseInt(max) < parseInt(min)) {
-      setError("Please select valid numbers for the min and max inputs");
+      setError(t("categoriesComp.error_valid_numbers"));
       filter = [];
     }
     if (error) {
@@ -180,13 +143,13 @@ export default function SearchedProducts() {
     <div>
       <div>
         <div className="SortAndReset">
-          <div className="priceRangeText"> Price Range:</div>
+          <div className="priceRangeText">{t("categoriesComp.priceRange")}</div>
           <form className="minMaxinput" onSubmit={handleSearch}>
             <input
               id="filter2"
               type="text"
               value={min}
-              placeholder="min..."
+              placeholder={t("categoriesComp.minPrice")}
               onChange={handleChangeMin}
             />
           </form>
@@ -196,13 +159,13 @@ export default function SearchedProducts() {
               id="filter"
               type="text"
               value={max}
-              placeholder="max..."
+              placeholder={t("categoriesComp.maxPrice")}
               onChange={handleChangeMax}
             />
           </form>
           {error && <p>{error}</p>}
           <button onClick={handleSearch} className="filterByPriceBtn">
-            Search{" "}
+            {t("categoriesComp.search")}{" "}
           </button>
           <div>
             <select
@@ -212,9 +175,9 @@ export default function SearchedProducts() {
               }}
               className="sortSelector"
             >
-              <option value="">Sort by</option>
-              <option value="ASCENDING">Highest First</option>
-              <option value="DESCENDING">Lowest First </option>
+              <option disabled>{t("categoriesComp.sortBy")}</option>
+              <option value="DESCENDING">{t("categoriesComp.des")}</option>
+              <option value="ASCENDING">{t("categoriesComp.asc")}</option>
             </select>
           </div>
         </div>
@@ -246,7 +209,6 @@ export default function SearchedProducts() {
             })
           )}
       </div>
-      <ToastContainer />
     </div>
   );
 }
