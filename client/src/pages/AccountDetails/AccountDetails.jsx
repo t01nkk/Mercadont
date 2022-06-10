@@ -5,7 +5,7 @@ import { useStore } from "../../context/store";
 import { useTranslation } from "react-i18next";
 // import "./AccountDetails.css"
 // import {mostrarFrente} from "./js/main.js"
-import { ToastContainer, toast } from "react-toastify";
+
 export default function AccountDetails() {
   const { t } = useTranslation();
   const [user, setUser] = useState("");

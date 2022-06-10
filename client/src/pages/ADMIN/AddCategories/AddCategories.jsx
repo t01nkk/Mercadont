@@ -3,9 +3,9 @@ import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store";
 import { fetchCategories } from "../../../redux/actions/actions.js";
-import {ToastContainer, toast} from 'react-toastify'
 import { MdDeleteForever } from "react-icons/md";
 import "./CategoryCard.css";
+import { alertInfo, alertSuccess } from "../../../helpers/toast";
 import { useTranslation } from "react-i18next";
 export default function EditProduct() {
   const history = useHistory()
@@ -16,31 +16,6 @@ export default function EditProduct() {
   });
   const [error, setError] = useState('');
   const { t } = useTranslation()
-  const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    })
-  }
-
-  const alertInfo = (msg) => {
-    toast.info(msg, {
-      position: "bottom-center",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    })
-  }
 
   function validate(value) {
     var expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
@@ -51,7 +26,6 @@ export default function EditProduct() {
       setError('')
     }
   }
-
 
   useEffect(() => {
     fetchCategories(dispatch);
@@ -67,7 +41,7 @@ export default function EditProduct() {
       alertSuccess(t("adminAddCategories.update"))
       setTimeout(() => {
         history.push('/')
-      }, 3000);
+      }, 2000);
     } catch (err) {
       console.log(err);
     }
@@ -112,7 +86,6 @@ export default function EditProduct() {
           <MdDeleteForever size={30} />
         </button>
       </div>
-      <ToastContainer />
     </div>
   );
 }

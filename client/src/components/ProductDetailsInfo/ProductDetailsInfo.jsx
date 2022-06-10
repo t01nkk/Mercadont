@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./ProductDetailsInfo.css";
 import { useHistory } from "react-router-dom";
 import accounting from "accounting";
-import { ToastContainer, toast } from "react-toastify";
 import { FormQA } from "../FormQA/FormQA";
 import { useTranslation } from "react-i18next";
 import { handleDeleteFavorite, handleSaveFavorite } from "../Cart/actionsCart";
@@ -11,7 +10,7 @@ import imgDeleteFavorite from "../../media/heart-delete-cart.png";
 import shoppingCart from "../../media/shoppingCart.png";
 import { useStore } from "../../context/store.js";
 import { totalCount } from "../../redux/actions/actions";
-
+import { alertSuccess, alertInfo } from "../../helpers/toast";
 export default function ProductDetailsInfo({
   id,
   image,
@@ -46,30 +45,6 @@ export default function ProductDetailsInfo({
   //**********************************************************/
   //------------------Funciones de alertas------------------//
   //**********************************************************/
-  const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
-  const alertInfo = (msg) => {
-    toast.info(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
 
   //**********************************************************/
   //------Funciones para agregar o borrar de favoritos------//
@@ -82,7 +57,7 @@ export default function ProductDetailsInfo({
   const postFavorite = () => {
     let person = JSON.parse(localStorage.getItem("myUser"));
     if (!person) {
-      alert(t("home.mustBeLoggedIn"));
+      alertInfo(t("home.mustBeLoggedIn"));
       history.push("/logIn");
       return;
     }
@@ -217,7 +192,6 @@ export default function ProductDetailsInfo({
           <div className="formQA">
             <FormQA productId={id} />
           </div>
-          <ToastContainer />
         </div>
       </div>
     </div>

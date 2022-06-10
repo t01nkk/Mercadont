@@ -112,7 +112,7 @@ export const SendBuys = () => {
                     </div>
                 </div>
                 <div>
-                    {amountTotal && <p>Total Price:{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
+                    {amountTotal && <p>{t("sendBuys.totalprice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
                     <p>{t("sendBuys.paymentMethod")}</p>
                     <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
                     <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
@@ -136,7 +136,7 @@ export const SendBuys = () => {
                     </button>
                     : null}
             </form>
-            <button onClick={(e) => handleBack(e)}>Go back to cart</button>
+            <button onClick={(e) => handleBack(e)}>{t("navigation.returnToCart")}</button>
         </div>
 
     )
