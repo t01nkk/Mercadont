@@ -93,3 +93,13 @@
   position: relative;
   height: 125px;
 }
+.navbar-space {
+  position: relative;
+  height: 125px;
+  @media only screen and (max-width: 552px) {
+    height: 170px;
+  }
+  @media only screen and (max-width: 290px) {
+    height: 210px;
+  }
+}
