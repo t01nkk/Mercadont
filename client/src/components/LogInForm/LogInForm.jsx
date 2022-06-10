@@ -30,7 +30,7 @@ export default function LogInForm() {
 
       //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
 
-      // if (userCredentials.user.emailVerified) {
+      if (userCredentials.user.emailVerified) {
 
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
         id: userCredentials.user.uid,
@@ -51,7 +51,7 @@ export default function LogInForm() {
 
       //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
 
-      // }
+      }
     } catch (err) {
       // console.log(err);
       if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
