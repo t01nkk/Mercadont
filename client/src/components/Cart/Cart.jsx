@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-
 import { ProductCart } from "../ProductCart/ProductCart";
 import { totalPrice } from "./actionsCart";
 import { totalCount } from "../../redux/actions/actions";
 import accounting from "accounting";
-import { ToastContainer, toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import "./Cart.css";
 import { useStore } from "../../context/store.js";
+import { alertInfo, alertSuccess } from "../../helpers/toast";
 
 export const Cart = () => {
   const { t } = useTranslation();
@@ -27,40 +26,14 @@ export const Cart = () => {
   let { search } = useLocation()
   useEffect(()=>{
     if(search == "?buy=false"){ 
-      alertInfo("Purchase cancelled successfully");
+      alertInfo(t("cart.cancelPurchaseSuccess"));
     }
     if(search == "?buy=true"){
       localStorage.removeItem(user)
-      alertSuccess("Purchase done successfully");
+      alertSuccess(t("cart.successfullPurchase"));
       setStorageCart([]);
     }
   }, [search]);
-
-  const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    });
-  };
-
-  const alertInfo = (msg) => {
-    toast.info(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
 
   const deleteDatatoStorage = (name) => {
     let newLocalStorage = yourStorage?.filter((e) => e.name !== name);
@@ -84,13 +57,11 @@ export const Cart = () => {
 
   //Funcion para limpiar carro
   const clearCart = (e) => {
-    // const answer = window.confirm("Are you sure you want to clear your cart?")
-    // // if (answer) {
     setStorageCart([]);
     setPriceTotal(totalPrice());
     localStorage?.removeItem(user);
     totalCount(dispatch);
-    // }
+    
     const answer = window.confirm(t("cart.confirmClearCart"));
     if (answer) {
       setStorageCart([]);
@@ -98,8 +69,8 @@ export const Cart = () => {
       localStorage?.removeItem(user);
       alertInfo(t("cart.removeEverythingFromCart"));
       setTimeout(() => {
-        history.push("/home");
-      }, 4000);
+        history.push('/home')
+      }, 2000);
     }
   };
 
@@ -149,8 +120,6 @@ export const Cart = () => {
       </button>
 
       {/* <FormBuys priceTotal={priceTotal}/> */}
-
-      <ToastContainer />
     </section>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useStore } from "../../../context/store";
 import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -9,10 +9,11 @@ import "./responsiveNavBar.css";
 import { useAuth } from "../../../context/authContext";
 import logo from "../../../media/logonavbar.png";
 import { totalCount } from "../../../redux/actions/actions.js";
-import i18next from "i18next";
+
+
 
 export default function LoggedNavBar() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [state, dispatch] = useStore();
   // const [language, setLanguage] = useState("es");
   let myUser = JSON.parse(localStorage.getItem("myUser"));
@@ -29,7 +30,7 @@ export default function LoggedNavBar() {
     }
   };
   const handleLanguage = (lang) => {
-    i18next.changeLanguage(lang);
+    i18n.changeLanguage(lang);
   };
 
   useEffect(() => {
@@ -111,7 +112,7 @@ export default function LoggedNavBar() {
                     <Link to="/favorites">{t("loggedNavBar.favorites")}</Link>
                   </li>
                   <li className="dropdown-item category-list-item">
-                    <Link to="/history">History</Link>
+                    <Link to="/history">{t("loggedNavBar.history")}</Link>
                   </li>
                   <li className="dropdown-item category-list-item log-out">
                     <a onClick={logoutSesion}>{t("loggedNavBar.logOut")}</a>

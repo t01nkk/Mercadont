@@ -7,10 +7,16 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: "es", //Lenguaje por defecto si no existe la traducción para X cadena en el lenguaje actual.
+    returnObjects: true,
     resources: {
       //Acá van las traducciones, básicamente.
       es: {
         translation: {
+          categories: [{ name: "Ropa para hombres" }],
+          navigation: {
+            goBack: "Volver a Inicio",
+            returnToCart: "Volver al carrito",
+          },
           accountDetails: {
             btnEditProfile: "Actualizar tu información",
             info: "Tu información personal",
@@ -46,7 +52,8 @@ i18n
           articleFavorites: {
             price: "Precio: ",
             rating: "Valoración general: ",
-            productDetails: "Ver detalles del producto",
+            productDetails: "Ver detalles",
+            removeFavorite: "Remover favorito",
           },
           favorites: {
             favorites: "Favoritos",
@@ -60,6 +67,20 @@ i18n
             emptyCart: "Tu carrito se encuentra vacío. Añádele algún producto",
             totalPrice: "Precio total de la compra: ",
             buy: "Realizar la compra",
+            successfulPurchase: "¡Compra realizada con éxito!",
+            cancelPurchaseSuccess: "Compra cancelada con éxito",
+          },
+          categoriesComp: {
+            error_pos_numbers: "Solo se aceptan números positivos",
+            error_valid_numbers: "Por favor utilice valores válidos",
+            error_valid_cats: "Por favor elija categorías apropiadas",
+            priceRange: "Rango de precio",
+            minPrice: "Desde...",
+            maxPrice: "Hasta...",
+            search: "Buscar",
+            sortBy: "Orden",
+            asc: "Ascendente",
+            des: "Descendente",
           },
           createUserTest: {
             errors_mail_required: "Se requiere una dirección de correo.",
@@ -79,7 +100,7 @@ i18n
           formQA: {
             mustLogInToAsk:
               "Necesitas estar registrado para poder realizarle preguntas al vendedor",
-            postedQuestion: "¡Pregunta realizada con exito!",
+            postedQuestion: "¡Pregunta realizada con éxito!",
             askSeller: "Hacerle una pregunta al vendedor",
             askAQuestion: "Pregunta algo...",
             postQuestion: "Realizar la pregunta",
@@ -109,6 +130,9 @@ i18n
             deleteProduct: "Eliminar producto",
             update: "Actualizar el producto",
             updated: "¡Producto actualizado con éxito!",
+            status: "Estado: ",
+            active: "Disponible",
+            inactive: "No disponible",
           },
           adminProductCard: {
             edit: "Editar",
@@ -156,6 +180,8 @@ i18n
             favorites: "Favoritos",
             logOut: "Cerrar sesión",
             cart: "Carrito",
+            history: "Historial",
+            language: "Idioma",
           },
           adminHome: {
             filter: "Filtrar por:",
@@ -179,6 +205,8 @@ i18n
             altRemoveFromFavorites: "Producto eliminado de favoritos",
             mustBeLoggedIn:
               "Necesitas estar registrado para añadir productos a tu lista de favoritos",
+            logInProducts:
+              "Necesitas ingresar para añadir productos al carrito",
           },
           loginAdmin: {
             login: "Ingreso a Administración",
@@ -205,6 +233,7 @@ i18n
           },
           searchBar: {
             placeholder: "Buscar...",
+            language: "Idioma",
           },
           sendBuys: {
             productsList: "Lista de productos:",
@@ -214,29 +243,244 @@ i18n
             paypal: "Pago mediante PayPal",
             paypalProcessing: "Procesando el pago. Aguarde unos instantes...",
             paypalConfirm: "Realizar la compra mediante PayPal",
+            totalPrice: "Precio total: ",
           },
         },
       },
       en: {
         translation: {
+          categories: [{ name: "Ropa para hombres" }],
+          navigation: {
+            goBack: "Return to Home",
+            returnToCart: "Return to Cart",
+          },
+          accountDetails: {
+            btnEditProfile: "Update profile",
+            info: "Personal info",
+            email: "Email address: ",
+            name: "Name: ",
+            lastname: "Lastname: ",
+            country: "Country: ",
+            city: "City: ",
+            province: "State/Department: ",
+            street: "Street: ",
+            postalCode: "Postal code: ",
+          },
+          accountDetailsForm: {
+            toastInfo: "Your profile has been successfully updated.",
+            changePassword: "Change password",
+            askPasswordChange:
+              "Are you sure you want to modify your current password?",
+            confirmPasswordChange:
+              "Password updated. Please check your email address.",
+            updateInfo: "Update info",
+            email: "Email address",
+            name: "Name",
+            lastname: "Lastname",
+            password: "Password",
+            image: "Profile avatar",
+            address: "Address: ",
+            city: "City...",
+            country: "Country...",
+            postalCode: "Postal code...",
+            province: "State/department...",
+            street: "Street...",
+          },
+          articleFavorites: {
+            price: "Price: ",
+            rating: "Rating: ",
+            productDetails: "View details",
+            removeFavorite: "Remove from favorites",
+          },
+          favorites: {
+            favorites: "Favorites",
+          },
+          cart: {
+            removeFromCart: "Product removed from cart",
+            removeEverythingFromCart: "Cart successfully emptied out.",
+            confirmClearCart: "Do you really want to empty out your cart?",
+            emptyTheCart: "Empty the cart",
+            welcome: "Welcome to your cart",
+            emptyCart: "Your cart is currently empty. Add something to it!",
+            totalPrice: "Total price for this purchase: ",
+            buy: "Buy",
+            successfulPurchase: "Purchase successfully done!",
+            cancelPurchaseSuccess: "Purchase successfully cancelled",
+          },
+          categoriesComp: {
+            error_pos_numbers: "Only positive numbers allowed",
+            error_valid_numbers: "Please insert valid numbers",
+            error_valid_cats: "Please choose the appropiate categories",
+            priceRange: "Price range",
+            minPrice: "From...",
+            maxPrice: "Up to...",
+            search: "Search",
+            sortBy: "Order",
+            asc: "Ascending",
+            des: "Descending",
+          },
+          createUserTest: {
+            errors_mail_required: "Email address required.",
+            errors_mail_invalid:
+              "Email address invalid. Try another one.",
+            errors_password: "Password required.",
+            errors_password_invalid:
+              "Password must have between 8 and 16 characters, it must contain uppercase and lowercase letters, and at least 1 number.",
+            errors_password_match: "Passwords must match.",
+            createAccount: "Create an account",
+            accountCreated: "Account successfully registered!",
+            name: "First name...",
+            email: "Email address...",
+            password: "Password...",
+            confirmPassword: "Confirm password...",
+          },
+          formQA: {
+            mustLogInToAsk:
+              "You need to be logged in to ask questions to the seller",
+            postedQuestion: "Question successfully posted!",
+            askSeller: "Ask the seller a question",
+            askAQuestion: "As something...",
+            postQuestion: "Post question",
+          },
+          adminLoggedNavBar: {
+            inventory: "Stock",
+            sell: "Sell",
+            adminCategories: "Administer categories",
+            logOut: "Log out",
+            switch: "Switch to Consumer mode",
+          },
+          adminUnloggedNavBar: {
+            switch: "Switch to Consumer mode",
+          },
+          adminCreateCategory: {
+            created: "New category added!",
+            postCategory: "Create a new category",
+            name: "Category name...",
+            submit: "Submit new category",
+          },
+          adminAddCategories: {
+            update: "Category successfully updated!",
+            delete: "Category successfully deleted",
+          },
+          adminEditProduct: {
+            delete: "Product successfully deleted",
+            deleteProduct: "Delete product",
+            update: "Update product",
+            updated: "Product successfully updated!",
+            status: "Status: ",
+            active: "Active",
+            inactive: "Inactive",
+          },
+          adminProductCard: {
+            edit: "Edit",
+            rating: "Rating: ",
+            stock: "Stock: ",
+            status: "Status: ",
+          },
+          adminProductDetails: {
+            update: "Update product",
+            categories: "Categories: ",
+            description: "Product details: ",
+            available: "Available: ",
+            price: "Price: ",
+          },
+          adminSellProduct: {
+            errors_name: "Name is required.",
+            errors_price: "Price is required.",
+            errors_description: "A description is required.",
+            errors_stock:
+              "Stock is required.",
+            postProduct: "New product",
+            name: "Product name...",
+            price: "Product price...",
+            description: "Product description...",
+            categories: "Categories",
+            image: "Product images...",
+            status: "Product status: ",
+            stock: "Stock: ",
+            submit: "Publish!",
+            select: "Select",
+          },
+
+          guestNavBar: {
+            home: "Home",
+            categories: "Categories",
+            logIn: "Log in/Sign up",
+            cart: "Cart",
+          },
+
           loggedNavBar: {
             home: "Home",
             categories: "Categories",
             profile: "Profile",
-            accountDetails: "Account Details",
+            accountDetails: "Account details",
             favorites: "Favorites",
             logOut: "Log out",
             cart: "Cart",
+            history: "History",
+            language: "Language",
           },
-          guestNavBar: {
-            home: "Home",
-            categories: "Categories",
-            profile: "Profile",
-            accountDetails: "Account Details",
-            favorites: "Favorites",
-            logOut: "Log out",
-            cart: "Cart",
-            logIn: "Login/Register",
+          adminHome: {
+            filter: "Filter by: ",
+            name: "Name",
+            stock: "Stocl",
+            rating: "Rating",
+            price: "Price",
+            status: "Status:",
+            active: "Active",
+            inactive: "Inactive",
+            category: "Category:",
+            order: "Order:",
+            valueAsc: "Ascending",
+            valueDes: "Descending",
+            reset: "Reset",
+          },
+          home: {
+            altAddToCart: "Added to cart!",
+            altAlreadyInCart: "Product is already in your cart",
+            altAddToFavs: "Added to favorites!",
+            altRemoveFromFavorites: "Product removed from favorites",
+            mustBeLoggedIn:
+              "You need to be logged in to add products to your favorites list",
+            logInProducts:
+              "You need to be logged in to add products to your cart",
+          },
+          loginAdmin: {
+            login: "Administration panel",
+          },
+          logInForm: {
+            errors_mail_required: "Email address required.",
+            errors_mail_invalid:
+              "Email address invalidad. Please try another one.",
+            errors_password: "Password is required.",
+            logIn: "Welcome!",
+            mail: "Email address...",
+            password: "Password...",
+            submit: "Log in",
+            logInGoogle: "Log in with Google",
+            notUser: "Don't have an account?",
+            newUser: "Create a new user",
+          },
+          productDetailsInfo: {
+            categories: "Categories: ",
+            description: "Product description: ",
+            stock: "Stock: ",
+            price: "Price: ",
+            qa: "Questions about this product: ",
+          },
+          searchBar: {
+            placeholder: "Search...",
+            language: "Language",
+          },
+          sendBuys: {
+            productsList: "Products list:",
+            paymentMethod: "Choose your preferred payment method",
+            card: "Pay with card",
+            cardPay: "Purchase with your card",
+            paypal: "Pay with PayPal",
+            paypalProcessing: "Processing payment. Please hold on a while...",
+            paypalConfirm: "Continue to PayPal",
+            totalPrice: "Total price: ",
           },
         },
       },
