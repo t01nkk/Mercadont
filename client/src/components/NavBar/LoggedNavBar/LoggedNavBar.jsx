@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import FilterCategories from "../../FilterCategories/FilterCategories";
 import { getFavorites } from "../../../redux/actions/actions.js";
 import SearchBar from "../../SearchBar/SearchBar";
-import "./responsiveNavBar.css";
+import "./responsiveNavBar.scss";
 import { useAuth } from "../../../context/authContext";
 import logo from "../../../media/logonavbar.png";
 import { totalCount } from "../../../redux/actions/actions.js";
