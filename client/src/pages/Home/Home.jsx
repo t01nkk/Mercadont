@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import { Loader } from "../../components/Loader/Loader.jsx"
 import { handleDeleteFavorite, handleSaveFavorite } from "../../components/Cart/actionsCart.js";
+import { useHistory } from "react-router-dom";
 
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
   const [state, dispatch] = useStore();
   const [cart, setCart] = useState([]);
   const [inCart, setInCart] = useState(false);
+  const history = useHistory();
   let person = JSON.parse(localStorage.getItem("myUser"));
   const alertSuccess = (msg) => {
     toast.success(msg, {
@@ -55,6 +57,14 @@ export default function Home() {
     // let price = accounting.formatMoney(price, "U$D ", 0)
     let products = { name, price, image, id, stock, quantity, totalPrice };
     let value = cart.find((e) => e.name === name);
+
+    let person = JSON.parse(localStorage.getItem("myUser"));
+    if (!person) {
+      alert("You need to be logged in to add products to the cart")
+      history.push("/logIn");
+      return;
+    }
+
     if (value) {
       setInCart(false);
       alertInfo(t("home.altAlreadyInCart"));

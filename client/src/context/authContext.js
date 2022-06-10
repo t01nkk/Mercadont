@@ -6,7 +6,8 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  sendEmailVerification
 } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -25,6 +26,12 @@ export function AuthProvider({ children }) {
 
   const signup = async (email, password) => {
     return await createUserWithEmailAndPassword(auth, email, password);
+
+    //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
+
+    // const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+    // await sendEmailVerification(auth.currentUser);
+    // return userCredentials;
   };
 
   const login = async (email, password) => {
@@ -33,6 +40,7 @@ export function AuthProvider({ children }) {
       email,
       password
     );
+
     return userCredentials;
   };
 

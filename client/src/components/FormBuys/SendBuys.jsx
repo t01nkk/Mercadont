@@ -38,7 +38,7 @@ export const SendBuys = () => {
                 const { id } = paymentMethod
                 await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
                     id,
-                    amount: priceTotal * 100,
+                    amount: Math.round(priceTotal * 100),
                     local,
                     userId: user
                 })
@@ -76,6 +76,10 @@ export const SendBuys = () => {
         }
     }
 
+    const handleBack = async (e) => {
+        e.preventDefault();
+        history.push("/cart");
+    }
     const [products, setProducts] = useState("")
     const [price, setPrice] = useState("")
 
@@ -90,45 +94,50 @@ export const SendBuys = () => {
     const mostra = () => {
     };
 
-    return (<form onSubmit={handleSubmit} className="form-buys">
+    return (
         <div>
-            <h2>{t("sendBuys.productsList") }</h2>
-            <div>
-                {React.Children.toArray(products && products.map((el) =>
-                (<ListProductsBuys
-                    name={el.name}
-                    price={el.price}
-                    totalPrice={el.totalPrice}
-                    image={el.image}
-                    amount={el.quantity}
-                />)))
+            <form onSubmit={handleSubmit} className="form-buys">
+                <div>
+                    <h2>{t("sendBuys.productsList")}</h2>
+                    <div>
+                        {React.Children.toArray(products && products.map((el) =>
+                        (<ListProductsBuys
+                            name={el.name}
+                            price={el.price}
+                            totalPrice={el.totalPrice}
+                            image={el.image}
+                            amount={el.quantity}
+                        />)))
+                        }
+                    </div>
+                </div>
+                <div>
+                    {amountTotal && <p>Total Price:{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
+                    <p>{t("sendBuys.paymentMethod")}</p>
+                    <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
+                    <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
+                </div>
+                {
+                    <div>
+                        {selectBuys === "card" ?
+                            <>
+                                <CardElement className='cardElement' />
+                                <button type='submit'>{t("sendBuys.cardPay")}</button>
+                            </>
+                            : null}
+                    </div>
                 }
-            </div>
-        </div>
-        <div>
-            {amountTotal && <p>Total Price:{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
-            <p>{t("sendBuys.paymentMethod") }</p>
-            <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card") }</button>
-            <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal") }</button>
-        </div>
-        {
-            <div>
-                {selectBuys === "card" ?
-                    <>
-                        <CardElement className='cardElement' />
-                        <button type='submit'>{t("sendBuys.cardPay") }</button>
-                    </>
+                {selectBuys === "paypal" ?
+                    <button type='submit'>
+                        {redirect ?
+                            <a href={redirect}>{t("sendBuys.paypalConfirm")}</a>
+                            : <p>{t("sendBuys.paypalProcessing")}</p>
+                        }
+                    </button>
                     : null}
-            </div>
-        }
-        {selectBuys === "paypal" ?
-            <button type='submit'>
-                {redirect ?
-                    <a href={redirect}>{t("sendBuys.paypalConfirm") }</a>
-                    : <p>{t("sendBuys.paypalProcessing") }</p>
-                }
-            </button>
-            : null}
-    </form>
+            </form>
+            <button onClick={(e) => handleBack(e)}>Go back to cart</button>
+        </div>
+
     )
 }
