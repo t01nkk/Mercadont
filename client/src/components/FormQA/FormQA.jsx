@@ -4,6 +4,8 @@ import { useStore } from '../../context/store';
 import { useHistory } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from "react-toastify";
+import {BsFillCursorFill } from "react-icons/bs";
+import "./FormQA.css"
 export const FormQA = ({ productId }) => {
     const { t } = useTranslation()
     const [data, setData] = useState({
@@ -54,9 +56,10 @@ export const FormQA = ({ productId }) => {
 
     return (
         <div>
-            <h4>{t("formQA.askSeller")}</h4>
+            <h4  className="title">{t("formQA.askSeller")}</h4>
             <form onSubmit={(e) => handleSubmit(e)}>
-                <div className="divInputQuestuion">
+               <div className='input-info'>
+               <div className="divInputQuestuion">
                     <input
                         type="text"
                         name="question"
@@ -66,8 +69,9 @@ export const FormQA = ({ productId }) => {
                     />
                 </div>
                 <div className="btn-question">
-                    <input type="submit" value={t("formQA.postQuestion")} className="input-submit" />
+                   <button> <BsFillCursorFill color='white'/></button>
                 </div>
+               </div>
             </form>
             <ToastContainer />
         </div>
