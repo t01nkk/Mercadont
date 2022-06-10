@@ -54,7 +54,6 @@ router.post("/login", async (req, res, next) => {
       }
     }
     )
-
     res.send({ msg: "User Logged In" });
   }
   catch (err) {
@@ -239,6 +238,7 @@ router.post('/product/history', async (req, res) => {
     console.log(foundProducts);
     res.send(foundProducts);
   } catch (err) {
+    console.log(err.message);
     res.status(404).send({ msg: err.message })
   }
 })
