@@ -1,15 +1,16 @@
 .details-container {
   text-align: center;
   display: flex;
-  margin-left: 450px;
-  margin-top: 180px;
-  width: 800px;
-  height: 700px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  margin-left: 20vw;
+  margin-top: 5vh;
+  width:60vw;
+  height: 87vh;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
 }
 
 .button-details-details {
   display: flex;
+  max-width: 20vw;
 }
 .product-img {
   width: 80%;
@@ -17,7 +18,7 @@
 .product-info {
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 30vw;
 }
 
 .details-info {
@@ -29,47 +30,68 @@
 .img-container {
   display: flex;
   justify-content: center;
+  max-block-size: 15vw;
 }
 .title-details-info {
   letter-spacing: 2px;
-  font-size: 12px;
+  font-size: 2vh;
   font-weight: 600;
   display: flex;
   flex-direction: column;
+  margin-bottom: 1vh;
 }
 
 .titleDetails {
   font-weight: 600;
-  font-size: 25px;
-  padding-top: 10px;
+  font-size: 3.6vh;
+  padding-top: 1vh;
   display: flex;
 }
 .product-info-details {
   display: flex;
   justify-content: space-evenly;
+  font-size: 2vh;
+
 }
 .description {
-  padding: 20px;
+  padding: 1vh;
+  max-width: 25vw;
   display: flex;
   flex-direction: column;
   text-align: justify;
+  font-size: 2vh;
 }
 
 .scroll {
-  
   overflow-y: scroll;
   overflow-x: hidden;
+  max-height: 15vh;
+  max-width: 28vw;
+  text-align: left;
+  margin-left: 1vw;
 }
 .formQA {
-  margin-top: 50px;
+  max-width: 25vw;
+  align-self: center;
 }
 .question {
   background-color: rgb(250, 250, 250);
-  border-radius: 7px;
-  justify-content: end;
-  margin: 5px;
-  display: flex;
-  word-break: break-all;
+  border-radius: 1vh;
+  border-width: 2px;
+  display: block;
+  width: 25vw;
+}
+.questionText{
+  background: #edecea;
+  margin-bottom: 0;
+  padding-left: 0.8vw;
+}
+
+.answerText{
+  background: darkgray;
+  color: white;
+  padding-left: 1vw;
+  margin-bottom: 0;
 }
 
 @media (max-width: 480px) {

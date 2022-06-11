@@ -12,11 +12,12 @@ export default function NavBarADMIN() {
   const [state, dispatch] = useStore();
   const history = useHistory();
   const checkSessionADMIN = async (dispatch) => {
-    let loggedAdmin = false;
+    let loggedAdmin = false; //
     let loggedAdminInfo = JSON.parse(localStorage.getItem("myAdmin"));
+    console.log("loggedadmininfo ", loggedAdminInfo);
     if (loggedAdminInfo !== null) {
       if (loggedAdminInfo?.data.isAdmin) {
-        loggedAdmin = true;
+        loggedAdmin = true; //
         await dispatch({
           type: ADMIN_SESSION,
           payload: {
@@ -33,7 +34,7 @@ export default function NavBarADMIN() {
         },
       });
       history.push(
-        "/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/login"
+        "/admin/login"
       );
     }
   };

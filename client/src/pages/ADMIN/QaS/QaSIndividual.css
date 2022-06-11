@@ -1,0 +1,41 @@
+.product{
+    margin: 1vh;
+    background: whitesmoke;
+    border-color: black;
+    border-width: 3px;
+    padding: 1vh;
+    display: flex;
+    flex-flow: row;
+    border-style: solid;
+}
+
+.productImage{
+    height: 15vh;
+    width: 15vh;
+    align-self: center;
+    margin: 1vh;
+    justify-self: right;
+}
+
+.productText{
+    width: 73vw;
+    display: flex;
+    flex-flow: column;
+    margin: 0;
+}
+
+.productButtons{
+    width: 15vw;
+    display: flex;
+    flex-flow: column;
+}
+
+.answerButtons{
+    display: flex;
+    flex-flow: column;
+    width: 15vw;
+}
+.button{
+    margin: 0.5vh;
+    overflow-clip-margin: initial;
+}
