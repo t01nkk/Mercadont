@@ -4,23 +4,11 @@ import { fetchCategories } from "../../../redux/actions/actions";
 import { useStore } from "../../../context/store";
 import { useHistory } from "react-router-dom";
 import "./CategoryCard.css";
-import { ToastContainer, toast } from 'react-toastify'
+import { alertSuccess } from "../../../helpers/toast";
 import { useTranslation } from "react-i18next";
 export default function CreateCategory() {
   const { t } = useTranslation()
 
-  const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    })
-  }
   const history = useHistory()
   const [state, dispatch] = useStore(); 
   const [errors, setErrors] = useState({});
@@ -60,7 +48,7 @@ export default function CreateCategory() {
       alertSuccess(t("adminCreateCategory.created"))
       setTimeout(() => {
         history.push('CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/categories')
-      }, 4000);
+      }, 2000);
     } catch (err) {
       console.log(err);
     }
@@ -87,7 +75,6 @@ export default function CreateCategory() {
           <input type="submit" value={t("adminCreateCategory.submit")} disabled={errors} className="input-submit" />
         </div>
       </form>
-      <ToastContainer />
     </div>
   );
 }

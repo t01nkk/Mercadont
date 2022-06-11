@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-
 import { ProductCart } from "../ProductCart/ProductCart";
 import { totalPrice } from "./actionsCart";
 import { totalCount } from "../../redux/actions/actions";
 import accounting from "accounting";
-import { ToastContainer, toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import "./Cart.css";
 import { useStore } from "../../context/store.js";
+import { alertInfo, alertSuccess } from "../../helpers/toast";
 
 export const Cart = () => {
   const { t } = useTranslation();
@@ -22,46 +21,20 @@ export const Cart = () => {
 
   useEffect(() => {
     setPriceTotal(totalPrice());
-  }, [])
-  
-  let { search } = useLocation()
-  useEffect(()=>{
-    if(search == "?buy=false"){ 
-      alertInfo("Purchase cancelled successfully");
+  }, []);
+
+  let { search } = useLocation();
+  useEffect(() => {
+    if (search == "?buy=false") {
+      alertInfo(t("cart.cancelPurchaseSuccess"));
     }
-    if(search == "?buy=true"){
-      localStorage.removeItem(user)
-      alertSuccess("Purchase done successfully");
+    if (search == "?buy=true") {
+      localStorage.removeItem(user);
+      alertSuccess(t("cart.successfullPurchase"));
       setStorageCart([]);
       totalCount(dispatch);
     }
   }, [search]);
-
-  const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    });
-  };
-
-  const alertInfo = (msg) => {
-    toast.info(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
 
   const deleteDatatoStorage = (name) => {
     let newLocalStorage = yourStorage?.filter((e) => e.name !== name);
@@ -91,6 +64,11 @@ export const Cart = () => {
     // setPriceTotal(totalPrice());
     // localStorage?.removeItem(user);
     // }
+    setStorageCart([]);
+    setPriceTotal(totalPrice());
+    localStorage?.removeItem(user);
+    totalCount(dispatch);
+
     const answer = window.confirm(t("cart.confirmClearCart"));
     if (answer) {
       setStorageCart([]);
@@ -100,7 +78,7 @@ export const Cart = () => {
       alertInfo(t("cart.removeEverythingFromCart"));
       setTimeout(() => {
         history.push("/home");
-      }, 4000);
+      }, 2000);
     }
   };
 
@@ -111,8 +89,8 @@ export const Cart = () => {
 
   return (
     <section className="cart-container">
-      <h2>{t("cart.welcome")}</h2>
-      <div className="cart-cards">
+      <h2 className="cart-container-title">{t("cart.welcome")}</h2>
+      <article className="cart-cards">
         {storageCart && storageCart?.length > 0 ? (
           React.Children.toArray(
             storageCart.map((el, index) => (
@@ -131,27 +109,32 @@ export const Cart = () => {
             ))
           )
         ) : (
-          <h3>{t("cart.emptyCart")}</h3>
+          <h3>
+            TEXTO CARRO VACIO
+            {/* {t("cart.emptyCart")} */}
+          </h3>
         )}
-      </div>
-      {storageCart && storageCart.length > 0 ? (
-        <p>
-          {t("cart.totalPrice")}
-          {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
-        </p>
-      ) : null}
-      {storageCart && storageCart?.length !== 0 ? (
-        <button onClick={makePurchase} disabled={storageCart === null}>
-          {t("cart.buy")}
+      </article>
+      <div className="cart-chechout-section">
+        {storageCart && storageCart.length > 0 ? (
+          <p>
+            TOTAL PRICE
+            {/* {t("cart.totalPrice")} */}
+            {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
+          </p>
+        ) : null}
+        {storageCart && storageCart?.length !== 0 ? (
+          <button onClick={makePurchase} disabled={storageCart === null}>
+            CHECHOUT
+            {/* {t("cart.buy")} */}
+          </button>
+        ) : null}
+        <button onClick={() => clearCart()} disabled={storageCart?.length < 1}>
+          BOTON DE VACIAR
+          {t("cart.emptyTheCart")}
         </button>
-      ) : null}
-      <button onClick={() => clearCart()} disabled={storageCart?.length < 1}>
-        {t("cart.emptyTheCart")}
-      </button>
-
+      </div>
       {/* <FormBuys priceTotal={priceTotal}/> */}
-
-      <ToastContainer />
     </section>
   );
 };

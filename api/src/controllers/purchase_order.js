@@ -19,7 +19,11 @@ const createPurchaseOrder = async (orderId,userId,local,amount,status) => {
             const user = await User.findOne({
                 where: { id: userId}
             })
-            mailPayment(user.email, orderId);
+            // DESCOMENTAR PARA ENVIAR MAIL AL USER CUANDO SE HACE EL PAGO.
+
+            // mailPayment(user.email, orderId);
+
+            // 
         }
         return created; 
     } catch (error) {
@@ -45,7 +49,12 @@ const createPurchaseCompleted = async (orderId) => {
         const user = await User.findOne({
             where: {id: order.userId}
         })
-        mailPayment(user.email, orderId);
+
+        // DESCOMENTAR PARA ENVIAR MAIL AL USER CUANDO SE HACE EL PAGO.
+
+        // mailPayment(user.email, orderId);
+
+        // 
         return updated;
     } catch (error) {
         return error
