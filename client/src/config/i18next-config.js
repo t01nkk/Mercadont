@@ -70,7 +70,7 @@ i18n
               "La contraseña debe tener entre 8 y 16 caracteres, debe contener contener caracteres en mayúsculas y minúsculas, y al menos 1 número.",
             errors_password_match: "Las contraseñas deben coincidir.",
             createAccount: "Crear una cuenta nueva",
-            accountCreated: "¡Cuenta registrada exitosamente!",
+            accountCreated: "¡Cuenta registrada exitosamente! Por favor, chequea tu mail para confirmar tu cuenta",
             name: "Primer nombre...",
             email: "Dirección de correo...",
             password: "Contraseña...",

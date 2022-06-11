@@ -1,9 +1,9 @@
-const { User, PurchaseOrder, Qa } = require("../db");
+const { User, PurchaseOrder, Qa, Product } = require("../db");
 const { Router } = require("express");
 const { Sequelize, Op } = require("sequelize");
 const router = Router();
 const createdOrders = require("../../purchaseOrders.json");
-const { groupPurchaseOrders } = require("../middlewares/middlewares");
+const { groupPurchaseOrders, mailQuestion } = require("../middlewares/middlewares");
 
 // Working
 //Get all Users
@@ -225,17 +225,15 @@ router.put("/:questionId/answer", async (req, res) => {
       }, { where: { id: questionId } })
 
       const userMail = await Qa.findOne({
-        include:{
-          model: User,
-          through: { attributes: [] }
-        },
+        include: { all: true },
         where:{
           id: questionId
         }
       })
-      // console.log("userMail:", userMail.dataValues)
-      // console.log("userMail.qa.dataValues.users:", userMail.dataValues.users[0].dataValues.email)
-      return res.status(200).send({userEmail : userMail.dataValues.users[0].dataValues.email})
+      const { email } = userMail.dataValues.users[0].dataValues;
+      const { id, name } = userMail.dataValues.products[0].dataValues
+      mailQuestion(email, name, id)
+      return res.status(200).send("Question answered")
   }
   catch (err) {
       console.log(err)
