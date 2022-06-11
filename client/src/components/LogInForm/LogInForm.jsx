@@ -12,28 +12,6 @@ export default function LogInForm() {
   const [redirect, setRedirect] = useState(false);
   const { login, loginWithGoogle, resetPassword } = useAuth();
 
-  async function userLogin (userCredentials){
-      const user = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
-        id: userCredentials.user.uid,
-        name: userCredentials.user.displayName,
-        email: userCredentials.user.email,
-        image: userCredentials.user.photoURL,
-        isVerified: userCredentials.user.emailVerified,
-      });
-
-      if(user?.banned){
-        alertError(`${t("logInForm.userBanned")}`)
-      }
-
-      if (userCredentials.user.uid) {
-        localStorage.setItem(
-            "myUser",
-            JSON.stringify(userCredentials.user.uid)
-        );
-        setRedirect(true);
-      }
-  }
-
   const handleLogin = async (values) => {
     try {
       const userCredentials = await login(values.email, values.password);
@@ -41,9 +19,25 @@ export default function LogInForm() {
       ////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
 
       if (userCredentials.user.emailVerified) {
-        await userLogin(userCredentials)
-          setRedirect(true);
+        const user = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+          id: userCredentials.user.uid,
+          name: userCredentials.user.displayName,
+          email: userCredentials.user.email,
+          image: userCredentials.user.photoURL,
+        });
+
+        if(user.data[0].banned){
+          alert("you are Banned. Get out of here")
+          return
         }
+
+        if (userCredentials.user.uid) {
+          localStorage.setItem(
+              "myUser",
+              JSON.stringify(userCredentials.user.uid)
+          );
+          setRedirect(true);
+        }}
         //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
       else {
         console.log("Check your mail box for the authentification email")
@@ -59,9 +53,27 @@ export default function LogInForm() {
   const handleGoogleSignin = async () => {
     try {
       const userCredentials = await loginWithGoogle();
-      await userLogin(userCredentials)
+      if (userCredentials.user.emailVerified) {
+        const user = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+          id: userCredentials.user.uid,
+          name: userCredentials.user.displayName,
+          email: userCredentials.user.email,
+          image: userCredentials.user.photoURL,
+        });
 
-      setRedirect(true);
+        if (user.data[0].banned) {
+          alert("You are banned. Get out of here")
+          return
+        }
+
+        if (userCredentials.user.uid) {
+          localStorage.setItem(
+              "myUser",
+              JSON.stringify(userCredentials.user.uid)
+          );
+        }
+        setRedirect(true);
+      }
     } catch (err) {
       console.log(err);
     }

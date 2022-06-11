@@ -94,8 +94,7 @@ router.put("/ban/:id", async (req, res) => {
   const { id } = req.params;
   const { setBan } = req.body;
 
-  if (setBan !== undefined || setBan !== null) {
-    try {
+   try {
       const bannedUser = await User.update(
         {
           banned: setBan,
@@ -106,7 +105,6 @@ router.put("/ban/:id", async (req, res) => {
     } catch (error) {
       return res.status(400).send(error);
     }
-  }
 });
 
 //ADMIN
