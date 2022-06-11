@@ -26,7 +26,6 @@ export default function NavBarADMIN() {
         });
       }
     } else {
-      console
       await dispatch({
         type: ADMIN_SESSION,
         payload: {
@@ -49,7 +48,6 @@ export default function NavBarADMIN() {
       <header className="header">
         <div className="header-logo">
           <Link to="/">
-            
             <img src={logo} alt="" />
           </Link>
         </div>
