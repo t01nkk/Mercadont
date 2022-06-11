@@ -4,17 +4,17 @@ import { useHistory } from 'react-router-dom'
 import { Cart } from '../../components/Cart/Cart'
 
 export default function UserCart() {
-  const history = useHistory()  
+  const history = useHistory();
 
-  const handleBack = async (e) =>{
+  const handleBack = async (e) => {
     e.preventDefault();
     history.push("/home");
-  }
+  };
 
   return (
     <>
       <Cart/>
       <button onClick={(e) => handleBack(e)}>{t("navigation.goBack")}</button>
     </>
-  )
+  );
 }

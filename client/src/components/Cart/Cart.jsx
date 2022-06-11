@@ -21,17 +21,18 @@ export const Cart = () => {
 
   useEffect(() => {
     setPriceTotal(totalPrice());
-  }, [])
-  
-  let { search } = useLocation()
-  useEffect(()=>{
-    if(search == "?buy=false"){ 
+  }, []);
+
+  let { search } = useLocation();
+  useEffect(() => {
+    if (search == "?buy=false") {
       alertInfo(t("cart.cancelPurchaseSuccess"));
     }
     if(search == "?buy=true"){
       localStorage.removeItem(user)
       alertSuccess(t("cart.successfulPurchase"));
       setStorageCart([]);
+      totalCount(dispatch);
     }
   }, [search]);
 
@@ -57,19 +58,26 @@ export const Cart = () => {
 
   //Funcion para limpiar carro
   const clearCart = (e) => {
+    // const answer = window.confirm("Are you sure you want to clear your cart?")
+    // // if (answer) {
+    // setStorageCart([]);
+    // setPriceTotal(totalPrice());
+    // localStorage?.removeItem(user);
+    // }
     setStorageCart([]);
     setPriceTotal(totalPrice());
     localStorage?.removeItem(user);
     totalCount(dispatch);
-    
+
     const answer = window.confirm(t("cart.confirmClearCart"));
     if (answer) {
       setStorageCart([]);
       setPriceTotal(totalPrice());
       localStorage?.removeItem(user);
+      totalCount(dispatch);
       alertInfo(t("cart.removeEverythingFromCart"));
       setTimeout(() => {
-        history.push('/home')
+        history.push("/home");
       }, 2000);
     }
   };
@@ -81,8 +89,8 @@ export const Cart = () => {
 
   return (
     <section className="cart-container">
-      <h2>{t("cart.welcome")}</h2>
-      <div className="cart-cards">
+      <h2 className="cart-container-title">{t("cart.welcome")}</h2>
+      <article className="cart-cards">
         {storageCart && storageCart?.length > 0 ? (
           React.Children.toArray(
             storageCart.map((el, index) => (
@@ -101,24 +109,31 @@ export const Cart = () => {
             ))
           )
         ) : (
-          <h3>{t("cart.emptyCart")}</h3>
+          <h3>
+            TEXTO CARRO VACIO
+            {/* {t("cart.emptyCart")} */}
+          </h3>
         )}
-      </div>
-      {storageCart && storageCart.length > 0 ? (
-        <p>
-          {t("cart.totalPrice")}
-          {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
-        </p>
-      ) : null}
-      {storageCart && storageCart?.length !== 0 ? (
-        <button onClick={makePurchase} disabled={storageCart === null}>
-          {t("cart.buy")}
+      </article>
+      <div className="cart-chechout-section">
+        {storageCart && storageCart.length > 0 ? (
+          <p>
+            TOTAL PRICE
+            {/* {t("cart.totalPrice")} */}
+            {`${accounting.formatMoney(priceTotal, "U$D ", 2)}`}
+          </p>
+        ) : null}
+        {storageCart && storageCart?.length !== 0 ? (
+          <button onClick={makePurchase} disabled={storageCart === null}>
+            CHECHOUT
+            {/* {t("cart.buy")} */}
+          </button>
+        ) : null}
+        <button onClick={() => clearCart()} disabled={storageCart?.length < 1}>
+          BOTON DE VACIAR
+          {t("cart.emptyTheCart")}
         </button>
-      ) : null}
-      <button onClick={() => clearCart()} disabled={storageCart?.length < 1}>
-        {t("cart.emptyTheCart")}
-      </button>
-
+      </div>
       {/* <FormBuys priceTotal={priceTotal}/> */}
     </section>
   );

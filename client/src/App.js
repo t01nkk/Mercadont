@@ -24,7 +24,9 @@ import NavBarADMIN from "./components/ADMIN/NavBarADMIN/NavBarADMIN";
 import { Favorites } from "./components/Favorites/Favorites";
 import ProductDetailsAdmin from "./pages/ADMIN/ProductDetailsADMIN/ProductDetailsAdmin";
 import { History } from "./components/History/History.jsx"
-import { ToastContainer } from "react-toastify"
+import { QaS } from "./pages/ADMIN/QaS/QaS.jsx"
+import { ToastContainer } from "react-toastify";
+
 //Cualquier ruta que tiene que solo estar disponible a usuario logueado, se le puede envolver en ProtectedRoutes
 // import {ProtectedRoute} from "./components/ProtectedRoute/ProtectedRoute";
 function App() {
@@ -161,6 +163,13 @@ function App() {
         >
           <NavBarADMIN />
           <AdminUsers />
+        </Route>
+        <Route
+          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/QaS"
+          exact
+        >
+          <NavBarADMIN />
+          <QaS />
         </Route>
         <Route
           path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/editCategories/:id"

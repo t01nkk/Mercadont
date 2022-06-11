@@ -29,6 +29,7 @@ export default function ProductDetailsInfoAdmin({
       <div className="img-container">
         <img src={image} alt={` ${name}`} className="product-img" />
       </div>
+      {/* <p>Hijo de puta</p> */}
       <div className="product-info">
         <p className="title">{name}</p>
         <p className="title">{t("adminProductDetails.categories")}</p>
@@ -42,6 +43,7 @@ export default function ProductDetailsInfoAdmin({
         <p>{stock}</p>
         <p className="title">{t("adminProductDetails.price")} </p>
         <p>{`${accounting.formatMoney(price, "U$D ", 0)}`}</p>
+
         {/* <p className="title">Rating: </p>
         <p>{rating}</p> */}
         {/* <p className="title">Reviews:</p>

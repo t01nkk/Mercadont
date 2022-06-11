@@ -116,54 +116,65 @@ export default function ProductDetailsInfo({
       <div className="details-info">
         <div className="product-info">
           <p className="titleDetails">
-            <button
-              className="card-btn"
-              onClick={() => handleSaveCart(name, price, image, id, stock)}
-            >
-              <img className="cart-btn" src={shoppingCart} alt="add-cart" />
-            </button>
-            {changeButton ? (
-              <button className="card-btn" onClick={() => deleteFavorite()}>
-                <img
-                  className="fav-btn"
-                  src={imgDeleteFavorite}
-                  alt="delete-favorite"
-                />
-              </button>
-            ) : (
-              <button className="card-btn" onClick={() => postFavorite()}>
-                <img
-                  className="fav-btn"
-                  src={imgAddFavorite}
-                  alt="add-favorite"
-                />
-              </button>
-            )}
             {name}
+            <div className="button-details-details">
+              <button
+                className="card-btn"
+                onClick={() => handleSaveCart(name, price, image, id, stock)}
+              >
+                <img className="cart-btn" src={shoppingCart} alt="add-cart" />
+              </button>
+              {changeButton ? (
+                <button className="card-btn" onClick={() => deleteFavorite()}>
+                  <img
+                    className="fav-btn"
+                    src={imgDeleteFavorite}
+                    alt="delete-favorite"
+                  />
+                </button>
+              ) : (
+                <button className="card-btn" onClick={() => postFavorite()}>
+                  <img
+                    className="fav-btn"
+                    src={imgAddFavorite}
+                    alt="add-favorite"
+                  />
+                </button>
+              )}
+            </div>
           </p>
-          <p className="title">{t("productDetailsInfo.description")}</p>
+
+          <p className="title-details-info">
+            {t("productDetailsInfo.description")}
+          </p>
           <p className="description">{description}</p>
           <div className="product-info-details">
             <div>
-              <p className="title">{t("productDetailsInfo.categories")}</p>
+              <p className="title-details-info">
+                {t("productDetailsInfo.categories")}
+              </p>
               {React.Children.toArray(
                 categories.map((category) => <p>{category.name}</p>)
               )}
             </div>
             <div>
-              <p className="title">{t("productDetailsInfo.stock")}</p>
+              <p className="title-details-info">
+                {t("productDetailsInfo.stock")}
+              </p>
               <p>{stock}</p>
             </div>
 
             <div>
-              <p className="title">{t("productDetailsInfo.price")}</p>
+              <p className="title-details-info">
+                {t("productDetailsInfo.price")}
+              </p>
               <p>{`${accounting.formatMoney(price, "U$D ", 0)}`}</p>
             </div>
           </div>
-          <p className="title">{t("productDetailsInfo.qa")}</p>
-          {/* <p className="title">Rating: </p>
+          <p className="title-details-info">{t("productDetailsInfo.qa")}</p>
+          {/* <p className="title-details-info">Rating: </p>
         <p>{rating}</p> */}
-          {/* <p className="title">Reviews:</p>
+          {/* <p className="title-details-info">Reviews:</p>
         <p>{reviews}</p> */}
 
           <div className="scroll">

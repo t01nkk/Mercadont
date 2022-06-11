@@ -28,13 +28,13 @@ export function AuthProvider({ children }) {
 
     //////////COMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
 
-    return await createUserWithEmailAndPassword(auth, email, password);
+    // return await createUserWithEmailAndPassword(auth, email, password);
 
     //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
 
-    // const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
-    // await sendEmailVerification(auth.currentUser);
-    // return userCredentials;
+    const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+    await sendEmailVerification(auth.currentUser);
+    return userCredentials;
   };
 
   const login = async (email, password) => {

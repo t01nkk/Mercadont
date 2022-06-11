@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { mailPayPal, modifyStockPaypal } = require("../middlewares/middlewares");
+const { modifyStockPaypal } = require("../middlewares/middlewares");
 const {
   createPurchaseOrder,
   createPurchaseCompleted,
@@ -74,7 +74,6 @@ const captureOrder = async (req, res) => {
   );
   completedOrder = createPurchaseCompleted(data.id)
   modifyStockPaypal(data.id)
-  // mailPayPal();
   res.status(200).redirect(`${process.env.HOST_PORT_FRONT}/cart?buy=true`);
 };
 
