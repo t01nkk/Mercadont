@@ -253,7 +253,7 @@ router.get("/all/:resolved", async (req, res) => {
           include: [
               {
                   model: Product,
-                  attributes: ["id", "name"],
+                  attributes: ["id", "name", "image"],
                   through: { attributes: [] },
               },
               {
@@ -271,7 +271,7 @@ router.get("/all/:resolved", async (req, res) => {
           include: [
               {
                   model: Product,
-                  attributes: ["id", "name"],
+                  attributes: ["id", "name", "image"],
                   through: { attributes: [] },
               },
               {
@@ -287,7 +287,7 @@ router.get("/all/:resolved", async (req, res) => {
       include: [
           {
               model: Product,
-              attributes: ["id", "name"],
+              attributes: ["id", "name", "image"],
               through: { attributes: [] },
           },
           {
