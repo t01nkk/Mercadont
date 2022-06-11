@@ -30,7 +30,7 @@ export const Cart = () => {
     }
     if(search == "?buy=true"){
       localStorage.removeItem(user)
-      alertSuccess(t("cart.successfullPurchase"));
+      alertSuccess(t("cart.successfulPurchase"));
       setStorageCart([]);
     }
   }, [search]);

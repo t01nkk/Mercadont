@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import shoppingCart from "../../media/shoppingCart.png";
 import imgAddFavorite from "../../media/heart-add-cart.png";
 import imgDeleteFavorite from "../../media/heart-delete-cart.png";
+import { alertInfo, alertWarning } from "../../helpers/toast";
 import accounting from "accounting";
 import { useTranslation } from "react-i18next";
 export default function ProductCard({
@@ -31,17 +32,22 @@ export default function ProductCard({
   const postFavorite = () => {
     let person = JSON.parse(localStorage.getItem("myUser"));
     if (!person) {
-      alert(t("home.mustBeLoggedIn"))
-      history.push("/logIn");
-      return;
+      alertWarning(t("home.mustBeLoggedIn"))
+      setTimeout(() => {
+              history.push("/logIn");        
+      }, 2000);
     }
-    setChangeButton(true);
+    else {
+          setChangeButton(true);
     handleSaveFavorite(id);
     alertSuccess(t("home.altAddToFavs"))
+
+    }
   };
 
   const deleteFavorite = () => {
     setChangeButton(false);
+    alertInfo(t("home.altRemoveFromFavorites"))
     handleDeleteFavorite(id);
   };
 

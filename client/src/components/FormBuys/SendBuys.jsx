@@ -6,6 +6,7 @@ import { totalPrice } from '../Cart/actionsCart'
 import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
 import { useTranslation } from 'react-i18next';
 import accounting from 'accounting'
+import {alertInfo} from '../../helpers/toast'
 
 export const SendBuys = () => {
     const { t } = useTranslation()
@@ -32,8 +33,9 @@ export const SendBuys = () => {
             const { error, paymentMethod } = await stripe.createPaymentMethod({
                 type: "card",
                 card: elements.getElement(CardElement)
+               
             })
-
+            alertInfo(t("sendBuys.processingCard"))
             if (!error) {
                 const { id } = paymentMethod
                 await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
@@ -43,7 +45,6 @@ export const SendBuys = () => {
                     userId: user
                 })
             }
-            // loadingBuys()
             if (paymentMethod) {
                 localStorage.removeItem(user)
                 history.push("/cart?buy=true")

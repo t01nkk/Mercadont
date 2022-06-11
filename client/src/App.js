@@ -31,7 +31,7 @@ function App() {
   return (
     <>
       <Router>
-        <ToastContainer limit={3}/>
+        <ToastContainer limit={3} />
         <Route exact path="/">
           {/* REDIRECT ROUTE (CAN USE TO FORCE UPDATE OF COMPONENTS) */}
           <Redirect to="/home" />

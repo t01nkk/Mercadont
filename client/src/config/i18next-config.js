@@ -8,11 +8,11 @@ i18n
   .init({
     fallbackLng: "es", //Lenguaje por defecto si no existe la traducción para X cadena en el lenguaje actual.
     returnObjects: true,
+    joinArrays: "\n",
     resources: {
       //Acá van las traducciones, básicamente.
       es: {
         translation: {
-          categories: [{ name: "Ropa para hombres" }],
           navigation: {
             goBack: "Volver a Inicio",
             returnToCart: "Volver al carrito",
@@ -179,9 +179,11 @@ i18n
             accountDetails: "Detalles de la cuenta",
             favorites: "Favoritos",
             logOut: "Cerrar sesión",
+            confirmLogOut: "¿Estás seguro de querer cerrar sesión?",
             cart: "Carrito",
             history: "Historial",
             language: "Idioma",
+            loggedOut: "Sesión cerrada. Hasta luego",
           },
           adminHome: {
             filter: "Filtrar por:",
@@ -223,6 +225,7 @@ i18n
             logInGoogle: "Ingresar con Google",
             notUser: "¿No tienes una cuenta?",
             newUser: "Crear un nuevo usuario",
+            loggedIn: "¡Ingreso exitoso!",
           },
           productDetailsInfo: {
             categories: "Categorías: ",
@@ -244,6 +247,7 @@ i18n
             paypalProcessing: "Procesando el pago. Aguarde unos instantes...",
             paypalConfirm: "Realizar la compra mediante PayPal",
             totalPrice: "Precio total: ",
+            processingCard: "Procesando el pago. Aguarde un instante...",
           },
         },
       },
@@ -321,8 +325,7 @@ i18n
           },
           createUserTest: {
             errors_mail_required: "Email address required.",
-            errors_mail_invalid:
-              "Email address invalid. Try another one.",
+            errors_mail_invalid: "Email address invalid. Try another one.",
             errors_password: "Password required.",
             errors_password_invalid:
               "Password must have between 8 and 16 characters, it must contain uppercase and lowercase letters, and at least 1 number.",
@@ -388,8 +391,7 @@ i18n
             errors_name: "Name is required.",
             errors_price: "Price is required.",
             errors_description: "A description is required.",
-            errors_stock:
-              "Stock is required.",
+            errors_stock: "Stock is required.",
             postProduct: "New product",
             name: "Product name...",
             price: "Product price...",
@@ -415,7 +417,9 @@ i18n
             profile: "Profile",
             accountDetails: "Account details",
             favorites: "Favorites",
+            confirmLogOut: "Are you sure you want to close your session?",
             logOut: "Log out",
+            loggedOut: "Logged out. See you later",
             cart: "Cart",
             history: "History",
             language: "Language",
@@ -479,6 +483,7 @@ i18n
             cardPay: "Purchase with your card",
             paypal: "Pay with PayPal",
             paypalProcessing: "Processing payment. Please hold on a while...",
+            processingCard: "Processing payment. Please hold on a while...",
             paypalConfirm: "Continue to PayPal",
             totalPrice: "Total price: ",
           },
