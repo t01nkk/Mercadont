@@ -18,14 +18,14 @@ i18n
             returnToCart: "Volver al carrito",
           },
           accountDetails: {
-            btnEditProfile: "Actualizar tu información",
-            info: "Tu información personal",
-            email: "Dirección de correo: ",
+            btnEditProfile: "Actualizar",
+            info: "Detalles",
+            email: "Correo: ",
             name: "Nombre: ",
             lastname: "Apellido: ",
             country: "País: ",
             city: "Ciudad: ",
-            province: "Provincia/Departamento: ",
+            province: "Provincia: ",
             street: "Calle: ",
             postalCode: "Código postal: ",
           },
@@ -321,8 +321,7 @@ i18n
           },
           createUserTest: {
             errors_mail_required: "Email address required.",
-            errors_mail_invalid:
-              "Email address invalid. Try another one.",
+            errors_mail_invalid: "Email address invalid. Try another one.",
             errors_password: "Password required.",
             errors_password_invalid:
               "Password must have between 8 and 16 characters, it must contain uppercase and lowercase letters, and at least 1 number.",
@@ -388,8 +387,7 @@ i18n
             errors_name: "Name is required.",
             errors_price: "Price is required.",
             errors_description: "A description is required.",
-            errors_stock:
-              "Stock is required.",
+            errors_stock: "Stock is required.",
             postProduct: "New product",
             name: "Product name...",
             price: "Product price...",
