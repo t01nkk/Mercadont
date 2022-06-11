@@ -245,15 +245,3 @@ export default function EditProduct() {
     </div>
   );
 }
-// const [stateQaS, setStateQaS] = useState(false)
-// return (
-//   <div>
-//       <button onClick={setStateQaS(true)}>realizadas</button>
-//       <button onClick={setStateQaS(false)}>pendientes</button>
-//       <div>
-//           <p>Fecha</p>
-//           <p>Aca va la pregunta del usuario</p>
-//       </div>
-//   </div>
-// )
-// }
