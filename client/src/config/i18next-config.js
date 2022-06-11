@@ -338,7 +338,7 @@ i18n
               "You need to be logged in to ask questions to the seller",
             postedQuestion: "Question successfully posted!",
             askSeller: "Ask the seller a question",
-            askAQuestion: "As something...",
+            askAQuestion: "Ask something...",
             postQuestion: "Post question",
           },
           adminLoggedNavBar: {
