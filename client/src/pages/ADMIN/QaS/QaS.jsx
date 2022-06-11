@@ -30,7 +30,7 @@ export const QaS = () => {
             <button onClick={()=>setStateQas(false)}>pendientes</button>
         </div>
         <div>
-           {dataQaS?.length && 
+           {dataQaS?.length?
             React.Children.toArray(dataQaS.map(e=>
                 <QaSIndividual
                     id={e.id}
@@ -42,7 +42,7 @@ export const QaS = () => {
                     answer={e.answer}
                 />
                 )
-             )
+             ):<h5>No hay consultas pendientes</h5>
             }
         </div>
     </div>
