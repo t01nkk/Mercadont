@@ -208,8 +208,8 @@ router.get("/history", async (req, res) => {
 //Answer Question / Add Answer
 router.put("/:questionId/answer", async (req, res) => {
   const { questionId } = req.params
-  const { answer } = req.body
-
+  const { answer, idProduct } = req.body
+  console.log(idProduct)
   if (!answer || answer.length < 1) {
       return res.status(404).send("Answer must not be empty")
   }

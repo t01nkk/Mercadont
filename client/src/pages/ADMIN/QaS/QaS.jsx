@@ -23,21 +23,27 @@ export const QaS = () => {
     }
   return (
     <div>
+        {stateQas?<h2>Preguntas Contestadas</h2>:<h2>Preguntas Pendientes</h2>}
+        <h2></h2>
         <div>
-            <button onClick={()=>setStateQas(true)}>todas</button>
+            <button onClick={()=>setStateQas(true)}>Contestadas</button>
             <button onClick={()=>setStateQas(false)}>pendientes</button>
         </div>
         <div>
-           {dataQaS.length && dataQaS.map(e=>
+           {dataQaS?.length && 
+            React.Children.toArray(dataQaS.map(e=>
                 <QaSIndividual
-                    key={e.createdAt + Math.random()}
+                    id={e.id}
                     createdAt={e.createdAt}
                     name={e.products[0].name}
+                    idProduct={e.products[0].id}
                     userId={e.users[0].id}
                     question={e.question}
                     answer={e.answer}
                 />
-            )}
+                )
+             )
+            }
         </div>
     </div>
   )
