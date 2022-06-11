@@ -6,6 +6,8 @@ import { totalPrice } from '../Cart/actionsCart'
 import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
 import { useTranslation } from 'react-i18next';
 import accounting from 'accounting'
+import { Loader } from "../Loader/Loader.jsx"
+import "./SendBuys.css"
 
 export const SendBuys = () => {
     const { t } = useTranslation()
@@ -18,6 +20,7 @@ export const SendBuys = () => {
     const [redirect, setRedirect] = useState("")
     const [selectBuys, setSelectBuys] = useState("")
     const [amountTotal, setAmounTotal] = useState("")
+    const [loadingBuys, setLoadingBuys] = useState(false)
     const history = useHistory()
 
 
@@ -33,7 +36,7 @@ export const SendBuys = () => {
                 type: "card",
                 card: elements.getElement(CardElement)
             })
-
+            setLoadingBuys(true)
             if (!error) {
                 const { id } = paymentMethod
                 await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
@@ -43,8 +46,10 @@ export const SendBuys = () => {
                     userId: user
                 })
             }
+           
             // loadingBuys()
             if (paymentMethod) {
+                setLoadingBuys(false)
                 localStorage.removeItem(user)
                 history.push("/cart?buy=true")
             }
@@ -123,6 +128,7 @@ export const SendBuys = () => {
                             <>
                                 <CardElement className='cardElement' />
                                 <button type='submit'>{t("sendBuys.cardPay")}</button>
+                                {loadingBuys && <div className='buys-loader'><Loader/></div>}
                             </>
                             : null}
                     </div>
