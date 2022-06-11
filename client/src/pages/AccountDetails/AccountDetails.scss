@@ -1,32 +1,89 @@
 .profile-wrapper {
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  margin-top: 3rem;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
 }
 .profile-info {
   justify-content: center;
   text-align: center;
 }
 .profile-title {
+  font-size: 1.1rem;
+  font-weight: 400;
+  @media only screen and (max-width: 450px) {
+    font-size: 1rem;
+  }
+  @media only screen and (max-width: 247px) {
+    background-color: black;
+    color: #fff;
+  }
+}
+.word-break {
+  word-wrap: break-word;
+  text-align: left;
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+  }
+  // @media only screen and (max-width: 900px) {
+  // }
+}
+.title-profile {
+  color: white;
   font-size: 1.3rem;
   font-weight: 400;
 }
 .navPush-accountDetails {
   margin-top: 6%;
 }
+.img-details {
+  border-radius: 10%;
+  align-items: flex-start;
+}
 .profile-container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   text-align: center;
-  border: solid 1px black;
-  border-radius: 15px;
-  width: 40%;
-  margin: 1rem 30%;
+  width: 60%;
+  margin: 2rem 20%;
+  background: linear-gradient(black 25%, white 10%);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  @media only screen and (max-width: 900px) {
+    width: 100%;
+  }
 }
+.data-user {
+  display: flex;
+  align-items: flex-start;
+  text-align: justify;
+  justify-content: space-between;
+  width: 100%;
+  @media only screen and (max-width: 500px) {
+    display: unset;
+  }
+}
+.data-user1 {
+  display: flex;
+  margin-left: 10%;
+  flex-direction: column;
+  @media only screen and (max-width: 500px) {
+    display: unset;
+    margin: unset;
+  }
+}
+.data-user2 {
+  display: flex;
+  margin-right: 10%;
+  flex-direction: column;
+  word-wrap: break-word;
+  @media only screen and (max-width: 500px) {
+    display: unset;
+    margin: unset;
+  }
+}
+
 .input-edit-profile {
   background-color: black;
   border: none;
@@ -46,32 +103,35 @@
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
+.label-accDetails {
+  font-weight: 600;
+}
 /* ---------- Estilos Generales de las Tarjetas ----------*/
-.tarjeta {
-  width: 100%;
-  max-width: 550px;
-  position: relative;
-  color: #fff;
-  transition: 0.3s ease all;
-  transform: rotateY(0deg);
-  transform-style: preserve-3d;
-  cursor: pointer;
-  z-index: 2;
-}
+// .tarjeta {
+//   width: 100%;
+//   max-width: 550px;
+//   position: relative;
+//   color: #fff;
+//   transition: 0.3s ease all;
+//   transform: rotateY(0deg);
+//   transform-style: preserve-3d;
+//   cursor: pointer;
+//   z-index: 2;
+// }
 
-.tarjeta.active {
-  transform: rotateY(180deg);
-}
+// .tarjeta.active {
+//   transform: rotateY(180deg);
+// }
 
-.tarjeta > div {
-  padding: 30px;
-  border-radius: 15px;
-  min-height: 315px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 10px 10px 0 rgba(90, 116, 148, 0.3);
-}
+// .tarjeta > div {
+//   padding: 30px;
+//   border-radius: 15px;
+//   min-height: 315px;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   box-shadow: 0 10px 10px 0 rgba(90, 116, 148, 0.3);
+// }
 
 /* ---------- Tarjeta Delantera ----------*/
 
