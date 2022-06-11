@@ -12,6 +12,28 @@ export default function LogInForm() {
   const [redirect, setRedirect] = useState(false);
   const { login, loginWithGoogle, resetPassword } = useAuth();
 
+  async function userLogin (userCredentials){
+      const user = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+        id: userCredentials.user.uid,
+        name: userCredentials.user.displayName,
+        email: userCredentials.user.email,
+        image: userCredentials.user.photoURL,
+        isVerified: userCredentials.user.emailVerified,
+      });
+
+      if(user?.banned){
+        alertError(`${t("logInForm.userBanned")}`)
+      }
+
+      if (userCredentials.user.uid) {
+        localStorage.setItem(
+            "myUser",
+            JSON.stringify(userCredentials.user.uid)
+        );
+        setRedirect(true);
+      }
+  }
+
   const handleLogin = async (values) => {
     try {
       const userCredentials = await login(values.email, values.password);
@@ -19,31 +41,17 @@ export default function LogInForm() {
       ////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
 
       if (userCredentials.user.emailVerified) {
-
-        await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
-          id: userCredentials.user.uid,
-          name: userCredentials.user.displayName,
-          email: userCredentials.user.email,
-          image: userCredentials.user.photoURL,
-          isVerified: userCredentials.user.emailVerified,
-        });
-
-        if (userCredentials.user.uid) {
-          localStorage.setItem(
-            "myUser",
-            JSON.stringify(userCredentials.user.uid)
-          );
+        await userLogin(userCredentials)
           setRedirect(true);
         }
         //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
-      } else {
+      else {
         console.log("Check your mail box for the authentification email")
       }
     } catch (err) {
       // console.log(err);
       if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
-      if (err.code === "auth/user-not-found")
-        errorMsg = "Email doesn't belong to a user";
+      if (err.code === "auth/user-not-found") errorMsg = "Email doesn't belong to a user";
       if (err.code === "auth/wrong-password") errorMsg = "Wrong Password";
       alertError(errorMsg)
     }
@@ -51,18 +59,7 @@ export default function LogInForm() {
   const handleGoogleSignin = async () => {
     try {
       const userCredentials = await loginWithGoogle();
-      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
-        id: userCredentials.user.uid,
-        name: userCredentials.user.displayName,
-        email: userCredentials.user.email,
-        image: userCredentials.user.photoURL,
-        isVerified: userCredentials.user.emailVerified,
-      });
-      if (userCredentials.user.uid)
-        localStorage.setItem(
-          "myUser",
-          JSON.stringify(userCredentials.user.uid)
-        );
+      await userLogin(userCredentials)
 
       setRedirect(true);
     } catch (err) {

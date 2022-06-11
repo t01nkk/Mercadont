@@ -223,6 +223,7 @@ i18n
             logInGoogle: "Ingresar con Google",
             notUser: "¿No tienes una cuenta?",
             newUser: "Crear un nuevo usuario",
+            bannedUser: "Su cuenta esta baneada"
           },
           productDetailsInfo: {
             categories: "Categorías: ",
@@ -459,6 +460,7 @@ i18n
             logInGoogle: "Log in with Google",
             notUser: "Don't have an account?",
             newUser: "Create a new user",
+            bannedUser: "Your account is banned"
           },
           productDetailsInfo: {
             categories: "Categories: ",
