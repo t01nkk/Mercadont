@@ -72,6 +72,7 @@
 }
 .formQA {
   max-width: 25vw;
+  align-self: center;
 }
 .question {
   background-color: rgb(250, 250, 250);

@@ -229,7 +229,8 @@ i18n
             description: "Detalles del producto: ",
             stock: "Stock actual: ",
             price: "Precio: ",
-            qa: "Preguntas acerca de este producto: ",
+            qa: "Preguntas: ",
+            noQuestion: "Se el primero en hacer una pregunta"
           },
           searchBar: {
             placeholder: "Buscar...",
@@ -464,7 +465,8 @@ i18n
             description: "Product description: ",
             stock: "Stock: ",
             price: "Price: ",
-            qa: "Questions about this product: ",
+            qa: "Questions: ",
+            noQuestion: "Be the first to ask a question"
           },
           searchBar: {
             placeholder: "Search...",
