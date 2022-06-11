@@ -1,4 +1,4 @@
-const { User, PurchaseOrder, Qa } = require("../db");
+const { User, PurchaseOrder, Qa, Product } = require("../db");
 const { Router } = require("express");
 const { Sequelize, Op } = require("sequelize");
 const router = Router();
@@ -240,5 +240,65 @@ router.put("/:questionId/answer", async (req, res) => {
       res.status(400).send(err)
   }
 })
+
+router.get("/all/:resolved", async (req, res) => {
+  const { resolved } = req.params;
+  try {
+    if (resolved == "true") {
+      const allQuestions = await Qa.findAll({
+          include: [
+              {
+                  model: Product,
+                  attributes: ["id", "name"],
+                  through: { attributes: [] },
+              },
+              {
+                  model: User,
+                  attributes: ["id"],
+                  through: { attributes: [] },
+              },
+          ],
+          where:{resolved: true}
+      });
+      return res.send(allQuestions);
+  } else if(resolved == "false") {    
+      const unresolvedOnly = await Qa.findAll({
+          where: { resolved: false },
+          include: [
+              {
+                  model: Product,
+                  attributes: ["id", "name"],
+                  through: { attributes: [] },
+              },
+              {
+                  model: User,
+                  attributes: ["id"],
+                  through: { attributes: [] },
+              },
+          ]
+      });
+      if (unresolvedOnly) return res.send(unresolvedOnly);
+    }
+    const all = await Qa.findAll({
+      include: [
+          {
+              model: Product,
+              attributes: ["id", "name"],
+              through: { attributes: [] },
+          },
+          {
+              model: User,
+              attributes: ["id"],
+              through: { attributes: [] },
+          },
+      ]
+  });
+    return res.send(all)
+  } catch (error) {
+    console.log(error.message)
+    res.status(404).send({ message: error.message });
+  }
+  
+});
 
 module.exports = router;

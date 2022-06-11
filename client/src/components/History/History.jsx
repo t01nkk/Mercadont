@@ -52,15 +52,15 @@ export const History = () => {
           <p>a</p>
           <p>a</p>
           {detailsProduct.length && detailsProduct.map((e,index)=>
-            <DetailsBuysHistory
-            date={history[index].date}
-            key={e.id}
-            amount={history[index].amount}
-            name={e.name}
-            id={e.id}
-            image={e.image}
-            price={e.price}
-            />
+             <DetailsBuysHistory
+             date={history[index].date}
+             key={e.id}
+             amount={history[index].amount}
+             name={e.name}
+             id={e.id}
+             image={e.image}
+             price={e.price}
+             />
           )
           }
         </div>
