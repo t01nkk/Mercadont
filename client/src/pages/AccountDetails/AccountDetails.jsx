@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useStore } from "../../context/store";
 import { useTranslation } from "react-i18next";
-// import "./AccountDetails.css"
+import "./AccountDetails.css"
 // import {mostrarFrente} from "./js/main.js"
 import { ToastContainer, toast } from "react-toastify";
 export default function AccountDetails() {
@@ -34,41 +34,27 @@ export default function AccountDetails() {
       {/* <script src="./js/main.js"></script> */}
       <div className="profile-container">
         <div className="profile-info">
-          <p className="profile-title">{t("accountDetails.info")}</p>
+          <p className="title-profile">{t("accountDetails.info")}</p>
           {user?.image ? (
-            <img src={user?.image} alt="No Image" />
+            <img src={user?.image} className="img-details" height="100px" alt="No Image" />
           ) : (
-            <img
+            <img 
+            className="img-details"
               src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
               alt="No Image"
-              height="40px"
+              height="100px"
             />
           )}
-          <p className="profile-title">{user?.email}</p>
-          <p className="profile-title">{user?.name}</p>
-          <p className="profile-title">{user?.lastname}</p>
+          <p className="profile-title">{user?.name} {user?.lastname}</p>
+          <p className="profile-title">{user?.email}</p>     
           <p className="profile-title">{user?.adress}</p>
-          <p>
-            {t("accountDetails.country")}
-            {user?.country}
-          </p>
-          <p>
-            {t("accountDetails.city")}
-            {user?.city}
-          </p>
-          <p>
-            {t("accountDetails.province")}
-            {user?.province}
-          </p>
-          <p>
-            {t("accountDetails.street")}
-            {user?.street}
-          </p>
-          <p>
-            {t("accountDetails.postalCode")}
-            {user?.postalCode}
-          </p>
-
+          <div className="data-user">
+          <div className="data-user1"><p>{t("accountDetails.country")}{user?.country}</p>
+          <p>{t("accountDetails.city")}{user?.city}</p></div>
+          <div className="data-user2"><p>{t("accountDetails.province")}{user?.province}</p>
+          <p>{t("accountDetails.street")}{user?.street}</p>
+          <p>{t("accountDetails.postalCode")}{user?.postalCode}</p></div>
+          </div>
           <Link to="/accountDetails/editProfile">
             <button className="input-edit-profile">
               {t("accountDetails.btnEditProfile")}

@@ -182,6 +182,7 @@ export default function AccountDetailsForm() {
             name="email"
             value={user.email}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="divInputUser">
@@ -190,6 +191,7 @@ export default function AccountDetailsForm() {
             type="text"
             name="name"
             value={user.name}
+            required
             onChange={handleChangeName}
           />
           {errors.name && <p className="error-input">{errors.name}</p>}{" "}
@@ -201,6 +203,7 @@ export default function AccountDetailsForm() {
             type="text"
             name="lastname"
             value={user.lastname}
+            required
             onChange={handleChangeName}
           />
            {errors.lastname && <p className="error-input">{errors.lastname}</p>}{" "}
@@ -211,6 +214,7 @@ export default function AccountDetailsForm() {
           <input
             type="text"
             name="city"
+            required
             placeholder={t("accountDetailsForm.city")}
             value={user.city}
             onChange={handleChangeName}
@@ -221,6 +225,7 @@ export default function AccountDetailsForm() {
           <input
             type="text"
             name="country"
+            required
             placeholder={t("accountDetailsForm.country")}
             value={user.country}
             onChange={handleChangeName}

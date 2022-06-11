@@ -79,12 +79,13 @@ export default function CreateCategory() {
             name="name"
             placeholder={t("adminCreateCategory.name")}
             onChange={handleChangeName }
+            required
             value={data.name}
           />
         </div>
         {errors.name && ( <p className='error-input'>{errors.name}</p> )}
         <div className="btn-createUser">
-          <input type="submit" value={t("adminCreateCategory.submit")} disabled={errors} className="input-submit" />
+          <input type="submit" value={t("adminCreateCategory.submit")} className="input-submit" />
         </div>
       </form>
       <ToastContainer />
