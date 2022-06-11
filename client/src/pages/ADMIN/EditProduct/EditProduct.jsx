@@ -98,6 +98,7 @@ export default function EditProduct() {
     }
     fetchedProduct.data.categories = destructuringCats;
     setProduct(fetchedProduct.data);
+   
   };
 
   useEffect(() => {
@@ -148,6 +149,7 @@ export default function EditProduct() {
   };
   return (
     <div className="container-edit-admin">
+      {product && console.log(product)}
       <div className="delete-product">
         <button onClick={handleDelete}>{t("adminEditProduct.deleteProduct")}</button>
       </div>
@@ -168,7 +170,7 @@ export default function EditProduct() {
               type="text"
               name="name"
               value={product.name}
-              ontouchstart={handleChangeName}
+              onTouchStart={handleChangeName}
               onChange={handleChangeName}
             />
             {errors.name && <p className="error-input">{errors.name}</p>}{" "}
@@ -176,7 +178,7 @@ export default function EditProduct() {
             <input
               type="number"
               name="price"
-              ontouchstart={handleChangePrice}
+              onTouchStart={handleChangePrice}
               value={product.price}
               onChange={handleChangePrice}
             />
@@ -191,11 +193,10 @@ export default function EditProduct() {
               onChange={handleChangeStock}
             />
             {errors.stock && <p className="error-input">{errors.stock}</p>}
-            <p>{t("adminEditProduct.status")}</p>
+            <p>{t("adminSellProduct.status")}</p>
             <select name="status" onChange={handleChange}>
-              <p>{t("adminSellProduct.status")}</p>
-              <option value="active">{t("adminEditProduct.active")}</option>
-              <option value="inactive">{t("adminEditProduct.inactive")}</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
             </select>
           </div>
           <p>{t("adminSellProduct.description")}</p>
@@ -244,3 +245,15 @@ export default function EditProduct() {
     </div>
   );
 }
+// const [stateQaS, setStateQaS] = useState(false)
+// return (
+//   <div>
+//       <button onClick={setStateQaS(true)}>realizadas</button>
+//       <button onClick={setStateQaS(false)}>pendientes</button>
+//       <div>
+//           <p>Fecha</p>
+//           <p>Aca va la pregunta del usuario</p>
+//       </div>
+//   </div>
+// )
+// }

@@ -212,8 +212,8 @@ router.get("/history", async (req, res) => {
 //Answer Question / Add Answer
 router.put("/:questionId/answer", async (req, res) => {
   const { questionId } = req.params
-  const { answer } = req.body
-
+  const { answer, idProduct } = req.body
+  console.log(idProduct)
   if (!answer || answer.length < 1) {
       return res.status(404).send("Answer must not be empty")
   }
@@ -244,5 +244,65 @@ router.put("/:questionId/answer", async (req, res) => {
       res.status(400).send(err)
   }
 })
+
+router.get("/all/:resolved", async (req, res) => {
+  const { resolved } = req.params;
+  try {
+    if (resolved == "true") {
+      const allQuestions = await Qa.findAll({
+          include: [
+              {
+                  model: Product,
+                  attributes: ["id", "name"],
+                  through: { attributes: [] },
+              },
+              {
+                  model: User,
+                  attributes: ["id"],
+                  through: { attributes: [] },
+              },
+          ],
+          where:{resolved: true}
+      });
+      return res.send(allQuestions);
+  } else if(resolved == "false") {    
+      const unresolvedOnly = await Qa.findAll({
+          where: { resolved: false },
+          include: [
+              {
+                  model: Product,
+                  attributes: ["id", "name"],
+                  through: { attributes: [] },
+              },
+              {
+                  model: User,
+                  attributes: ["id"],
+                  through: { attributes: [] },
+              },
+          ]
+      });
+      if (unresolvedOnly) return res.send(unresolvedOnly);
+    }
+    const all = await Qa.findAll({
+      include: [
+          {
+              model: Product,
+              attributes: ["id", "name"],
+              through: { attributes: [] },
+          },
+          {
+              model: User,
+              attributes: ["id"],
+              through: { attributes: [] },
+          },
+      ]
+  });
+    return res.send(all)
+  } catch (error) {
+    console.log(error.message)
+    res.status(404).send({ message: error.message });
+  }
+  
+});
 
 module.exports = router;
