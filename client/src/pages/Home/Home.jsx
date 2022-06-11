@@ -9,11 +9,12 @@ import {
   totalCount,
 } from "../../redux/actions/actions.js";
 import "./Home.css";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import { Loader } from "../../components/Loader/Loader.jsx"
-import { handleDeleteFavorite } from "../../components/Cart/actionsCart.js";
+import { handleDeleteFavorite, handleSaveFavorite } from "../../components/Cart/actionsCart.js";
+import { useHistory } from "react-router-dom";
+import {alertInfo, alertSuccess, alertWarning} from '../../helpers/toast'
 
 
 export default function Home() {
@@ -22,32 +23,8 @@ export default function Home() {
   const [state, dispatch] = useStore();
   const [cart, setCart] = useState([]);
   const [inCart, setInCart] = useState(false);
+  const history = useHistory();
   let person = JSON.parse(localStorage.getItem("myUser"));
-  const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    });
-  };
-  const alertInfo = (msg) => {
-    toast.info(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    });
-  };
-
  
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
@@ -55,7 +32,15 @@ export default function Home() {
     // let price = accounting.formatMoney(price, "U$D ", 0)
     let products = { name, price, image, id, stock, quantity, totalPrice };
     let value = cart.find((e) => e.name === name);
-    if (value) {
+
+    let person = JSON.parse(localStorage.getItem("myUser"));
+    if (!person) {
+      alertWarning(t("home.logInProducts"))
+      setTimeout(() => {
+        history.push("/logIn");
+      }, 2000);
+    }
+    else if (value) {
       setInCart(false);
       alertInfo(t("home.altAlreadyInCart"));
       return;
@@ -63,35 +48,6 @@ export default function Home() {
       setInCart(true);
       setCart((cart) => [...cart, products]);
       alertSuccess(t("home.altAddToCart"));
-    }
-  };
-
-  const handleSaveFavorite = async (id) => {
-    if (!person) alert(t("home.mustBeLoggedIn"))
-    try {
-      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
-        idUser: person,
-        idProduct: id,
-      });
-      alertSuccess(t("home.altAddToFavs"))
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleDeleteFavorite = async (id) => {
-    try {
-      await axios.delete(
-        `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
-        {
-          data: {
-            idUser: person,
-            idProduct: id,
-          },
-        }
-      );
-      alertInfo(t("home.altRemoveFromFavorites"))
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -120,7 +76,7 @@ export default function Home() {
   // };
 
   return (
-    <section className="section-products spaceNavTop">
+    <section className="section-products ">
       {/* <button onClick={() => mostra()}>mostra storage</button> */}
       {state.products && state.favorites
         ? React.Children.toArray(
@@ -137,6 +93,7 @@ export default function Home() {
                   handleSaveFavorite={handleSaveFavorite}
                   handleDeleteFavorite={handleDeleteFavorite}
                   isAdd={state.favorites.find((e) => e.id === product.id)}
+                  alertSuccess={alertSuccess}
                 />
               );
             }
@@ -144,8 +101,6 @@ export default function Home() {
           })
         )
         : <div className="container-loader"><Loader /></div>}
-      <ToastContainer />
-      <p>{t(i18n.languages[0]) }</p>
     </section>
   );
 }

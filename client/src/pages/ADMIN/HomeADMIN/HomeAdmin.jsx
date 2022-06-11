@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { fetchCategories, fetchProducts } from "../../../redux/actions/actions";
 import { useStore } from "../../../context/store.js";
-import "./HomeAdmin.css";
+import "./HomeAdmin.scss";
 import ProductCardAdmin from "../../../components/ADMIN/ProductCardADMIN/ProductCardAdmin";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";

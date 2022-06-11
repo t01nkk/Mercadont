@@ -1,0 +1,25 @@
+.container-dateHistory{
+    width: 90vw;
+    margin: auto;
+}
+
+.container-data-history{
+    display: flex;
+    justify-content: space-evenly;
+    cursor: pointer;
+}
+
+.container-data-history>div{
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+}
+
+.container-data-history>div>p{
+    width: 50%;
+    text-align: center;
+}
+
+.container-data-history>div>p>span{
+    font-weight: 600;
+}
