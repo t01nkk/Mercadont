@@ -19,20 +19,20 @@ export default function LoggedAdmin() {
         <div className="dropdown">
           <a className="dropbtn">ADMIN</a>
           <div className="dropdown-content">
-            <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home">
+            <Link to="/admin/home">
               {t("adminLoggedNavBar.inventory")}
             </Link>
-            <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/user" >User</Link>
-            <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/QaS" >QaS</Link>
-            <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/sellProduct">
+            <Link to="/admin/user" >User</Link>
+            <Link to="/admin/QaS" >QaS</Link>
+            <Link to="/admin/sellProduct">
               {t("adminLoggedNavBar.sell")}
             </Link>
-            <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/addCategories">
+            <Link to="/admin/addCategories">
               {t("adminLoggedNavBar.adminCategories")}
             </Link>
             <Link
               onClick={logOutSession}
-              to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/login"
+              to="/admin/login"
             >
               {t("adminLoggedNavBar.logOut")}
             </Link>
