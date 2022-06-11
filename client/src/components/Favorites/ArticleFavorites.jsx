@@ -28,7 +28,7 @@ export const ArticleFavorites = ({id,name,price,rating,image,removeFavorite}) =>
             {t("articleFavorites.productDetails")}
           </button>
           <button className="btn btn-primary btn-sm" onClick={()=> removeFavorite(id)}>
-            Remove Favorite
+            {t("articleFavorites.removeFavorite")}
           </button>
           </div>
         </div>

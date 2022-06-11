@@ -4,7 +4,7 @@ import SearchBar from "../../SearchBar/SearchBar";
 import FilterCategories from "../../FilterCategories/FilterCategories";
 import { useTranslation } from "react-i18next";
 import logo from "../../../media/logonavbar.png";
-import "../LoggedNavBar/responsiveNavBar.css";
+import "../LoggedNavBar/responsiveNavBar.scss";
 export default function GuestNavBar() {
   const { t } = useTranslation();
 

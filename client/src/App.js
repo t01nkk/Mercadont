@@ -25,6 +25,7 @@ import { Favorites } from "./components/Favorites/Favorites";
 import ProductDetailsAdmin from "./pages/ADMIN/ProductDetailsADMIN/ProductDetailsAdmin";
 import { History } from "./components/History/History.jsx"
 import { QaS } from "./pages/ADMIN/QaS/QaS.jsx"
+import { ToastContainer } from "react-toastify";
 
 //Cualquier ruta que tiene que solo estar disponible a usuario logueado, se le puede envolver en ProtectedRoutes
 // import {ProtectedRoute} from "./components/ProtectedRoute/ProtectedRoute";
@@ -32,6 +33,7 @@ function App() {
   return (
     <>
       <Router>
+        <ToastContainer limit={3} />
         <Route exact path="/">
           {/* REDIRECT ROUTE (CAN USE TO FORCE UPDATE OF COMPONENTS) */}
           <Redirect to="/home" />

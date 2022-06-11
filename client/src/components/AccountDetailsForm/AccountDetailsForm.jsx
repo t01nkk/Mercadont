@@ -2,27 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useStore } from "../../context/store";
-import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "../../context/authContext";
 import { useTranslation } from "react-i18next";
 import "./accountDetails.css";
+import { alertInfo } from '../../helpers/toast'
+
 export default function AccountDetailsForm() {
   const { t } = useTranslation();
   const history = useHistory();
-
-  // 'User information updated successfully'
-  const alertUserUpdated = (msg) => {
-    toast.info(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
 
   const { resetPassword } = useAuth();
   const [state, dispatch] = useStore();
@@ -45,8 +32,6 @@ export default function AccountDetailsForm() {
 
   const expression = {
     Expression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
- 
-    
   };
 
 
@@ -144,10 +129,10 @@ export default function AccountDetailsForm() {
           postalCode,
         }
       );
-      alertUserUpdated(t("accountDetailsForm.toastInfo"));
+      alertInfo(t("accountDetailsForm.toastInfo"));
       setTimeout(() => {
         history.push("/accountDetails");
-      }, 4000);
+      }, 2000);
     } catch (err) {
       // console.log(err);
       return err;
@@ -279,7 +264,6 @@ export default function AccountDetailsForm() {
           <input type="submit" name="Update info"  className="input-submit" />
         </div>
       </form>
-      <ToastContainer />  
     </div>
   );
 }

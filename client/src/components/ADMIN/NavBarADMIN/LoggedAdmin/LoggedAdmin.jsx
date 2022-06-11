@@ -4,7 +4,7 @@ import { useStore } from "../../../../context/store";
 import FilterCategories from "../../../FilterCategories/FilterCategories";
 import { useTranslation } from "react-i18next";
 export default function LoggedAdmin() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [state] = useStore();
   const logOutSession = () => {
     localStorage.clear();
@@ -17,7 +17,7 @@ export default function LoggedAdmin() {
       </div>
       <div className="container-actions-user">
         <div className="dropdown">
-          <a className="dropbtn">{adminName}</a>
+          <a className="dropbtn">ADMIN</a>
           <div className="dropdown-content">
             <Link to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home">
               {t("adminLoggedNavBar.inventory")}

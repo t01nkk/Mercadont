@@ -4,8 +4,8 @@ import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
 import { fetchCategories } from "../../../redux/actions/actions.js";
 import "./EditProduct.css";
+import { alertInfo, alertSuccess } from "../../../helpers/toast.js";
 import { useTranslation } from "react-i18next";
-import {ToastContainer, toast} from 'react-toastify'
 export default function EditProduct() {
   const { t } = useTranslation()
   const [state, dispatch] = useStore();
@@ -101,31 +101,6 @@ export default function EditProduct() {
    
   };
 
-   const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    });
-  };
-  const alertInfo = (msg) => {
-    toast.info(msg, {
-      position: "bottom-center",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    });
-  };
-
   useEffect(() => {
     fetchProductById();
     fetchCategories(dispatch);
@@ -151,7 +126,7 @@ export default function EditProduct() {
       alertSuccess(t("adminEditProduct.updated"))
       setTimeout(() => {
           alert("Acá debería redirigir.")
-      }, 3000);
+      }, 2000);
     } catch (err) {
       console.log(err);
     }
@@ -167,7 +142,7 @@ export default function EditProduct() {
       alertInfo(t("adminEditProduct.delete"))
       setTimeout(() => {
         alert('Acá tendría que redireccionar.')
-      }, 3000);
+      }, 2000);
     } catch (err) {
       console.log(err);
     }
@@ -267,19 +242,6 @@ export default function EditProduct() {
           </div>
         </div>
       </form>
-      <ToastContainer />
     </div>
   );
 }
-// const [stateQaS, setStateQaS] = useState(false)
-// return (
-//   <div>
-//       <button onClick={setStateQaS(true)}>realizadas</button>
-//       <button onClick={setStateQaS(false)}>pendientes</button>
-//       <div>
-//           <p>Fecha</p>
-//           <p>Aca va la pregunta del usuario</p>
-//       </div>
-//   </div>
-// )
-// }

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Formik } from "formik";
-import { ToastContainer, toast } from "react-toastify";
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/authContext";
+import { alertSuccess} from "../../helpers/toast";
 export default function LogInForm() {
   const history = useHistory();
 
@@ -13,53 +13,28 @@ export default function LogInForm() {
   //   setData({ ...data, [e.target.name]: e.target.value });
   // };
 
-  const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    })
-  }
-
-  const alertMailError = (msg) => {
-    toast.warning(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    })
-  }
-
   const { signup } = useAuth();
   const [error, setError] = useState();
 
-  const handleSubmitt = async (values) => {
-    try {
-      const userCredentials = await signup(values.email, values.password);
-      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/register`, {
-        id: userCredentials.user.uid,
-        name: values.name,
-        email: values.email,
-      });
-      alertSuccess(t("createUserTest.accountCreated"))
-      setTimeout(() => {
-        history.push("/login");
-      }, 4000);
+    const handleSubmitt = async (values) => {
+      try {
+        const userCredentials = await signup(values.email, values.password);
+        await axios.post(`${process.env.REACT_APP_DOMAIN}/user/register`, {
+          id: userCredentials.user.uid,
+          name: values.name,
+          email: values.email,
+        });
+        alertSuccess(t("createUserTest.accountCreated"))
+        setTimeout(() => {
+        history.push("/login");  
+        }, 2000);
+        
+      } catch (err) {
+        if (err.code === "auth/internal-error") setError("Correo Invalido");
+        if (err.code === "auth/email-already-in-use")setError("El correo ya se encuentra en uso");
+      };
 
-    } catch (err) {
-      if (err.code === "auth/internal-error") setError("Correo Invalido");
-      if (err.code === "auth/email-already-in-use") setError("El correo ya se encuentra en uso");
-    }
-  };
+    } 
 
   return (
     <div>
@@ -165,7 +140,6 @@ export default function LogInForm() {
           </div>
         )}
       </Formik>
-      <ToastContainer />
     </div>
   );
 };

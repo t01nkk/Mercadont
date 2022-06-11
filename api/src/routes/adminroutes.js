@@ -3,6 +3,7 @@ const { Router } = require("express");
 const { Sequelize, Op } = require("sequelize");
 const router = Router();
 const createdOrders = require("../../purchaseOrders.json");
+const { groupPurchaseOrders, mailQuestion } = require("../middlewares/middlewares");
 
 // Working
 //Get all Users
@@ -124,7 +125,6 @@ router.post("/getAdmin", async (req, res) => {
     res.status(404).send(error);
   }
 });
-
 // Creates many orders to test ORDER PURCHASE ORDERS BY DATE
 router.get("/loadOrders", async (req, res) => {
   try {
@@ -136,9 +136,9 @@ router.get("/loadOrders", async (req, res) => {
         productQuantity: order.productQuantity,
         totalAmount: order.totalAmount,
         date: order.date,
-        status: order.status,
+        paymentStatus: order.paymentStatus,
+        orderStatus: order.orderStatus
       });
-      // console.log("newOrder:",newOrder)
     }
     res.status(200).send("Orders created");
   } catch (error) {
@@ -146,7 +146,46 @@ router.get("/loadOrders", async (req, res) => {
   }
 });
 
-// Get PURCHASE ORDERS by date
+//Filter PURCHASE ORDERS by STATUS
+router.get("/filterOrders/:status", async (req, res) =>{
+  const { status } = req.params;
+
+  try {
+    const orders = await PurchaseOrder.findAll({
+      where:{
+        orderStatus: status
+      }
+    })
+    if (!orders.length) {
+      return res.status(200).send([]);
+    }
+    let purchaseOrders = groupPurchaseOrders(orders)
+    return res.status(200).send(purchaseOrders)
+  } catch (error) {
+    return res.status(404).send(error);
+  }
+})
+
+// Set PURCHARSE ORDER STATUS
+router.put("/setOrderStatus", async (req, res) =>{
+  const { orderStatus, orderId } = req.body;
+
+  try {
+    const orders = await PurchaseOrder.update(
+      {
+        orderStatus: orderStatus,
+      },
+      {
+        where:{ orderId: orderId }
+      }
+    )
+    return res.status(200).send(orders)
+  } catch (error) {
+    return res.status(404).send(error);
+  }
+})
+
+// Get PURCHASE ORDERS by DATE
 router.get("/history", async (req, res) => {
   const { startDate, endDate } = req.body;
   let orders = [];
@@ -160,47 +199,12 @@ router.get("/history", async (req, res) => {
       },
       group: PurchaseOrder.date,
     });
-    // console.log("userHistory:", userHistory)
     if (!userHistory.length) {
       return res.status(200).send([]);
     }
-    let order = {
-      orderNumber: "",
-      date: "",
-      products: [],
-      amount: 0,
-    };
-    order.orderNumber === userHistory[0].orderId;
-    order.date === userHistory[0].date;
-    order.amount === userHistory[0].totalAmount;
-
-    for (let item of userHistory) {
-      if (order.orderNumber === item.orderId) {
-        order.products.push({
-          product: item.productId,
-          productQuantity: item.productQuantity,
-        });
-      } else {
-        if (order.orderNumber !== "") orders.push(order);
-        order = {
-          orderNumber: "",
-          date: "",
-          products: [],
-          amount: 0,
-        };
-        order.orderNumber = item.orderId;
-        order.date = item.date;
-        order.amount = item.totalAmount;
-        order.products.push({
-          product: item.productId,
-          productQuantity: item.productQuantity,
-        });
-      }
-    }
-    orders.push(order);
-    return res.status(200).send(orders);
+    let historyPurchaseOrders = groupPurchaseOrders(userHistory)
+    return res.status(200).send(historyPurchaseOrders)
   } catch (error) {
-    console.log(error);
     return res.status(404).send(error);
   }
 });
@@ -221,19 +225,19 @@ router.put("/:questionId/answer", async (req, res) => {
       }, { where: { id: questionId } })
 
       const userMail = await Qa.findOne({
-        // include: { all: true }
-        include:{
-          model: User,
-          through: { attributes: [] }
-        },
+        include: { all: true },
         where:{
           id: questionId
         }
       })
-      console.log("userMail:", userMail.dataValues)
-      console.log("userMail.qa.dataValues.users:", userMail.dataValues.users[0].dataValues.email)
+      const { email } = userMail.dataValues.users[0].dataValues;
+      const { id, name } = userMail.dataValues.products[0].dataValues
+      // DESCOMENTAR PARA ENVIAR MAIL AL USER CUANDO ADMIN RESPONDE PREGUNTA.
 
-      return res.status(200).send("Answer Added")
+      // mailQuestion(email, name, id)
+
+      // 
+      return res.status(200).send("Question answered")
   }
   catch (err) {
       console.log(err)

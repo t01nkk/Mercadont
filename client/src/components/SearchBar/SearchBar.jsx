@@ -78,7 +78,7 @@ export default function SearchBar() {
           data-bs-auto-close="outside"
           aria-expanded="false"
         >
-          Language
+          {t("searchBar.language")}
         </Link>
         <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
           <li className="dropdown-item category-list-item">

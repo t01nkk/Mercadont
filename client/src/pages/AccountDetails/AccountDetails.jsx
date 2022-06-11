@@ -5,12 +5,12 @@ import { useStore } from "../../context/store";
 import { useTranslation } from "react-i18next";
 // import "./AccountDetails.css"
 // import {mostrarFrente} from "./js/main.js"
-import { ToastContainer, toast } from "react-toastify";
+
 export default function AccountDetails() {
   const { t } = useTranslation();
   const [user, setUser] = useState("");
   const [state, dispatch] = useStore();
-  const history = useHistory()    
+  const history = useHistory();
 
   const address = user?.address;
   let exp = new RegExp(`"`, "g");
@@ -40,10 +40,10 @@ export default function AccountDetails() {
     }
   };
 
-  const handleBack = async (e) =>{
+  const handleBack = async (e) => {
     e.preventDefault();
     history.push("/home");
-  }
+  };
 
   useEffect(() => {
     fetchUser();
@@ -97,43 +97,6 @@ export default function AccountDetails() {
           </Link>
         </div>
       </div>
-      {/* <div>
-        <h3>Yours Cads:</h3>
-        <div>
-          Iria un div por cada tarjeta que tenga el usuario con boton de
-          eliminar
-        </div>
-      </div>
-      <div>
-        <button>Add new card:</button>
-      </div>
-      <div>
-        <section className="tarjeta" id="tarjeta">
-          <div className="front">
-            <div className="logo">
-              <img src="" alt="" />
-            </div>
-            <img src="" alt="" className="chip"/>
-            <div className="data">
-              <div className="group" id="number">
-                <p className="label">Nunber Card</p>
-                <p className="number">#### #### #### ####</p>
-              <div className="flexbox">
-                <div className="group" id="name">
-                  <p className="label">Name Card</p>
-                  <p className="name">Jhon Doe</p>
-                </div>
-                <div className="group" id="expiration">
-                  <p className="label">Expiration</p>
-                  <p className="expiration"><span className="mount">MM</span>/<span className="year">AA</span></p>
-                </div>
-              </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div> */}
-      <button onClick={(e) => handleBack(e)}>Go back to the main page</button>
     </div>
   );
 }
