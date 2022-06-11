@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useStore } from "../../../../context/store";
-import FilterCategories from "../../../FilterCategories/FilterCategories";
 import { useTranslation } from "react-i18next";
 export default function LoggedAdmin() {
   const { t } = useTranslation();

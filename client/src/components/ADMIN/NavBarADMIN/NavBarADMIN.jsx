@@ -5,7 +5,7 @@ import LoggedAdmin from "./LoggedAdmin/LoggedAdmin";
 import UnloggedAdmin from "./UnloggedAdmin/UnloggedAdmin";
 import { useStore } from "../../../context/store";
 import { fetchCategories } from "../../../redux/actions/actions";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { ADMIN_SESSION } from "../../../redux/actions/actionTypes";
 
 export default function NavBarADMIN() {
@@ -26,6 +26,7 @@ export default function NavBarADMIN() {
         });
       }
     } else {
+      console
       await dispatch({
         type: ADMIN_SESSION,
         payload: {
@@ -47,7 +48,10 @@ export default function NavBarADMIN() {
     <div>
       <header className="header">
         <div className="header-logo">
-          <img src={logo} alt="" />
+          <Link to="/">
+            
+            <img src={logo} alt="" />
+          </Link>
         </div>
         {state.sessionAdmin ? <LoggedAdmin /> : <UnloggedAdmin />}
       </header>
