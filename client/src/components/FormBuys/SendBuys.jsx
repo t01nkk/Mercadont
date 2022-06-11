@@ -6,6 +6,7 @@ import { totalPrice } from '../Cart/actionsCart'
 import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
 import { useTranslation } from 'react-i18next';
 import accounting from 'accounting'
+import {alertInfo} from '../../helpers/toast'
 import { Loader } from "../Loader/Loader.jsx"
 import "./SendBuys.css"
 
@@ -35,7 +36,9 @@ export const SendBuys = () => {
             const { error, paymentMethod } = await stripe.createPaymentMethod({
                 type: "card",
                 card: elements.getElement(CardElement)
+               
             })
+            alertInfo(t("sendBuys.processingCard"))
             setLoadingBuys(true)
             if (!error) {
                 const { id } = paymentMethod

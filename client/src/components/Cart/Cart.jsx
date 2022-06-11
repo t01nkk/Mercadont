@@ -28,9 +28,9 @@ export const Cart = () => {
     if (search == "?buy=false") {
       alertInfo(t("cart.cancelPurchaseSuccess"));
     }
-    if (search == "?buy=true") {
-      localStorage.removeItem(user);
-      alertSuccess(t("cart.successfullPurchase"));
+    if(search == "?buy=true"){
+      localStorage.removeItem(user)
+      alertSuccess(t("cart.successfulPurchase"));
       setStorageCart([]);
       totalCount(dispatch);
     }
