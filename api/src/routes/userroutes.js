@@ -44,7 +44,7 @@ router.post("/register", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
   // const { email, password } = req.body;
-  const { name, email, image, id } = req.body;
+  const { name, email, image, id} = req.body;
   try {
     const userExist = await User.findOrCreate({
       where: { id: id }, defaults: {
@@ -55,7 +55,7 @@ router.post("/login", async (req, res, next) => {
       }
     }
     )
-    res.send({ msg: "User Logged In" });
+    res.status(200).send(userExist);
   }
   catch (err) {
     console.log(err)

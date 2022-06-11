@@ -24,16 +24,16 @@ export const QaS = () => {
   return (
     <div>
         {stateQas?<h2>Preguntas Contestadas</h2>:<h2>Preguntas Pendientes</h2>}
-        <h2></h2>
-        <div>
-            <button onClick={()=>setStateQas(true)}>Contestadas</button>
-            <button onClick={()=>setStateQas(false)}>pendientes</button>
+        <div>{stateQas?
+            <button onClick={()=>setStateQas(false)}> View pendientes</button>:
+            <button onClick={()=>setStateQas(true)}> View Contestadas</button>}
         </div>
-        <div>
+        <div className="cardContainer">
            {dataQaS?.length?
             React.Children.toArray(dataQaS.map(e=>
                 <QaSIndividual
                     id={e.id}
+                    image={e.products[0].image}
                     createdAt={e.createdAt}
                     name={e.products[0].name}
                     idProduct={e.products[0].id}

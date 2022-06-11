@@ -1,8 +1,9 @@
 import axios from 'axios'
 import React, { useState }from 'react'
 import { useHistory,Redirect } from 'react-router-dom'
+import "./QaSIndividual.css"
 
-export const QaSIndividual = ({id,idProduct,createdAt,name,userId,question,answer}) => {
+export const QaSIndividual = ({id,idProduct,createdAt,name,userId,question,answer, image}) => {
   const [textArea, setTextArea] = useState("")
   const [changeQaS, setChangeQaS] = useState(false)
   const history = useHistory()
@@ -32,26 +33,28 @@ export const QaSIndividual = ({id,idProduct,createdAt,name,userId,question,answe
   }
   
   return (
-    <div>
-        <button onClick={()=>viewProduct()}>View Product</button>
-        <div>
-            <p>Product:{name}</p>
-            <p>Question Date:{createdAt}</p>
+        <div className="product">
+            <div className="productText">
+              <p> <b>Product: </b>{name}</p>
+              <p><b>Question Date: </b>{createdAt}</p>
+              <p><b>Question: </b>{question}</p>
+              {answer?<p><b>Answer: </b>{answer}</p>: <p>Aun no respondida</p>}
         </div>
-        <p>Question:{question}</p>
-        {answer?<p>Answer: {answer}</p>: <p>Aun no respondida</p>}      
-        {/* <p>Answer: {answer}</p> */}
-        {answer?<button onClick={()=>setChangeQaS(true)}>Editar</button>:<button onClick={()=>setChangeQaS(true)}>Contestar pregunta</button>}
-        
-        {changeQaS?<div>
-          <button onClick={()=>setChangeQaS(false)}>X</button>
-          <textarea name="" id="" cols="20" rows="5" value={textArea} required onChange={handleChange}></textarea>
-        <button onClick={()=>sendQaS()}>Send answer</button>
-        </div>:null}
-        
-        <br />
-        <br />
-        <br />
+        <div className="productButtons">
+          <button className="button" onClick={()=>viewProduct()}>View Product</button>
+
+          {/* <p>Answer: {answer}</p> */}
+
+          {changeQaS?<div className="answerButtons">
+            <textarea  name="" id="" cols="auto" rows="auto" value={textArea} required onChange={handleChange}></textarea>
+            <button className="button" onClick={()=>setChangeQaS(false)}>X</button>
+            <button onClick={()=>sendQaS()}>Send answer</button>
+          </div>:
+              answer?<button className="button" onClick={()=>setChangeQaS(true)}>Editar</button>:
+                  <button className="button" onClick={()=>setChangeQaS(true)}>Contestar pregunta</button>
+          }
+        </div>
+        <img className="productImage" src={image} alt="Not Found"/>
     </div>
   )
 }
