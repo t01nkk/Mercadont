@@ -35,16 +35,9 @@ export default function LogInForm() {
           );
           setRedirect(true);
         }
-<<<<<<< HEAD
-
-
         //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
-
-=======
-      //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
-      }else{
+      } else {
         console.log("Check your mail box for the authentification email")
->>>>>>> bf41dfb5870e4f6bb63fabc44be3f80c4747cae6
       }
     } catch (err) {
       // console.log(err);
