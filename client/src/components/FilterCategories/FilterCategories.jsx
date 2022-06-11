@@ -7,7 +7,7 @@ import {
 } from "../../redux/actions/actionTypes";
 import { fetchCategories } from "../../redux/actions/actions.js";
 import axios from "axios";
-import "./FilterCategories.css";
+import "./FilterCategories.scss";
 export default function FilerCategories() {
   const [state, dispatch] = useStore();
   const [redirect, setRedirect] = useState(false);
@@ -19,8 +19,8 @@ export default function FilerCategories() {
     e.preventDefault();
     const { categories } = filter;
     try {
-      state.filter = categories
-      console.log(state)
+      state.filter = categories;
+      console.log(state);
       const res = await axios.post(
         `${process.env.REACT_APP_DOMAIN}/product/filter`,
         {
@@ -70,15 +70,13 @@ export default function FilerCategories() {
   }, []);
   useEffect(() => {
     fetchCategories(dispatch);
-    document
-        .querySelectorAll("input[type=checkbox]")
-        .forEach((el) => {
-          if (state.filter.includes(el.value)) el.checked = true
-        });
+    document.querySelectorAll("input[type=checkbox]").forEach((el) => {
+      if (state.filter.includes(el.value)) el.checked = true;
+    });
   }, []);
 
   return (
-    <>
+    <section className="scroll-categories">
       {redirect ? <Redirect push to="/categories" /> : null}
       <form
         onSubmit={(e) => {
@@ -107,6 +105,6 @@ export default function FilerCategories() {
           buscar
         </button>
       </form>
-    </>
+    </section>
   );
 }

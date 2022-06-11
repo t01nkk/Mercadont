@@ -53,3 +53,11 @@
   justify-content: space-between;
   font-size: 0.85rem;
 }
+
+.scroll-categories {
+  @media only screen and (max-width: 500px) {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 30vh;
+  }
+}

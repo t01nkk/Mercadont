@@ -102,9 +102,13 @@ router.put("/details/:id", async (req, res) => {
         name: name,
         lastname: lastname,
         email: email,
-        address: JSON.stringify({ country, province, city, street, postalCode }),
-        image: image
-
+        country: country,
+        province:province, 
+        city:city,
+        street:street,
+        postalCode:postalCode,
+        image:image
+     
       },
       { where: { id: id } }
     );
