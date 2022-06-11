@@ -32,6 +32,7 @@ export const Cart = () => {
       localStorage.removeItem(user);
       alertSuccess(t("cart.successfullPurchase"));
       setStorageCart([]);
+      totalCount(dispatch);
     }
   }, [search]);
 
@@ -57,6 +58,12 @@ export const Cart = () => {
 
   //Funcion para limpiar carro
   const clearCart = (e) => {
+    // const answer = window.confirm("Are you sure you want to clear your cart?")
+    // // if (answer) {
+    // setStorageCart([]);
+    // setPriceTotal(totalPrice());
+    // localStorage?.removeItem(user);
+    // }
     setStorageCart([]);
     setPriceTotal(totalPrice());
     localStorage?.removeItem(user);
@@ -67,6 +74,7 @@ export const Cart = () => {
       setStorageCart([]);
       setPriceTotal(totalPrice());
       localStorage?.removeItem(user);
+      totalCount(dispatch);
       alertInfo(t("cart.removeEverythingFromCart"));
       setTimeout(() => {
         history.push("/home");

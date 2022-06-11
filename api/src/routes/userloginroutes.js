@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { User, Product, PurchaseOrder } = require("../db");
+const { groupPurchaseOrders } = require("../middlewares/middlewares");
 
 
 router.post("/register", async (req, res, next) => {
@@ -180,51 +181,14 @@ router.get("/history/:id", async (req, res) => {
     const userHistory = await PurchaseOrder.findAll({
       where: {
         userId: id,
-        status: "completed"
+        paymentStatus: "completed"
       },
     });
     if (!userHistory.length) {
       return res.status(200).send([]);
     }
-    let order = {
-      orderNumber: "",
-      date: "",
-      products: [],
-      amount: 0,
-    }
-    order.orderNumber === userHistory[0].orderId
-    order.date === userHistory[0].date
-    order.amount === userHistory[0].totalAmount
-
-    for (let item of userHistory) {
-      if (order.orderNumber === item.orderId) {
-        order.products.push(
-          {
-            product: item.productId,
-            productQuantity: item.productQuantity
-          }
-        )
-      } else {
-        if (order.orderNumber !== "") orders.push(order)
-        order = {
-          orderNumber: "",
-          date: "",
-          products:[],
-          amount: 0,
-        }
-        order.orderNumber = item.orderId
-        order.date = item.date
-        order.amount = item.totalAmount
-        order.products.push(
-          {
-            product: item.productId,
-            productQuantity: item.productQuantity
-          }
-        )
-      }
-    }
-    orders.push(order)
-    return res.status(200).send(orders);
+    let userPurchaseOrders = groupPurchaseOrders(userHistory)
+    return res.status(200).send(userPurchaseOrders)
   } catch (error) {
     return res.status(404).send(error);
   }

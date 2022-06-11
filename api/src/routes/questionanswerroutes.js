@@ -26,26 +26,26 @@ router.post("/:id/question", async (req, res) => {
     }
 })
 
-//Answer Question / Add Answer
-router.put("/:questionId/answer", async (req, res) => {
-    const { questionId } = req.params
-    const { answer } = req.body
+// //Answer Question / Add Answer
+// router.put("/:questionId/answer", async (req, res) => {
+//     const { questionId } = req.params
+//     const { answer } = req.body
 
-    if (!answer || answer.length < 1) {
-        return res.status(404).send("Answer must not be empty")
-    }
+//     if (!answer || answer.length < 1) {
+//         return res.status(404).send("Answer must not be empty")
+//     }
 
-    try {
-        await Qa.update({
-            answer,
-            resolved: true,
-        }, { where: { id: questionId } })
+//     try {
+//         await Qa.update({
+//             answer,
+//             resolved: true,
+//         }, { where: { id: questionId } })
 
-        return res.status(200).send("Answer Added")
-    }
-    catch (err) {
-        res.status(400).send(err)
-    }
-})
+//         return res.status(200).send("Answer Added")
+//     }
+//     catch (err) {
+//         res.status(400).send(err)
+//     }
+// })
 
 module.exports = router;

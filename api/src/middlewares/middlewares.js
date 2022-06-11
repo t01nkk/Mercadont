@@ -145,7 +145,7 @@ async function getUsers() {
 }
 
 // async..await is not allowed in global scope, must use a wrapper
-async function mailPayPal() {
+async function mailPayment(recipient, orderId, ) {
   // Tendría que entrarle como parámetro, entre otras cosas, el email.
   // Only needed if you don't have a real mail account for testing
   let testAccount = await nodemailer.createTestAccount();
@@ -161,13 +161,77 @@ async function mailPayPal() {
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: `"Mercadon\'t libre" <no-reply@${process.env.USER_MAIL_DOMAIN}>`, // sender address
-    to: "genoamano@gmail.com", // list of receivers
-    subject: "Hello ✔", // Subject line
-    text: "Aguante el paco, vieja. No me importa nada.", // plain text body
-    html: "<b>Aguante el paco, vieja. No me importa nada.</b>", // html body
+    to: recipient, // list of receivers
+    subject: `Purchase Order N°: -${orderId}- ✔`, // Subject line
+    text: "We have successfully received the payment for your purchase. We will contact you again when the order is processed and ready to be delivered.", // plain text body
+    html: "<b>We have successfully received the payment for your purchase. We will contact you again when the order is processed and ready to be delivered.</b>", // html body
   });
-  console.log("Message sent: %s", info.messageId);
+  // console.log("Message sent: %s", info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+}
+
+async function mailQuestion(recipient, productName, productId) {
+  // Tendría que entrarle como parámetro, entre otras cosas, el email.
+  // Only needed if you don't have a real mail account for testing
+  let testAccount = await nodemailer.createTestAccount();
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: "smtp.mailgun.org",
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: process.env.MAILGUN_USER, // generated ethereal user
+      pass: process.env.MAILGUN_PASSWORD, // generated ethereal password
+    },
+  });
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: `"Mercadon\'t libre" <no-reply@${process.env.USER_MAIL_DOMAIN}>`, // sender address
+    to: recipient, // list of receivers
+    subject: `Your question on ${productName} has been answered✔`, // Subject line
+    text: `Your question on the product ${productName} has been answered. Check your your email`, // plain text body
+    html: `<b>You question on the product has been answered. You can click on this <a href=${process.env.HOST_PORT_FRONT}/home/${productId}>link</a> to see the answer.</b>`, // html body
+  });
+  // console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+}
+
+function groupPurchaseOrders (purchaseOrders){
+  let orders = [];
+  let order = {
+    orderNumber: "",
+    date: "",
+    products: [],
+    amount: 0,
+  };
+    order.orderNumber === purchaseOrders[0].orderId;
+    order.date === purchaseOrders[0].date;
+    order.amount === purchaseOrders[0].totalAmount;
+
+    for (let item of purchaseOrders) {
+      if (order.orderNumber === item.orderId) {
+        order.products.push({
+          product: item.productId,
+          productQuantity: item.productQuantity,
+        });
+      } else {
+        if (order.orderNumber !== "") orders.push(order);
+        order = {
+          orderNumber: "",
+          date: "",
+          products: [],
+          amount: 0,
+        };
+        order.orderNumber = item.orderId;
+        order.date = item.date;
+        order.amount = item.totalAmount;
+        order.products.push({
+          product: item.productId,
+          productQuantity: item.productQuantity,
+        });
+      }
+    }
+    orders.push(order);
+    return orders;
 }
 
 module.exports = {
@@ -180,5 +244,7 @@ module.exports = {
   modifyStockPaypal,
   // checkAuthenticated,
   // checkNotAuthenticated,
-  mailPayPal,
+  mailPayment,
+  mailQuestion,
+  groupPurchaseOrders
 }
