@@ -16,30 +16,30 @@ export default function LogInForm() {
     try {
       const userCredentials = await login(values.email, values.password);
 
-      //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
+      ////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
 
-      // if (userCredentials.user.emailVerified) {
+      if (userCredentials.user.emailVerified) {
 
-      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
-        id: userCredentials.user.uid,
-        name: userCredentials.user.displayName,
-        email: userCredentials.user.email,
-        image: userCredentials.user.photoURL,
-        isVerified: userCredentials.user.emailVerified,
-      });
+        await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+          id: userCredentials.user.uid,
+          name: userCredentials.user.displayName,
+          email: userCredentials.user.email,
+          image: userCredentials.user.photoURL,
+          isVerified: userCredentials.user.emailVerified,
+        });
 
-      if (userCredentials.user.uid) {
-        localStorage.setItem(
-          "myUser",
-          JSON.stringify(userCredentials.user.uid)
-        );
-        setRedirect(true);
+        if (userCredentials.user.uid) {
+          localStorage.setItem(
+            "myUser",
+            JSON.stringify(userCredentials.user.uid)
+          );
+          setRedirect(true);
+        }
+
+
+        //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
+
       }
-
-
-      //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
-
-      // }
     } catch (err) {
       // console.log(err);
       if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
