@@ -76,30 +76,32 @@ export default function FilerCategories() {
   }, []);
 
   return (
-    <section className="scroll-categories">
+    <section className="categories-section">
       {redirect ? <Redirect push to="/categories" /> : null}
       <form
         onSubmit={(e) => {
           handleSearch(e);
         }}
       >
-        {state.categories.map((categories) => (
-          <label
-            key={categories.name}
-            className="label-category dropdown-item category-list-item "
-          >
-            {categories.name}
-            <input
-              className="checkbox-category"
-              value={categories.name}
-              type="checkbox"
-              id={categories.name}
-              onChange={(e) => {
-                handleSelect(e);
-              }}
-            />
-          </label>
-        ))}
+        <div className="scroll-categories">
+          {state.categories.map((categories) => (
+            <label
+              key={categories.name}
+              className="label-category dropdown-item category-list-item "
+            >
+              {categories.name}
+              <input
+                className="checkbox-category"
+                value={categories.name}
+                type="checkbox"
+                id={categories.name}
+                onChange={(e) => {
+                  handleSelect(e);
+                }}
+              />
+            </label>
+          ))}
+        </div>
         <li className="dropdown-divider"></li>
         <button type="submit" className="filter-search-btn">
           buscar
