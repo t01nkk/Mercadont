@@ -4,6 +4,7 @@ import axios from 'axios'
 
 export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsProduct }) => {
     // console.log(count)
+    date = date.slice(0,10)
     const [cant, setcant] = useState(0)
     const [idProduct, setIdProduct] = useState([])
     let total = 0

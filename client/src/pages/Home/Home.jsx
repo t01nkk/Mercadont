@@ -43,7 +43,6 @@ export default function Home() {
     else if (value) {
       setInCart(false);
       alertInfo(t("home.altAlreadyInCart"));
-      return;
     } else {
       setInCart(true);
       setCart((cart) => [...cart, products]);
