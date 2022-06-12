@@ -8,10 +8,11 @@ import { useTranslation } from "react-i18next";
 import "./Cart.css";
 import { useStore } from "../../context/store.js";
 import { alertInfo, alertSuccess } from "../../helpers/toast";
+import axios from "axios";
 
 export const Cart = () => {
   const { t } = useTranslation();
-  let user = JSON.parse(localStorage?.getItem("myUser"));
+  var user = JSON.parse(localStorage?.getItem("myUser"));
   let local = JSON.parse(localStorage.getItem(user));
   let yourStorage = JSON.parse(localStorage?.getItem(user));
   const [storageCart, setStorageCart] = useState(yourStorage);
@@ -82,9 +83,34 @@ export const Cart = () => {
     }
   };
 
-  const makePurchase = () => {
-    localStorage?.setItem("myPrice", JSON.stringify(priceTotal));
-    history.push("/buysProducts");
+  const makePurchase = async () => {
+    try{
+      const userDetails = await axios.get(`${process.env.REACT_APP_DOMAIN}/user/details/${user}`)
+      const country = userDetails.data.country
+      const province = userDetails.data.province
+      const city = userDetails.data.city
+      const street = userDetails.data.street
+      const postalCode = userDetails.data.postalCode
+
+      console.log(country)
+      console.log(province)
+      console.log(city)
+      console.log(street)
+      console.log(postalCode)
+
+      if( country === "" || province === "" || city === "" || street === "" || postalCode=== "" ){
+        alert("Please fill out your Address details so that the package can be sent")
+        history.push("/accountDetails")
+        return
+      }
+
+      localStorage?.setItem("myPrice", JSON.stringify(priceTotal));
+      history.push("/buysProducts");
+    }catch (err){
+      console.log(err)
+    }
+
+
   };
 
   return (
