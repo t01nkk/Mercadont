@@ -360,7 +360,6 @@ router.get("/recommendation/mostSold", async (req, res) =>{
 
 //-------------------RECOMMENDATION - PRODUCTS BY RATING ------------------------------ //
 router.get("/recommendation/byRating", async (req, res) =>{
-
   try {
     const products = await Product.findAll();
     products.sort((a,b) =>{
@@ -373,4 +372,60 @@ router.get("/recommendation/byRating", async (req, res) =>{
     res.status(400).send(error)
   }
 });
+
+//-------------------RECOMMENDATION - PRODUCTS BY HISTORY ------------------------------ //
+router.get("/recommendation/byHistory/:userId", async (req, res) =>{
+  const {userId} = req.params;
+  let product = {
+    id: "",
+  }
+  let products = []
+  let categories = []
+  try {
+    const userProducts = await PurchaseOrder.findAll({
+      where:{
+        userId: userId
+      }
+    });
+
+    if(!userProducts){
+      return res.status(400).send("No orders found");
+    }
+
+    product.id = userProducts[0].productId;
+    for (let i = 1; i < userProducts.length; i++){
+      if(product.id !== userProducts[i].productId){
+        products.push(product);
+        product = {
+          id : "",
+        }
+        product.id = userProducts[i].productId;
+      }
+    }
+    products.push(product);
+    console.log("products:", products);
+
+    for(let pro of products){
+      const item = await Product.findAll({
+        // include: Category,
+        include: [
+          {
+              model: Category,
+              through: { attributes: [] },
+          }
+        ],
+        where: { id: pro.id }
+      })
+      console.log("item:", item[0]?.categories)
+      categories.push(item[0]?.categories)
+    }
+    categories = [...new Set(categories)]
+     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
+    res.status(200).send(categories)
+  } catch (error) {
+    console.log(error)
+    res.status(400).send(error)
+  }
+});
+
 module.exports = router;
