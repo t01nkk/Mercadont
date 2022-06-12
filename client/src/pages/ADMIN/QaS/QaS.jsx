@@ -23,10 +23,10 @@ export const QaS = () => {
     }
   return (
     <div>
-        {stateQas?<h2>Preguntas Contestadas</h2>:<h2>Preguntas Pendientes</h2>}
-        <div>{stateQas?
-            <button onClick={()=>setStateQas(false)}> View pendientes</button>:
-            <button onClick={()=>setStateQas(true)}> View Contestadas</button>}
+        <h2>Preguntas</h2>
+        <div>
+          <button onClick={()=>setStateQas(false)} disabled={!stateQas}> View pendientes</button>
+          <button onClick={()=>setStateQas(true)} disabled={stateQas}> View Contestadas</button>
         </div>
         <div className="cardContainer">
            {dataQaS?.length?

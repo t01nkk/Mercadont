@@ -36,7 +36,7 @@ export const QaSIndividual = ({ id, idProduct, createdAt, name, userId, question
     <div className="product">
       <div className="productText">
         <p> <b>Product: </b>{name}</p>
-        <p><b>Question Date: </b>{createdAt}</p>
+        <p><b>Question Date: </b>{createdAt.slice(0,10)}</p>
         <p><b>Question: </b>{question}</p>
         {answer ? <p><b>Answer: </b>{answer}</p> : <p>Aun no respondida</p>}
       </div>
