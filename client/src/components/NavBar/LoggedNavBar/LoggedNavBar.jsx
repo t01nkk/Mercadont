@@ -11,7 +11,6 @@ import logo from "../../../media/logonavbar.png";
 import { totalCount } from "../../../redux/actions/actions.js";
 import { alertInfo } from "../../../helpers/toast";
 
-
 export default function LoggedNavBar() {
   const { t, i18n } = useTranslation();
   const [state, dispatch] = useStore();
@@ -26,7 +25,7 @@ export default function LoggedNavBar() {
     if (answer) {
       await logout;
       localStorage.removeItem("myUser");
-      alertInfo(t("loggedNavBar.loggedOut"))
+      alertInfo(t("loggedNavBar.loggedOut"));
       history.push("/");
     }
   };
@@ -56,7 +55,9 @@ export default function LoggedNavBar() {
       >
         <div className="container-fluid">
           <a className="navbar-brand">
-            <img src={logo} alt="" height="80" />
+            <Link to="/">
+              <img src={logo} alt="" height="80" />
+            </Link>
           </a>
           <button
             className="navbar-toggler"

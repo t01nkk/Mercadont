@@ -65,7 +65,7 @@ i18n
             emptyTheCart: "Vaciar el carrito",
             welcome: "Bienvenido a tu carrito",
             emptyCart: "Tu carrito se encuentra vacío. Añádele algún producto",
-            totalPrice: "Precio total de la compra: ",
+            totalPrice: "Total de la compra: ",
             buy: "Realizar la compra",
             successfulPurchase: "¡Compra realizada con éxito!",
             cancelPurchaseSuccess: "Compra cancelada con éxito",
