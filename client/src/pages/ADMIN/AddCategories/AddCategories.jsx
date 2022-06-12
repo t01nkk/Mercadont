@@ -40,7 +40,7 @@ export default function EditProduct() {
       });
       alertSuccess(t("adminAddCategories.update"));
       setTimeout(() => {
-        history.push("/admin/addCategories");
+        history.push("/admin/home");
       }, 2000);
     } catch (err) {
       console.log(err);
