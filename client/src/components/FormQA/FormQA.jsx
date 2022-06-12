@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import { useStore } from '../../context/store';
 import { useHistory } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { ToastContainer, toast } from "react-toastify";
 import {BsFillCursorFill } from "react-icons/bs";
 import "./FormQA.css"
+import { alertSuccess } from '../../helpers/toast';
 export const FormQA = ({ productId }) => {
     const { t } = useTranslation()
     const [data, setData] = useState({
@@ -13,19 +13,6 @@ export const FormQA = ({ productId }) => {
     });
     const [state] = useStore();
     const history = useHistory()
-
-    const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    });
-  };
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
@@ -48,7 +35,7 @@ export const FormQA = ({ productId }) => {
                 alertSuccess(t("formQA.postedQuestion"))
             setTimeout(() => {
                 window.location.reload()
-            }, 4000);
+            }, 2000);
         } catch (err) {
             alert(err);
         }
@@ -69,11 +56,10 @@ export const FormQA = ({ productId }) => {
                     />
                 </div>
                 <div className="btn-question">
-                   <button> <BsFillCursorFill color='white'/></button>
+                   <button className='button-qua'> <BsFillCursorFill color='white'/></button>
                 </div>
                </div>
             </form>
-            <ToastContainer />
         </div>
     )
 }

@@ -1,36 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./LoginForm.css";
 import { Link, Redirect } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Formik } from "formik";
-import { toast, ToastContainer } from "react-toastify";
+import { alertError, alertSuccess } from "../../helpers/toast";
 export default function LogInForm() {
   let errorMsg = "";
   const { t } = useTranslation();
   const [redirect, setRedirect] = useState(false);
   const { login, loginWithGoogle, resetPassword } = useAuth();
 
-  const errorAlert = () => {
-    toast.error(errorMsg, {
-      position: "bottom-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
   const handleLogin = async (values) => {
     try {
       const userCredentials = await login(values.email, values.password);
 
       //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
 
-      if (userCredentials.user.emailVerified) {
+      // if (userCredentials.user.emailVerified) {
 
       await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
         id: userCredentials.user.uid,
@@ -45,12 +33,29 @@ export default function LogInForm() {
           "myUser",
           JSON.stringify(userCredentials.user.uid)
         );
+        alertSuccess(t("logInForm.loggedIn"))
         setRedirect(true);
       }
+      if (userCredentials.user.emailVerified) {
 
+        await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+          id: userCredentials.user.uid,
+          name: userCredentials.user.displayName,
+          email: userCredentials.user.email,
+          image: userCredentials.user.photoURL,
+          isVerified: userCredentials.user.emailVerified,
+        });
 
+        if (userCredentials.user.uid) {
+          localStorage.setItem(
+            "myUser",
+            JSON.stringify(userCredentials.user.uid)
+          );
+          setRedirect(true);
+        }
       //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
-
+      }else{
+        console.log("Check your mail box for the authentification email")
       }
     } catch (err) {
       // console.log(err);
@@ -58,7 +63,7 @@ export default function LogInForm() {
       if (err.code === "auth/user-not-found")
         errorMsg = "Email doesn't belong to a user";
       if (err.code === "auth/wrong-password") errorMsg = "Wrong Password";
-      errorAlert();
+      alertError(errorMsg)
     }
   };
   const handleGoogleSignin = async () => {
@@ -76,7 +81,7 @@ export default function LogInForm() {
           "myUser",
           JSON.stringify(userCredentials.user.uid)
         );
-
+        alertSuccess(t("logInForm.loggedIn"))
       setRedirect(true);
     } catch (err) {
       console.log(err);
@@ -192,7 +197,6 @@ export default function LogInForm() {
           </div>
         )}
       </Formik>
-      <ToastContainer />
     </div>
   );
 }

@@ -10,7 +10,7 @@ export default function LoginADMIN() {
   const [redirect, setRedirect] = useState(false);
   const { login } = useAuth();
   const handleLogin = async (values) => {
-    
+
     try {
       const userCredentials = await login(values.email, values.password);
 
@@ -75,10 +75,10 @@ export default function LoginADMIN() {
             {redirect ? (
               <Redirect
                 push
-                to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home"
+                to="/admin/home"
               />
             ) : null}
-            <h2>{t("loginAdmin.login") }</h2>
+            <h2>{t("loginAdmin.login")}</h2>
             <form
               method="POST"
               action={`${process.env.REACT_APP_DOMAIN}/user/login`}

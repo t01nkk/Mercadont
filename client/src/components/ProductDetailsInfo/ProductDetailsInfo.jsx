@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./ProductDetailsInfo.css";
 import { useHistory } from "react-router-dom";
 import accounting from "accounting";
-import { ToastContainer, toast } from "react-toastify";
 import { FormQA } from "../FormQA/FormQA";
 import { useTranslation } from "react-i18next";
 import { handleDeleteFavorite, handleSaveFavorite } from "../Cart/actionsCart";
@@ -11,7 +10,7 @@ import imgDeleteFavorite from "../../media/heart-delete-cart.png";
 import shoppingCart from "../../media/shoppingCart.png";
 import { useStore } from "../../context/store.js";
 import { totalCount } from "../../redux/actions/actions";
-
+import { alertSuccess, alertInfo } from "../../helpers/toast";
 export default function ProductDetailsInfo({
   id,
   image,
@@ -46,30 +45,6 @@ export default function ProductDetailsInfo({
   //**********************************************************/
   //------------------Funciones de alertas------------------//
   //**********************************************************/
-  const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
-  const alertInfo = (msg) => {
-    toast.info(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
 
   //**********************************************************/
   //------Funciones para agregar o borrar de favoritos------//
@@ -82,7 +57,7 @@ export default function ProductDetailsInfo({
   const postFavorite = () => {
     let person = JSON.parse(localStorage.getItem("myUser"));
     if (!person) {
-      alert(t("home.mustBeLoggedIn"));
+      alertInfo(t("home.mustBeLoggedIn"));
       history.push("/logIn");
       return;
     }
@@ -141,54 +116,65 @@ export default function ProductDetailsInfo({
       <div className="details-info">
         <div className="product-info">
           <p className="titleDetails">
-            <button
-              className="card-btn"
-              onClick={() => handleSaveCart(name, price, image, id, stock)}
-            >
-              <img className="cart-btn" src={shoppingCart} alt="add-cart" />
-            </button>
-            {changeButton ? (
-              <button className="card-btn" onClick={() => deleteFavorite()}>
-                <img
-                  className="fav-btn"
-                  src={imgDeleteFavorite}
-                  alt="delete-favorite"
-                />
-              </button>
-            ) : (
-              <button className="card-btn" onClick={() => postFavorite()}>
-                <img
-                  className="fav-btn"
-                  src={imgAddFavorite}
-                  alt="add-favorite"
-                />
-              </button>
-            )}
             {name}
+            <div className="button-details-details">
+              <button
+                className="card-btn"
+                onClick={() => handleSaveCart(name, price, image, id, stock)}
+              >
+                <img className="cart-btn" src={shoppingCart} alt="add-cart" />
+              </button>
+              {changeButton ? (
+                <button className="card-btn" onClick={() => deleteFavorite()}>
+                  <img
+                    className="fav-btn"
+                    src={imgDeleteFavorite}
+                    alt="delete-favorite"
+                  />
+                </button>
+              ) : (
+                <button className="card-btn" onClick={() => postFavorite()}>
+                  <img
+                    className="fav-btn"
+                    src={imgAddFavorite}
+                    alt="add-favorite"
+                  />
+                </button>
+              )}
+            </div>
           </p>
-          <p className="title">{t("productDetailsInfo.description")}</p>
+
+          <p className="title-details-info">
+            {t("productDetailsInfo.description")}
+          </p>
           <p className="description">{description}</p>
           <div className="product-info-details">
             <div>
-              <p className="title">{t("productDetailsInfo.categories")}</p>
+              <p className="title-details-info">
+                {t("productDetailsInfo.categories")}
+              </p>
               {React.Children.toArray(
                 categories.map((category) => <p>{category.name}</p>)
               )}
             </div>
             <div>
-              <p className="title">{t("productDetailsInfo.stock")}</p>
+              <p className="title-details-info">
+                {t("productDetailsInfo.stock")}
+              </p>
               <p>{stock}</p>
             </div>
 
             <div>
-              <p className="title">{t("productDetailsInfo.price")}</p>
+              <p className="title-details-info">
+                {t("productDetailsInfo.price")}
+              </p>
               <p>{`${accounting.formatMoney(price, "U$D ", 0)}`}</p>
             </div>
           </div>
-          <p className="title">{t("productDetailsInfo.qa")}</p>
-          {/* <p className="title">Rating: </p>
+          <p className="title-details-info">{t("productDetailsInfo.qa")}</p>
+          {/* <p className="title-details-info">Rating: </p>
         <p>{rating}</p> */}
-          {/* <p className="title">Reviews:</p>
+          {/* <p className="title-details-info">Reviews:</p>
         <p>{reviews}</p> */}
 
           <div className="scroll">
@@ -196,8 +182,8 @@ export default function ProductDetailsInfo({
               {React.Children.toArray(
                 qas.map((qa) => (
                   <div className="question">
-                    <p>{qa.question}</p>
-                    {qa.answer ? <div>{qa.answer}</div> : null}
+                    <p className="questionText">Q: {qa.question}</p>
+                    {qa.answer ? <div className="answerText">A: {qa.answer}</div> : null}
                   </div>
                 ))
               )}
@@ -206,7 +192,6 @@ export default function ProductDetailsInfo({
           <div className="formQA">
             <FormQA productId={id} />
           </div>
-          <ToastContainer />
         </div>
       </div>
     </div>

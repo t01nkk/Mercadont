@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useStore } from "../../../context/store";
 import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import FilterCategories from "../../FilterCategories/FilterCategories";
 import { getFavorites } from "../../../redux/actions/actions.js";
 import SearchBar from "../../SearchBar/SearchBar";
-import "./responsiveNavBar.css";
+import "./responsiveNavBar.scss";
 import { useAuth } from "../../../context/authContext";
 import logo from "../../../media/logonavbar.png";
 import { totalCount } from "../../../redux/actions/actions.js";
-import i18next from "i18next";
+import { alertInfo } from "../../../helpers/toast";
 
 export default function LoggedNavBar() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [state, dispatch] = useStore();
   // const [language, setLanguage] = useState("es");
   let myUser = JSON.parse(localStorage.getItem("myUser"));
@@ -21,15 +21,16 @@ export default function LoggedNavBar() {
   const history = useHistory();
   const logoutSesion = async () => {
     // let user = JSON.parse(localStorage.getItem("myUser"))
-    const answer = window.confirm("Are you sure you want to log out?");
+    const answer = window.confirm(t("loggedNavBar.confirmLogOut"));
     if (answer) {
       await logout;
       localStorage.removeItem("myUser");
+      alertInfo(t("loggedNavBar.loggedOut"));
       history.push("/");
     }
   };
   const handleLanguage = (lang) => {
-    i18next.changeLanguage(lang);
+    i18n.changeLanguage(lang);
   };
 
   useEffect(() => {
@@ -54,7 +55,9 @@ export default function LoggedNavBar() {
       >
         <div className="container-fluid">
           <a className="navbar-brand">
-            <img src={logo} alt="" height="80" />
+            <Link to="/">
+              <img src={logo} alt="" height="80" />
+            </Link>
           </a>
           <button
             className="navbar-toggler"
@@ -111,7 +114,7 @@ export default function LoggedNavBar() {
                     <Link to="/favorites">{t("loggedNavBar.favorites")}</Link>
                   </li>
                   <li className="dropdown-item category-list-item">
-                    <Link to="/history">History</Link>
+                    <Link to="/history">{t("loggedNavBar.history")}</Link>
                   </li>
                   <li className="dropdown-item category-list-item log-out">
                     <a onClick={logoutSesion}>{t("loggedNavBar.logOut")}</a>

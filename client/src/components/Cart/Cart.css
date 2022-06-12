@@ -1,9 +1,107 @@
 .cart-container {
   display: flex;
-  gap: 3.5rem;
-  justify-content: center;
   flex-direction: column;
+  margin: 0 10%;
 }
 .cart-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 22rem));
+  gap: 1.2rem;
+  justify-content: center;
+}
+.cart-container-title {
   display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+.cart-chechout-section {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+  flex-direction: column;
+}
+.cart-total-price {
+  display: flex;
+}
+.total-price-cart {
+  display: flex;
+  justify-content: center;
+  margin: 25px 0;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+@media (hover: hover) {
+  #creditcard {
+    /*  set start position */
+    transform: translateY(110px);
+    transition: transform 0.1s ease-in-out;
+    /*  set transition for mouse enter & exit */
+  }
+
+  #money {
+    /*  set start position */
+    transform: translateY(180px);
+    transition: transform 0.1s ease-in-out;
+    /*  set transition for mouse enter & exit */
+  }
+
+  button:hover #creditcard {
+    transform: translateY(0px);
+    transition: transform 0.2s ease-in-out;
+    /*  overide transition for mouse enter */
+  }
+
+  button:hover #money {
+    transform: translateY(0px);
+    transition: transform 0.3s ease-in-out;
+    /*  overide transition for mouse enter */
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.25rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.cart-buy-button:hover .button__text span {
+  transform: translateY(-0.25rem);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* styling */
+
+.cart-buy-button {
+  
+  border: none;
+  outline: none;
+  padding: 1rem 90px 1rem 2rem;
+  position: relative;
+  background-color: #000000;
+  color: #fff;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 30%;
+}
+
+.cart-buy-button:active {
+  transform: translateY(1px);
+}
+
+.button__svg {
+  position: absolute;
+  overflow: visible;
+  bottom: 5px;
+  left: calc(100% - 100px);
+  height: 90px;
 }

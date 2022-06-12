@@ -9,12 +9,12 @@ import {
   totalCount,
 } from "../../redux/actions/actions.js";
 import "./Home.css";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import { Loader } from "../../components/Loader/Loader.jsx"
 import { handleDeleteFavorite, handleSaveFavorite } from "../../components/Cart/actionsCart.js";
 import { useHistory } from "react-router-dom";
+import {alertInfo, alertSuccess, alertWarning} from '../../helpers/toast'
 
 
 export default function Home() {
@@ -25,31 +25,6 @@ export default function Home() {
   const [inCart, setInCart] = useState(false);
   const history = useHistory();
   let person = JSON.parse(localStorage.getItem("myUser"));
-  const alertSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    });
-  };
-  const alertInfo = (msg) => {
-    toast.info(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark"
-    });
-  };
-
  
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
@@ -60,15 +35,14 @@ export default function Home() {
 
     let person = JSON.parse(localStorage.getItem("myUser"));
     if (!person) {
-      alert("You need to be logged in to add products to the cart")
-      history.push("/logIn");
-      return;
+      alertWarning(t("home.logInProducts"))
+      setTimeout(() => {
+        history.push("/logIn");
+      }, 2000);
     }
-
-    if (value) {
+    else if (value) {
       setInCart(false);
       alertInfo(t("home.altAlreadyInCart"));
-      return;
     } else {
       setInCart(true);
       setCart((cart) => [...cart, products]);
@@ -126,8 +100,6 @@ export default function Home() {
           })
         )
         : <div className="container-loader"><Loader /></div>}
-      <ToastContainer />
-      <p>{t(i18n.languages[0]) }</p>
     </section>
   );
 }

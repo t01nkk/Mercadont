@@ -2,27 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useStore } from "../../context/store";
-import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "../../context/authContext";
 import { useTranslation } from "react-i18next";
 import "./accountDetails.css";
+import { alertInfo } from '../../helpers/toast'
+
 export default function AccountDetailsForm() {
   const { t } = useTranslation();
   const history = useHistory();
-
-  // 'User information updated successfully'
-  const alertUserUpdated = (msg) => {
-    toast.info(msg, {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
 
   const { resetPassword } = useAuth();
   const [state, dispatch] = useStore();
@@ -45,8 +32,6 @@ export default function AccountDetailsForm() {
 
   const expression = {
     Expression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
- 
-    
   };
 
 
@@ -144,10 +129,10 @@ export default function AccountDetailsForm() {
           postalCode,
         }
       );
-      alertUserUpdated(t("accountDetailsForm.toastInfo"));
+      alertInfo(t("accountDetailsForm.toastInfo"));
       setTimeout(() => {
         history.push("/accountDetails");
-      }, 4000);
+      }, 2000);
     } catch (err) {
       // console.log(err);
       return err;
@@ -182,6 +167,7 @@ export default function AccountDetailsForm() {
             name="email"
             value={user.email}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="divInputUser">
@@ -190,6 +176,7 @@ export default function AccountDetailsForm() {
             type="text"
             name="name"
             value={user.name}
+            required
             onChange={handleChangeName}
           />
           {errors.name && <p className="error-input">{errors.name}</p>}{" "}
@@ -201,6 +188,7 @@ export default function AccountDetailsForm() {
             type="text"
             name="lastname"
             value={user.lastname}
+            required
             onChange={handleChangeName}
           />
            {errors.lastname && <p className="error-input">{errors.lastname}</p>}{" "}
@@ -211,8 +199,9 @@ export default function AccountDetailsForm() {
           <input
             type="text"
             name="city"
+            required
             placeholder={t("accountDetailsForm.city")}
-            value={user.address?.city}
+            value={user.city}
             onChange={handleChangeName}
           />
              {errors.city && <p className="error-input">{errors.city}</p>}{" "}
@@ -221,8 +210,9 @@ export default function AccountDetailsForm() {
           <input
             type="text"
             name="country"
+            required
             placeholder={t("accountDetailsForm.country")}
-            value={user.address?.country}
+            value={user.country}
             onChange={handleChangeName}
           />
              {errors.country && <p className="error-input">{errors.country}</p>}{" "}
@@ -232,7 +222,7 @@ export default function AccountDetailsForm() {
             type="text"
             name="postalCode"
             placeholder={t("accountDetailsForm.postalCode")}
-            value={user.address?.postalCode}
+            value={user.postalCode}
             onChange={handleChange}
           />
         </div>
@@ -241,7 +231,7 @@ export default function AccountDetailsForm() {
             type="text"
             name="province"
             placeholder={t("accountDetailsForm.province")}
-            value={user.address?.province}
+            value={user.province}
             onChange={handleChangeName}
           />
              {errors.province && <p className="error-input">{errors.province}</p>}{" "}
@@ -251,7 +241,7 @@ export default function AccountDetailsForm() {
             type="text"
             name="street"
             placeholder={t("accountDetailsForm.street")}
-            value={user.address?.street}
+            value={user.street}
             onChange={handleChangeName}
           />
              {errors.street && <p className="error-input">{errors.street}</p>}{" "}
@@ -279,7 +269,6 @@ export default function AccountDetailsForm() {
           <input type="submit" name="Update info"  className="input-submit" />
         </div>
       </form>
-      <ToastContainer />  
     </div>
   );
 }

@@ -22,17 +22,28 @@ module.exports = (sequelize) => {
         allowNull: false,
         unique: true,
       },
-
-      address: {
-        type: DataTypes.JSON({
-          country: DataTypes.STRING,
-          province: DataTypes.STRING,
-          city: DataTypes.STRING,
-          street: DataTypes.STRING,
-          postalCode: DataTypes.STRING,
-        }),
-        // allowNull: false,
+      country: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+                
       },
+      province: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+      },
+      city: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+      },
+      street: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+      },
+      postalCode: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+      },
+      
       image: {
         type: DataTypes.STRING,
         // allowNull: false

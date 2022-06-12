@@ -13,31 +13,31 @@ router.get("/", async (req, res) => {
 
 
 router.post("/", async (req, res) => {
-    const { name} = req.body
-    let exists = await Category.findOne({ where: { name: name } });
-    if (!exists) {
-      if (!name) return res.status(400).send({ msg: "Please pick a name for you category" });    
-      try {
-        const newProduct = await Category.create({
-          name:name,
-        })  
-        res.status(201).send("New Category Created")
-      }
-      catch (err) {
-        res.status(401).send(err)
-      }
-
+  const { name } = req.body
+  let exists = await Category.findOne({ where: { name: name } });
+  if (!exists) {
+    if (!name) return res.status(400).send({ msg: "Please pick a name for you category" });
+    try {
+      const newProduct = await Category.create({
+        name: name,
+      })
+      res.status(201).send("New Category Created")
     }
- 
+    catch (err) {
+      res.status(401).send(err)
+    }
+
+  }
+
 })
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params
-  const { name } = req.body; 
-   try {
+  const { name } = req.body;
+  try {
     await Category.update(
       {
-        name: name,        
+        name: name,
       },
       {
         where: { id: id }

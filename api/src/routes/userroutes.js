@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { User, Product, PurchaseOrder } = require("../db");
+const { groupPurchaseOrders } = require("../middlewares/middlewares");
 
 
 router.post("/register", async (req, res, next) => {
@@ -43,7 +44,7 @@ router.post("/register", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
   // const { email, password } = req.body;
-  const { name, email, image, id } = req.body;
+  const { name, email, image, id} = req.body;
   try {
     const userExist = await User.findOrCreate({
       where: { id: id }, defaults: {
@@ -54,7 +55,7 @@ router.post("/login", async (req, res, next) => {
       }
     }
     )
-    res.send({ msg: "User Logged In" });
+    res.status(200).send(userExist);
   }
   catch (err) {
     console.log(err)
@@ -101,9 +102,13 @@ router.put("/details/:id", async (req, res) => {
         name: name,
         lastname: lastname,
         email: email,
-        address: JSON.stringify({ country, province, city, street, postalCode }),
-        image: image
-
+        country: country,
+        province:province, 
+        city:city,
+        street:street,
+        postalCode:postalCode,
+        image:image
+     
       },
       { where: { id: id } }
     );
@@ -176,51 +181,14 @@ router.get("/history/:id", async (req, res) => {
     const userHistory = await PurchaseOrder.findAll({
       where: {
         userId: id,
-        status: "completed"
+        paymentStatus: "completed"
       },
     });
     if (!userHistory.length) {
       return res.status(200).send([]);
     }
-    let order = {
-      orderNumber: "",
-      date: "",
-      products: [],
-      amount: 0,
-    }
-    order.orderNumber === userHistory[0].orderId
-    order.date === userHistory[0].date
-    order.amount === userHistory[0].totalAmount
-
-    for (let item of userHistory) {
-      if (order.orderNumber === item.orderId) {
-        order.products.push(
-          {
-            product: item.productId,
-            productQuantity: item.productQuantity
-          }
-        )
-      } else {
-        if (order.orderNumber !== "") orders.push(order)
-        order = {
-          orderNumber: "",
-          date: "",
-          products:[],
-          amount: 0,
-        }
-        order.orderNumber = item.orderId
-        order.date = item.date
-        order.amount = item.totalAmount
-        order.products.push(
-          {
-            product: item.productId,
-            productQuantity: item.productQuantity
-          }
-        )
-      }
-    }
-    orders.push(order)
-    return res.status(200).send(orders);
+    let userPurchaseOrders = groupPurchaseOrders(userHistory)
+    return res.status(200).send(userPurchaseOrders)
   } catch (error) {
     return res.status(404).send(error);
   }

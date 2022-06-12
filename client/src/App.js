@@ -25,6 +25,7 @@ import { Favorites } from "./components/Favorites/Favorites";
 import ProductDetailsAdmin from "./pages/ADMIN/ProductDetailsADMIN/ProductDetailsAdmin";
 import { History } from "./components/History/History.jsx"
 import { QaS } from "./pages/ADMIN/QaS/QaS.jsx"
+import { ToastContainer } from "react-toastify";
 
 //Cualquier ruta que tiene que solo estar disponible a usuario logueado, se le puede envolver en ProtectedRoutes
 // import {ProtectedRoute} from "./components/ProtectedRoute/ProtectedRoute";
@@ -32,6 +33,7 @@ function App() {
   return (
     <>
       <Router>
+        <ToastContainer limit={3} />
         <Route exact path="/">
           {/* REDIRECT ROUTE (CAN USE TO FORCE UPDATE OF COMPONENTS) */}
           <Redirect to="/home" />
@@ -98,27 +100,27 @@ function App() {
         </Route>
         {/* AAAAAAAAAAAAAAAAADDDDDDDDDMMMMMMMIIIIIIIIIINNNNNNNN */}
         <Route
-          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F"
+          path="/admin"
           exact
         >
-          <Redirect to="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/login" />
+          <Redirect to="/admin/login" />
         </Route>
         <Route
-          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/login"
+          path="/admin/login"
           exact
         >
           <NavBarADMIN />
           <LoginADMIN />
         </Route>
         <Route
-          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home"
+          path="/admin/home"
           exact
         >
           <NavBarADMIN />
           <HomeAdmin />
         </Route>
         <Route
-          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/sellProduct"
+          path="/admin/sellProduct"
           exact
         >
           {/* ADMIN SELL PRODUCT FORM  */}
@@ -126,7 +128,7 @@ function App() {
           <SellProduct />
         </Route>
         <Route
-          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/admin/edit/:id"
+          path="/admin/edit/:id"
           exact
         >
           {/* ADMIN EDIT PRODUCT */}
@@ -134,7 +136,7 @@ function App() {
           <EditProduct />
         </Route>
         <Route
-          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/home/:id"
+          path="/admin/home/:id"
           exact
         >
           {/* ADMIN DETAILS PRODUCT */}
@@ -142,42 +144,42 @@ function App() {
           <ProductDetailsAdmin />
         </Route>
         <Route
-          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/categories"
+          path="/admin/categories"
           exact
         >
           <NavBarADMIN />
           <Categories />
         </Route>
         <Route
-          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/addCategories"
+          path="/admin/addCategories"
           exact
         >
           <NavBarADMIN />
           <CategoriesCards />
         </Route>
         <Route
-          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/user"
+          path="/admin/user"
           exact
         >
           <NavBarADMIN />
           <AdminUsers />
         </Route>
         <Route
-          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/QaS"
+          path="/admin/QaS"
           exact
         >
           <NavBarADMIN />
           <QaS />
         </Route>
         <Route
-          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/editCategories/:id"
+          path="/admin/editCategories/:id"
           exact
         >
           <NavBarADMIN />
           <AddCategories />
         </Route>
         <Route
-          path="/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/createCategory"
+          path="/admin/createCategory"
           exact
         >
           <NavBarADMIN />

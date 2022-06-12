@@ -4,7 +4,7 @@ import SearchBar from "../../SearchBar/SearchBar";
 import FilterCategories from "../../FilterCategories/FilterCategories";
 import { useTranslation } from "react-i18next";
 import logo from "../../../media/logonavbar.png";
-import "../LoggedNavBar/responsiveNavBar.css";
+import "../LoggedNavBar/responsiveNavBar.scss";
 export default function GuestNavBar() {
   const { t } = useTranslation();
 
@@ -16,7 +16,9 @@ export default function GuestNavBar() {
       >
         <div className="container-fluid">
           <a className="navbar-brand">
-            <img src={logo} alt="" height="80" />
+            <Link to="/">
+              <img src={logo} alt="" height="80" />
+            </Link>
           </a>
           <button
             className="navbar-toggler"

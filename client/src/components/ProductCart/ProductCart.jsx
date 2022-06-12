@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "./ProductCart.scss";
 import { totalPrice } from "../Cart/actionsCart";
 import accounting from "accounting";
-
+import { MdDeleteForever } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
 export const ProductCart = ({
   name,
   stock,
@@ -49,33 +51,51 @@ export const ProductCart = ({
   return (
     <div className="card-body-cart">
       <img src={image} alt={name} className="card-image-cart" />
-      <p>{name}</p>
-      <p>{accounting.formatMoney(price, "U$D ", 0)}</p>
-      <p>TOTAL: {accounting.formatMoney(price * count, "U$D ", 0)}</p>
-      {count !== 1 ? (
-        <button
-          className="btn btn-primary btn-sm"
-          onClick={() => oneLess(stock, name, price)}
+      <div className="cart-info-wrapper">
+        <div className="cart-info-details">
+          <p className="cart-info-title">{name}</p>
+          <p className="cart-info-price">
+            {accounting.formatMoney(price, "U$D ", 0)}
+          </p>
+          <div className="cart-info-prices">
+            <div className="cart-sum">
+              <span>QTY:{storageCart[pos].quantity}</span>
+              <div className="cart-btn-sum">
+                {count !== stock ? (
+                  <button
+                    className="cart-btn-sum-plus"
+                    onClick={() => oneMore(stock, name, price)}
+                  >
+                    <FiPlusSquare size={25} />
+                  </button>
+                ) : null}
+                {count !== 1 ? (
+                  <button
+                    className="cart-btn-sum-minus"
+                    onClick={() => oneLess(stock, name, price)}
+                  >
+                    <FiMinusSquare size={25} />
+                  </button>
+                ) : null}
+              </div>
+            </div>
+            <p>
+              TOTAL:
+              <span className="cart-info-total">
+                {accounting.formatMoney(price * count, "U$D ", 0)}
+              </span>
+            </p>
+          </div>
+        </div>
+        <div
+          to=""
+          className="cart-del-prod"
+          onClick={() => deleteDatatoStorage(name)}
         >
-          -
-        </button>
-      ) : null}
-      <span>{storageCart[pos].quantity}</span>
-      {count !== stock ? (
-        <button
-          className="btn btn-primary btn-sm"
-          onClick={() => oneMore(stock, name, price)}
-        >
-          +
-        </button>
-      ) : null}
-      <button
-        className="del-view-product-cart"
-        onClick={() => deleteDatatoStorage(name)}
-      >
-        Eliminar
-      </button>
-      <button onClick={() => viewProduct(id)}>Ver</button>
+          <MdDeleteForever size={30} />
+        </div>
+      </div>
+      {/* <button onClick={() => viewProduct(id)}>Ver</button> */}
     </div>
   );
 };

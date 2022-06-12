@@ -19,7 +19,7 @@ export default function ProductDetails() {
   }, []);
 
   return (
-    <div className="product-details-container">
+    <>
       {product && (
         <ProductDetailsInfo
           key={product.id}
@@ -36,6 +36,6 @@ export default function ProductDetails() {
           status={product.status}
         />
       )}
-    </div>
+    </>
   );
 }

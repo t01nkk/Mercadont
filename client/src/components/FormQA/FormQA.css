@@ -1,20 +1,31 @@
-.divInputQuestuion input{
-    height: 50px;
-    width: 300px;
-    display: flex;
-  
+.divInputQuestuion input {
+  height: 6vh;
+  width: 18vw;
+  display: flex;
 }
-.btn-question{
-    display: flex;
-    height: 60px;
-    width: 100px;
-   
-    
-    
+
+.title{
+  margin-top: 2vh;
+  margin-bottom: 0;
+}
+
+.button-qua {
+  width: 6vh;
+  height: 6vh;
+  left: 50%;
+  transform: translate(-50%);
+  text-align: center;
+  margin-bottom: 10px;
+  background-color: black;
+}
+.btn-question {
+  display: flex;
+  height: 60px;
+  width: 100px;
 }
 .input-info {
-    display: flex;
-    padding: 20px;
-    justify-content: center;
-
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  align-self: center;
 }
