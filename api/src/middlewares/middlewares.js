@@ -208,10 +208,7 @@ async function mailPayment(recipient, orderId,) {
 }
 
 async function mailQuestion(recipient, productName, productId) {
-  // Tendría que entrarle como parámetro, entre otras cosas, el email.
-  // Only needed if you don't have a real mail account for testing
   let testAccount = await nodemailer.createTestAccount();
-  // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: "smtp.mailgun.org",
     secure: true, // true for 465, false for other ports
@@ -220,7 +217,7 @@ async function mailQuestion(recipient, productName, productId) {
       pass: process.env.MAILGUN_PASSWORD, // generated ethereal password
     },
   });
-  // send mail with defined transport object
+
   let info = await transporter.sendMail({
     from: `"Mercadon\'t libre" <no-reply@${process.env.USER_MAIL_DOMAIN}>`, // sender address
     to: recipient, // list of receivers
@@ -228,8 +225,46 @@ async function mailQuestion(recipient, productName, productId) {
     text: `Your question on the product ${productName} has been answered. Check your your email`, // plain text body
     html: `<b>Your question on the product has been answered. You can click on this <a href=${process.env.HOST_PORT_FRONT}/home/${productId}>link</a> to see the answer.</b>`, // html body
   });
-  // console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+}
+
+async function mailOrderAccepted(recipient,orderId) {
+  let testAccount = await nodemailer.createTestAccount();
+  let transporter = nodemailer.createTransport({
+    host: "smtp.mailgun.org",
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: process.env.MAILGUN_USER, // generated ethereal user
+      pass: process.env.MAILGUN_PASSWORD, // generated ethereal password
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: `"Mercadon\'t libre" <no-reply@${process.env.USER_MAIL_DOMAIN}>`, // sender address
+    to: recipient, // list of receivers
+    subject: `Your order N° ${orderId} has been accepted`, // Subject line
+    text: `Your order N° ${orderId} has been accepted. You will be receving your order in around 2 weeks.`, // plain text body
+    html: `<b>Your order N° ${orderId} has been accepted. You will be receving your order in around 2 weeks.</b>`, // html body
+  });
+}
+
+async function mailOrderRejected(recipient, orderId) {
+  let testAccount = await nodemailer.createTestAccount();
+  let transporter = nodemailer.createTransport({
+    host: "smtp.mailgun.org",
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: process.env.MAILGUN_USER, // generated ethereal user
+      pass: process.env.MAILGUN_PASSWORD, // generated ethereal password
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: `"Mercadon\'t libre" <no-reply@${process.env.USER_MAIL_DOMAIN}>`, // sender address
+    to: recipient, // list of receivers
+    subject: `Your order N° ${orderId} has been rejected`, // Subject line
+    text: `Your order N° ${orderId} has been rejected. Please send an email to mercadont.libre@gmail.com to get more informacion.`, // plain text body
+    html: `<b>Your order N° ${orderId} has been rejected. Please send an email to mercadont.libre@gmail.com to get more informacion.</b>`, // html body
+  });
 }
 
 function groupPurchaseOrders(purchaseOrders) {
@@ -284,5 +319,7 @@ module.exports = {
   // checkNotAuthenticated,
   mailPayment,
   mailQuestion,
+  mailOrderAccepted,
+  mailOrderRejected,
   groupPurchaseOrders
 }
