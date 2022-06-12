@@ -189,7 +189,7 @@ async function mailQuestion(recipient, productName, productId) {
     to: recipient, // list of receivers
     subject: `Your question on ${productName} has been answered✔`, // Subject line
     text: `Your question on the product ${productName} has been answered. Check your your email`, // plain text body
-    html: `<b>You question on the product has been answered. You can click on this <a href=${process.env.HOST_PORT_FRONT}/home/${productId}>link</a> to see the answer.</b>`, // html body
+    html: `<b>Your question on the product has been answered. You can click on this <a href=${process.env.HOST_PORT_FRONT}/home/${productId}>link</a> to see the answer.</b>`, // html body
   });
   // console.log("Message sent: %s", info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
