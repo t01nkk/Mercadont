@@ -16,7 +16,9 @@ export default function GuestNavBar() {
       >
         <div className="container-fluid">
           <a className="navbar-brand">
-            <img src={logo} alt="" height="80" />
+            <Link to="/">
+              <img src={logo} alt="" height="80" />
+            </Link>
           </a>
           <button
             className="navbar-toggler"

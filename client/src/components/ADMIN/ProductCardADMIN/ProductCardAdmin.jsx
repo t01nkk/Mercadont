@@ -51,7 +51,7 @@ export default function ProductCardAdmin({
       </div>
       <Link
         className="button-container"
-        to={`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/admin/edit/${id}`}
+        to={`/admin/edit/${id}`}
       >
         <FiEdit size={40} />
       </Link>

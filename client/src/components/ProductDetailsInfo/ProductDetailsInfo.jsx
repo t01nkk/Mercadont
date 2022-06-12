@@ -182,8 +182,8 @@ export default function ProductDetailsInfo({
               {React.Children.toArray(
                 qas.map((qa) => (
                   <div className="question">
-                    <p>{qa.question}</p>
-                    {qa.answer ? <div>{qa.answer}</div> : null}
+                    <p className="questionText">Q: {qa.question}</p>
+                    {qa.answer ? <div className="answerText">A: {qa.answer}</div> : null}
                   </div>
                 ))
               )}

@@ -15,7 +15,7 @@ export default function CategoriesCards() {
   return (
     <div className="cardsContainer">
       <div className="add-button-div">
-        <Link to={`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/createCategory`}>
+        <Link to={`/admin/createCategory`}>
           <button className="create add-button">
             <MdOutlineAddCircle size={32} />
           </button>

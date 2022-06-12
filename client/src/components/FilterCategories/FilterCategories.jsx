@@ -7,7 +7,7 @@ import {
 } from "../../redux/actions/actionTypes";
 import { fetchCategories } from "../../redux/actions/actions.js";
 import axios from "axios";
-import "./FilterCategories.css";
+import "./FilterCategories.scss";
 export default function FilerCategories() {
   const [state, dispatch] = useStore();
   const [redirect, setRedirect] = useState(false);
@@ -19,8 +19,8 @@ export default function FilerCategories() {
     e.preventDefault();
     const { categories } = filter;
     try {
-      state.filter = categories
-      console.log(state)
+      state.filter = categories;
+      console.log(state);
       const res = await axios.post(
         `${process.env.REACT_APP_DOMAIN}/product/filter`,
         {
@@ -70,43 +70,43 @@ export default function FilerCategories() {
   }, []);
   useEffect(() => {
     fetchCategories(dispatch);
-    document
-        .querySelectorAll("input[type=checkbox]")
-        .forEach((el) => {
-          if (state.filter.includes(el.value)) el.checked = true
-        });
+    document.querySelectorAll("input[type=checkbox]").forEach((el) => {
+      if (state.filter.includes(el.value)) el.checked = true;
+    });
   }, []);
 
   return (
-    <>
+    <section className="categories-section">
       {redirect ? <Redirect push to="/categories" /> : null}
       <form
         onSubmit={(e) => {
           handleSearch(e);
         }}
       >
-        {state.categories.map((categories) => (
-          <label
-            key={categories.name}
-            className="label-category dropdown-item category-list-item "
-          >
-            {categories.name}
-            <input
-              className="checkbox-category"
-              value={categories.name}
-              type="checkbox"
-              id={categories.name}
-              onChange={(e) => {
-                handleSelect(e);
-              }}
-            />
-          </label>
-        ))}
+        <div className="scroll-categories">
+          {state.categories.map((categories) => (
+            <label
+              key={categories.name}
+              className="label-category dropdown-item category-list-item "
+            >
+              {categories.name}
+              <input
+                className="checkbox-category"
+                value={categories.name}
+                type="checkbox"
+                id={categories.name}
+                onChange={(e) => {
+                  handleSelect(e);
+                }}
+              />
+            </label>
+          ))}
+        </div>
         <li className="dropdown-divider"></li>
         <button type="submit" className="filter-search-btn">
           buscar
         </button>
       </form>
-    </>
+    </section>
   );
 }
