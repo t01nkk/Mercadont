@@ -27,6 +27,20 @@ export const Buys = () => {
         }
     }
 
+    let changeStateBuys = async (changeState)=>{
+        try {
+            let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/admin/setOrderStatus`,{
+                orderStatus:changeState,
+                orderId:dataBuys.orderNumber
+            })
+            // if(resp){
+            //     window.location.reload()
+            // }
+        } catch (error) {
+            console.log(console.log(error))
+        }
+    }
+
   return (
     <div>
         {changeSection ?
@@ -63,8 +77,8 @@ export const Buys = () => {
                         />
                     ))}
                     <>
-                        <button>Aceptar pedido</button>
-                        <button>Rechazaar pedido</button>
+                        <button onClick={()=>{changeStateBuys("accepted")}}>Aceptar pedido</button>
+                        <button onClick={()=>{changeStateBuys("rejected")}}>Rechazaar pedido</button>
                     </>
                 </div>
             </div>
