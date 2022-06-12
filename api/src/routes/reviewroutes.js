@@ -1,4 +1,5 @@
 const { Product, User, Category, Qa, Review } = require("../db")
+const { calcProdRating } = require('../middlewares/middlewares')
 const { Router } = require("express")
 
 
@@ -9,7 +10,9 @@ const router = Router()
 router.post("/:id/review", async (req, res) => {
     const { id } = req.params
     const { rating, text, userId } = req.body
-
+    if (rating > 5 && rating < 1) {
+        return res.status(400).send({ message: "Rating must be a number betwin 5 and 1" })
+    }
     try {
         const product = await Product.findOne({
             include: {
@@ -19,17 +22,22 @@ router.post("/:id/review", async (req, res) => {
             }
         },
             { where: { id: id } })
+        if (!product) console.log("no product")
         const user = await User.findOne({ where: { id: userId } })
-        for (let review of product.reviews) {
-            if (user.hasReview(review)) return res.status(400).send("User Already reviewed product," +
-                " please update your review if your wish to leave feedback")
-        }
+        // for (let review of product.reviews) {
+        //     if (user.hasReview(review)) return res.status(400).send("User Already reviewed product," +
+        //         " please update your review if your wish to leave feedback")
+        // }
+        if (!user) console.log("no user")
         const fullReview = await Review.create({
             rating,
-            text
+            text,
+            productId: product.id,
+            userId: user.id
         })
         product.addReview(fullReview)
         user.addReview(fullReview)
+        await calcProdRating(rating, product);
         return res.status(200).send("Review Added")
     }
     catch (err) {
