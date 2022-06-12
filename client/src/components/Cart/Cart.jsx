@@ -7,7 +7,7 @@ import accounting from "accounting";
 import { useTranslation } from "react-i18next";
 import "./Cart.css";
 import { useStore } from "../../context/store.js";
-import { alertInfo, alertSuccess } from "../../helpers/toast";
+import {alertInfo, alertSuccess, alertWarning} from "../../helpers/toast";
 import axios from "axios";
 
 export const Cart = () => {
@@ -92,15 +92,11 @@ export const Cart = () => {
       const street = userDetails.data.street
       const postalCode = userDetails.data.postalCode
 
-      console.log(country)
-      console.log(province)
-      console.log(city)
-      console.log(street)
-      console.log(postalCode)
-
       if( country === "" || province === "" || city === "" || street === "" || postalCode=== "" ){
-        alert("Please fill out your Address details so that the package can be sent")
-        history.push("/accountDetails")
+        alertWarning(t("cart.addressDetailsMissing"))
+        setTimeout(() => {
+          history.push("/accountDetails")
+        }, 1000);
         return
       }
 
