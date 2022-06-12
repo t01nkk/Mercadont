@@ -5,7 +5,7 @@ import { useAuth } from "../../context/authContext";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Formik } from "formik";
-import { alertError } from "../../helpers/toast";
+import { alertError, alertSuccess } from "../../helpers/toast";
 export default function LogInForm() {
   let errorMsg = "";
   const { t } = useTranslation();
@@ -33,13 +33,30 @@ export default function LogInForm() {
           "myUser",
           JSON.stringify(userCredentials.user.uid)
         );
+        alertSuccess(t("logInForm.loggedIn"))
         setRedirect(true);
       }
+      if (userCredentials.user.emailVerified) {
 
+        await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+          id: userCredentials.user.uid,
+          name: userCredentials.user.displayName,
+          email: userCredentials.user.email,
+          image: userCredentials.user.photoURL,
+          isVerified: userCredentials.user.emailVerified,
+        });
 
+        if (userCredentials.user.uid) {
+          localStorage.setItem(
+            "myUser",
+            JSON.stringify(userCredentials.user.uid)
+          );
+          setRedirect(true);
+        }
       //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
-
-      // }
+      }else{
+        console.log("Check your mail box for the authentification email")
+      }
     } catch (err) {
       // console.log(err);
       if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
@@ -64,7 +81,7 @@ export default function LogInForm() {
           "myUser",
           JSON.stringify(userCredentials.user.uid)
         );
-
+        alertSuccess(t("logInForm.loggedIn"))
       setRedirect(true);
     } catch (err) {
       console.log(err);

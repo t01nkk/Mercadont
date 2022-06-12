@@ -50,6 +50,7 @@ export const Favorites = () => {
             />
           ))}
       </div>
-    </div>
-  );
-};
+      <button onClick={(e) => handleBack(e)}>{t("navigation.goBack")}</button>
+  </div>
+  )
+}

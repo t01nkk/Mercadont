@@ -9,8 +9,7 @@ import "./responsiveNavBar.scss";
 import { useAuth } from "../../../context/authContext";
 import logo from "../../../media/logonavbar.png";
 import { totalCount } from "../../../redux/actions/actions.js";
-
-
+import { alertInfo } from "../../../helpers/toast";
 
 export default function LoggedNavBar() {
   const { t, i18n } = useTranslation();
@@ -22,10 +21,11 @@ export default function LoggedNavBar() {
   const history = useHistory();
   const logoutSesion = async () => {
     // let user = JSON.parse(localStorage.getItem("myUser"))
-    const answer = window.confirm("Are you sure you want to log out?");
+    const answer = window.confirm(t("loggedNavBar.confirmLogOut"));
     if (answer) {
       await logout;
       localStorage.removeItem("myUser");
+      alertInfo(t("loggedNavBar.loggedOut"));
       history.push("/");
     }
   };
@@ -55,7 +55,9 @@ export default function LoggedNavBar() {
       >
         <div className="container-fluid">
           <a className="navbar-brand">
-            <img src={logo} alt="" height="80" />
+            <Link to="/">
+              <img src={logo} alt="" height="80" />
+            </Link>
           </a>
           <button
             className="navbar-toggler"
