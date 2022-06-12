@@ -2,20 +2,20 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
     sequelize.define('review', {
         rating: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT,
             allowNull: false,
             defaultValue: 0,
             validate: {
-                min: 0,
+                min: 1,
                 max: 5
             }
         },
         text: {
             type: DataTypes.TEXT,
-            allowNull:false
+            allowNull: false
         }
 
     },
     ),
-        {timestamps:false}
+        { timestamps: false }
 };
