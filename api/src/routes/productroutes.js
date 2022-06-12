@@ -403,7 +403,7 @@ router.get("/recommendation/byHistory/:userId", async (req, res) =>{
       }
     }
     products.push(product);
-    console.log("products:", products);
+    // console.log("products:", products);
 
     for(let pro of products){
       const item = await Product.findAll({
@@ -416,7 +416,7 @@ router.get("/recommendation/byHistory/:userId", async (req, res) =>{
         ],
         where: { id: pro.id }
       })
-      console.log("item:", item[0]?.categories)
+      // console.log("item:", item[0]?.categories)
       categories.push(item[0]?.categories)
     }
     categories = [...new Set(categories)]
