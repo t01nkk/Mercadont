@@ -17,7 +17,6 @@ export const QaSIndividual = ({id,idProduct,createdAt,name,userId,question,answe
       })
       if(sendAnswerAdmin){
         window.location.reload()
-        // Redirect("/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/QaS")
       }
     } catch (error) {
       console.log(error)
