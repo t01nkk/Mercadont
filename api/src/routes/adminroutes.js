@@ -69,19 +69,11 @@ router.get("/adminUsers", async (req, res) => {
 //Give user Admin credencials
 router.put("/setAdmin", async (req, res) => {
   const { email } = req.body;
-  const setAdmin = true;
-  if (setAdmin !== undefined || setAdmin !== null) {
-    try {
-      const isAdmin = await User.update(
-        {
-          isAdmin: true,
-        },
-        { where: { email: email } }
-      );
-      return res.status(200).send(isAdmin);
-    } catch (error) {
-      
-      return res.status(400).send(error);
+  let setAdmin = true;
+  try {
+    const user = await User.findOne({ where: { email: email } });
+    if (user.isAdmin) {
+      setAdmin = false;
     }
     const isAdmin = await User.update(
       {
