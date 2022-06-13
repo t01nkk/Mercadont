@@ -2,6 +2,7 @@ import axios from 'axios'
 import React,{useState, useEffect} from 'react'
 import { ItemBuy } from './ItemBuy.jsx'
 import { DetailsBuys } from './DetailsBuys.jsx'
+import {useHistory, useLocation} from "react-router-dom";
 
 export const Buys = () => {
 
@@ -9,6 +10,8 @@ export const Buys = () => {
     const [dataBuys, setDataBuys] = useState("")
     const [detailsProduct, setDetailsProduct] = useState([])
     const [changeSection, setChangeSection] = useState(true)
+    const history = useHistory()
+    let {search} = useLocation()
 
 //ESTADO DE LA COMPRA
 //"pending", "accepted", "rejected"
@@ -20,7 +23,7 @@ export const Buys = () => {
     let getDataBuys = async()=>{
         try {
             let buys = await axios(`${process.env.REACT_APP_DOMAIN}/admin/filterOrders/${stateBuys}`)
-            console.log(buys)
+            //console.log(buys)
             setDataBuys(buys.data)
         } catch (error) {
             console.log(error)
@@ -29,17 +32,19 @@ export const Buys = () => {
 
     let changeStateBuys = async (changeState)=>{
         try {
+            console.log(dataBuys)
             console.log(dataBuys[0].orderNumber)
             let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/admin/setOrderStatus`,{
                 orderStatus:changeState,
-                orderId:dataBuys[0].orderNumber
+                orderId:search.substring(1)
             })
-            // if(resp){
-            //     window.location.reload()
-            // }
+            if(resp){
+                history.push(`/admin/Buys`)
+                window.location.reload()
+            }
             console.log(resp)
         } catch (error) {
-            console.log(console.log(error))
+            console.log(error)
         }
     }
 
@@ -52,7 +57,7 @@ export const Buys = () => {
                 <button onClick={()=>setStateBuys("accepted")}>Aceptadas</button>
                 <button onClick={()=>setStateBuys("rejected")}>Rechazadas</button>
             </div>
-            <div>
+                <div>
                 {dataBuys.length > 0 && dataBuys.map(e=> (
                     <ItemBuy
                     key={e.orderNumber}
@@ -61,9 +66,10 @@ export const Buys = () => {
                     count={e.products}
                     setChangeSection={setChangeSection}
                     setDetailsProduct={setDetailsProduct}
+                    orderId={e.orderNumber}
                     />
                 ))}
-            </div>
+                </div>
         </div>
             :
             <div>
@@ -79,8 +85,8 @@ export const Buys = () => {
                         />
                     ))}
                     <>
-                        <button onClick={()=>{changeStateBuys("accepted")}}>Aceptar pedido</button>
-                        <button onClick={()=>{changeStateBuys("rejected")}}>Rechazaar pedido</button>
+                        <button onClick={async ()=>{ await changeStateBuys("accepted")}}>Aceptar pedido</button>
+                        <button onClick={async ()=>{await changeStateBuys("rejected")}}>Rechazar pedido</button>
                     </>
                 </div>
             </div>
