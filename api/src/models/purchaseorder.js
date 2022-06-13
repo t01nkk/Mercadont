@@ -17,6 +17,10 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
+        review: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         totalAmount: {
             type: DataTypes.FLOAT,
             allowNull: true

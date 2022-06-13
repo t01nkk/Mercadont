@@ -3,7 +3,7 @@ const { Router } = require("express");
 const { Sequelize, Op } = require("sequelize");
 const router = Router();
 const createdOrders = require("../../purchaseOrders.json");
-const { groupPurchaseOrders, mailQuestion } = require("../middlewares/middlewares");
+const { groupPurchaseOrders, mailQuestion, mailOrderRejected, mailOrderAccepted } = require("../middlewares/middlewares");
 
 // Working
 //Get all Users
@@ -177,7 +177,29 @@ router.put("/setOrderStatus", async (req, res) =>{
         where:{ orderId: orderId }
       }
     )
-    return res.status(200).send(orders)
+
+    const userOrder = await PurchaseOrder.findOne({
+      where:{ orderId: orderId }
+    })
+
+    const user = await User.findOne({
+      where:{ id: userOrder.userId }
+    })  
+console.log("Soy YO",user.email, orderId)
+    if(orderStatus === "accepted"){
+      // DESCOMENTAR PARA ENVIAR MAIL
+      mailOrderAccepted(user.email, orderId)
+      // 
+      return res.status(200).send(`Order updated to ${orderStatus}, and mail sent to the buyer (${user.email})`)
+    }
+    
+    if(orderStatus === "rejected"){
+      // DESCOMENTAR PARA ENVIAR MAIL
+      mailOrderRejected(user.email, orderId)
+      // 
+      return res.status(200).send(`Order updated to ${orderStatus}, and mail sent to the buyer (${user.email})`)
+    }
+    
   } catch (error) {
     return res.status(404).send(error);
   }

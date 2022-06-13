@@ -22,6 +22,8 @@ export const History = () => {
     console.log("arrayHistory:", arrayHistory.data)
     setHistory(arrayHistory.data)
   }
+  //pm_1LA33sL7xpNkb3eJhcFHEHnp
+  //pm_1LA33sL7xpNkb3eJhcFHEHnp
 
   return (
     <div>
@@ -43,20 +45,25 @@ export const History = () => {
         </div>
         :
         <div>
-          {detailsProduct.length && detailsProduct.map((e, index) =>
+          {console.log(history)}
+          {console.log(detailsProduct)}
+          {detailsProduct.length && detailsProduct.map((e, i) =>
             <DetailsBuysHistory
               // date={history[index].date}
               key={e.id}
               // amount={history[index].amount}
+              orderId={history[0]?.orderNumber}
               name={e.name}
               id={e.id}
               image={e.image}
               price={e.price}
+              myUser={myUser}
             />
           )
           }
         </div>
       }
+      
     </div>
   )
 }

@@ -11,7 +11,7 @@ const router = Router();
 const stripe = new Stripe(
   "sk_test_51L4snIL7xpNkb3eJIsYUyZ8SYO4cHXX3GyMVVgp1lJ56KTEq6Mc8qtENUNlam4mslm4pwNXq48uFQYLrDPldNso900jpNAxL5e"
 );
-//WORKING
+//----------------------PRODUCT FILTER---------------------------------- //
 //Get All Products, Filter By Category, Name, Price
 router.get("/", async (req, res) => {
   try {
@@ -40,6 +40,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+//----------------------PRODUCT SEARCH---------------------------------- //
 // Get all products
 router.get("/search", async (req, res) => {
   const { name } = req.query;
@@ -74,7 +75,7 @@ router.get("/search", async (req, res) => {
   }
 });
 
-// Working
+//----------------------PRODUCT FILTER BY CATEGORY---------------------------------- //
 // Get all products Filter By Category
 router.post("/filter", async (req, res) => {
   if (req.body.categories) {
@@ -128,7 +129,7 @@ router.post("/filter", async (req, res) => {
   }
 });
 
-// Working
+//----------------------ONE PRODUCT DETAILS---------------------------------- //
 //Get Product Details
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
@@ -164,7 +165,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Working
+//----------------------MANY PRODUCTS DETAILS---------------------------------- //
 //Get MANY Product Details
 router.get("/manyProducts", async (req, res) => {
   const { arrayProducts } = req.body;
@@ -202,7 +203,7 @@ router.get("/manyProducts", async (req, res) => {
   }
 });
 
-// Working
+//----------------------CREATE PRODUCT---------------------------------- //
 //Create Product
 router.post("/create", async (req, res) => {
   let { name, price, description, status, image, stock, categories, sizes } =
@@ -250,7 +251,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-// Working
+//----------------------DELETE PRODUCT---------------------------------- //
 //Delete Product
 router.delete("/delete/:id", async (req, res) => {
   const { id } = req.params;
@@ -262,7 +263,7 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// Working
+//---------------------UPDATE PRODUCT---------------------------------- //
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
@@ -312,6 +313,119 @@ router.put("/update/:id", async (req, res) => {
     return res.status(202).send("Product Updated");
   } catch (err) {
     return res.status(400).send(err);
+  }
+});
+
+//-------------------RECOMMENDATION - MOST SOLD PRODUCTS------------------------------ //
+router.get("/recommendation/mostSold", async (req, res) =>{
+  let product = {
+    id: "",
+    quantity: 0,
+  }
+  let productsSold = []
+  try {
+    const orders = await PurchaseOrder.findAll();
+
+    if(!orders){
+      const products = await Product.findAll();
+      return res.status(200).send(products);
+    }
+    product.id = orders[0].productId;
+    product.quantity = orders[0].productQuantity;
+
+    for (let i = 1; i < orders.length; i++){
+      if(product.id === orders[i].productId){
+        product.quantity += orders[i].productQuantity;
+      }else{
+        productsSold.push(product);
+        product = {
+          id : "",
+          quantity: 0,
+        }
+        product.id = orders[i].productId;
+        product.quantity = orders[i].productQuantity;
+      }
+    }
+    productsSold.push(product);
+    // Por ahora devuelve un array donde detalla la cantidad de unidades que se vendio de cada producto
+    // Es decir, el array contiene un objeto por cada producto vendido y la cantidad que se vendio de este:
+    // {
+    //   product id
+    //   quantity sold
+    // }
+    res.status(200).send(productsSold);
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
+
+//-------------------RECOMMENDATION - PRODUCTS BY RATING ------------------------------ //
+router.get("/recommendation/byRating", async (req, res) =>{
+  try {
+    const products = await Product.findAll();
+    products.sort((a,b) =>{
+      return  b.rating - a.rating
+    })
+    // Por ahora solo devuelve todos los productos pero ordenados por rating descendente
+    res.status(200).send(products)
+  } catch (error) {
+    console.log(error)
+    res.status(400).send(error)
+  }
+});
+
+//-------------------RECOMMENDATION - PRODUCTS BY HISTORY ------------------------------ //
+router.get("/recommendation/byHistory/:userId", async (req, res) =>{
+  const {userId} = req.params;
+  let product = {
+    id: "",
+  }
+  let products = []
+  let categories = []
+  try {
+    const userProducts = await PurchaseOrder.findAll({
+      where:{
+        userId: userId
+      }
+    });
+
+    if(!userProducts){
+      return res.status(400).send("No orders found");
+    }
+
+    product.id = userProducts[0].productId;
+    for (let i = 1; i < userProducts.length; i++){
+      if(product.id !== userProducts[i].productId){
+        products.push(product);
+        product = {
+          id : "",
+        }
+        product.id = userProducts[i].productId;
+      }
+    }
+    products.push(product);
+    // console.log("products:", products);
+
+    for(let pro of products){
+      const item = await Product.findAll({
+        // include: Category,
+        include: [
+          {
+              model: Category,
+              through: { attributes: [] },
+          }
+        ],
+        where: { id: pro.id }
+      })
+      // console.log("item:", item[0]?.categories)
+      categories.push(item[0]?.categories)
+    }
+    categories = [...new Set(categories)]
+     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
+    res.status(200).send(categories)
+  } catch (error) {
+    console.log(error)
+    res.status(400).send(error)
   }
 });
 

@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import "./History.css"
+import React,{ useState, useEffect } from 'react'
 import axios from 'axios'
-
-export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsProduct }) => {
-    // console.log(count)
+export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProduct }) => {
     date = date.slice(0,10)
-    const [cant, setcant] = useState(0)
+    const [cant, setCant] = useState(0)
     const [idProduct, setIdProduct] = useState([])
     let total = 0
+
     useEffect(() => {
         sumarCount()
         // console.log(count)
@@ -22,10 +20,10 @@ export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsP
             });
             setIdProduct(newArray)
         }
-        setcant(total)
+        setCant(total)
     }
 
-    const getDetailsHistory = async () => {
+    const getDetailsBuys = async () => {
         try {
             const foundProducts = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/product/history`,
                 {
@@ -40,7 +38,7 @@ export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsP
     }
 
     return (
-        <div className='container-data-history' onClick={getDetailsHistory}>
+        <div className='container-data-history' onClick={getDetailsBuys}>
             <p>Date of Purchase: <span>{date}</span></p>
             <div>
                 <p>Quantity of Product: <span>{cant !== 0 && cant}</span></p>
@@ -49,4 +47,5 @@ export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsP
             <br />
         </div>
     )
+
 }

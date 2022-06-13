@@ -18,16 +18,16 @@ export const QaSIndividual = ({ id, idProduct, createdAt, name, userId, question
       })
       if (sendAnswerAdmin) {
         window.location.reload()
-        // Redirect("/admin/QaS")
       }
-    } catch (error) {
+  }catch (error) {
       console.log(error)
     }
   }
-  const handleChange = (e) => {
+
+  const handleChange = (e)=>{ 
     setTextArea(e.target.value)
   }
-
+  
   const viewProduct = () => {
     history.push(`/admin/edit/${idProduct}`)
   }
@@ -36,7 +36,7 @@ export const QaSIndividual = ({ id, idProduct, createdAt, name, userId, question
     <div className="product">
       <div className="productText">
         <p> <b>Product: </b>{name}</p>
-        <p><b>Question Date: </b>{createdAt}</p>
+        <p><b>Question Date: </b>{createdAt.slice(0,10)}</p>
         <p><b>Question: </b>{question}</p>
         {answer ? <p><b>Answer: </b>{answer}</p> : <p>Aun no respondida</p>}
       </div>
