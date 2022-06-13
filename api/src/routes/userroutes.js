@@ -188,6 +188,7 @@ router.get("/history/:id", async (req, res) => {
       return res.status(200).send([]);
     }
     let userPurchaseOrders = groupPurchaseOrders(userHistory)
+    console.log("userPurchaseOrders:",userPurchaseOrders)
     return res.status(200).send(userPurchaseOrders)
   } catch (error) {
     return res.status(404).send(error);
