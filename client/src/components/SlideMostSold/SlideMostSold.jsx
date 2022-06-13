@@ -86,9 +86,7 @@ export default function Slide() {
             modules={[Navigation, Pagination]}
             navigation={true}
             slidesPerView={1}
-            pagination={{
-                type: "fraction",
-            }}
+            pagination={true}
             breakpoints={{
                 640: {
                     slidesPerView: 2,
