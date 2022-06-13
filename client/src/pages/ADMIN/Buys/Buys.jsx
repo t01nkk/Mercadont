@@ -2,7 +2,7 @@ import axios from 'axios'
 import React,{useState, useEffect} from 'react'
 import { ItemBuy } from './ItemBuy.jsx'
 import { DetailsBuys } from './DetailsBuys.jsx'
-
+import { useLocation } from "react-router-dom"
 export const Buys = () => {
 
     const [stateBuys, setStateBuys] = useState("pending")
@@ -15,6 +15,8 @@ export const Buys = () => {
     useEffect(()=>{
         getDataBuys()
     }, [stateBuys])
+
+    let { search } = useLocation()
 
 
     let getDataBuys = async()=>{
@@ -29,10 +31,11 @@ export const Buys = () => {
 
     let changeStateBuys = async (changeState)=>{
         try {
-            console.log(dataBuys[0].orderNumber)
+            console.log(dataBuys)
+            
             let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/admin/setOrderStatus`,{
                 orderStatus:changeState,
-                orderId:dataBuys[0].orderNumber
+                orderId:search.substring(1)
             })
             // if(resp){
             //     window.location.reload()
@@ -56,6 +59,7 @@ export const Buys = () => {
                 {dataBuys.length > 0 && dataBuys.map(e=> (
                     <ItemBuy
                     key={e.orderNumber}
+                    orderNumber={e.orderNumber}
                     amount={e.amount}
                     date={e.date}
                     count={e.products}

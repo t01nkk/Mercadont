@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from "react-router-dom"
 import "./History.css"
 import axios from 'axios'
 
-export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsProduct }) => {
-    // console.log(count)
+export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsProduct, orderStatus, orderNumber, setIsReview, review }) => {
+    
+    const history = useHistory()
+    //pm_1LAFPdL7xpNkb3eJ9QXGOVtC
     date = date.slice(0,10)
     const [cant, setcant] = useState(0)
     const [idProduct, setIdProduct] = useState([])
@@ -31,7 +34,8 @@ export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsP
                 {
                     order: idProduct
                 })
-                console.log(foundProducts)
+                setIsReview(review)
+                history.push(`/history?${orderNumber}`)
                 await setDetailsProduct(foundProducts.data)
                 await setChangeSection(false)
         } catch (error) {
@@ -45,6 +49,7 @@ export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsP
             <div>
                 <p>Quantity of Product: <span>{cant !== 0 && cant}</span></p>
                 <p>Total: <span>{amount}</span></p>
+                {orderStatus === "accepted" && <button onClick={getDetailsHistory}>Dejar Reviews</button>}
             </div>
             <br />
         </div>
