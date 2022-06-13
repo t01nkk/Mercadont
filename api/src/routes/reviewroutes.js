@@ -1,4 +1,4 @@
-const { Product, User, Category, Qa, Review } = require("../db")
+const { Product, User, Category, Qa, Review, PurchaseOrder } = require("../db")
 const { calcProdRating } = require('../middlewares/middlewares')
 const { Router } = require("express")
 
@@ -9,7 +9,7 @@ const router = Router()
 
 router.post("/:id/review", async (req, res) => {
     const { id } = req.params
-    const { rating, text, userId } = req.body
+    const { rating, text, userId, orderId } = req.body
     if (rating > 5 && rating < 1) {
         return res.status(400).send({ message: "Rating must be a number betwin 5 and 1" })
     }
@@ -24,10 +24,10 @@ router.post("/:id/review", async (req, res) => {
             { where: { id: id } })
         if (!product) console.log("no product")
         const user = await User.findOne({ where: { id: userId } })
-        // for (let review of product.reviews) {
-        //     if (user.hasReview(review)) return res.status(400).send("User Already reviewed product," +
-        //         " please update your review if your wish to leave feedback")
-        // }
+        for (let review of product.reviews) {
+            if (user.hasReview(review)) return res.status(400).send("User Already reviewed product," +
+                " please update your review if your wish to leave feedback")
+        }
         if (!user) console.log("no user")
         const fullReview = await Review.create({
             rating,
@@ -38,6 +38,10 @@ router.post("/:id/review", async (req, res) => {
         product.addReview(fullReview)
         user.addReview(fullReview)
         await calcProdRating(rating, product);
+        //Setea el valor "REVIEW" de la tabla Purchase order en TRUE para Deshabilitar una review nueva en por el mismo usuario en el front
+        const findOrder = await PurchaseOrder.findone({ where: { orderId: orderId } });
+        if (!findOrder) return res.status(400).send({ msg: "This order Id isn't valid" });
+        await PurchaseOrder.update({ review: true }, { where: { orderId: orderId } })
         return res.status(200).send("Review Added")
     }
     catch (err) {

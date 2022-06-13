@@ -185,17 +185,17 @@ router.put("/setOrderStatus", async (req, res) =>{
     const user = await User.findOne({
       where:{ id: userOrder.userId }
     })  
-
+console.log("Soy YO",user.email, orderId)
     if(orderStatus === "accepted"){
       // DESCOMENTAR PARA ENVIAR MAIL
-      // mailOrderAccepted(user.email, orderId)
+      mailOrderAccepted(user.email, orderId)
       // 
       return res.status(200).send(`Order updated to ${orderStatus}, and mail sent to the buyer (${user.email})`)
     }
     
     if(orderStatus === "rejected"){
       // DESCOMENTAR PARA ENVIAR MAIL
-      // mailOrderRejected(user.email, orderId)
+      mailOrderRejected(user.email, orderId)
       // 
       return res.status(200).send(`Order updated to ${orderStatus}, and mail sent to the buyer (${user.email})`)
     }
