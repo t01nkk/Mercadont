@@ -326,9 +326,11 @@ router.get("/recommendation/mostSold", async (req, res) =>{
   try {
     const orders = await PurchaseOrder.findAll();
 
-    if(!orders){
+    if(!orders.length){
       const products = await Product.findAll();
-      return res.status(200).send(products);
+      let arrayProducts = [...products]
+      arrayProducts.splice(12)
+      return res.status(200).send(arrayProducts);
     }
     product.id = orders[0].productId;
     product.quantity = orders[0].productQuantity;
@@ -353,8 +355,10 @@ router.get("/recommendation/mostSold", async (req, res) =>{
     //   product id
     //   quantity sold
     // }
+    productsSold.splice(12)
     res.status(200).send(productsSold);
   } catch (error) {
+    console.log(error)
     res.status(400).send(error)
   }
 })
