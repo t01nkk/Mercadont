@@ -359,6 +359,7 @@ router.get("/recommendation/mostSold", async (req, res) =>{
     for(let p of productsSold){
       arrayProducts.push(p.details)
     }
+    // Devuelve un array de productos mas comprados ordenados de manera DESCENDENTE
     res.status(200).send(arrayProducts);
   } catch (error) {
     console.log(error)
@@ -374,7 +375,7 @@ router.get("/recommendation/byRating", async (req, res) =>{
       return  b.rating - a.rating
     })
     products.splice(12)
-    // Por ahora solo devuelve todos los productos pero ordenados por rating descendente
+    // Devuelve los 12 productos con mas rating de manera DESCENDENTE
     res.status(200).send(products)
   } catch (error) {
     console.log(error)
