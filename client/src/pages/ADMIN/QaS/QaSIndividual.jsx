@@ -18,16 +18,16 @@ export const QaSIndividual = ({ id, idProduct, createdAt, name, userId, question
       })
       if (sendAnswerAdmin) {
         window.location.reload()
-        // Redirect("/admin/QaS")
       }
-    } catch (error) {
+  }catch (error) {
       console.log(error)
     }
   }
-  const handleChange = (e) => {
+
+  const handleChange = (e)=>{ 
     setTextArea(e.target.value)
   }
-
+  
   const viewProduct = () => {
     history.push(`/admin/edit/${idProduct}`)
   }

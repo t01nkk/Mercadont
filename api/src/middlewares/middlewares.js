@@ -1,6 +1,6 @@
 const productos = require("../../productscats.json");
 const users = require("../../users.json");
-const { Product, User, Category, PurchaseOrder } = require("../db");
+const { Product, User, Category, PurchaseOrder, Review } = require("../db");
 const { Op } = require("sequelize");
 // const { genPassword } = require('./password_utils');
 const nodemailer = require("nodemailer");
@@ -89,6 +89,21 @@ function validateInputProduct(
 }
 
 async function getProducts() {
+  const findUserCreated = await User.findAll({ where: { userCreated: true } });
+  const countUser = await User.count();
+  if (findUserCreated?.length === countUser) {
+    for (let i = 0; i < users.length; i++) {
+      await User.create({
+        id: "G6kwSxpc9LgFQ76jJE1SPIiZGfI2",
+        email: users[i].email,
+        name: users[i].name,
+        banned: users[i].banned,
+        isAdmin: users[i].isAdmin,
+      });
+    }
+  }
+  const admin = await User.findOne({ where: { email: users[0].email } })
+
   const findCreated = await Product.findAll({ where: { created: true } });
   let count = await Product.count();
   if (findCreated.length === count) {
@@ -104,6 +119,15 @@ async function getProducts() {
         db: true,
       });
 
+      const fullReview = await Review.create({
+        rating: productos[i].rating,
+        text: '',
+        productId: newProduct.id,
+        userId: admin.id
+      })
+      newProduct.addReview(fullReview)
+      admin.addReview(fullReview)
+
       for (let j = 0; j < productos[i].categories.length; j++) {
         let cat = await Category.findOne({
           where: { name: { [Op.iLike]: `%${productos[i].categories[j]}%` } },
@@ -117,6 +141,7 @@ async function getProducts() {
           });
           await newProduct.addCategory(created);
         }
+
       }
     }
   } else return { msg: "Failed" };
@@ -124,28 +149,40 @@ async function getProducts() {
   return { msg: "Product Database loaded succesfully!" };
 }
 
-async function getUsers() {
-  const findCreated = await User.findAll({ where: { userCreated: true } });
-  const count = await User.count();
-  if (findCreated?.length === count) {
-    for (let i = 0; i < users.length; i++) {
-      let password = genPassword(users[i].password);
-      await User.create({
-        email: users[i].email,
-        password: password,
-        name: users[i].name,
-        lastname: users[i].lastname,
-        address: users[i].address,
-        image: users[i].image,
-        banned: users[i].banned,
-        isAdmin: users[i].isAdmin,
-      });
+const calcProdRating = async (rating, prod) => {
+  let sum = parseInt(rating);
+  let count = 1;
+  prod.reviews.map(review => { sum += review.rating; ++count })
+  await Product.update({
+    rating: Number(sum / count).toFixed(2)
+  },
+    {
+      where: {
+        id: prod.id
+      }
     }
-  }
+  )
+  console.log(count, " sum :", sum)
 }
 
+// async function getUsers() {
+//   const findCreated = await User.findAll({ where: { userCreated: true } });
+//   const count = await User.count();
+//   if (findCreated?.length === count) {
+//     for (let i = 0; i < users.length; i++) {
+//       await User.create({
+//         email: users[i].email,
+//         name: users[i].name,
+//         image: users[i].image,
+//         banned: users[i].banned,
+//         isAdmin: users[i].isAdmin,
+//       });
+//     }
+//   }
+// }
+
 // async..await is not allowed in global scope, must use a wrapper
-async function mailPayment(recipient, orderId, ) {
+async function mailPayment(recipient, orderId,) {
   // Tendría que entrarle como parámetro, entre otras cosas, el email.
   // Only needed if you don't have a real mail account for testing
   let testAccount = await nodemailer.createTestAccount();
@@ -171,10 +208,7 @@ async function mailPayment(recipient, orderId, ) {
 }
 
 async function mailQuestion(recipient, productName, productId) {
-  // Tendría que entrarle como parámetro, entre otras cosas, el email.
-  // Only needed if you don't have a real mail account for testing
   let testAccount = await nodemailer.createTestAccount();
-  // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: "smtp.mailgun.org",
     secure: true, // true for 465, false for other ports
@@ -183,60 +217,107 @@ async function mailQuestion(recipient, productName, productId) {
       pass: process.env.MAILGUN_PASSWORD, // generated ethereal password
     },
   });
-  // send mail with defined transport object
+
   let info = await transporter.sendMail({
     from: `"Mercadon\'t libre" <no-reply@${process.env.USER_MAIL_DOMAIN}>`, // sender address
     to: recipient, // list of receivers
     subject: `Your question on ${productName} has been answered✔`, // Subject line
     text: `Your question on the product ${productName} has been answered. Check your your email`, // plain text body
-    html: `<b>You question on the product has been answered. You can click on this <a href=${process.env.HOST_PORT_FRONT}/home/${productId}>link</a> to see the answer.</b>`, // html body
+    html: `<b>Your question on the product has been answered. You can click on this <a href=${process.env.HOST_PORT_FRONT}/home/${productId}>link</a> to see the answer.</b>`, // html body
   });
-  // console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 }
 
-function groupPurchaseOrders (purchaseOrders){
+async function mailOrderAccepted(recipient,orderId) {
+  let testAccount = await nodemailer.createTestAccount();
+  let transporter = nodemailer.createTransport({
+    host: "smtp.mailgun.org",
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: process.env.MAILGUN_USER, // generated ethereal user
+      pass: process.env.MAILGUN_PASSWORD, // generated ethereal password
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: `"Mercadon\'t libre" <no-reply@${process.env.USER_MAIL_DOMAIN}>`, // sender address
+    to: recipient, // list of receivers
+    subject: `Your order N° ${orderId} has been accepted`, // Subject line
+    text: `Your order N° ${orderId} has been accepted. You will be receving your order in around 2 weeks.`, // plain text body
+    html: `<b>Your order N° ${orderId} has been accepted. You will be receving your order in around 2 weeks.</b>`, // html body
+  });
+}
+
+async function mailOrderRejected(recipient, orderId) {
+  let testAccount = await nodemailer.createTestAccount();
+  let transporter = nodemailer.createTransport({
+    host: "smtp.mailgun.org",
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: process.env.MAILGUN_USER, // generated ethereal user
+      pass: process.env.MAILGUN_PASSWORD, // generated ethereal password
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: `"Mercadon\'t libre" <no-reply@${process.env.USER_MAIL_DOMAIN}>`, // sender address
+    to: recipient, // list of receivers
+    subject: `Your order N° ${orderId} has been rejected`, // Subject line
+    text: `Your order N° ${orderId} has been rejected. Please send an email to mercadont.libre@gmail.com to get more informacion.`, // plain text body
+    html: `<b>Your order N° ${orderId} has been rejected. Please send an email to mercadont.libre@gmail.com to get more informacion.</b>`, // html body
+  });
+}
+
+function groupPurchaseOrders(purchaseOrders) {
   let orders = [];
   let order = {
     orderNumber: "",
     date: "",
     products: [],
     amount: 0,
+    orderStatus: "",
+    review: false,
   };
-    order.orderNumber === purchaseOrders[0].orderId;
-    order.date === purchaseOrders[0].date;
-    order.amount === purchaseOrders[0].totalAmount;
+  order.orderNumber === purchaseOrders[0].orderId;
+  order.date === purchaseOrders[0].date;
+  order.amount === purchaseOrders[0].totalAmount;
+  order.orderStatus === purchaseOrders[0].orderStatus;
+  order.review === purchaseOrders[0].review;
 
-    for (let item of purchaseOrders) {
-      if (order.orderNumber === item.orderId) {
-        order.products.push({
-          product: item.productId,
-          productQuantity: item.productQuantity,
-        });
-      } else {
-        if (order.orderNumber !== "") orders.push(order);
-        order = {
-          orderNumber: "",
-          date: "",
-          products: [],
-          amount: 0,
-        };
-        order.orderNumber = item.orderId;
-        order.date = item.date;
-        order.amount = item.totalAmount;
-        order.products.push({
-          product: item.productId,
-          productQuantity: item.productQuantity,
-        });
-      }
+  for (let item of purchaseOrders) {
+    if (order.orderNumber === item.orderId) {
+      order.products.push({
+        product: item.productId,
+        productQuantity: item.productQuantity,
+      });
+    } else {
+      if (order.orderNumber !== "") orders.push(order);
+      order = {
+        orderNumber: "",
+        date: "",
+        products: [],
+        amount: 0,
+        orderStatus: "",
+        review: false,
+      };
+      order.orderNumber = item.orderId;
+      order.date = item.date;
+      order.amount = item.totalAmount;
+      order.orderStatus = item.orderStatus;
+      order.review === item.review;
+      order.products.push({
+        product: item.productId,
+        productQuantity: item.productQuantity,
+      });
     }
-    orders.push(order);
-    return orders;
+  }
+  orders.push(order);
+  return orders;
 }
 
 module.exports = {
   // initialize
-  getUsers,
+  // getUsers,
+  calcProdRating,
   getProducts,
   // validateInputUser,
   validateInputProduct,
@@ -246,5 +327,7 @@ module.exports = {
   // checkNotAuthenticated,
   mailPayment,
   mailQuestion,
+  mailOrderAccepted,
+  mailOrderRejected,
   groupPurchaseOrders
 }

@@ -26,6 +26,7 @@ import ProductDetailsAdmin from "./pages/ADMIN/ProductDetailsADMIN/ProductDetail
 import { History } from "./components/History/History.jsx"
 import { QaS } from "./pages/ADMIN/QaS/QaS.jsx"
 import { ToastContainer } from "react-toastify";
+import { Buys } from "./pages/ADMIN/Buys/Buys.jsx"
 
 //Cualquier ruta que tiene que solo estar disponible a usuario logueado, se le puede envolver en ProtectedRoutes
 // import {ProtectedRoute} from "./components/ProtectedRoute/ProtectedRoute";
@@ -164,6 +165,7 @@ function App() {
           <NavBarADMIN />
           <AdminUsers />
         </Route>
+         {/* ADMIN QaS */}
         <Route
           path="/admin/QaS"
           exact
@@ -171,6 +173,16 @@ function App() {
           <NavBarADMIN />
           <QaS />
         </Route>
+
+        {/* ADMIN LIST BUYS*/}
+        <Route
+          path="/admin/buys"
+          exact
+        >
+          <NavBarADMIN />
+          <Buys/>
+        </Route>
+
         <Route
           path="/admin/editCategories/:id"
           exact

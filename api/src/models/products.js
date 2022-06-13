@@ -21,18 +21,8 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         rating: {
-            type: DataTypes.JSON({
-                average: {
-                    type: DataTypes.FLOAT,
-                },
-                each: {
-                    type: DataTypes.ARRAY(DataTypes.FLOAT),
-                }
-            }),
-            defaultValue: {
-                average: null,
-                each: []
-            }
+            type: DataTypes.FLOAT,
+            defaultValue: 1
         },
         image: { //DEBERÍA SER UN ARRAY, PUEDE HABER MAS DE UNA FOTO POR PRODUCTO
             // type: DataTypes.BLOB,
@@ -53,7 +43,7 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        sizes:{
+        sizes: {
             type: DataTypes.ARRAY(DataTypes.STRING)
         }
     },

@@ -23,6 +23,7 @@ export default function LoggedAdmin() {
             </Link>
             <Link to="/admin/user" >User</Link>
             <Link to="/admin/QaS" >QaS</Link>
+            <Link to="/admin/Buys" >Buys</Link>
             <Link to="/admin/sellProduct">
               {t("adminLoggedNavBar.sell")}
             </Link>
