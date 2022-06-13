@@ -396,12 +396,17 @@ router.get("/recommendation/byHistory/:userId", async (req, res) =>{
     });
 
     if(!userProducts.length){
-      const products = await Product.findAll();
-      products.splice(12)
-      return res.status(200).send(products);
-      // return res.status(400).send("No orders found");
+      const cat = await Category.findAll();
+      cat.splice(12)
+      for(let c of cat){
+        if(!categories.includes(c.dataValues.id)){
+          categories.push(c.dataValues.id)
+        }
+      }
+      // Devuelve un array con el ID de 12 categorias
+      return res.status(200).send(categories);
     }
- 
+
     for (let i = 0; i < userProducts.length; i++){
       if(product.id !== userProducts[i].productId){  
         product = {}
@@ -416,10 +421,8 @@ router.get("/recommendation/byHistory/:userId", async (req, res) =>{
           }
         ) ;
         for(let c of product.categories){
-          // console.log("c.dataValues:", c.dataValues)
           if(!categories.includes(c.dataValues.id)){
             categories.push(c.dataValues.id)
-            // categories.push(c.dataValues.name)
           }
         }
       }
