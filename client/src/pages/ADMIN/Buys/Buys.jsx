@@ -29,13 +29,15 @@ export const Buys = () => {
 
     let changeStateBuys = async (changeState)=>{
         try {
+            console.log(dataBuys[0].orderNumber)
             let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/admin/setOrderStatus`,{
                 orderStatus:changeState,
-                orderId:dataBuys.orderNumber
+                orderId:dataBuys[0].orderNumber
             })
             // if(resp){
             //     window.location.reload()
             // }
+            console.log(resp)
         } catch (error) {
             console.log(console.log(error))
         }
