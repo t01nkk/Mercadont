@@ -327,7 +327,8 @@ router.get("/recommendation/mostSold", async (req, res) =>{
     const orders = await PurchaseOrder.findAll();
 
     if(!orders){
-      return res.status(400).send("No orders found");
+      const products = await Product.findAll();
+      return res.status(200).send(products);
     }
     product.id = orders[0].productId;
     product.quantity = orders[0].productQuantity;
