@@ -32,15 +32,8 @@ export default function Slide() {
     const [inCart, setInCart] = useState(false);
     const history = useHistory();
     let person = JSON.parse(localStorage.getItem("myUser"));
-    console.log("objeto", state.soldMost)
-    const arraySold = []
-    for (let i = 0; i < state.soldMost.length; i++) {
-
-        console.log("mas vendidos g", state.soldMost[i]?.details)
-        arraySold.push(state.soldMost[i]?.details)
-
-    }
-    console.log("hola", arraySold)
+   
+    
 
     const sold = state.soldMost[0]?.details
     const handleSaveCart = (name, price, image, id, stock) => {
@@ -93,10 +86,28 @@ export default function Slide() {
 
     return (
         <Swiper
-            modules={[Navigation, Pagination]}
-            navigation={true}
+            
+           
             slidesPerView={1}
-            pagination={true}
+            pagination={{
+                clickable: true
+            }}
+            modules={[Navigation, Pagination, Autoplay]}
+            navigation={true}
+            effect={"coverflow"}
+           
+            
+            
+            loop={true}
+            coverflowEffect={{
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true
+            }}        
+           
+            
             breakpoints={{
                 640: {
                     slidesPerView: 2,
@@ -118,10 +129,10 @@ export default function Slide() {
             <section className="section-products ">
                 {/* <button onClick={() => mostra()}>mostra storage</button> */}
 
-                {/* state.soldMost */ arraySold && state.favorites
+                { state.soldMost  && state.favorites
                     ? React.Children.toArray(
-                        arraySold/* state.soldMost */.map((product) => {
-                            console.log("Tati", product)
+                         state.soldMost.map((product) => {
+                           
                             if (product.status === "active") {
                                 return (
                                     <SwiperSlide >
