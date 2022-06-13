@@ -1,17 +1,18 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import ProductCard from "../../components/ProductCard/ProductCard.jsx";
+import ProductCard from "../ProductCard/ProductCard.jsx";
 import { useStore } from "../../context/store.js";
 import {
-    fetchProducts,
+    
     fetchCategories,
     getFavorites,
     totalCount,
+    fetchMostSold,
 } from "../../redux/actions/actions.js";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
-import { Loader } from "../../components/Loader/Loader.jsx"
-import { handleDeleteFavorite, handleSaveFavorite } from "../../components/Cart/actionsCart.js";
+import { Loader } from "../Loader/Loader.jsx"
+import { handleDeleteFavorite, handleSaveFavorite } from "../Cart/actionsCart.js";
 import { useHistory } from "react-router-dom";
 import { alertInfo, alertSuccess, alertWarning } from '../../helpers/toast'
 import { Autoplay, Navigation, Pagination } from 'swiper';
@@ -31,7 +32,7 @@ export default function Slide() {
     const [inCart, setInCart] = useState(false);
     const history = useHistory();
     let person = JSON.parse(localStorage.getItem("myUser"));
-  console.log(state.products)
+    console.log("mas vendidos",state.soldMost)
     const handleSaveCart = (name, price, image, id, stock) => {
         let quantity = 1;
         let totalPrice = price;
@@ -61,7 +62,7 @@ export default function Slide() {
         let myCart = JSON.parse(localStorage.getItem(myUser));
         fetchCategories(dispatch);
         getFavorites(dispatch, person);
-        fetchProducts(dispatch);
+        fetchMostSold(dispatch);
         setUser(myUser);
         if (myCart) {
             setCart(myCart);
@@ -108,9 +109,9 @@ export default function Slide() {
 
             <section className="section-products ">
                 {/* <button onClick={() => mostra()}>mostra storage</button> */}
-                {state.products && state.favorites
+                {state.soldMost && state.favorites
                     ? React.Children.toArray(
-                        state.products.map((product) => {
+                        state.soldMost.map((product) => {
                             if (product.status === "active") {
                                 return (
                                     <SwiperSlide >

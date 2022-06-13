@@ -1,14 +1,13 @@
 import React from "react"
-import Slide from "../../components/Slide/Slide.jsx"
+import SlideMostSold from "../../components/SlideMostSold/SlideMostSold.jsx"
 export default function Home() {
 
 
   return (
 
     <div>
-      <Slide />
-      <Slide />
-      <Slide />
+      <SlideMostSold />
+      
     </div>
   )
 }

@@ -7,6 +7,7 @@ import {
   ADMIN_SESSION,
   GET_FAVORITES,
   CHANGE_COUNT_PRODUCT,
+  FETCH_MOST_SOLD
 } from "./actionTypes";
 
 export const fetchProducts = async (dispatch) => {
@@ -18,6 +19,18 @@ export const fetchProducts = async (dispatch) => {
     payload: fetchedProducts.data,
   });
 };
+
+export const fetchMostSold = async (dispatch) => {
+  const fetchedMostSold = await axios.get(
+    `${process.env.REACT_APP_DOMAIN}/product/recommendation/mostSold`
+  );
+  
+  dispatch({
+    type: FETCH_MOST_SOLD,
+    payload: fetchedMostSold.data,
+  });
+};
+
 export const fetchUsers = async (dispatch) => {
   const fetchedUsers = await axios.get(
     `${process.env.REACT_APP_DOMAIN}/admin/users`
