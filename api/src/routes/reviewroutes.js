@@ -39,7 +39,7 @@ router.post("/:id/review", async (req, res) => {
         user.addReview(fullReview)
         await calcProdRating(rating, product);
         //Setea el valor "REVIEW" de la tabla Purchase order en TRUE para Deshabilitar una review nueva en por el mismo usuario en el front
-        const findOrder = await PurchaseOrder.findone({ where: { orderId: orderId } });
+        const findOrder = await PurchaseOrder.findOne({ where: { orderId: orderId } });
         if (!findOrder) return res.status(400).send({ msg: "This order Id isn't valid" });
         await PurchaseOrder.update({ review: true }, { where: { orderId: orderId } })
         return res.status(200).send("Review Added")
