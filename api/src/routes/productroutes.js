@@ -5,6 +5,7 @@ const cors = require("cors");
 const { modifyStock } = require("../middlewares/middlewares");
 const { validateInputProduct } = require("../middlewares/middlewares");
 const { Op, where, Sequelize } = require("sequelize");
+const { set } = require("../app");
 
 const router = Router();
 
@@ -331,24 +332,6 @@ router.get("/recommendation/mostSold", async (req, res) =>{
       products.splice(12)
       return res.status(200).send(products);
     }
-    // product.id = orders[0].productId;
-    // product.quantity = orders[0].productQuantity;
-
-    // for (let i = 1; i < orders.length; i++){
-    //   if(product.id === orders[i].productId){
-    //     product.quantity += orders[i].productQuantity;
-    //   }else{
-    //     productsSold.push(product);
-    //     product = {
-    //       id : "",
-    //       quantity: 0,
-    //     }
-    //     product.id = orders[i].productId;
-    //     product.quantity = orders[i].productQuantity;
-    //   }
-    // }
-    // productsSold.push(product);
-
     product.details = await Product.findOne({where: {id: orders[0].productId}}) ;
     product.quantity = orders[0].productQuantity;
 
@@ -370,13 +353,7 @@ router.get("/recommendation/mostSold", async (req, res) =>{
     productsSold.sort((a,b) =>{
       return  b.details.rating - a.details.rating
     })
-    // Por ahora devuelve un array donde detalla la cantidad de unidades que se vendio de cada producto
-    // Es decir, el array contiene un objeto por cada producto vendido y la cantidad que se vendio de este:
-    // {
-    //   product details (ALL THE INFO OF THE PRODUCT FROM THE DB)
-    //   quantity sold
-    // }
-    // console.log(productsSold)
+
     productsSold.splice(12)
     let arrayProducts =[]
     for(let p of productsSold){
@@ -423,20 +400,8 @@ router.get("/recommendation/byHistory/:userId", async (req, res) =>{
       return res.status(200).send(products);
       // return res.status(400).send("No orders found");
     }
-
-    product = await Product.findOne(
-      {where: {id: userProducts[0].productId},
-      include: [
-              {
-                  model: Category,
-                  through: { attributes: [] },
-              }
-            ],
-      }
-    ) ;
-    console.log("product.categories:",product.categories)
-    categories.push(product.categories)
-    for (let i = 1; i < userProducts.length; i++){
+ 
+    for (let i = 0; i < userProducts.length; i++){
       if(product.id !== userProducts[i].productId){  
         product = {}
         product = await Product.findOne(
@@ -449,13 +414,16 @@ router.get("/recommendation/byHistory/:userId", async (req, res) =>{
           ],
           }
         ) ;
-        categories.push(product.categories)
+        for(let c of product.categories){
+          // console.log("c.dataValues:", c.dataValues)
+          if(!categories.includes(c.dataValues.id)){
+            categories.push(c.dataValues.id)
+            // categories.push(c.dataValues.name)
+          }
+        }
       }
     }
-    
-
-    // categories = [...new Set(categories)]
-     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
+     // Devuelve un array con el ID de todas las categorias relacionadas a los productos comprados por el user
     res.status(200).send(categories)
   } catch (error) {
     console.log(error)
