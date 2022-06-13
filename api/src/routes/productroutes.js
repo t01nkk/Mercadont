@@ -320,7 +320,7 @@ router.put("/update/:id", async (req, res) => {
 router.get("/recommendation/mostSold", async (req, res) =>{
  
   let product = {
-    id: "",
+    details: {},
     quantity: 0,
   }
   let productsSold = []
@@ -329,23 +329,40 @@ router.get("/recommendation/mostSold", async (req, res) =>{
   
     if(!orders?.length){
       const products = await Product.findAll();
-      let arrayProducts = [...products]
-      arrayProducts.splice(12)
-      return res.status(200).send(arrayProducts);
+      products.splice(12)
+      return res.status(200).send(products);
     }
-    product.id = orders[0].productId;
+    // product.id = orders[0].productId;
+    // product.quantity = orders[0].productQuantity;
+
+    // for (let i = 1; i < orders.length; i++){
+    //   if(product.id === orders[i].productId){
+    //     product.quantity += orders[i].productQuantity;
+    //   }else{
+    //     productsSold.push(product);
+    //     product = {
+    //       id : "",
+    //       quantity: 0,
+    //     }
+    //     product.id = orders[i].productId;
+    //     product.quantity = orders[i].productQuantity;
+    //   }
+    // }
+    // productsSold.push(product);
+
+    product.details = await Product.findOne({where: {id: orders[0].productId}}) ;
     product.quantity = orders[0].productQuantity;
 
     for (let i = 1; i < orders.length; i++){
-      if(product.id === orders[i].productId){
+      if(product.details.id === orders[i].productId){
         product.quantity += orders[i].productQuantity;
       }else{
         productsSold.push(product);
         product = {
-          id : "",
+          details: {},
           quantity: 0,
         }
-        product.id = orders[i].productId;
+        product.details = await Product.findOne({where: {id: orders[i].productId}}) ;
         product.quantity = orders[i].productQuantity;
       }
     }
@@ -353,9 +370,10 @@ router.get("/recommendation/mostSold", async (req, res) =>{
     // Por ahora devuelve un array donde detalla la cantidad de unidades que se vendio de cada producto
     // Es decir, el array contiene un objeto por cada producto vendido y la cantidad que se vendio de este:
     // {
-    //   product id
+    //   product details (ALL THE INFO OF THE PRODUCT FROM THE DB)
     //   quantity sold
     // }
+    // console.log(productsSold)
     productsSold.splice(12)
     res.status(200).send(productsSold);
   } catch (error) {
