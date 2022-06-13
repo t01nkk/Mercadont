@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import ProductCard from "../ProductCard/ProductCard.jsx";
 import { useStore } from "../../context/store.js";
 import {
-    
+
     fetchCategories,
     getFavorites,
     totalCount,
@@ -32,7 +32,17 @@ export default function Slide() {
     const [inCart, setInCart] = useState(false);
     const history = useHistory();
     let person = JSON.parse(localStorage.getItem("myUser"));
-    console.log("mas vendidos",state.soldMost)
+    console.log("objeto", state.soldMost)
+    const arraySold = []
+    for (let i = 0; i < state.soldMost.length; i++) {
+
+        console.log("mas vendidos g", state.soldMost[i]?.details)
+        arraySold.push(state.soldMost[i]?.details)
+
+    }
+    console.log("hola", arraySold)
+
+    const sold = state.soldMost[0]?.details
     const handleSaveCart = (name, price, image, id, stock) => {
         let quantity = 1;
         let totalPrice = price;
@@ -107,9 +117,11 @@ export default function Slide() {
 
             <section className="section-products ">
                 {/* <button onClick={() => mostra()}>mostra storage</button> */}
-                {state.soldMost && state.favorites
+
+                {/* state.soldMost */ arraySold && state.favorites
                     ? React.Children.toArray(
-                        state.soldMost.map((product) => {
+                        arraySold/* state.soldMost */.map((product) => {
+                            console.log("Tati", product)
                             if (product.status === "active") {
                                 return (
                                     <SwiperSlide >
