@@ -1,31 +1,47 @@
+.qua-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
 .divInputQuestuion input {
-  height: 6vh;
-  width: 18vw;
   display: flex;
 }
 
-.title{
+.qua-ask {
   margin-top: 2vh;
-  margin-bottom: 0;
 }
 
 .button-qua {
-  width: 6vh;
-  height: 6vh;
-  left: 50%;
-  transform: translate(-50%);
-  text-align: center;
-  margin-bottom: 10px;
   background-color: black;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  margin-top: 40px;
+  height: 40px;
+  align-items: center;
+  border: none;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+}
+.button-qua:hover {
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
 }
 .btn-question {
   display: flex;
-  height: 60px;
-  width: 100px;
 }
 .input-info {
   display: flex;
-  padding: 20px;
+  width: 100%;
   justify-content: center;
   align-self: center;
+  flex-direction: column;
+}
+.qua-textarea {
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+  height: 100px;
+  width: 100%;
 }

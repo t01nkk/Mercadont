@@ -1,0 +1,116 @@
+.navPush-accountDetails {
+  margin-top: 2%;
+}
+
+.account-details{
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  flex-direction: column;
+ 
+}
+
+.form-details{
+  padding-top: 1%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  height: 80%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to right,
+  black 10%, white 10%);
+ 
+  @media only screen and (max-width: 850px) {
+    height: 90%;
+    padding-left: 9%;
+    padding-top: 5%;
+  }
+}
+
+.input-details{
+  padding-top: 15%;   
+  padding-left:2% ;
+  @media only screen and (max-width: 850px) {
+  
+    padding-top: 5%;
+  }
+}
+.input-line{
+   border: none;
+   border-bottom: 2px solid black;
+}
+.title-details{
+  margin-top: 5%;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+
+.address-details {
+  padding-top: 5%;
+  display: flex;
+  justify-content: space-between;
+  @media only screen and (max-width: 850px) {
+    display: unset;
+  }
+  
+}
+.address-details1{
+  display: flex;
+  padding-right:20% ;
+  flex-direction: column;
+  
+}
+.address-details2 {
+  display: flex;
+  padding-right:20% ;
+  flex-direction: column;
+  word-wrap: break-word;
+  
+ 
+}
+.password-user{
+  display: flex;
+  flex-direction: row;
+  padding-top: 5%;   
+  padding-left:2% ;
+
+}
+
+.button-user{
+  margin-top: 5%;
+  display: flex;
+  justify-content: flex-end;
+  @media only screen and (max-width: 850px) {
+    margin-top: 0%;
+
+  }
+}
+.button-details{
+  display: flex;
+  justify-content: flex-end;
+  background-color: black;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  align-items: center;
+  font-size: 1.14rem;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem;
+  @media only screen and (max-width: 850px) {
+    padding: 0%;
+    font-size: 0.8rem;
+
+  }
+}
+.input-edit-profile:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}

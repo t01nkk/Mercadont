@@ -65,9 +65,11 @@ i18n
             confirmClearCart: "¿Estás de acuerdo en vaciar tu carrito entero?",
             emptyTheCart: "Vaciar el carrito",
             welcome: "Bienvenido a tu carrito",
+
             emptyCart: "Tu carrito se encuentra vacío.",
             totalPrice: "Precio total de la compra: ",
             buy: "Realizar la compra",
+
             successfulPurchase: "¡Compra realizada con éxito!",
             cancelPurchaseSuccess: "Compra cancelada con éxito",
             addressDetailsMissing:" Por favor completa los datos de tu domicilio"
@@ -76,7 +78,7 @@ i18n
             error_pos_numbers: "Solo se aceptan números positivos",
             error_valid_numbers: "Por favor utilice valores válidos",
             error_valid_cats: "Por favor elija categorías apropiadas",
-            priceRange: "Rango de precio",
+            priceRange: "Precio",
             minPrice: "$Min",
             maxPrice: "$Max",
             search: "Buscar",
