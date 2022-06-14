@@ -277,11 +277,11 @@ function groupPurchaseOrders(purchaseOrders) {
     orderStatus: "",
     review: false,
   };
-  order.orderNumber === purchaseOrders[0].orderId;
-  order.date === purchaseOrders[0].date;
-  order.amount === purchaseOrders[0].totalAmount;
-  order.orderStatus === purchaseOrders[0].orderStatus;
-  order.review === purchaseOrders[0].review;
+  order.orderNumber = purchaseOrders[0].orderId;
+  order.date = purchaseOrders[0].date;
+  order.amount = purchaseOrders[0].totalAmount;
+  order.orderStatus = purchaseOrders[0].orderStatus;
+  order.review = purchaseOrders[0].review;
 
   for (let item of purchaseOrders) {
     if (order.orderNumber === item.orderId) {
@@ -303,7 +303,7 @@ function groupPurchaseOrders(purchaseOrders) {
       order.date = item.date;
       order.amount = item.totalAmount;
       order.orderStatus = item.orderStatus;
-      order.review === item.review;
+      order.review = item.review;
       order.products.push({
         product: item.productId,
         productQuantity: item.productQuantity,
