@@ -9,7 +9,6 @@ export const QaSIndividual = ({ id, idProduct, createdAt, name, userId, question
   const history = useHistory()
 
   const sendQaS = async () => {
-    console.log(textArea)
     try {
       if (!textArea) { alert("por favor complete el campo") }
       let sendAnswerAdmin = await axios.put(`${process.env.REACT_APP_DOMAIN}/admin/${id}/answer`, {
@@ -19,15 +18,15 @@ export const QaSIndividual = ({ id, idProduct, createdAt, name, userId, question
       if (sendAnswerAdmin) {
         window.location.reload()
       }
-  }catch (error) {
+    } catch (error) {
       console.log(error)
     }
   }
 
-  const handleChange = (e)=>{ 
+  const handleChange = (e) => {
     setTextArea(e.target.value)
   }
-  
+
   const viewProduct = () => {
     history.push(`/admin/edit/${idProduct}`)
   }
@@ -36,7 +35,7 @@ export const QaSIndividual = ({ id, idProduct, createdAt, name, userId, question
     <div className="product">
       <div className="productText">
         <p> <b>Product: </b>{name}</p>
-        <p><b>Question Date: </b>{createdAt.slice(0,10)}</p>
+        <p><b>Question Date: </b>{createdAt.slice(0, 10)}</p>
         <p><b>Question: </b>{question}</p>
         {answer ? <p><b>Answer: </b>{answer}</p> : <p>Aun no respondida</p>}
       </div>

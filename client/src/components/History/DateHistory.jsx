@@ -4,16 +4,15 @@ import "./History.css"
 import axios from 'axios'
 
 export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsProduct, orderStatus, orderNumber, setIsReview, review }) => {
-    
+
     const history = useHistory()
     //pm_1LAFPdL7xpNkb3eJ9QXGOVtC
-    date = date.slice(0,10)
+    date = date.slice(0, 10)
     const [cant, setcant] = useState(0)
     const [idProduct, setIdProduct] = useState([])
     let total = 0
     useEffect(() => {
         sumarCount()
-        // console.log(count)
     }, [count.length])
 
     const sumarCount = async () => {
@@ -34,10 +33,10 @@ export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsP
                 {
                     order: idProduct
                 })
-                setIsReview(review)
-                history.push(`/history?${orderNumber}`)
-                await setDetailsProduct(foundProducts.data)
-                await setChangeSection(false)
+            setIsReview(review)
+            history.push(`/history?${orderNumber}`)
+            await setDetailsProduct(foundProducts.data)
+            await setChangeSection(false)
         } catch (error) {
             console.log(error)
         }
@@ -49,7 +48,7 @@ export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsP
             <div>
                 <p>Quantity of Product: <span>{cant !== 0 && cant}</span></p>
                 <p>Total: <span>{amount}</span></p>
-                {orderStatus === "accepted" && <button onClick={getDetailsHistory}>Dejar Reviews</button>}
+                {orderStatus === "accepted" && review == false && <button onClick={getDetailsHistory}>Dejar Reviews</button>}
             </div>
             <br />
         </div>

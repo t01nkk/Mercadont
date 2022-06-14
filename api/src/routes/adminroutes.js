@@ -185,7 +185,6 @@ router.put("/setOrderStatus", async (req, res) => {
     const user = await User.findOne({
       where: { id: userOrder.userId }
     })
-    console.log("Soy YO", user.email, orderId)
     if (orderStatus === "accepted") {
       // DESCOMENTAR PARA ENVIAR MAIL
       mailOrderAccepted(user.email, orderId)
@@ -233,7 +232,6 @@ router.get("/history", async (req, res) => {
 router.put("/:questionId/answer", async (req, res) => {
   const { questionId } = req.params
   const { answer, idProduct } = req.body
-  console.log(idProduct)
   if (!answer || answer.length < 1) {
     return res.status(404).send("Answer must not be empty")
   }
