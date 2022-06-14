@@ -1,11 +1,12 @@
 import axios from 'axios'
 import React, { useState }from 'react'
-import { useHistory, Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { alertInfo } from '../../../helpers/toast'
 import { useTranslation } from 'react-i18next'
 import { alertSuccess } from '../../../helpers/toast'
+import "./QaSIndividual.css"
 
-export const QaSIndividual = ({id,idProduct,createdAt,name,userId,question,answer}) => {
+export const QaSIndividual = ({ id, idProduct, createdAt, name, userId, question, answer, image }) => {
   const [textArea, setTextArea] = useState("")
   const [changeQaS, setChangeQaS] = useState(false)
   const history = useHistory()
@@ -31,14 +32,15 @@ export const QaSIndividual = ({id,idProduct,createdAt,name,userId,question,answe
       console.log(error)
     }
   }
-  const handleChange = (e)=>{
+
+  const handleChange = (e) => {
     setTextArea(e.target.value)
   }
 
-  const viewProduct = ()=>{
-    history.push(`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/admin/edit/${idProduct}`)
+  const viewProduct = () => {
+    history.push(`/admin/edit/${idProduct}`)
   }
-  
+
   return (
     <div>
         <button onClick={()=>viewProduct()}>{t("adminQaS.view") }</button>

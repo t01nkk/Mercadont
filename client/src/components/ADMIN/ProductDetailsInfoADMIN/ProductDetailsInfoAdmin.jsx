@@ -20,7 +20,7 @@ export default function ProductDetailsInfoAdmin({
     <div className="details-container">
       <button>
         <Link
-          to={`/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/admin/edit/${id}`}
+          to={`/admin/edit/${id}`}
         >
           {t("adminProductDetails.update")}
         </Link>

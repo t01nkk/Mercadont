@@ -12,15 +12,13 @@ export default function FilerCategories() {
   const [state, dispatch] = useStore();
   const [redirect, setRedirect] = useState(false);
   const [filter, setFilter] = useState({
-    categories: [],
+    categories:state.filter,
   });
   const history = useHistory();
   const handleSearch = async (e) => {
     e.preventDefault();
     const { categories } = filter;
     try {
-      state.filter = categories;
-      console.log(state);
       const res = await axios.post(
         `${process.env.REACT_APP_DOMAIN}/product/filter`,
         {
@@ -28,25 +26,26 @@ export default function FilerCategories() {
         }
       );
       if (Array.isArray(res.data)) {
+        state.filter = categories
         dispatch({
           type: CATEGORIES_PRODUCT,
           payload: res.data,
         });
+
         setRedirect(true);
       } else {
         document
           .querySelectorAll("input[type=checkbox]")
-          .forEach((el) => (el.checked = false));
+          .forEach((el) =>{
+            if(!state.filter.includes(el.value)) (el.checked = false)
+          } );
         setFilter({
-          categories: [],
+          categories: state.filter,
         });
         alert("No products with those selected categories where found");
-        const allProducts = await axios.get(
-          `${process.env.REACT_APP_DOMAIN}/product`
-        );
         dispatch({
           type: FETCH_PRODUCTS,
-          payload: allProducts.data,
+          payload: state.products,
         });
       }
     } catch (err) {
@@ -76,30 +75,32 @@ export default function FilerCategories() {
   }, []);
 
   return (
-    <section className="scroll-categories">
+    <section className="categories-section">
       {redirect ? <Redirect push to="/categories" /> : null}
       <form
         onSubmit={(e) => {
           handleSearch(e);
         }}
       >
-        {state.categories.map((categories) => (
-          <label
-            key={categories.name}
-            className="label-category dropdown-item category-list-item "
-          >
-            {categories.name}
-            <input
-              className="checkbox-category"
-              value={categories.name}
-              type="checkbox"
-              id={categories.name}
-              onChange={(e) => {
-                handleSelect(e);
-              }}
-            />
-          </label>
-        ))}
+        <div className="scroll-categories">
+          {state.categories.map((categories) => (
+            <label
+              key={categories.name}
+              className="label-category dropdown-item category-list-item "
+            >
+              {categories.name}
+              <input
+                className="checkbox-category"
+                value={categories.name}
+                type="checkbox"
+                id={categories.name}
+                onChange={(e) => {
+                  handleSelect(e);
+                }}
+              />
+            </label>
+          ))}
+        </div>
         <li className="dropdown-divider"></li>
         <button type="submit" className="filter-search-btn">
           buscar

@@ -55,7 +55,7 @@ router.post("/login", async (req, res, next) => {
       }
     }
     )
-    res.send({ msg: "User Logged In" });
+    res.status(200).send(userExist);
   }
   catch (err) {
     console.log(err)
@@ -92,7 +92,6 @@ router.get("/details/:id", async (req, res) => {
 router.put("/details/:id", async (req, res) => {
   const { id } = req.params;
   const { name, email, lastname, image, country, province, city, street, postalCode } = req.body;
-  console.log(req.body.address)
   // let errors = validateInputUser(name,email);
   // if (errors.length) return res.status(400).send({ msg: errors });
 
@@ -103,12 +102,12 @@ router.put("/details/:id", async (req, res) => {
         lastname: lastname,
         email: email,
         country: country,
-        province:province, 
-        city:city,
-        street:street,
-        postalCode:postalCode,
-        image:image
-     
+        province: province,
+        city: city,
+        street: street,
+        postalCode: postalCode,
+        image: image
+
       },
       { where: { id: id } }
     );
@@ -187,6 +186,7 @@ router.get("/history/:id", async (req, res) => {
     if (!userHistory.length) {
       return res.status(200).send([]);
     }
+
     let userPurchaseOrders = groupPurchaseOrders(userHistory)
     return res.status(200).send(userPurchaseOrders)
   } catch (error) {
@@ -205,7 +205,6 @@ router.post('/product/history', async (req, res) => {
       }
       foundProducts.push(found);
     }
-    console.log(foundProducts);
     res.send(foundProducts);
   } catch (err) {
     console.log(err.message);

@@ -10,34 +10,34 @@ export default function CreateCategory() {
   const { t } = useTranslation()
 
   const history = useHistory()
-  const [state, dispatch] = useStore(); 
+  const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
 
   const [data, setData] = useState({
     name: "",
   });
 
-  const expression = {	
-		name: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-   
+  const expression = {
+    name: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+
   }
   function validator(input) {
-    let errors = {};   
+    let errors = {};
 
     if (!expression.name.test(input.name)) {
-        errors.name = 'Name is necessary';
+      errors.name = 'Name is necessary';
     }
-   
+
     return errors
   }
   const handleChangeName = (e) => {
-    setErrors("")  
-   setErrors(validator({ ...data, [e.target.name]: e.target.value }));
-    
-        setData({ ...data, [e.target.name]: e.target.value });
+    setErrors("")
+    setErrors(validator({ ...data, [e.target.name]: e.target.value }));
+
+    setData({ ...data, [e.target.name]: e.target.value });
   };
-  
- 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name } = data;
@@ -47,7 +47,7 @@ export default function CreateCategory() {
       });
       alertSuccess(t("adminCreateCategory.created"))
       setTimeout(() => {
-        history.push('CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/categories')
+        history.push('/admin/addCategories')
       }, 2000);
     } catch (err) {
       console.log(err);
@@ -66,12 +66,12 @@ export default function CreateCategory() {
             type="text"
             name="name"
             placeholder={t("adminCreateCategory.name")}
-            onChange={handleChangeName }
+            onChange={handleChangeName}
             required
             value={data.name}
           />
         </div>
-        {errors.name && ( <p className='error-input'>{errors.name}</p> )}
+        {errors.name && (<p className='error-input'>{errors.name}</p>)}
         <div className="btn-createUser">
           <input type="submit" value={t("adminCreateCategory.submit")} className="input-submit" />
         </div>

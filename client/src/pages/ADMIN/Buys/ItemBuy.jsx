@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from "react-router-dom"
-import "./History.css"
 import axios from 'axios'
-
-export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsProduct, orderStatus, orderNumber, setIsReview, review }) => {
-
-    const history = useHistory()
-    //pm_1LAFPdL7xpNkb3eJ9QXGOVtC
+import { useHistory } from 'react-router-dom'
+export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProduct, orderId }) => {
     date = date.slice(0, 10)
-    const [cant, setcant] = useState(0)
+    const [cant, setCant] = useState(0)
     const [idProduct, setIdProduct] = useState([])
+    const history = useHistory()
     let total = 0
+
     useEffect(() => {
         sumarCount()
+        // console.log(count)
     }, [count.length])
 
     const sumarCount = async () => {
@@ -24,17 +22,16 @@ export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsP
             });
             setIdProduct(newArray)
         }
-        setcant(total)
+        setCant(total)
     }
 
-    const getDetailsHistory = async () => {
+    const getDetailsBuys = async () => {
         try {
             const foundProducts = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/product/history`,
                 {
                     order: idProduct
                 })
-            setIsReview(review)
-            history.push(`/history?${orderNumber}`)
+            history.push(`/admin/Buys?${orderId}`)
             await setDetailsProduct(foundProducts.data)
             await setChangeSection(false)
         } catch (error) {
@@ -43,14 +40,14 @@ export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsP
     }
 
     return (
-        <div className='container-data-history' onClick={getDetailsHistory}>
+        <div className='container-data-history' onClick={getDetailsBuys}>
             <p>Date of Purchase: <span>{date}</span></p>
             <div>
                 <p>Quantity of Product: <span>{cant !== 0 && cant}</span></p>
                 <p>Total: <span>{amount}</span></p>
-                {orderStatus === "accepted" && review == false && <button onClick={getDetailsHistory}>Dejar Reviews</button>}
             </div>
             <br />
         </div>
     )
+
 }

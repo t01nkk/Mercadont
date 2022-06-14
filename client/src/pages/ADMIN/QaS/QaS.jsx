@@ -10,16 +10,15 @@ export const QaS = () => {
     const [stateQas, setStateQas] = useState(false)
     const [dataQaS, setDataQaS] = useState("")
 
-    useEffect(()=>{
+    useEffect(() => {
         getStateQaS()
-    },[stateQas])
+    }, [stateQas])
 
-    let getStateQaS = async ()=>{
+    let getStateQaS = async () => {
         try {
             let qas = await axios(`${process.env.REACT_APP_DOMAIN}/admin/all/${stateQas}`)
             setDataQaS(qas.data)
-            console.log(qas)
-            
+
         } catch (error) {
             console.log(error)
         }
