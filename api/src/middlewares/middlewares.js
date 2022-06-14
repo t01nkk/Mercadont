@@ -183,15 +183,15 @@ const calcProdRating = async (rating, prod) => {
 // async..await is not allowed in global scope, must use a wrapper
 async function mailPayment(recipient, orderId) {
   // Tendría que entrarle como parámetro, entre otras cosas, el email.
-   let transporter = nodemailer.createTransport({
-     host: "smtp.gmail.com",
-     port: 465,
-     secure: true,
-     auth: {
-       user: process.env.GOOGLE_MAIL_APP,
-       pass: process.env.GOOGLE_MAIL_APP_PASS,
-     },
-   });
+  let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.GOOGLE_MAIL_APP,
+      pass: process.env.GOOGLE_MAIL_APP_PASS,
+    },
+  });
   // send mail with defined transport object
   await transporter.sendMail({
     from: "Mercadon't Libre no-reply@mercadontlibre.com",
@@ -229,7 +229,7 @@ async function mailQuestion(recipient, productName, productId) {
 }
 
 async function mailOrderAccepted(recipient, orderId) {
- let transporter = nodemailer.createTransport({
+  let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
@@ -249,7 +249,7 @@ async function mailOrderAccepted(recipient, orderId) {
 }
 
 async function mailOrderRejected(recipient, orderId) {
-   let transporter = nodemailer.createTransport({
+  let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,

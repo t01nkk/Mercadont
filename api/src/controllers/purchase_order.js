@@ -21,7 +21,7 @@ const createPurchaseOrder = async (orderId,userId,local,amount,status) => {
             })
             // DESCOMENTAR PARA ENVIAR MAIL AL USER CUANDO SE HACE EL PAGO.
 
-            mailPayment(user.email, orderId);
+            // mailPayment(user.email, orderId);
 
             // 
         }
@@ -52,7 +52,7 @@ const createPurchaseCompleted = async (orderId) => {
 
         // DESCOMENTAR PARA ENVIAR MAIL AL USER CUANDO SE HACE EL PAGO.
 
-        mailPayment(user.email, orderId);
+        // mailPayment(user.email, orderId);
 
         // 
         return updated;
