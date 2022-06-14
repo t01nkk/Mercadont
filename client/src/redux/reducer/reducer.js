@@ -56,7 +56,6 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         searchedProducts: action.payload,
-        filter: action.payload,
       };
     }
     case CATEGORIES_PRODUCT: {

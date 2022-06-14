@@ -98,7 +98,7 @@ export default function EditProduct() {
     }
     fetchedProduct.data.categories = destructuringCats;
     setProduct(fetchedProduct.data);
-   
+
   };
 
   useEffect(() => {
@@ -125,7 +125,7 @@ export default function EditProduct() {
       );
       alertSuccess(t("adminEditProduct.updated"))
       setTimeout(() => {
-          alert("Acá debería redirigir.")
+        alert("Acá debería redirigir.")
       }, 2000);
     } catch (err) {
       console.log(err);
@@ -149,7 +149,6 @@ export default function EditProduct() {
   };
   return (
     <div className="container-edit-admin">
-      {product && console.log(product)}
       <div className="delete-product">
         <button onClick={handleDelete}>{t("adminEditProduct.deleteProduct")}</button>
       </div>
@@ -237,7 +236,7 @@ export default function EditProduct() {
                     >X</button>
                   </p>
                 )))
-                }
+              }
             </div>
           </div>
         </div>
