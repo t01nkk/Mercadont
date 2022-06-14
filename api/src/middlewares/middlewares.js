@@ -1,9 +1,9 @@
+const nodemailer = require("nodemailer");
 const productos = require("../../productscats.json");
 const users = require("../../users.json");
 const { Product, User, Category, PurchaseOrder } = require("../db");
 const { Op } = require("sequelize");
 // const { genPassword } = require('./password_utils');
-const nodemailer = require("nodemailer");
 
 const modifyStockStripe = async (local) => {
   let updateProduct;
@@ -145,22 +145,20 @@ async function getUsers() {
 }
 
 // async..await is not allowed in global scope, must use a wrapper
-async function mailPayment(recipient, orderId, ) {
+async function mailPayment(recipient, orderId) {
   // Tendría que entrarle como parámetro, entre otras cosas, el email.
-  // Only needed if you don't have a real mail account for testing
-  let testAccount = await nodemailer.createTestAccount();
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    host: "smtp.mailgun.org",
-    secure: true, // true for 465, false for other ports
-    auth: {
-      user: process.env.MAILGUN_USER, // generated ethereal user
-      pass: process.env.MAILGUN_PASSWORD, // generated ethereal password
-    },
-  });
+   let transporter = nodemailer.createTransport({
+     host: "smtp.gmail.com",
+     port: 465,
+     secure: true,
+     auth: {
+       user: process.env.GOOGLE_MAIL_APP,
+       pass: process.env.GOOGLE_MAIL_APP_PASS,
+     },
+   });
   // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: `"Mercadon\'t libre" <no-reply@${process.env.USER_MAIL_DOMAIN}>`, // sender address
+  await transporter.sendMail({
+    from: "Mercadon't Libre no-reply@mercadontlibre.com",
     to: recipient, // list of receivers
     subject: `Purchase Order N°: -${orderId}- ✔`, // Subject line
     text: "We have successfully received the payment for your purchase. We will contact you again when the order is processed and ready to be delivered.", // plain text body
@@ -171,28 +169,67 @@ async function mailPayment(recipient, orderId, ) {
 }
 
 async function mailQuestion(recipient, productName, productId) {
-  // Tendría que entrarle como parámetro, entre otras cosas, el email.
-  // Only needed if you don't have a real mail account for testing
-  let testAccount = await nodemailer.createTestAccount();
-  // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    host: "smtp.mailgun.org",
-    secure: true, // true for 465, false for other ports
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
-      user: process.env.MAILGUN_USER, // generated ethereal user
-      pass: process.env.MAILGUN_PASSWORD, // generated ethereal password
+      user: process.env.GOOGLE_MAIL_APP,
+      pass: process.env.GOOGLE_MAIL_APP_PASS,
     },
   });
-  // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: `"Mercadon\'t libre" <no-reply@${process.env.USER_MAIL_DOMAIN}>`, // sender address
-    to: recipient, // list of receivers
-    subject: `Your question on ${productName} has been answered✔`, // Subject line
-    text: `Your question on the product ${productName} has been answered. Check your your email`, // plain text body
-    html: `<b>You question on the product has been answered. You can click on this <a href=${process.env.HOST_PORT_FRONT}/home/${productId}>link</a> to see the answer.</b>`, // html body
+
+  try {
+    await transporter.sendMail({
+      from: "Mercadon't Libre no-reply@mercadontlibre.com",
+      to: recipient,
+      subject: `Your question on ${productName} has been answered ✔`,
+      text: `Your question on the product ${productName} has been answered. Check your your email.`, // plain text body
+      html: `<b>You question on the product has been answered. You can click on this <a href=${process.env.HOST_PORT_FRONT}/home/${productId}>link</a> to see the answer.</b>`, // html body
+    });
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function mailOrderAccepted(recipient, orderId) {
+ let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.GOOGLE_MAIL_APP,
+      pass: process.env.GOOGLE_MAIL_APP_PASS,
+    },
   });
-  // console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+  await transporter.sendMail({
+    from: "Mercadon't Libre no-reply@mercadontlibre.com",
+    to: recipient, // list of receivers
+    subject: `Your order N° ${orderId} has been accepted`, // Subject line
+    text: `Your order N° ${orderId} has been accepted. You will be receving your order in around 2 weeks.`, // plain text body
+    html: `<b>Your order N° ${orderId} has been accepted. You will be receving your order in around 2 weeks.</b>`, // html body
+  });
+}
+
+async function mailOrderRejected(recipient, orderId) {
+   let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.GOOGLE_MAIL_APP,
+      pass: process.env.GOOGLE_MAIL_APP_PASS,
+    },
+  });
+
+  await transporter.sendMail({
+    from: "Mercadon't Libre no-reply@mercadontlibre.com",
+    to: recipient, // list of receivers
+    subject: `Your order N° ${orderId} has been rejected`, // Subject line
+    text: `Your order N° ${orderId} has been rejected. Please send an email to mercadont.libre@gmail.com to get more information.`, // plain text body
+    html: `<b>Your order N° ${orderId} has been rejected. Please send an email to mercadont.libre@gmail.com to get more information.</b>`, // html body
+  });
 }
 
 function groupPurchaseOrders (purchaseOrders){
@@ -246,5 +283,7 @@ module.exports = {
   // checkNotAuthenticated,
   mailPayment,
   mailQuestion,
+  mailOrderAccepted,
+  mailOrderRejected,
   groupPurchaseOrders
 }
