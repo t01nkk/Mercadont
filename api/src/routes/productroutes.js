@@ -384,9 +384,12 @@ router.get("/recommendation/byRating", async (req, res) => {
 });
 
 //-------------------RECOMMENDATION - PRODUCTS BY HISTORY ------------------------------ //
-router.get("/recommendation/byHistory/:userId", async (req, res) =>{
-  const {userId} = req.params;
-  let product = {}
+router.get("/recommendation/byHistory/:userId", async (req, res) => {
+  const { userId } = req.params;
+  let product = {
+    id: "",
+  }
+  let products = []
   let categories = []
   try {
     const userProducts = await PurchaseOrder.findAll({
@@ -395,46 +398,54 @@ router.get("/recommendation/byHistory/:userId", async (req, res) =>{
       }
     });
 
-    if(!userProducts.length){
-      const cat = await Category.findAll();
-      cat.splice(12)
-      for(let c of cat){
-        if(!categories.includes(c.dataValues.name)){
-          categories.push(c.dataValues.name)
-        }
-      }
-      // Devuelve un array con el ID de 12 categorias
-      return res.status(200).send(categories);
+    if (!userProducts) {
+      return res.status(400).send("No orders found");
     }
 
-    for (let i = 0; i < userProducts.length; i++){
-      if(product.id !== userProducts[i].productId){  
-        product = {}
-        product = await Product.findOne(
-          {where: {id: userProducts[i].productId},
-          include: [
-            {
-                model: Category,
-                through: { attributes: [] },
-            }
-          ],
-          }
-        ) ;
-        for(let c of product.categories){
-          if(!categories.includes(c.dataValues.name)){
-            categories.push(c.dataValues.name)
-          }
+    product.id = userProducts[0].productId;
+    for (let i = 1; i < userProducts.length; i++) {
+      if (product.id !== userProducts[i].productId) {
+        products.push(product);
+        product = {
+          id: "",
         }
+        product.id = userProducts[i].productId;
+      }
+    }
+    products.push(product);
+
+    for (let pro of products) {
+      const item = await Product.findAll({
+        include: [
+          {
+            model: Category,
+            through: { attributes: [] },
+          }
+        ],
+        where: { id: pro.id }
+      })
+      for(let category of item[0]?.categories){
+        if(!categories.includes(category.name))categories.push(category.name)
       }
     }
 
-    
-     // Devuelve un array con el ID de todas las categorias relacionadas a los productos comprados por el user
-    res.status(200).send(categories)
+    let recommended = await Product.findAll({
+      include:[{
+        model: Category,
+        attributes:["name"],
+        through:{attributes:[]},
+        where:{
+          name: categories
+        }
+      }]
+    })
+
+    res.status(200).send(recommended)
   } catch (error) {
     console.log(error)
     res.status(400).send(error)
   }
 });
+
 
 module.exports = router;
