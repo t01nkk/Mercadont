@@ -120,7 +120,8 @@ export default function Slide() {
     //   let miStorage = JSON.parse(localStorage.getItem("myUser"));
     //   console.log(miStorage);
     // };
-
+     
+     console.log("Hola sold",sold)
     return (
         <div className="div-slide">
             <Swiper
