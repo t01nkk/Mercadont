@@ -8,6 +8,7 @@ import {
     getFavorites,
     totalCount,
     fetchRating,
+    fetchProducts
 } from "../../redux/actions/actions.js";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
@@ -40,7 +41,11 @@ export default function Slide() {
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-    const fetchSold = async () => {
+ 
+    
+
+
+    const fetchSold = async () => {        
         try {
             let miStorage = JSON.parse(localStorage.getItem("myUser"));
             const recommendedProducts = await axios.get(
@@ -68,9 +73,7 @@ export default function Slide() {
             return err;
         }
     };
-    useEffect(() => {
-        fetchSold();
-    }, []);
+    
 
 
     const handleSaveCart = (name, price, image, id, stock) => {
@@ -98,11 +101,12 @@ export default function Slide() {
     };
 
     useEffect(() => {
+        
         let myUser = JSON.parse(localStorage.getItem("myUser"));
         let myCart = JSON.parse(localStorage.getItem(myUser));
         fetchCategories(dispatch);
         getFavorites(dispatch, person);
-
+        fetchProducts(dispatch);
         setUser(myUser);
         if (myCart) {
             setCart(myCart);
@@ -115,13 +119,16 @@ export default function Slide() {
         localStorage.setItem(user, JSON.stringify(cart));
         totalCount(dispatch)
     }, [cart]);
-
+   
+    useEffect(() => {
+        fetchSold();
+    }, []);
     // const mostra = () => {
     //   let miStorage = JSON.parse(localStorage.getItem("myUser"));
     //   console.log(miStorage);
     // };
      
-     console.log("Hola sold",sold)
+     console.log("Hola sold",state.products)
     return (
         <div className="div-slide">
             <Swiper
