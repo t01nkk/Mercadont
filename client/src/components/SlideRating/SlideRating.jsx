@@ -7,7 +7,7 @@ import {
     fetchCategories,
     getFavorites,
     totalCount,
-    fetchMostSold,
+    fetchRating,
 } from "../../redux/actions/actions.js";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
@@ -22,9 +22,9 @@ import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import 'swiper/swiper.scss'; // core Swiper
 import 'swiper/modules/navigation/navigation.scss'; // Navigation module
 import 'swiper/modules/pagination/pagination.scss'; // Pagination module
-import "./SlideMostSold.scss"
+import "../SlideMostSold/SlideMostSold.scss"
 
-export default function Slide() {
+export default function SlideRating() {
     const { t, i18n } = useTranslation()
     const [user, setUser] = useState([]);
     const [state, dispatch] = useStore();
@@ -32,8 +32,8 @@ export default function Slide() {
     const [inCart, setInCart] = useState(false);
     const history = useHistory();
     let person = JSON.parse(localStorage.getItem("myUser"));
-
-    console.log("Hola", state.soldMost)
+    console.log("Hola rating", state.rating)
+    
 
     const sold = state.soldMost[0]?.details
     const handleSaveCart = (name, price, image, id, stock) => {
@@ -65,7 +65,7 @@ export default function Slide() {
         let myCart = JSON.parse(localStorage.getItem(myUser));
         fetchCategories(dispatch);
         getFavorites(dispatch, person);
-        fetchMostSold(dispatch);
+        fetchRating(dispatch);
         setUser(myUser);
         if (myCart) {
             setCart(myCart);
@@ -87,12 +87,12 @@ export default function Slide() {
     return (
         <div className="div-slide">
             <Swiper
-               
+                     
                 spaceBetween={0}                
                 loop={true}
                 modules={[Navigation, Pagination]}
                 navigation={true}
-               
+              
                 breakpoints={{
                     500: {
                         slidesPerView: 1,
@@ -116,38 +116,40 @@ export default function Slide() {
                     clickable: true
                 }}
                 className="mySwiper"
-            >
+        >
 
-                <section className="section-products ">
-                    {/* <button onClick={() => mostra()}>mostra storage</button> */}
+            <section className="section-products ">
+                {/* <button onClick={() => mostra()}>mostra storage</button> */}
 
-                    {state.soldMost && state.favorites
-                        ? React.Children.toArray(
-                            state.soldMost.map((product) => {
+                { state.rating  && state.favorites
+                    ? React.Children.toArray(
+                         state.rating.map((product) => {
+                            
+                            if (product.status === "active") {
+                                return (
+                                   
+                                    <SwiperSlide >
+                                        <ProductCardSlide
+                                            id={product.id}
+                                            name={product.name}
+                                            stock={product.stock}
+                                            price={product.price}
+                                            image={product.image}
+                                            handleSaveCart={handleSaveCart}
+                                            handleSaveFavorite={handleSaveFavorite}
+                                            handleDeleteFavorite={handleDeleteFavorite}
+                                            isAdd={state.favorites.find((e) => e.id === product.id)}
+                                            alertSuccess={alertSuccess}
+                                        /></SwiperSlide>
 
-                                if (product.status === "active") {
-                                    return (
-                                        <SwiperSlide >
-                                            <ProductCardSlide
-                                                id={product.id}
-                                                name={product.name}
-                                                stock={product.stock}
-                                                price={product.price}
-                                                image={product.image}
-                                                handleSaveCart={handleSaveCart}
-                                                handleSaveFavorite={handleSaveFavorite}
-                                                handleDeleteFavorite={handleDeleteFavorite}
-                                                isAdd={state.favorites.find((e) => e.id === product.id)}
-                                                alertSuccess={alertSuccess}
-                                            /></SwiperSlide>
-
-                                    );
-                                }
-                                return null;
-                            })
-                        )
-                        : <div className="container-loader"><Loader /></div>}
-                </section></Swiper>
+                                );
+                            }
+                            return null;
+                        })
+                    )
+                    : <div className="container-loader"><Loader /></div>}
+            </section></Swiper>
+   
         </div>
-    );
+    )
 }

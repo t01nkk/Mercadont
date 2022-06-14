@@ -7,7 +7,8 @@ import {
   ADMIN_SESSION,
   GET_FAVORITES,
   CHANGE_COUNT_PRODUCT,
-  FETCH_MOST_SOLD
+  FETCH_MOST_SOLD,
+  FETCH_RATING
 } from "./actionTypes";
 
 export const fetchProducts = async (dispatch) => {
@@ -17,6 +18,17 @@ export const fetchProducts = async (dispatch) => {
   dispatch({
     type: FETCH_PRODUCTS,
     payload: fetchedProducts.data,
+  });
+};
+
+export const fetchRating = async (dispatch) => {
+  const fetchedrating = await axios.get(
+    `${process.env.REACT_APP_DOMAIN}/product/recommendation/byRating`
+  );
+  
+  dispatch({
+    type: FETCH_RATING,
+    payload: fetchedrating.data,
   });
 };
 

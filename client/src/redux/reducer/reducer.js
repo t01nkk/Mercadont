@@ -14,11 +14,12 @@ import {
   FILTER_PRODUCTS_ADMIN,
   CHANGE_COUNT_PRODUCT,
   FETCH_ADMIN_USER,
-  FETCH_MOST_SOLD
+  FETCH_MOST_SOLD,
+  FETCH_RATING
 } from "../actions/actionTypes";
 
 export const initialState = {
-  products: [],
+  products: [], 
   usersAdmin:[],
   searchedProducts: [],
   filter: [],
@@ -31,7 +32,8 @@ export const initialState = {
   favorites: "",
   filterProductsAdmin: [],
   countCart: "",
-  soldMost:[]
+  soldMost:[],
+  rating:[]
 };
 
 export function reducer(state = initialState, action) {
@@ -39,8 +41,15 @@ export function reducer(state = initialState, action) {
     case FETCH_PRODUCTS: {
       return {
         ...state,
-        products: action.payload,
+        products: action.payload,        
       };
+    }
+    case FETCH_RATING:{
+      return{
+        ...state,
+        rating:action.payload
+
+      }
     }
     case FETCH_MOST_SOLD:{
       return{
