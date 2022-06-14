@@ -438,11 +438,24 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
         ],
         where: { id: pro.id }
       })
-      categories.push(item[0]?.categories)
+      for(let category of item[0]?.categories){
+        if(!categories.includes(category.name))categories.push(category.name)
+      }
     }
-    categories = [...new Set(categories)]
+
+    let recommended = await Product.findAll({
+      include:[{
+        model: Category,
+        attributes:["name"],
+        through:{attributes:[]},
+        where:{
+          name: categories
+        }
+      }]
+    })
+
     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
-    res.status(200).send(categories)
+    res.status(200).send(recommended)
   } catch (error) {
     console.log(error)
     res.status(400).send(error)
