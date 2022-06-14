@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "./SearchedProducts.css";
+import "./SearchedProducts.scss";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useStore } from "../../context/store";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {
   ORDER_BY_ASCDESC_PRICE,
   FILTER_BY_PRICE,
@@ -15,14 +15,14 @@ import {
   handleSaveFavorite,
 } from "../../components/Cart/actionsCart";
 import { t } from "i18next";
-
+import { IoSearchSharp } from "react-icons/io5";
 export default function SearchedProducts() {
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
   const [state, dispatch] = useStore();
   const [cart, setCart] = useState(initialCart);
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(0);
+  const [min, setMin] = useState();
+  const [max, setMax] = useState();
   const [error, setError] = useState("");
   const [inCart, setInCart] = useState(false);
   const [user, setUser] = useState([]);
@@ -50,42 +50,15 @@ export default function SearchedProducts() {
     }
   };
 
-  // const handleSaveFavorite = async (id) => {
-  //   try {
-  //     await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
-  //       idUser: person,
-  //       idProduct: id,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // const handleDeleteFavorite = async (id) => {
-  //   try {
-  //     await axios.delete(
-  //       `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
-  //       {
-  //         data: {
-  //           idUser: person,
-  //           idProduct: id,
-  //         },
-  //       }
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   const handleChangeMax = (e) => {
     setError("");
-    if (e.target.value < 0)
-      setError(t("categoriesComp.error_pos_numbers"));
+    if (e.target.value < 0) setError(t("categoriesComp.error_pos_numbers"));
     setMax(e.target.value);
   };
 
   const handleChangeMin = (e) => {
     setError("");
-    if (e.target.value < 0)
-      setError(t("categoriesComp.error_pos_numbers"));
+    if (e.target.value < 0) setError(t("categoriesComp.error_pos_numbers"));
     setMin(e.target.value);
   };
 
@@ -140,50 +113,53 @@ export default function SearchedProducts() {
   }, [cart]);
 
   return (
-    <div>
-      <div>
-        <div className="SortAndReset">
-          <div className="priceRangeText">{t("categoriesComp.priceRange")}</div>
-          <form className="minMaxinput" onSubmit={handleSearch}>
+    <div className="searched-container">
+      <div className="SortAndReset">
+        <div className="minMax-filter">
+          <span className="priceRange-text">
+            {t("categoriesComp.priceRange")}
+          </span>
+          <form className="range-form" onSubmit={handleSearch}>
             <input
+              className="range-input"
               id="filter2"
-              type="text"
+              type="number"
               value={min}
-              placeholder={t("categoriesComp.minPrice")}
+              placeholder="MIN"
               onChange={handleChangeMin}
             />
           </form>
           -
-          <form className="minMaxinput" onSubmit={handleSearch}>
+          <form className="range-form" onSubmit={handleSearch}>
             <input
+              className="range-input"
               id="filter"
-              type="text"
+              type="number"
               value={max}
-              placeholder={t("categoriesComp.maxPrice")}
+              placeholder="MAX"
               onChange={handleChangeMax}
             />
           </form>
-          {error && <p>{error}</p>}
-          <button onClick={handleSearch} className="filterByPriceBtn">
-            {t("categoriesComp.search")}{" "}
-          </button>
-          <div>
-            <select
-              defaultValue=""
-              onChange={(e) => {
-                handleOrder(e);
-              }}
-              className="sortSelector"
-            >
-              <option disabled>{t("categoriesComp.sortBy")}</option>
-              <option value="DESCENDING">{t("categoriesComp.des")}</option>
-              <option value="ASCENDING">{t("categoriesComp.asc")}</option>
-            </select>
+          <div className="searched-btn">
+            <IoSearchSharp size={25} onClick={handleSearch} />
           </div>
         </div>
-        {error && <p>{error}</p>}
+        <div className="order-options">
+          <label className="order-label" htmlFor="">{t("categoriesComp.sortBy")}</label>
+          <select
+            defaultValue=""
+            onChange={(e) => {
+              handleOrder(e);
+            }}
+          >
+            <option value="DESCENDING">MAX-MIN</option>
+            <option value="ASCENDING">MIN-MAX</option>
+          </select>
+        </div>
       </div>
+
       {redirect ? <Redirect push to="/home" /> : null}
+      <span>{error && <p>{error}</p>}</span>
       <div className="section-products">
         {state.searchedProducts &&
           React.Children.toArray(

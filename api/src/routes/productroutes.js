@@ -5,6 +5,7 @@ const cors = require("cors");
 const { modifyStock } = require("../middlewares/middlewares");
 const { validateInputProduct } = require("../middlewares/middlewares");
 const { Op, where, Sequelize } = require("sequelize");
+const { set } = require("../app");
 
 const router = Router();
 
@@ -171,7 +172,6 @@ router.get("/manyProducts", async (req, res) => {
   const { arrayProducts } = req.body;
   let array = [];
   try {
-
     for (let item of arrayProducts) {
       const product = await Product.findOne({
         include: [
@@ -195,7 +195,7 @@ router.get("/manyProducts", async (req, res) => {
           id: item,
         },
       });
-      array.push(product)
+      array.push(product);
     }
     return res.status(200).send(array);
   } catch (error) {
@@ -321,35 +321,19 @@ router.get("/recommendation/mostSold", async (req, res) => {
   let product = {
     details: {},
     quantity: 0,
-  }
-  let productsSold = []
+  };
+  let productsSold = [];
   try {
     const orders = await PurchaseOrder.findAll();
 
-    if (!orders.length) {
+    if (!orders?.length) {
       const products = await Product.findAll();
-      products.splice(12)
+      products.splice(12);
       return res.status(200).send(products);
     }
-    // product.id = orders[0].productId;
-    // product.quantity = orders[0].productQuantity;
-
-    // for (let i = 1; i < orders.length; i++){
-    //   if(product.id === orders[i].productId){
-    //     product.quantity += orders[i].productQuantity;
-    //   }else{
-    //     productsSold.push(product);
-    //     product = {
-    //       id : "",
-    //       quantity: 0,
-    //     }
-    //     product.id = orders[i].productId;
-    //     product.quantity = orders[i].productQuantity;
-    //   }
-    // }
-    // productsSold.push(product);
-
-    product.details = await Product.findOne({ where: { id: orders[0].productId } });
+    product.details = await Product.findOne({
+      where: { id: orders[0].productId },
+    });
     product.quantity = orders[0].productQuantity;
 
     for (let i = 1; i < orders.length; i++) {
@@ -360,55 +344,61 @@ router.get("/recommendation/mostSold", async (req, res) => {
         product = {
           details: {},
           quantity: 0,
-        }
-        product.details = await Product.findOne({ where: { id: orders[i].productId } });
+        };
+        product.details = await Product.findOne({
+          where: { id: orders[i].productId },
+        });
         product.quantity = orders[i].productQuantity;
       }
     }
     productsSold.push(product);
-    // Por ahora devuelve un array donde detalla la cantidad de unidades que se vendio de cada producto
-    // Es decir, el array contiene un objeto por cada producto vendido y la cantidad que se vendio de este:
-    // {
-    //   product details (ALL THE INFO OF THE PRODUCT FROM THE DB)
-    //   quantity sold
-    // }
-    // console.log(productsSold)
-    productsSold.splice(12)
-    res.status(200).send(productsSold);
+
+    productsSold.sort((a, b) => {
+      return b.details.rating - a.details.rating;
+    });
+
+    productsSold.splice(10);
+    let arrayProducts = [];
+    for (let p of productsSold) {
+      arrayProducts.push(p.details);
+    }
+    // Devuelve un array de productos mas comprados ordenados de manera DESCENDENTE
+    res.status(200).send(arrayProducts);
   } catch (error) {
-    console.log(error)
-    res.status(400).send(error)
+    console.log(error);
+    res.status(400).send(error);
   }
-})
+});
 
 //-------------------RECOMMENDATION - PRODUCTS BY RATING ------------------------------ //
 router.get("/recommendation/byRating", async (req, res) => {
   try {
     const products = await Product.findAll();
     products.sort((a, b) => {
-      return b.rating - a.rating
-    })
-    // Por ahora solo devuelve todos los productos pero ordenados por rating descendente
-    res.status(200).send(products)
+      return b.rating - a.rating;
+    });
+    products.splice(10);
+    // Devuelve los 12 productos con mas rating de manera DESCENDENTE
+    res.status(200).send(products);
   } catch (error) {
-    console.log(error)
-    res.status(400).send(error)
+    console.log(error);
+    res.status(400).send(error);
   }
 });
-
 //-------------------RECOMMENDATION - PRODUCTS BY HISTORY ------------------------------ //
+
 router.get("/recommendation/byHistory/:userId", async (req, res) => {
   const { userId } = req.params;
   let product = {
     id: "",
-  }
-  let products = []
-  let categories = []
+  };
+  let products = [];
+  let categories = [];
   try {
     const userProducts = await PurchaseOrder.findAll({
       where: {
-        userId: userId
-      }
+        userId: userId,
+      },
     });
 
     if (!userProducts) {
@@ -421,7 +411,7 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
         products.push(product);
         product = {
           id: "",
-        }
+        };
         product.id = userProducts[i].productId;
       }
     }
@@ -434,18 +424,33 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
           {
             model: Category,
             through: { attributes: [] },
-          }
+          },
         ],
-        where: { id: pro.id }
-      })
-      categories.push(item[0]?.categories)
+        where: { id: pro.id },
+      });
+      for (let category of item[0]?.categories) {
+        if (!categories.includes(category.name)) categories.push(category.name);
+      }
     }
-    categories = [...new Set(categories)]
+
+    let recommended = await Product.findAll({
+      include: [
+        {
+          model: Category,
+          attributes: ["name"],
+          through: { attributes: [] },
+          where: {
+            name: categories,
+          },
+        },
+      ],
+    });
+
     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
-    res.status(200).send(categories)
+    res.status(200).send(recommended);
   } catch (error) {
-    console.log(error)
-    res.status(400).send(error)
+    console.log(error);
+    res.status(400).send(error);
   }
 });
 
