@@ -4,8 +4,8 @@ import { useHistory } from "react-router-dom";
 import { useStore } from "../../context/store";
 import { useAuth } from "../../context/authContext";
 import { useTranslation } from "react-i18next";
-import "./accountDetails.css";
-import { alertInfo } from '../../helpers/toast'
+import "./accountDetails.scss";
+import { alertInfo } from "../../helpers/toast";
 
 export default function AccountDetailsForm() {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ export default function AccountDetailsForm() {
 
   const { resetPassword } = useAuth();
   const [state, dispatch] = useStore();
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
   const [user, setUser] = useState({
     email: state.user.email,
     name: "",
@@ -28,12 +28,9 @@ export default function AccountDetailsForm() {
     image: "",
   });
 
-
-
   const expression = {
     Expression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
   };
-
 
   function validator(input) {
     let errors = {};
@@ -64,8 +61,6 @@ export default function AccountDetailsForm() {
       setErrors("");
     }
 
-
-
     return errors;
   }
 
@@ -75,7 +70,7 @@ export default function AccountDetailsForm() {
 
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  console.log(errors)
+  console.log(errors);
   let id = localStorage.getItem("myUser");
 
   const fetchUser = async () => {
@@ -153,140 +148,143 @@ export default function AccountDetailsForm() {
   };
 
   return (
-    <div >
-      <h2>{t("accountDetailsForm.updateInfo")}</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="divInputUser">
-          <p className="title">{t("accountDetailsForm.name")}: </p>
-          <input
-            type="text"
-            name="name"
-            value={user.name}
-            required
-            onChange={handleChangeName}
-          />
-          {errors.name && <p className="error-input">{errors.name}</p>}{" "}
-        </div>
-
-        <div className="divInputUser">
-          <p className="title">{t("accountDetailsForm.lastname")}: </p>
-          <input
-            type="text"
-            name="lastname"
-            value={user.lastname}
-            required
-            onChange={handleChangeName}
-          />
-          {errors.lastname && <p className="error-input">{errors.lastname}</p>}{" "}
-        </div>
-        <div className="divInputUser">
-          <p className="title">{t("accountDetailsForm.address")}</p>
-          <input
-            type="text"
-            name="country"
-            required
-            placeholder={t("accountDetailsForm.country")}
-            value={user.country}
-            onChange={handleChangeName}
-          />
-          {errors.country && <p className="error-input">{errors.country}</p>}{" "}
-        </div>
-        <div className="divInputUser">
-          <input
-            type="text"
-            name="province"
-            placeholder={t("accountDetailsForm.province")}
-            value={user.province}
-            onChange={handleChangeName}
-          />
-          {errors.province && <p className="error-input">{errors.province}</p>}{" "}
-        </div>
-
-        <div className="divInputUser">
-
-          <input
-            type="text"
-            name="city"
-            required
-            placeholder={t("accountDetailsForm.city")}
-            value={user.city}
-            onChange={handleChangeName}
-          />
-          {errors.city && <p className="error-input">{errors.city}</p>}{" "}
-        </div>
-        <div className="divInputUser">
-          <input
-            type="text"
-            name="country"
-            required
-            placeholder={t("accountDetailsForm.country")}
-            value={user.country}
-            onChange={handleChangeName}
-          />
-          {errors.country && <p className="error-input">{errors.country}</p>}{" "}
-        </div>
-        <div className="divInputUser">
-          <input
-            type="text"
-            name="postalCode"
-            placeholder={t("accountDetailsForm.postalCode")}
-            value={user.postalCode}
+    <div className="account-details navPush-accountDetails">
+      <div className="form-details">
+        <h2 className="title-details">{t("accountDetailsForm.updateInfo")}</h2>
+        <form onSubmit={handleSubmit}>
+          {/* <div className="input-details">
+          <label >{t("accountDetailsForm.email")}: </label>
+          <input 
+           className="input-line"
+            type="email"
+            name="email"
+            value={user.email}
             onChange={handleChange}
+            required
           />
-        </div>
-        <div className="divInputUser">
-          <input
-            type="text"
-            name="province"
-            placeholder={t("accountDetailsForm.province")}
-            value={user.province}
-            onChange={handleChangeName}
-          />
-          {errors.province && <p className="error-input">{errors.province}</p>}{" "}
-        </div>
-        <div className="divInputUser">
-          <input
-            type="text"
-            name="street"
-            placeholder={t("accountDetailsForm.street")}
-            value={user.street}
-            onChange={handleChangeName}
-          />
-          {errors.street && <p className="error-input">{errors.street}</p>}{" "}
-        </div>
+        </div> */}
+          <div className="address-details">
+            {/* <p >{t("accountDetailsForm.address")}</p> */}
+            <div className="address-details1">
+              <div className="input-details">
+                <p>{t("accountDetailsForm.name")}: </p>
+                <input
+                  className="input-line"
+                  type="text"
+                  name="name"
+                  value={user.name}
+                  required
+                  onChange={handleChangeName}
+                />
+                {errors.name && <p>{errors.name}</p>}{" "}
+              </div>
 
-        <div className="divInputUser">
-          <input
-            type="text"
-            name="postalCode"
-            placeholder={t("accountDetailsForm.postalCode")}
-            value={user.postalCode}
-            onChange={handleChange}
-          />
-        </div>
+              <div className="input-details">
+                <p>{t("accountDetailsForm.lastname")}: </p>
+                <input
+                  className="input-line"
+                  type="text"
+                  name="lastname"
+                  value={user.lastname}
+                  required
+                  onChange={handleChangeName}
+                />
+                {errors.lastname && <p>{errors.lastname}</p>}{" "}
+              </div>
+              <div className="input-details">
+                <p>City</p>
+                <input
+                  className="input-line"
+                  type="text"
+                  name="city"
+                  required
+                  placeholder={t("accountDetailsForm.city")}
+                  value={user.city}
+                  onChange={handleChangeName}
+                />
+                {errors.city && <p>{errors.city}</p>}{" "}
+              </div>
+              <div className="input-details">
+                <p>Country</p>
+                <input
+                  className="input-line"
+                  type="text"
+                  name="country"
+                  required
+                  placeholder={t("accountDetailsForm.country")}
+                  value={user.country}
+                  onChange={handleChangeName}
+                />
+                {errors.country && <p>{errors.country}</p>}{" "}
+              </div>
+            </div>
+            <div className="address-details2">
+              <div className="input-details">
+                <p>PostalCode</p>
+                <input
+                  className="input-line"
+                  type="text"
+                  name="postalCode"
+                  placeholder={t("accountDetailsForm.postalCode")}
+                  value={user.postalCode}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="input-details">
+                <p>Province</p>
+                <input
+                  className="input-line"
+                  type="text"
+                  name="province"
+                  placeholder={t("accountDetailsForm.province")}
+                  value={user.province}
+                  onChange={handleChangeName}
+                />
+                {errors.province && <p>{errors.province}</p>}{" "}
+              </div>
+              <div className="input-details">
+                <p> Street</p>
+                <input
+                  className="input-line"
+                  type="text"
+                  name="street"
+                  placeholder={t("accountDetailsForm.street")}
+                  value={user.street}
+                  onChange={handleChangeName}
+                />
+                {errors.street && <p>{errors.street}</p>}{" "}
+              </div>
+              <div className="input-details">
+                <p>{t("accountDetailsForm.image")}: </p>
+                <input
+                  className="input-line"
+                  type="text"
+                  name="image"
+                  placeholder="Image..."
+                  onChange={handleChange}
+                  value={user.image}
+                />
+              </div>
+            </div>
+          </div>
 
-        <div className="">
-          <p className="title">{t("accountDetailsForm.password")}: </p>
-          <button onClick={(e) => handleResetPassword(e)}>
-            {t("accountDetailsForm.changePassword")}
-          </button>
-        </div>
+          <div className="password-user ">
+            <p>{t("accountDetailsForm.password")}: </p>
+            <div className="button-user">
+              <button
+                className="button-details"
+                onClick={(e) => handleResetPassword(e)}
+              >
+                {t("accountDetailsForm.changePassword")}
+              </button>
+            </div>
+          </div>
 
-        <div className="divInputUser">
-          <p className="title">{t("accountDetailsForm.image")}: </p>
-          <input
-            type="text"
-            name="image"
-            placeholder="Image..."
-            onChange={handleChange}
-            value={user.image}
-          />
-        </div>
-
-        <div className="btn-login">
-          <input type="submit" name="Update info" className="input-submit" />
-        </div>
-      </form >
-    </div >
+          <div className="button-user">
+            <button className="button-details">Actualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

@@ -1,0 +1,77 @@
+.SortAndReset {
+  display: flex;
+  justify-content: space-around;
+  background-color: black;
+  width: 50%;
+  height: 60px;
+  color: #ffffff;
+  align-items: center;
+  padding: 0 15px;
+  margin: 0 auto;
+  @media only screen and (max-width: 1200px) {
+    flex-direction: column;
+    height: 120px;
+  }
+  @media only screen and (max-width: 600px) {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+.searched-btn {
+  color: #fff;
+  cursor: pointer;
+}
+.searched-btn:hover {
+  color: #f0b479;
+}
+
+.range-input {
+  width: 100%;
+}
+.range-form {
+  width: 30%;
+}
+.filterByPriceBtn {
+  margin: 0 10px;
+}
+.minMax-filter {
+  display: flex;
+  width: 70%;
+  justify-content: space-around;
+  align-items: center;
+  @media only screen and (max-width: 1200px) {
+    width: 100%;
+  }
+}
+
+.priceFilter-text {
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+.searched-container {
+  width: 100%;
+  height: 100%;
+
+  align-items: center;
+}
+.section-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(2rem, 20rem));
+  gap: 3.5rem;
+  justify-content: center;
+}
+.order-options {
+  width: 30%;
+  display: flex;
+  justify-content: space-around;
+  @media only screen and (max-width: 1200px) {
+    width: 100%;
+    justify-content: center;
+  }
+}
+.order-label {
+  @media only screen and (max-width: 1200px) {
+    margin-right: 10px;
+  }
+}

@@ -9,13 +9,14 @@ import {
 import { getFavorites } from "../../redux/actions/actions.js";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader/Loader";
-import "./categories.css";
+import "./categories.scss";
 import { handleDeleteFavorite, handleSaveFavorite } from "../Cart/actionsCart";
 import { useTranslation } from "react-i18next";
-import { alertInfo, alertSuccess, alertWarning } from '../../helpers/toast'
+import { alertInfo, alertSuccess, alertWarning } from "../../helpers/toast";
+import { IoSearchSharp } from "react-icons/io5";
 export default function Categories() {
   // let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [redirect, setRedirect] = useState(false);
   const [state, dispatch] = useStore();
   const [cart, setCart] = useState([]);
@@ -25,32 +26,6 @@ export default function Categories() {
   const [error, setError] = useState("");
   const [user, setUser] = useState([]);
   let person = JSON.parse(localStorage.getItem("myUser"));
-
-  // const handleSaveFavorite = async (id) => {
-  //   try {
-  //     await axios.post(`${process.env.REACT_APP_DOMAIN}/user/addFavorite`, {
-  //       idUser: person,
-  //       idProduct: id,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // const handleDeleteFavorite = async (id) => {
-  //   try {
-  //     await axios.delete(
-  //       `${process.env.REACT_APP_DOMAIN}/user/removeFavorite`,
-  //       {
-  //         data: {
-  //           idUser: person,
-  //           idProduct: id,
-  //         },
-  //       }
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const handleRedirect = () => {
     if (!state.products.length) {
@@ -65,7 +40,7 @@ export default function Categories() {
     let value = cart.find((e) => e.name === name);
     if (value) {
       setInCart(false);
-      alertInfo(t("home.altAlreadyInCart"))
+      alertInfo(t("home.altAlreadyInCart"));
       return;
     } else {
       setInCart(true);
@@ -83,15 +58,13 @@ export default function Categories() {
   };
   const handleChangeMax = (e) => {
     setError("");
-    if (e.target.value < 0)
-      setError(t("categoriesComp.error_pos_numbers"));
+    if (e.target.value < 0) setError(t("categoriesComp.error_pos_numbers"));
     setMax(e.target.value);
   };
 
   const handleChangeMin = (e) => {
     setError("");
-    if (e.target.value < 0)
-      setError(t("categoriesComp.error_pos_numbers"));
+    if (e.target.value < 0) setError(t("categoriesComp.error_pos_numbers"));
     setMin(e.target.value);
   };
 
@@ -140,33 +113,42 @@ export default function Categories() {
     handleRedirect();
   }, []);
   return (
-    <div>
+    <div className="searched-container">
       <div className="SortAndReset">
-        <div className="priceRangeText">{t("categoriesComp.priceRange")}</div>
-        <form className="minMaxinput" onSubmit={handleSearch}>
-          <input
-            id="filter2"
-            type="text"
-            value={min}
-            placeholder={t("categoriesComp.minPrice")}
-            onChange={handleChangeMin}
-          />
-        </form>
-        -
-        <form className="minMaxinput" onSubmit={handleSearch}>
-          <input
-            id="filter"
-            type="text"
-            value={max}
-            placeholder={t("categoriesComp.maxPrice")}
-            onChange={handleChangeMax}
-          />
-        </form>
-        {error && <p>{error}</p>}
-        <button onClick={handleSearch} className="filterByPriceBtn">
-          {t("categoriesComp.search") }{" "}
-        </button>
-        <div>
+        <div className="minMax-filter">
+          <span className="priceRangeText">
+            {t("categoriesComp.priceRange")}
+          </span>
+          <form className="range-form" onSubmit={handleSearch}>
+            <input
+              className="range-input"
+              id="filter2"
+              type="text"
+              value={min}
+              placeholder={t("categoriesComp.minPrice")}
+              onChange={handleChangeMin}
+            />
+          </form>
+          -
+          <form className="range-form" onSubmit={handleSearch}>
+            <input
+              className="range-input"
+              id="filter"
+              type="text"
+              value={max}
+              placeholder={t("categoriesComp.maxPrice")}
+              onChange={handleChangeMax}
+            />
+          </form>
+          {error && <p>{error}</p>}
+          <div className="searched-btn">
+            <IoSearchSharp size={25} onClick={handleSearch} />
+          </div>
+        </div>
+        <div className="order-options">
+          <label className="order-label" htmlFor="">
+            {t("categoriesComp.sortBy")}
+          </label>
           <select
             defaultValue=""
             onChange={(e) => {
@@ -174,9 +156,8 @@ export default function Categories() {
             }}
             className="sortSelector"
           >
-            <option disabled>{t("categoriesComp.sortBy")}</option>
-            <option value="DESCENDING">{t("categoriesComp.des")}</option>
-            <option value="ASCENDING">{t("categoriesComp.asc")}</option>
+            <option value="DESCENDING">MAX-MIN</option>
+            <option value="ASCENDING">MIN-MAX</option>
           </select>
         </div>
       </div>

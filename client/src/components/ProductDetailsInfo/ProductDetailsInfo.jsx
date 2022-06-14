@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./ProductDetailsInfo.css";
+import "./ProductDetailsInfo.scss";
 import { useHistory } from "react-router-dom";
 import accounting from "accounting";
 import { FormQA } from "../FormQA/FormQA";
@@ -111,88 +111,94 @@ export default function ProductDetailsInfo({
 
   return (
     <div className="details-container">
-      <img src={image} alt={` ${name}`} className="product-img" />
-
       <div className="details-info">
+        <div className="details-image">
+          <img src={image} alt={` ${name}`} className="product-img" />
+        </div>
         <div className="product-info">
-          <p className="titleDetails">
-            {name}
-            <div className="button-details-details">
+          <div className="details-actions">
+            <button
+              className="card-btn m-2 b-w "
+              onClick={() => handleSaveCart(name, price, image, id, stock)}
+            >
+              <img className="cart-btn" src={shoppingCart} alt="add-cart" />
+            </button>
+            {changeButton ? (
               <button
-                className="card-btn"
-                onClick={() => handleSaveCart(name, price, image, id, stock)}
+                className="card-btn m-2 b-w"
+                onClick={() => deleteFavorite()}
               >
-                <img className="cart-btn" src={shoppingCart} alt="add-cart" />
+                <img
+                  className="fav-btn"
+                  src={imgDeleteFavorite}
+                  alt="delete-favorite"
+                />
               </button>
-              {changeButton ? (
-                <button className="card-btn" onClick={() => deleteFavorite()}>
-                  <img
-                    className="fav-btn"
-                    src={imgDeleteFavorite}
-                    alt="delete-favorite"
-                  />
-                </button>
-              ) : (
-                <button className="card-btn" onClick={() => postFavorite()}>
-                  <img
-                    className="fav-btn"
-                    src={imgAddFavorite}
-                    alt="add-favorite"
-                  />
-                </button>
-              )}
-            </div>
-          </p>
-
-          <p className="title-details-info">
+            ) : (
+              <button
+                className="card-btn m-2 b-w"
+                onClick={() => postFavorite()}
+              >
+                <img
+                  className="fav-btn"
+                  src={imgAddFavorite}
+                  alt="add-favorite"
+                />
+              </button>
+            )}
+          </div>
+          <p className="titleDetails">{name}</p>
+          <p className="title-details-info-description">
             {t("productDetailsInfo.description")}
           </p>
-          <p className="description">{description}</p>
-          <div className="product-info-details">
-            <div>
-              <p className="title-details-info">
+          <p className="details-description">{description}</p>
+
+          <div className="details-categories-stock">
+            <div className="details-categories">
+              <p className="title-details-info-categories">
                 {t("productDetailsInfo.categories")}
               </p>
               {React.Children.toArray(
-                categories.map((category) => <p>{category.name}</p>)
+                categories.map((category) => (
+                  <p className="details-category-name">{category.name}</p>
+                ))
               )}
             </div>
-            <div>
-              <p className="title-details-info">
+            <div className="details-stock">
+              <p className="title-details-info-stock">
                 {t("productDetailsInfo.stock")}
               </p>
               <p>{stock}</p>
             </div>
-
-            <div>
-              <p className="title-details-info">
-                {t("productDetailsInfo.price")}
-              </p>
-              <p>{`${accounting.formatMoney(price, "U$D ", 0)}`}</p>
-            </div>
           </div>
-          <p className="title-details-info">{t("productDetailsInfo.qa")}</p>
-          {/* <p className="title-details-info">Rating: </p>
-        <p>{rating}</p> */}
-          {/* <p className="title-details-info">Reviews:</p>
-        <p>{reviews}</p> */}
-
-          <div className="scroll">
-            <p>
-              {React.Children.toArray(
-                qas.map((qa) => (
-                  <div className="question">
-                    <p className="questionText">Q: {qa.question}</p>
-                    {qa.answer ? <div className="answerText">A: {qa.answer}</div> : null}
-                  </div>
-                ))
-              )}
+          <div className="details-price">
+            <p className="title-details-info-price">
+              {t("productDetailsInfo.price")}
+            </p>
+            <p className="details-price-number">
+              <span className="details-currency">U$D</span>
+              {`${accounting.formatMoney(price, "", 2, ".")}`}
             </p>
           </div>
-          <div className="formQA">
-            <FormQA productId={id} />
-          </div>
         </div>
+      </div>
+      <div className="details-qua">
+        <p className="title-details-info-qua">{t("productDetailsInfo.qa")}</p>
+        {qas && (
+          <div className="details-questions-list">
+            {React.Children.toArray(
+              qas.map((qa) => (
+                <div className="question">
+                  <p className="questionText">Q: {qa.question}</p>
+                  {qa.answer ? (
+                    <div className="answerText">A: {qa.answer}</div>
+                  ) : null}
+                </div>
+              ))
+            )}
+          </div>
+        )}
+        <FormQA productId={id} />
       </div>
     </div>
   );
