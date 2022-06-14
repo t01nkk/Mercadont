@@ -14,7 +14,6 @@ const modifyStockStripe = async (local) => {
       const findProduct = await Product.findByPk(local[i].id);
 
       if (findProduct.stock <= 0 && findProduct.stock - local[i].quantity < 0) {
-        console.log("errorsuli")
         return false;
       }
 

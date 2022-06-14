@@ -33,43 +33,35 @@ export default function Slide() {
     const [inCart, setInCart] = useState(false);
     const history = useHistory();
     let person = JSON.parse(localStorage.getItem("myUser"));
-    
+
     function getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
     const fetchSold = async () => {
-        if(state.products.length){
+        if (state.products.length) {
             try {
-                // console.log("state.products-FETCH:", state.products)
-                // console.log("state.products.length-FETCH:", state.products.length)
                 let recommended = [];
                 let miStorage = JSON.parse(localStorage.getItem("myUser"));
-                if(miStorage){
+                if (miStorage) {
                     const recommendedProducts = await axios.get(
                         `${process.env.REACT_APP_DOMAIN}/product/recommendation/byHistory/${miStorage}`
                     );
                     recommended = recommendedProducts.data
-                    // console.log("recommendedProducts.data:", recommendedProducts.data)
-                }   
-                if(recommended.length>12){
-                    recommended = recommended.slice(0,12)
                 }
-                for(let i= 0 ; i < 12; i++){
-                    let index = getRandomInt(0,state.products.length -1)
-
-                    // console.log("index:", index)
-                    if(!recommended.includes(state.products[index])){
-                        
-                        console.log("state.products[index]:", state.products[index])
+                if (recommended.length > 12) {
+                    recommended = recommended.slice(0, 12)
+                }
+                for (let i = 0; i < 12; i++) {
+                    let index = getRandomInt(0, state.products.length - 1)
+                    if (!recommended.includes(state.products[index])) {
                         recommended.push(state.products[index])
                     }
                 }
-                if(recommended.length>12){
-                    recommended = recommended.slice(0,12)
+                if (recommended.length > 12) {
+                    recommended = recommended.slice(0, 12)
                 }
-                // console.log("hola recommended",recommended)
                 setSold(recommended);
             } catch (err) {
                 return err;
@@ -102,7 +94,7 @@ export default function Slide() {
     };
 
     useEffect(() => {
-        
+
         let myUser = JSON.parse(localStorage.getItem("myUser"));
         let myCart = JSON.parse(localStorage.getItem(myUser));
         // fetchProducts(dispatch)
@@ -129,10 +121,9 @@ export default function Slide() {
     //   let miStorage = JSON.parse(localStorage.getItem("myUser"));
     //   console.log(miStorage);
     // };
-    console.log("Hola sold",sold)
     return (
         <div className="div-slide">
-            
+
             <Swiper
 
                 spaceBetween={0}
