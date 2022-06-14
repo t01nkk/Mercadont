@@ -255,11 +255,8 @@ router.put("/:questionId/answer", async (req, res) => {
     })
     const { email } = userMail.dataValues.users[0].dataValues;
     const { id, name } = userMail.dataValues.products[0].dataValues
-    // DESCOMENTAR PARA ENVIAR MAIL AL USER CUANDO ADMIN RESPONDE PREGUNTA.
 
-    // mailQuestion(email, name, id)
-
-    // 
+    mailQuestion(email, name, id)
     return res.status(200).send("Question answered")
   }
   catch (err) {
