@@ -1,25 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { FaStar } from "react-icons/fa"
+import { StarRating } from '../StarRating/StarRating'
 // import { useLocation } from 'react-router-dom'
 
 import "./History.css"
 
 export const DetailsBuysHistory = ({amount,name,id,image,price,date,myUser,isReview, isOrder,updateDataText}) => {
   
+
+  
   const [valueText, setValueText] = useState("")
+
+  
+  const [star, setStar] = useState(null)
+  const [hover, setHover] = useState(null)
+  
+
+  // useEffect(()=>{
+    
+  // },[valueText,getstar])
 
   const handleChange = (e)=>{
     setValueText(e.target.value)
-    
   }
 
   const handleBlur = (e)=>{
     e.stopPropagation()
+    console.log("SI o puse alrevez",star, valueText, id)
     handleChange(e)
-updateDataText({
-      id,
-      text:valueText,
-      rating:4
-    })
+    // updateDataText({
+    //   id,
+    //   text:valueText,
+    //   rating:star
+    // })
   }
   //id => por params
   //rating, text,userId,orderId => body
@@ -31,7 +44,30 @@ updateDataText({
           <img src={image} alt={name} />
       </div>
       <div>
-        {!isReview && isOrder === "accepted" ?<textarea name="" id="" cols="20" rows="5" value={valueText} onChange={handleChange} onBlur={handleBlur}></textarea>:null}
+        {!isReview && isOrder === "accepted" ?
+          <div onBlur={handleBlur}>
+            <textarea name="" id="" cols="20" rows="5" value={valueText} onChange={handleChange} ></textarea>
+            <div onBlur={handleBlur}>
+              {
+              [...Array(5)].map((e,i)=>{
+              
+                  const ratingValue = i + 1
+                  return (
+                      <label className='container-star' key={"fostar" + ratingValue}>
+                          <input type="radio" name="ratingStar" value={ratingValue} onClick={()=>setStar(ratingValue)}/>
+                          <FaStar
+                              color={ratingValue <= (star || hover) ? "black": "grey"}
+                              size={20}
+                              onMouseEnter={()=> setHover(ratingValue)}
+                              onMouseLeave={()=> setHover(ratingValue)}
+                          />
+                      </label>
+                      )
+              })
+              }
+            </div>
+          </div>
+        :null}
       </div>
     </div>
   )

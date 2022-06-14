@@ -4,6 +4,7 @@ import axios from "axios"
 import { useHistory } from 'react-router-dom'
 import { totalPrice } from '../Cart/actionsCart'
 import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
+import { PruebaListProduct } from '../ListProductsBuys/PruebaListProduct'
 import { useTranslation } from 'react-i18next';
 import accounting from 'accounting'
 import {alertInfo} from '../../helpers/toast'
@@ -132,6 +133,7 @@ export const SendBuys = () => {
                                 <CardElement className='cardElement' />
                                 <button type='submit'>{t("sendBuys.cardPay")}</button>
                                 {loadingBuys && <div className='buys-loader'><Loader/></div>}
+                                <PruebaListProduct/>
                             </>
                             : null}
                     </div>
