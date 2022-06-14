@@ -71,7 +71,7 @@ export default function ProductCard({
       </Link>
       <div className="btn-wrapper">
         <button
-          className="card-btn"
+          className="card-btn margin-1"
           onClick={() => handleSaveCart(name, price, image, id, stock)}
         >
           <img className="cart-btn" src={shoppingCart} alt="add-cart"/>
@@ -86,7 +86,7 @@ export default function ProductCard({
         </button>
       )} */}
         {changeButton ? (
-          <button className="card-btn" onClick={() => deleteFavorite()}>
+          <button className="card-btn margin-1" onClick={() => deleteFavorite()}>
             <img
               className="fav-btn"
               src={imgDeleteFavorite}
@@ -94,7 +94,7 @@ export default function ProductCard({
             />
           </button>
         ) : (
-          <button className="card-btn" onClick={() => postFavorite()}>
+          <button className="card-btn margin-1" onClick={() => postFavorite()}>
             <img className="fav-btn" src={imgAddFavorite} alt="add-favorite" />
           </button>
         )}

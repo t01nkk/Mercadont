@@ -20,6 +20,7 @@
   justify-content: center;
   margin: 30px 0;
   flex-direction: column;
+  align-items: center;
 }
 .cart-total-price {
   display: flex;
@@ -80,18 +81,18 @@
 /* styling */
 
 .cart-buy-button {
-  
   border: none;
   outline: none;
   padding: 1rem 90px 1rem 2rem;
   position: relative;
-  background-color: #000000;
+  background-color: #4caf50;
   color: #fff;
   font-size: 1.2rem;
   text-transform: uppercase;
   cursor: pointer;
   box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
-  width: 30%;
+  width: 335px;
+  align-self: center;
 }
 
 .cart-buy-button:active {
@@ -104,4 +105,60 @@
   bottom: 5px;
   left: calc(100% - 100px);
   height: 90px;
+}
+.buy-btn-responsive {
+  visibility: hidden;
+}
+@media only screen and (max-width: 550px) {
+  .cart-buy-button {
+    display: none;
+  }
+  .buy-btn-responsive {
+    display: flex;
+    justify-content: center;
+    visibility: visible;
+    border: none;
+    outline: none;
+    background-color: #4caf50;
+    color: #fff;
+    font-size: 1rem;
+    text-transform: uppercase;
+    box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+    width: 60%;
+    align-self: center;
+    align-items: center;
+    height: 55px;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+
+    cursor: pointer;
+  }
+  .buy-btn-responsive:hover {
+    box-shadow: rgba(0, 9, 61, 0.5) 0px 4px 10px 0px;
+  }
+}
+
+.empty-cart-btn {
+  border: none;
+  outline: none;
+  background-color: #990404;
+  height: 40px;
+  color: #fff;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 335px;
+  text-align: center;
+  align-items: center;
+  @media only screen and (max-width: 550px) {
+    width: 60%;
+  }
+  @media only screen and (max-width: 430px) {
+    width: 60%;
+    height: unset;
+  }
+}
+.empty-cart-btn:hover {
+  box-shadow: 0 5px 13px rgba(133, 2, 2, 0.409);
 }

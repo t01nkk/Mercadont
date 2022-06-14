@@ -1,4 +1,6 @@
-
+.margin-1 {
+  margin: 1rem;
+}
 .card-clothe {
   margin-top: 5rem;
   overflow: hidden;
@@ -36,7 +38,6 @@
   font-size: 1rem;
   height: 1rem;
   width: 3%;
-  margin: 1rem;
   border: 1px solid;
   border-radius: 35px;
   background: transparent;
