@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 import "./History.css"
 
-export const DetailsBuysHistory = ({amount,name,id,image,price,date,myUser,isReview,updateDataText}) => {
+export const DetailsBuysHistory = ({amount,name,id,image,price,date,myUser,isReview, isOrder,updateDataText}) => {
   
   const [valueText, setValueText] = useState("")
 
@@ -31,7 +31,7 @@ updateDataText({
           <img src={image} alt={name} />
       </div>
       <div>
-        {!isReview && <textarea name="" id="" cols="20" rows="5" value={valueText} onChange={handleChange} onBlur={handleBlur}></textarea>}
+        {!isReview && isOrder === "accepted" ?<textarea name="" id="" cols="20" rows="5" value={valueText} onChange={handleChange} onBlur={handleBlur}></textarea>:null}
       </div>
     </div>
   )

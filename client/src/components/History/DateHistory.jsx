@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom"
 import "./History.css"
 import axios from 'axios'
 
-export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsProduct, orderStatus, orderNumber, setIsReview, review }) => {
+export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsProduct, orderStatus, orderNumber, setIsReview, review, setIsOrder }) => {
 
     const history = useHistory()
     //pm_1LAFPdL7xpNkb3eJ9QXGOVtC
@@ -34,6 +34,7 @@ export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsP
                     order: idProduct
                 })
             setIsReview(review)
+            setIsOrder(orderStatus)
             history.push(`/history?${orderNumber}`)
             await setDetailsProduct(foundProducts.data)
             await setChangeSection(false)
