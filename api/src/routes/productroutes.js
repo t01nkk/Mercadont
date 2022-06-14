@@ -173,7 +173,7 @@ router.get("/manyProducts", async (req, res) => {
   let array = [];
   try {
 
-    for (let item of arrayProducts){
+    for (let item of arrayProducts) {
       const product = await Product.findOne({
         include: [
           {
@@ -318,7 +318,7 @@ router.put("/update/:id", async (req, res) => {
 });
 
 //-------------------RECOMMENDATION - MOST SOLD PRODUCTS------------------------------ //
-router.get("/recommendation/mostSold", async (req, res) =>{
+router.get("/recommendation/mostSold", async (req, res) => {
   let product = {
     details: {},
     quantity: 0,
@@ -327,7 +327,7 @@ router.get("/recommendation/mostSold", async (req, res) =>{
   try {
     const orders = await PurchaseOrder.findAll();
 
-    if(!orders.length){
+    if (!orders.length) {
       const products = await Product.findAll();
       products.splice(12)
       return res.status(200).send(products);
@@ -335,16 +335,16 @@ router.get("/recommendation/mostSold", async (req, res) =>{
     product.details = await Product.findOne({where: {id: orders[0].productId}}) ;
     product.quantity = orders[0].productQuantity;
 
-    for (let i = 1; i < orders.length; i++){
-      if(product.details.id === orders[i].productId){
+    for (let i = 1; i < orders.length; i++) {
+      if (product.details.id === orders[i].productId) {
         product.quantity += orders[i].productQuantity;
-      }else{
+      } else {
         productsSold.push(product);
         product = {
           details: {},
           quantity: 0,
         }
-        product.details = await Product.findOne({where: {id: orders[i].productId}}) ;
+        product.details = await Product.findOne({ where: { id: orders[i].productId } });
         product.quantity = orders[i].productQuantity;
       }
     }
@@ -368,11 +368,11 @@ router.get("/recommendation/mostSold", async (req, res) =>{
 })
 
 //-------------------RECOMMENDATION - PRODUCTS BY RATING ------------------------------ //
-router.get("/recommendation/byRating", async (req, res) =>{
+router.get("/recommendation/byRating", async (req, res) => {
   try {
     const products = await Product.findAll();
-    products.sort((a,b) =>{
-      return  b.rating - a.rating
+    products.sort((a, b) => {
+      return b.rating - a.rating
     })
     products.splice(12)
     // Devuelve los 12 productos con mas rating de manera DESCENDENTE
@@ -390,7 +390,7 @@ router.get("/recommendation/byHistory/:userId", async (req, res) =>{
   let categories = []
   try {
     const userProducts = await PurchaseOrder.findAll({
-      where:{
+      where: {
         userId: userId
       }
     });
@@ -399,8 +399,8 @@ router.get("/recommendation/byHistory/:userId", async (req, res) =>{
       const cat = await Category.findAll();
       cat.splice(12)
       for(let c of cat){
-        if(!categories.includes(c.dataValues.id)){
-          categories.push(c.dataValues.id)
+        if(!categories.includes(c.dataValues.name)){
+          categories.push(c.dataValues.name)
         }
       }
       // Devuelve un array con el ID de 12 categorias
@@ -421,12 +421,14 @@ router.get("/recommendation/byHistory/:userId", async (req, res) =>{
           }
         ) ;
         for(let c of product.categories){
-          if(!categories.includes(c.dataValues.id)){
-            categories.push(c.dataValues.id)
+          if(!categories.includes(c.dataValues.name)){
+            categories.push(c.dataValues.name)
           }
         }
       }
     }
+
+    
      // Devuelve un array con el ID de todas las categorias relacionadas a los productos comprados por el user
     res.status(200).send(categories)
   } catch (error) {

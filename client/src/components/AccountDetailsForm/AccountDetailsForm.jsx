@@ -13,12 +13,12 @@ export default function AccountDetailsForm() {
 
   const { resetPassword } = useAuth();
   const [state, dispatch] = useStore();
-  const [errors,setErrors] =useState({})
+  const [errors, setErrors] = useState({})
   const [user, setUser] = useState({
     email: state.user.email,
     name: "",
     lastname: "",
-    address:"",
+    address: "",
     country: "",
     province: "",
     city: "",
@@ -40,32 +40,32 @@ export default function AccountDetailsForm() {
 
     if (!expression.Expression.test(input.name)) {
       errors.name = `Name is neccesary`;
-    }else if (input === "") {
+    } else if (input === "") {
       setErrors("");
     }
     if (!expression.Expression.test(input.lastname)) {
       errors.lastname = `Lastname is neccesary`;
-    }else if (input === "") {
+    } else if (input === "") {
       setErrors("");
     }
     if (!expression.Expression.test(input.country)) {
       errors.country = `Country is neccesary`;
-    }else if (input === "") {
+    } else if (input === "") {
       setErrors("");
     }
     if (!expression.Expression.test(input.city)) {
       errors.city = `City is neccesary`;
-    }else if (input === "") {
+    } else if (input === "") {
       setErrors("");
     }
     if (!expression.Expression.test(input.province)) {
       errors.province = `Province is neccesary`;
-    }else if (input === "") {
+    } else if (input === "") {
       setErrors("");
     }
-   
-   
-    
+
+
+
     return errors;
   }
 
@@ -75,20 +75,16 @@ export default function AccountDetailsForm() {
 
     setUser({ ...user, [e.target.name]: e.target.value });
   };
- console.log(errors)
+  console.log(errors)
   let id = localStorage.getItem("myUser");
 
   const fetchUser = async () => {
-    // console.log(state.user)
     try {
       let miStorage = JSON.parse(localStorage.getItem("myUser"));
       const userDB = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/user/details/${miStorage}`
       );
-      console.log("user", userDB);
       setUser(userDB.data);
-     
-      console.log(userDB.data)
     } catch (err) {
       // console.log(err);
       return err;
@@ -161,16 +157,6 @@ export default function AccountDetailsForm() {
       <h2>{t("accountDetailsForm.updateInfo")}</h2>
       <form onSubmit={handleSubmit}>
         <div className="divInputUser">
-          <label className="title">{t("accountDetailsForm.email")}: </label>
-          <input
-            type="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="divInputUser">
           <p className="title">{t("accountDetailsForm.name")}: </p>
           <input
             type="text"
@@ -191,11 +177,33 @@ export default function AccountDetailsForm() {
             required
             onChange={handleChangeName}
           />
-           {errors.lastname && <p className="error-input">{errors.lastname}</p>}{" "}
+          {errors.lastname && <p className="error-input">{errors.lastname}</p>}{" "}
+        </div>
+        <div className="divInputUser">
+          <p className="title">{t("accountDetailsForm.address")}</p>
+          <input
+            type="text"
+            name="country"
+            required
+            placeholder={t("accountDetailsForm.country")}
+            value={user.country}
+            onChange={handleChangeName}
+          />
+          {errors.country && <p className="error-input">{errors.country}</p>}{" "}
+        </div>
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="province"
+            placeholder={t("accountDetailsForm.province")}
+            value={user.province}
+            onChange={handleChangeName}
+          />
+          {errors.province && <p className="error-input">{errors.province}</p>}{" "}
         </div>
 
         <div className="divInputUser">
-          <p className="title">{t("accountDetailsForm.address")}</p>
+
           <input
             type="text"
             name="city"
@@ -204,7 +212,7 @@ export default function AccountDetailsForm() {
             value={user.city}
             onChange={handleChangeName}
           />
-             {errors.city && <p className="error-input">{errors.city}</p>}{" "}
+          {errors.city && <p className="error-input">{errors.city}</p>}{" "}
         </div>
         <div className="divInputUser">
           <input
@@ -215,7 +223,7 @@ export default function AccountDetailsForm() {
             value={user.country}
             onChange={handleChangeName}
           />
-             {errors.country && <p className="error-input">{errors.country}</p>}{" "}
+          {errors.country && <p className="error-input">{errors.country}</p>}{" "}
         </div>
         <div className="divInputUser">
           <input
@@ -234,7 +242,7 @@ export default function AccountDetailsForm() {
             value={user.province}
             onChange={handleChangeName}
           />
-             {errors.province && <p className="error-input">{errors.province}</p>}{" "}
+          {errors.province && <p className="error-input">{errors.province}</p>}{" "}
         </div>
         <div className="divInputUser">
           <input
@@ -244,7 +252,17 @@ export default function AccountDetailsForm() {
             value={user.street}
             onChange={handleChangeName}
           />
-             {errors.street && <p className="error-input">{errors.street}</p>}{" "}
+          {errors.street && <p className="error-input">{errors.street}</p>}{" "}
+        </div>
+
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="postalCode"
+            placeholder={t("accountDetailsForm.postalCode")}
+            value={user.postalCode}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="">
@@ -264,11 +282,11 @@ export default function AccountDetailsForm() {
             value={user.image}
           />
         </div>
-        
+
         <div className="btn-login">
-          <input type="submit" name="Update info"  className="input-submit" />
+          <input type="submit" name="Update info" className="input-submit" />
         </div>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 }

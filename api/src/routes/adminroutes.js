@@ -94,17 +94,17 @@ router.put("/ban/:id", async (req, res) => {
   const { id } = req.params;
   const { setBan } = req.body;
 
-   try {
-      const bannedUser = await User.update(
-        {
-          banned: setBan,
-        },
-        { where: { id: id } }
-      );
-      return res.status(200).send(bannedUser);
-    } catch (error) {
-      return res.status(400).send(error);
-    }
+  try {
+    const bannedUser = await User.update(
+      {
+        banned: setBan,
+      },
+      { where: { id: id } }
+    );
+    return res.status(200).send(bannedUser);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
 });
 
 //ADMIN
@@ -145,12 +145,12 @@ router.get("/loadOrders", async (req, res) => {
 });
 
 //Filter PURCHASE ORDERS by STATUS
-router.get("/filterOrders/:status", async (req, res) =>{
+router.get("/filterOrders/:status", async (req, res) => {
   const { status } = req.params;
 
   try {
     const orders = await PurchaseOrder.findAll({
-      where:{
+      where: {
         orderStatus: status
       }
     })
@@ -165,7 +165,7 @@ router.get("/filterOrders/:status", async (req, res) =>{
 })
 
 // Set PURCHARSE ORDER STATUS
-router.put("/setOrderStatus", async (req, res) =>{
+router.put("/setOrderStatus", async (req, res) => {
   const { orderStatus, orderId } = req.body;
 
   try {
@@ -174,32 +174,31 @@ router.put("/setOrderStatus", async (req, res) =>{
         orderStatus: orderStatus,
       },
       {
-        where:{ orderId: orderId }
+        where: { orderId: orderId }
       }
     )
 
     const userOrder = await PurchaseOrder.findOne({
-      where:{ orderId: orderId }
+      where: { orderId: orderId }
     })
 
     const user = await User.findOne({
-      where:{ id: userOrder.userId }
-    })  
-console.log("Soy YO",user.email, orderId)
-    if(orderStatus === "accepted"){
+      where: { id: userOrder.userId }
+    })
+    if (orderStatus === "accepted") {
       // DESCOMENTAR PARA ENVIAR MAIL
-      mailOrderAccepted(user.email, orderId)
+      //mailOrderAccepted(user.email, orderId)
       // 
       return res.status(200).send(`Order updated to ${orderStatus}, and mail sent to the buyer (${user.email})`)
     }
-    
-    if(orderStatus === "rejected"){
+
+    if (orderStatus === "rejected") {
       // DESCOMENTAR PARA ENVIAR MAIL
-      mailOrderRejected(user.email, orderId)
+      //mailOrderRejected(user.email, orderId)
       // 
       return res.status(200).send(`Order updated to ${orderStatus}, and mail sent to the buyer (${user.email})`)
     }
-    
+
   } catch (error) {
     return res.status(404).send(error);
   }
@@ -233,96 +232,97 @@ router.get("/history", async (req, res) => {
 router.put("/:questionId/answer", async (req, res) => {
   const { questionId } = req.params
   const { answer, idProduct } = req.body
-  console.log(idProduct)
   if (!answer || answer.length < 1) {
-      return res.status(404).send("Answer must not be empty")
+    return res.status(404).send("Answer must not be empty")
   }
 
   try {
-      await Qa.update({
-          answer,
-          resolved: true,
-      }, { where: { id: questionId } })
+    await Qa.update({
+      answer,
+      resolved: true,
+    }, { where: { id: questionId } })
 
-      const userMail = await Qa.findOne({
-        include: { all: true },
-        where:{
-          id: questionId
-        }
-      })
-      const { email } = userMail.dataValues.users[0].dataValues;
-      const { id, name } = userMail.dataValues.products[0].dataValues
-      // DESCOMENTAR PARA ENVIAR MAIL AL USER CUANDO ADMIN RESPONDE PREGUNTA.
+    const userMail = await Qa.findOne({
+      include: { all: true },
+      where: {
+        id: questionId
+      }
+    })
+    const { email } = userMail.dataValues.users[0].dataValues;
+    const { id, name } = userMail.dataValues.products[0].dataValues
+    // DESCOMENTAR PARA ENVIAR MAIL AL USER CUANDO ADMIN RESPONDE PREGUNTA.
 
-      // mailQuestion(email, name, id)
+    // mailQuestion(email, name, id)
 
-      // 
-      return res.status(200).send("Question answered")
+    // 
+    return res.status(200).send("Question answered")
   }
   catch (err) {
-      console.log(err)
-      res.status(400).send(err)
+    console.log(err)
+    res.status(400).send(err)
   }
 })
+
+//////////QUESTIONS N' ANSWERS ////////////////
 
 router.get("/all/:resolved", async (req, res) => {
   const { resolved } = req.params;
   try {
     if (resolved == "true") {
       const allQuestions = await Qa.findAll({
-          include: [
-              {
-                  model: Product,
-                  attributes: ["id", "name", "image"],
-                  through: { attributes: [] },
-              },
-              {
-                  model: User,
-                  attributes: ["id"],
-                  through: { attributes: [] },
-              },
-          ],
-          where:{resolved: true}
+        include: [
+          {
+            model: Product,
+            attributes: ["id", "name", "image"],
+            through: { attributes: [] },
+          },
+          {
+            model: User,
+            attributes: ["id"],
+            through: { attributes: [] },
+          },
+        ],
+        where: { resolved: true }
       });
       return res.send(allQuestions);
-  } else if(resolved == "false") {    
+    } else if (resolved == "false") {
       const unresolvedOnly = await Qa.findAll({
-          where: { resolved: false },
-          include: [
-              {
-                  model: Product,
-                  attributes: ["id", "name", "image"],
-                  through: { attributes: [] },
-              },
-              {
-                  model: User,
-                  attributes: ["id"],
-                  through: { attributes: [] },
-              },
-          ]
+        where: { resolved: false },
+        include: [
+          {
+            model: Product,
+            attributes: ["id", "name", "image"],
+            through: { attributes: [] },
+          },
+          {
+            model: User,
+            attributes: ["id"],
+            through: { attributes: [] },
+          },
+        ]
       });
       if (unresolvedOnly) return res.send(unresolvedOnly);
     }
     const all = await Qa.findAll({
       include: [
-          {
-              model: Product,
-              attributes: ["id", "name", "image"],
-              through: { attributes: [] },
-          },
-          {
-              model: User,
-              attributes: ["id"],
-              through: { attributes: [] },
-          },
+        {
+          model: Product,
+          attributes: ["id", "name", "image"],
+          through: { attributes: [] },
+        },
+        {
+          model: User,
+          attributes: ["id"],
+          through: { attributes: [] },
+        },
       ]
-  });
+    });
     return res.send(all)
   } catch (error) {
     console.log(error.message)
     res.status(404).send({ message: error.message });
   }
-  
+
 });
 
 module.exports = router;

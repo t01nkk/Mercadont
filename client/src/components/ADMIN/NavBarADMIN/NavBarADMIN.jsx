@@ -14,7 +14,6 @@ export default function NavBarADMIN() {
   const checkSessionADMIN = async (dispatch) => {
     let loggedAdmin = false; //
     let loggedAdminInfo = JSON.parse(localStorage.getItem("myAdmin"));
-    console.log("loggedadmininfo ", loggedAdminInfo);
     if (loggedAdminInfo !== null) {
       if (loggedAdminInfo?.data.isAdmin) {
         loggedAdmin = true; //
