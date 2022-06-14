@@ -7,7 +7,7 @@ import accounting from "accounting";
 import { useTranslation } from "react-i18next";
 import "./Cart.css";
 import { useStore } from "../../context/store.js";
-import {alertInfo, alertSuccess, alertWarning} from "../../helpers/toast";
+import { alertInfo, alertSuccess, alertWarning } from "../../helpers/toast";
 import axios from "axios";
 
 export const Cart = () => {
@@ -84,7 +84,7 @@ export const Cart = () => {
   };
 
   const makePurchase = async () => {
-    try{
+    try {
       const userDetails = await axios.get(`${process.env.REACT_APP_DOMAIN}/user/details/${user}`)
       const country = userDetails.data.country
       const province = userDetails.data.province
@@ -92,17 +92,18 @@ export const Cart = () => {
       const street = userDetails.data.street
       const postalCode = userDetails.data.postalCode
 
-      if( country === "" || province === "" || city === "" || street === "" || postalCode=== "" ){
-        alertWarning(t("cart.addressDetailsMissing"))
-        setTimeout(() => {
-          history.push("/accountDetails")
-        }, 1000);
-        return
-      }
+      // if( country === "" || province === "" || city === "" || street === "" || postalCode=== "" ){
+      //   alertWarning(t("cart.addressDetailsMissing"))
+      //   setTimeout(() => {
+      //     history.push("/accountDetails")
+      //   }, 1000);
+      //   return
+      // }
+
 
       localStorage?.setItem("myPrice", JSON.stringify(priceTotal));
       history.push("/buysProducts");
-    }catch (err){
+    } catch (err) {
       console.log(err)
     }
 
