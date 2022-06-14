@@ -3,12 +3,11 @@ import React, { useState, useEffect } from "react";
 import ProductCardSlide from "../ProductCardSlide/ProductCardSlide.jsx";
 import { useStore } from "../../context/store.js";
 import {
-
     fetchCategories,
     getFavorites,
     totalCount,
     fetchRating,
-    fetchProducts
+    fetchProducts,
 } from "../../redux/actions/actions.js";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
@@ -35,46 +34,43 @@ export default function Slide() {
     const history = useHistory();
     let person = JSON.parse(localStorage.getItem("myUser"));
     
-
     function getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
- 
-    
-
-
-    const fetchSold = async () => {        
-        try {
-            let miStorage = JSON.parse(localStorage.getItem("myUser"));
-            const recommendedProducts = await axios.get(
-                `${process.env.REACT_APP_DOMAIN}/product/recommendation/byHistory/${miStorage}`
-            );
-            let recommended = recommendedProducts.data
-            if(recommended.length>12){
-              recommended=  recommended.slice(0,12)
-            }
-            while (recommended.length < 12) {
-                let index = getRandomInt(0,state.products.length)
-                if(recommended.includes(state.products[index])){
-                    continue
+    const fetchSold = async () => {
+        if(state.products.length){
+            try {
+                // console.log("state.products-FETCH:", state.products)
+                // console.log("state.products.length-FETCH:", state.products.length)
+                let recommended = [];
+                let miStorage = JSON.parse(localStorage.getItem("myUser"));
+                if(miStorage){
+                    const recommendedProducts = await axios.get(
+                        `${process.env.REACT_APP_DOMAIN}/product/recommendation/byHistory/${miStorage}`
+                    );
+                    recommended = recommendedProducts.data
+                    // console.log("recommendedProducts.data:", recommendedProducts.data)
+                }   
+                if(recommended.length>12){
+                    recommended = recommended.slice(0,12)
                 }
-                recommended.push(state.products[index])
-
-                        }
-
-                        console.log("hola recommended",recommended)
-            setSold(recommended);
-   
-
-        } catch (err) {
-
-            return err;
+                for(let i= 0 ; i < 12; i++){
+                    let index = getRandomInt(0,state.products.length)
+                    // console.log("index:", index)
+                    if(!recommended.includes(state.products[index])){
+                        // console.log("state.products[index]:", state.products[index])
+                        recommended.push(state.products[index])
+                    }
+                }
+                // console.log("hola recommended",recommended)
+                setSold(recommended);
+            } catch (err) {
+                return err;
+            }
         }
     };
-    
-
 
     const handleSaveCart = (name, price, image, id, stock) => {
         let quantity = 1;
@@ -104,9 +100,9 @@ export default function Slide() {
         
         let myUser = JSON.parse(localStorage.getItem("myUser"));
         let myCart = JSON.parse(localStorage.getItem(myUser));
-        fetchCategories(dispatch);
+        // fetchProducts(dispatch)
+        // fetchCategories(dispatch);
         getFavorites(dispatch, person);
-        fetchProducts(dispatch);
         setUser(myUser);
         if (myCart) {
             setCart(myCart);
@@ -119,16 +115,16 @@ export default function Slide() {
         localStorage.setItem(user, JSON.stringify(cart));
         totalCount(dispatch)
     }, [cart]);
-   
+
     useEffect(() => {
         fetchSold();
-    }, []);
+    }, [state.products]);
+
     // const mostra = () => {
     //   let miStorage = JSON.parse(localStorage.getItem("myUser"));
     //   console.log(miStorage);
     // };
-     
-     console.log("Hola sold",state.products)
+    console.log("Hola sold",sold)
     return (
         <div className="div-slide">
             <Swiper

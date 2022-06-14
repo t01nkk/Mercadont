@@ -390,20 +390,22 @@ router.get("/recommendation/byRating", async (req, res) => {
 
 router.get("/recommendation/byHistory/:userId", async (req, res) => {
   const { userId } = req.params;
+  if(!userId) return res.status(200).send([]);
   let product = {
     id: "",
   };
   let products = [];
   let categories = [];
   try {
+    
     const userProducts = await PurchaseOrder.findAll({
       where: {
         userId: userId,
       },
     });
 
-    if (!userProducts) {
-      return res.status(400).send("No orders found");
+    if (!userProducts.length) {
+      return res.status(200).send([]);
     }
     
     product.id = userProducts[0].productId;
