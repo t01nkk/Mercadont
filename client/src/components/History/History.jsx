@@ -11,6 +11,7 @@ export const History = () => {
   const [detailsProduct, setDetailsProduct] = useState([])
   const [changeSection, setChangeSection] = useState(true)
   const [isReview, setIsReview] = useState(false)
+  const [ isOrder, setIsOrder] = useState(false)
   const [reviewText, setReviewText] = useState([])
 
 
@@ -69,6 +70,7 @@ export const History = () => {
                 orderStatus={e.orderStatus}
                 review={e.review}
                 setIsReview={setIsReview}
+                setIsOrder={setIsOrder}
                 setChangeSection={setChangeSection}
                 setDetailsProduct={setDetailsProduct}
               />
@@ -87,15 +89,17 @@ export const History = () => {
               price={e.price}
               myUser={myUser}
               isReview={isReview}
+              isOrder={isOrder}
               updateDataText={updateDataText}
             />
           )
           }
-          {!isReview &&
+          {!isReview && isOrder === "accepted"?
             <div>
               <button onClick={() => sendReview()}>Enviar review</button>
               <button>No hacer review</button>
             </div>
+            :null
           }
         </div>
       }
