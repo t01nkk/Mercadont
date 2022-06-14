@@ -86,6 +86,7 @@ export default function Slide() {
 
     return (
         <div className="div-slide">
+            
             <Swiper
                spaceBetween={0}                
                loop={true}

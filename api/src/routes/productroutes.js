@@ -327,7 +327,8 @@ router.get("/recommendation/mostSold", async (req, res) => {
     const orders = await PurchaseOrder.findAll();
 
     if (!orders?.length) {
-      const products = await Product.findAll();
+   
+      const products = await Product.findAll({where: {status: "active"}});
       products.splice(12);
       return res.status(200).send(products);
     }

@@ -57,12 +57,17 @@ export default function Slide() {
                     recommended = recommended.slice(0,12)
                 }
                 for(let i= 0 ; i < 12; i++){
-                    let index = getRandomInt(0,state.products.length)
+                    let index = getRandomInt(0,state.products.length -1)
+
                     // console.log("index:", index)
                     if(!recommended.includes(state.products[index])){
-                        // console.log("state.products[index]:", state.products[index])
+                        
+                        console.log("state.products[index]:", state.products[index])
                         recommended.push(state.products[index])
                     }
+                }
+                if(recommended.length>12){
+                    recommended = recommended.slice(0,12)
                 }
                 // console.log("hola recommended",recommended)
                 setSold(recommended);
@@ -127,6 +132,7 @@ export default function Slide() {
     console.log("Hola sold",sold)
     return (
         <div className="div-slide">
+            
             <Swiper
 
                 spaceBetween={0}
@@ -165,7 +171,6 @@ export default function Slide() {
                     {sold && state.favorites
                         ? React.Children.toArray(
                             sold.map((product) => {
-
                                 if (product.status === "active") {
                                     return (
                                         <SwiperSlide >
