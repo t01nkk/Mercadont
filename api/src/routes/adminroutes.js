@@ -10,6 +10,7 @@ const { groupPurchaseOrders, mailQuestion, mailOrderRejected, mailOrderAccepted 
 router.get("/users", async (req, res) => {
   try {
     const user = await User.findAll();
+    console.log(user)
     if (!user) {
       return res.status(404).send("Users Not Found");
     }
@@ -187,14 +188,14 @@ router.put("/setOrderStatus", async (req, res) => {
     })
     if (orderStatus === "accepted") {
       // DESCOMENTAR PARA ENVIAR MAIL
-      //mailOrderAccepted(user.email, orderId)
+      mailOrderAccepted(user.email, orderId)
       // 
       return res.status(200).send(`Order updated to ${orderStatus}, and mail sent to the buyer (${user.email})`)
     }
 
     if (orderStatus === "rejected") {
       // DESCOMENTAR PARA ENVIAR MAIL
-      //mailOrderRejected(user.email, orderId)
+      mailOrderRejected(user.email, orderId)
       // 
       return res.status(200).send(`Order updated to ${orderStatus}, and mail sent to the buyer (${user.email})`)
     }
@@ -252,7 +253,7 @@ router.put("/:questionId/answer", async (req, res) => {
     const { id, name } = userMail.dataValues.products[0].dataValues
     // DESCOMENTAR PARA ENVIAR MAIL AL USER CUANDO ADMIN RESPONDE PREGUNTA.
 
-    // mailQuestion(email, name, id)
+    mailQuestion(email, name, id)
 
     // 
     return res.status(200).send("Question answered")

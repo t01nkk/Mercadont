@@ -10,17 +10,18 @@ export default function AdminUsers() {
   useEffect(() => {
     fetchUsers(dispatch);
   }, []);
-   return (
+  return (
     <div >
       <div >
-       
+
       </div>
       {state.usersAdmin &&
         React.Children.toArray(
-          state.usersAdmin.map((user) => {            
+          state.usersAdmin.map((user) => {
+            if (user.email === "mercadont.libre@gmail.com") return null;
             return <AdminUser id={user.id} name={user.name} email={user.email} />;
           })
-          
+
         )}
     </div>
   );
