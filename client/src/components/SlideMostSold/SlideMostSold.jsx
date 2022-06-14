@@ -33,7 +33,7 @@ export default function Slide() {
     const history = useHistory();
     let person = JSON.parse(localStorage.getItem("myUser"));
 
-    console.log("Hola", state.soldMost)
+    
 
     const sold = state.soldMost[0]?.details
     const handleSaveCart = (name, price, image, id, stock) => {
@@ -87,35 +87,34 @@ export default function Slide() {
     return (
         <div className="div-slide">
             <Swiper
-               
-                spaceBetween={0}                
-                loop={true}
-                modules={[Navigation, Pagination]}
-                navigation={true}
-               
-                breakpoints={{
-                    500: {
-                        slidesPerView: 1,
-                        spaceBetween: 0,
-                      },   
+               spaceBetween={0}                
+               loop={true}
+               modules={[Navigation, Pagination]}
+               navigation={true}
+             
+               breakpoints={{
+                   500: {
+                       slidesPerView: 1,
+                       spaceBetween: 0,
+                     },   
 
-                    640: {
-                      slidesPerView: 2,
-                      spaceBetween: 0,
-                    },
-                    768: {
-                      slidesPerView: 3,
-                      spaceBetween: 0,
-                    },
-                    1024: {
-                      slidesPerView: 4,
-                      spaceBetween: 0,
-                    },
-                  }}
-                pagination={{
-                    clickable: true
-                }}
-                className="mySwiper"
+                   640: {
+                     slidesPerView: 2,
+                     spaceBetween: 0,
+                   },
+                   768: {
+                     slidesPerView: 3,
+                     spaceBetween: 0,
+                   },
+                   1024: {
+                     slidesPerView: 4,
+                     spaceBetween: 0,
+                   },
+                 }}
+               pagination={{
+                   clickable: true
+               }}
+               className="mySwiper"
             >
 
                 <section className="section-products ">

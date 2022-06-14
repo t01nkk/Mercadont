@@ -402,7 +402,7 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
     if (!userProducts) {
       return res.status(400).send("No orders found");
     }
-
+    
     product.id = userProducts[0].productId;
     for (let i = 1; i < userProducts.length; i++) {
       if (product.id !== userProducts[i].productId) {
@@ -413,6 +413,7 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
         product.id = userProducts[i].productId;
       }
     }
+
     products.push(product);
 
     for (let pro of products) {
@@ -442,6 +443,8 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
       }]
     })
 
+  
+ console.log("Hola recommended",recommended)
     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
     res.status(200).send(recommended)
   } catch (error) {

@@ -24,18 +24,55 @@ import 'swiper/modules/navigation/navigation.scss'; // Navigation module
 import 'swiper/modules/pagination/pagination.scss'; // Pagination module
 import "../SlideMostSold/SlideMostSold.scss"
 
-export default function SlideRating() {
+export default function Slide() {
     const { t, i18n } = useTranslation()
     const [user, setUser] = useState([]);
+    const [sold, setSold] = useState([])
     const [state, dispatch] = useStore();
     const [cart, setCart] = useState([]);
     const [inCart, setInCart] = useState(false);
     const history = useHistory();
     let person = JSON.parse(localStorage.getItem("myUser"));
-   
     
 
-    const sold = state.soldMost[0]?.details
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    const fetchSold = async () => {
+        try {
+            let miStorage = JSON.parse(localStorage.getItem("myUser"));
+            const recommendedProducts = await axios.get(
+                `${process.env.REACT_APP_DOMAIN}/product/recommendation/byHistory/${miStorage}`
+            );
+            let recommended = recommendedProducts.data
+            if(recommended.length>12){
+              recommended=  recommended.slice(0,12)
+            }
+            while (recommended.length < 12) {
+                let index = getRandomInt(0,state.products.length)
+                if(recommended.includes(state.products[index])){
+                    continue
+                }
+                recommended.push(state.products[index])
+
+                        }
+
+                        console.log("hola recommended",recommended)
+            setSold(recommended);
+   
+
+        } catch (err) {
+
+            return err;
+        }
+    };
+    useEffect(() => {
+        fetchSold();
+    }, []);
+
+
     const handleSaveCart = (name, price, image, id, stock) => {
         let quantity = 1;
         let totalPrice = price;
@@ -65,7 +102,7 @@ export default function SlideRating() {
         let myCart = JSON.parse(localStorage.getItem(myUser));
         fetchCategories(dispatch);
         getFavorites(dispatch, person);
-        fetchRating(dispatch);
+
         setUser(myUser);
         if (myCart) {
             setCart(myCart);
@@ -87,69 +124,68 @@ export default function SlideRating() {
     return (
         <div className="div-slide">
             <Swiper
-                     
-                spaceBetween={0}                
+
+                spaceBetween={0}
                 loop={true}
                 modules={[Navigation, Pagination]}
                 navigation={true}
-              
+
                 breakpoints={{
                     500: {
                         slidesPerView: 1,
                         spaceBetween: 0,
-                      },   
+                    },
 
                     640: {
-                      slidesPerView: 2,
-                      spaceBetween: 0,
+                        slidesPerView: 2,
+                        spaceBetween: 0,
                     },
                     768: {
-                      slidesPerView: 3,
-                      spaceBetween: 0,
+                        slidesPerView: 3,
+                        spaceBetween: 0,
                     },
                     1024: {
-                      slidesPerView: 4,
-                      spaceBetween: 0,
+                        slidesPerView: 4,
+                        spaceBetween: 0,
                     },
-                  }}
+                }}
                 pagination={{
                     clickable: true
                 }}
                 className="mySwiper"
-        >
+            >
 
-            <section className="section-products ">
-                {/* <button onClick={() => mostra()}>mostra storage</button> */}
+                <section className="section-products ">
+                    {/* <button onClick={() => mostra()}>mostra storage</button> */}
 
-                { state.rating  && state.favorites
-                    ? React.Children.toArray(
-                         state.rating.map((product) => {
-                            
-                            if (product.status === "active") {
-                                return (
-                                   
-                                    <SwiperSlide >
-                                        <ProductCardSlide
-                                            id={product.id}
-                                            name={product.name}
-                                            stock={product.stock}
-                                            price={product.price}
-                                            image={product.image}
-                                            handleSaveCart={handleSaveCart}
-                                            handleSaveFavorite={handleSaveFavorite}
-                                            handleDeleteFavorite={handleDeleteFavorite}
-                                            isAdd={state.favorites.find((e) => e.id === product.id)}
-                                            alertSuccess={alertSuccess}
-                                        /></SwiperSlide>
+                    {sold && state.favorites
+                        ? React.Children.toArray(
+                            sold.map((product) => {
 
-                                );
-                            }
-                            return null;
-                        })
-                    )
-                    : <div className="container-loader"><Loader /></div>}
-            </section></Swiper>
-   
+                                if (product.status === "active") {
+                                    return (
+                                        <SwiperSlide >
+                                            <ProductCardSlide
+                                                id={product.id}
+                                                name={product.name}
+                                                stock={product.stock}
+                                                price={product.price}
+                                                image={product.image}
+                                                handleSaveCart={handleSaveCart}
+                                                handleSaveFavorite={handleSaveFavorite}
+                                                handleDeleteFavorite={handleDeleteFavorite}
+                                                isAdd={state.favorites.find((e) => e.id === product.id)}
+                                                alertSuccess={alertSuccess}
+                                            /></SwiperSlide>
+
+                                    );
+                                }
+                                return null;
+                            })
+                        )
+                        : <div className="container-loader"><Loader /></div>}
+                </section></Swiper>
+
         </div>
     )
 }
