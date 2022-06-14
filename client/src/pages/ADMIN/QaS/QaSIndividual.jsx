@@ -1,22 +1,30 @@
 import axios from 'axios'
 import React, { useState }from 'react'
-import { useHistory,Redirect } from 'react-router-dom'
+import { useHistory, Redirect } from 'react-router-dom'
+import { alertInfo } from '../../../helpers/toast'
+import { useTranslation } from 'react-i18next'
+import { alertSuccess } from '../../../helpers/toast'
 
 export const QaSIndividual = ({id,idProduct,createdAt,name,userId,question,answer}) => {
   const [textArea, setTextArea] = useState("")
   const [changeQaS, setChangeQaS] = useState(false)
   const history = useHistory()
 
+  const { t } = useTranslation()
+
   const sendQaS = async()=>{
-    console.log(textArea)
     try {
-      if(!textArea){alert("por favor complete el campo")}
+      if(!textArea){alertInfo(t("adminQaS.fillThisSpace"))}
       let sendAnswerAdmin = await axios.put(`${process.env.REACT_APP_DOMAIN}/admin/${id}/answer`,{
         answer:textArea,
         idProduct
       })
-      if(sendAnswerAdmin){
-        window.location.reload()
+      if (sendAnswerAdmin) {
+        alertSuccess(t("adminQaS.answerAdded"))
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000);
+        
         // Redirect("/CC7E389029C4B7768A0C89DC75F304059EF9ECBA68FF02FD4BFB7FE740721F4F/admin/QaS")
       }
     } catch (error) {
@@ -33,20 +41,19 @@ export const QaSIndividual = ({id,idProduct,createdAt,name,userId,question,answe
   
   return (
     <div>
-        <button onClick={()=>viewProduct()}>View Product</button>
+        <button onClick={()=>viewProduct()}>{t("adminQaS.view") }</button>
         <div>
-            <p>Product:{name}</p>
-            <p>Question Date:{createdAt}</p>
+            <p>{t("adminQaS.product") }{name}</p>
+            <p>{t("adminQaS.questionDate") }{createdAt}</p>
         </div>
-        <p>Question:{question}</p>
-        {answer?<p>Answer: {answer}</p>: <p>Aun no respondida</p>}      
-        {/* <p>Answer: {answer}</p> */}
-        {answer?<button onClick={()=>setChangeQaS(true)}>Editar</button>:<button onClick={()=>setChangeQaS(true)}>Contestar pregunta</button>}
+        <p>{t("adminQaS.question") }{question}</p>
+      {answer ? <p>{t("adminQaS.answer")}{answer}</p>: <p>{t("adminQaS.lackingAnswer") }</p>}      
+        {answer?<button onClick={()=>setChangeQaS(true)}>{t("adminQaS.edit") }</button>:<button onClick={()=>setChangeQaS(true)}>{t("adminQaS.answerQuestion") }</button>}
         
         {changeQaS?<div>
           <button onClick={()=>setChangeQaS(false)}>X</button>
           <textarea name="" id="" cols="20" rows="5" value={textArea} required onChange={handleChange}></textarea>
-        <button onClick={()=>sendQaS()}>Send answer</button>
+        <button onClick={()=>sendQaS()}>{t("adminQaS.submit") }</button>
         </div>:null}
         
         <br />

@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { QaSIndividual } from './QaSIndividual'
+import { useTranslation } from 'react-i18next'
+
 
 export const QaS = () => {
+    const { t } = useTranslation()
+
     const [stateQas, setStateQas] = useState(false)
     const [dataQaS, setDataQaS] = useState("")
 
@@ -23,11 +27,11 @@ export const QaS = () => {
     }
   return (
     <div>
-        {stateQas?<h2>Preguntas Contestadas</h2>:<h2>Preguntas Pendientes</h2>}
+          {stateQas ? <h2>{t("adminQaS.solvedQuestions") }</h2>:<h2>{t("adminQaS.pendingQuestions") }</h2>}
         <h2></h2>
         <div>
-            <button onClick={()=>setStateQas(true)}>Contestadas</button>
-            <button onClick={()=>setStateQas(false)}>pendientes</button>
+            <button onClick={()=>setStateQas(true)}>{t("adminQaS.answered") }</button>
+            <button onClick={()=>setStateQas(false)}>{t("adminQaS.pending") }</button>
         </div>
         <div>
            {dataQaS?.length?
@@ -42,7 +46,7 @@ export const QaS = () => {
                     answer={e.answer}
                 />
                 )
-             ):<h5>No hay consultas pendientes</h5>
+             ):<h5>{t("adminQaS.noPending") }</h5>
             }
         </div>
     </div>
