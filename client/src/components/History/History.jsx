@@ -97,7 +97,6 @@ export const History = () => {
           {!isReview && isOrder === "accepted"?
             <div>
               <button onClick={() => sendReview()}>Enviar review</button>
-              <button>No hacer review</button>
             </div>
             :null
           }
