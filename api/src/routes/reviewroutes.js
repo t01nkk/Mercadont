@@ -7,11 +7,12 @@ const router = Router()
 
 //Add Review to Product
 
-router.post("/", async (req, res) => {
+router.put("/", async (req, res) => {
     const { userId, orderId, producto } = req.body
     const findOrder = await PurchaseOrder.findAll({ where: { orderId: orderId } });
-    console.log(findOrder)
     if (!findOrder?.length) return res.status(400).send({ msg: "This order Id isn't valid" });
+    // if (findOrder.orderStatus !== "accepted") return res.status(400).send({ msg: "The order must be accepted before being able to send a review" });
+
     try {
         for (var i = 0; i < producto.length; i++) {
 
@@ -47,19 +48,18 @@ router.post("/", async (req, res) => {
             await calcProdRating(producto[i].rating, product);
 
         }
-        //Setea el valor "REVIEW" de la tabla Purchase order en TRUE para Deshabilitar una review nueva en por el mismo usuario en el front
 
+        await findOrder.map(async (order) => {
 
-        findOrder.map(async (order) => {
-
-            await PurchaseOrder.update({ review: true }, { where: { orderId: order.orderId } });
+            await PurchaseOrder.update({ review: true }, { where: { orderId: order.orderId } })
 
         })
+
         return res.status(200).send("Review Added")
     }
     catch (err) {
         console.log(err)
-        return res.status(400).send(err)
+        return res.status(400).send({ message: err.message })
     }
 })
 

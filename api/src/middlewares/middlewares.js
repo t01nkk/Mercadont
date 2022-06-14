@@ -162,7 +162,6 @@ const calcProdRating = async (rating, prod) => {
       }
     }
   )
-  console.log(count, " sum :", sum)
 }
 
 // async function getUsers() {
@@ -227,7 +226,7 @@ async function mailQuestion(recipient, productName, productId) {
   });
 }
 
-async function mailOrderAccepted(recipient,orderId) {
+async function mailOrderAccepted(recipient, orderId) {
   let testAccount = await nodemailer.createTestAccount();
   let transporter = nodemailer.createTransport({
     host: "smtp.mailgun.org",
@@ -303,7 +302,7 @@ function groupPurchaseOrders(purchaseOrders) {
       order.date = item.date;
       order.amount = item.totalAmount;
       order.orderStatus = item.orderStatus;
-      order.review === item.review;
+      order.review = item.review;
       order.products.push({
         product: item.productId,
         productQuantity: item.productQuantity,

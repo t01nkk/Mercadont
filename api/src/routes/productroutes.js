@@ -172,7 +172,7 @@ router.get("/manyProducts", async (req, res) => {
   let array = [];
   try {
 
-    for (let item of arrayProducts){
+    for (let item of arrayProducts) {
       const product = await Product.findOne({
         include: [
           {
@@ -317,32 +317,51 @@ router.put("/update/:id", async (req, res) => {
 });
 
 //-------------------RECOMMENDATION - MOST SOLD PRODUCTS------------------------------ //
-router.get("/recommendation/mostSold", async (req, res) =>{
+router.get("/recommendation/mostSold", async (req, res) => {
   let product = {
-    id: "",
+    details: {},
     quantity: 0,
   }
   let productsSold = []
   try {
     const orders = await PurchaseOrder.findAll();
 
-    if(!orders){
+    if (!orders.length) {
       const products = await Product.findAll();
+      products.splice(12)
       return res.status(200).send(products);
     }
-    product.id = orders[0].productId;
+    // product.id = orders[0].productId;
+    // product.quantity = orders[0].productQuantity;
+
+    // for (let i = 1; i < orders.length; i++){
+    //   if(product.id === orders[i].productId){
+    //     product.quantity += orders[i].productQuantity;
+    //   }else{
+    //     productsSold.push(product);
+    //     product = {
+    //       id : "",
+    //       quantity: 0,
+    //     }
+    //     product.id = orders[i].productId;
+    //     product.quantity = orders[i].productQuantity;
+    //   }
+    // }
+    // productsSold.push(product);
+
+    product.details = await Product.findOne({ where: { id: orders[0].productId } });
     product.quantity = orders[0].productQuantity;
 
-    for (let i = 1; i < orders.length; i++){
-      if(product.id === orders[i].productId){
+    for (let i = 1; i < orders.length; i++) {
+      if (product.details.id === orders[i].productId) {
         product.quantity += orders[i].productQuantity;
-      }else{
+      } else {
         productsSold.push(product);
         product = {
-          id : "",
+          details: {},
           quantity: 0,
         }
-        product.id = orders[i].productId;
+        product.details = await Product.findOne({ where: { id: orders[i].productId } });
         product.quantity = orders[i].productQuantity;
       }
     }
@@ -350,21 +369,24 @@ router.get("/recommendation/mostSold", async (req, res) =>{
     // Por ahora devuelve un array donde detalla la cantidad de unidades que se vendio de cada producto
     // Es decir, el array contiene un objeto por cada producto vendido y la cantidad que se vendio de este:
     // {
-    //   product id
+    //   product details (ALL THE INFO OF THE PRODUCT FROM THE DB)
     //   quantity sold
     // }
+    // console.log(productsSold)
+    productsSold.splice(12)
     res.status(200).send(productsSold);
   } catch (error) {
+    console.log(error)
     res.status(400).send(error)
   }
 })
 
 //-------------------RECOMMENDATION - PRODUCTS BY RATING ------------------------------ //
-router.get("/recommendation/byRating", async (req, res) =>{
+router.get("/recommendation/byRating", async (req, res) => {
   try {
     const products = await Product.findAll();
-    products.sort((a,b) =>{
-      return  b.rating - a.rating
+    products.sort((a, b) => {
+      return b.rating - a.rating
     })
     // Por ahora solo devuelve todos los productos pero ordenados por rating descendente
     res.status(200).send(products)
@@ -375,8 +397,8 @@ router.get("/recommendation/byRating", async (req, res) =>{
 });
 
 //-------------------RECOMMENDATION - PRODUCTS BY HISTORY ------------------------------ //
-router.get("/recommendation/byHistory/:userId", async (req, res) =>{
-  const {userId} = req.params;
+router.get("/recommendation/byHistory/:userId", async (req, res) => {
+  const { userId } = req.params;
   let product = {
     id: "",
   }
@@ -384,44 +406,42 @@ router.get("/recommendation/byHistory/:userId", async (req, res) =>{
   let categories = []
   try {
     const userProducts = await PurchaseOrder.findAll({
-      where:{
+      where: {
         userId: userId
       }
     });
 
-    if(!userProducts){
+    if (!userProducts) {
       return res.status(400).send("No orders found");
     }
 
     product.id = userProducts[0].productId;
-    for (let i = 1; i < userProducts.length; i++){
-      if(product.id !== userProducts[i].productId){
+    for (let i = 1; i < userProducts.length; i++) {
+      if (product.id !== userProducts[i].productId) {
         products.push(product);
         product = {
-          id : "",
+          id: "",
         }
         product.id = userProducts[i].productId;
       }
     }
     products.push(product);
-    // console.log("products:", products);
 
-    for(let pro of products){
+    for (let pro of products) {
       const item = await Product.findAll({
         // include: Category,
         include: [
           {
-              model: Category,
-              through: { attributes: [] },
+            model: Category,
+            through: { attributes: [] },
           }
         ],
         where: { id: pro.id }
       })
-      // console.log("item:", item[0]?.categories)
       categories.push(item[0]?.categories)
     }
     categories = [...new Set(categories)]
-     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
+    // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
     res.status(200).send(categories)
   } catch (error) {
     console.log(error)

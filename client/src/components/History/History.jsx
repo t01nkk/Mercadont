@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios"
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import { DateHistory } from './DateHistory';
 import "./History.css"
 import { DetailsBuysHistory } from './DetailsBuysHistory';
+
 
 export const History = () => {
   const [history, setHistory] = useState([])
@@ -12,6 +13,8 @@ export const History = () => {
   const [isReview, setIsReview] = useState(false)
   const [reviewText, setReviewText] = useState([])
 
+
+  let redirect = useHistory();
   let myUser = JSON.parse(localStorage.getItem("myUser"));
   let { search } = useLocation()
 
@@ -23,26 +26,31 @@ export const History = () => {
 
   const getHistory = async () => {
     let arrayHistory = await axios(`${process.env.REACT_APP_DOMAIN}/user/history/${myUser}`)
-    console.log("arrayHistory:", arrayHistory.data)
     setHistory(arrayHistory.data)
   }
 
   //AXIOS
-  const sendReview = ()=>{
-    console.log("myuser",myUser,"search",search.substring(1))
-    console.log(reviewText)
-      //id => por params
-      //rating, text,userId,orderId => body
+  const sendReview = async () => {
+    let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/review`, {
+      userId: myUser,
+      orderId: search.substring(1),
+      producto: reviewText
+    })
+    if (resp) {
+      redirect.push("/home")
+    }
+    //id => por params
+    //rating, text,userId,orderId => body
   }
 
-  let updateDataText = (data)=>{
-    if(!reviewText.length)setReviewText(reviewText.concat(data))
-    else{
-      let idFIndReview = reviewText.find(e=>data.id === e.id)
-      if(idFIndReview){
+  let updateDataText = (data) => {
+    if (!reviewText.length) setReviewText(reviewText.concat(data))
+    else {
+      let idFIndReview = reviewText.find(e => data.id === e.id)
+      if (idFIndReview) {
         idFIndReview.text = data.text
       }
-      else{setReviewText(reviewText.concat(data))}
+      else { setReviewText(reviewText.concat(data)) }
     }
   }
 
@@ -64,7 +72,7 @@ export const History = () => {
                 setChangeSection={setChangeSection}
                 setDetailsProduct={setDetailsProduct}
               />
-              ))
+            ))
             }
           </div>
         </div>
@@ -83,15 +91,15 @@ export const History = () => {
             />
           )
           }
-          {!isReview && 
+          {!isReview &&
             <div>
-              <button onClick={()=>sendReview()}>Enviar review</button>
+              <button onClick={() => sendReview()}>Enviar review</button>
               <button>No hacer review</button>
             </div>
           }
         </div>
       }
-      
+
     </div>
   )
 }
