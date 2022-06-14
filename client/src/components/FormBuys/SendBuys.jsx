@@ -33,6 +33,8 @@ export const SendBuys = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        let el = elements.getElement(CardElement)
+        console.log(el)
         if (selectBuys === "card") {
             const { error, paymentMethod } = await stripe.createPaymentMethod({
                 type: "card",

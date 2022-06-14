@@ -7,32 +7,35 @@ import "./History.css"
 
 export const DetailsBuysHistory = ({amount,name,id,image,price,date,myUser,isReview, isOrder,updateDataText}) => {
   
-
-  
   const [valueText, setValueText] = useState("")
-
-  
   const [star, setStar] = useState(null)
   const [hover, setHover] = useState(null)
-  
 
-  // useEffect(()=>{
-    
-  // },[valueText,getstar])
+
+  // const [sendObjetc, setSendObjetc] = useState({
+  //     id,
+  //     text:"",
+  //     rating:""
+  // })
+  
 
   const handleChange = (e)=>{
     setValueText(e.target.value)
   }
 
+  const handleChangeStar = (e)=>{
+    setStar(e.target.value)
+  }
+
   const handleBlur = (e)=>{
     e.stopPropagation()
-    console.log("SI o puse alrevez",star, valueText, id)
-    handleChange(e)
-    // updateDataText({
-    //   id,
-    //   text:valueText,
-    //   rating:star
-    // })
+    // console.log("SI o puse alrevez",star, valueText, id)
+    // handleChange(e)
+    updateDataText({
+      id,
+      text:valueText,
+      rating:star
+    })
   }
   //id => por params
   //rating, text,userId,orderId => body
@@ -45,16 +48,16 @@ export const DetailsBuysHistory = ({amount,name,id,image,price,date,myUser,isRev
       </div>
       <div>
         {!isReview && isOrder === "accepted" ?
-          <div onBlur={handleBlur}>
-            <textarea name="" id="" cols="20" rows="5" value={valueText} onChange={handleChange} ></textarea>
-            <div onBlur={handleBlur}>
+          <div>
+            <textarea name="" id="" cols="20" rows="5" value={valueText} onChange={handleChange} onBlur={handleBlur}></textarea>
+            <div>
               {
               [...Array(5)].map((e,i)=>{
               
                   const ratingValue = i + 1
                   return (
                       <label className='container-star' key={"fostar" + ratingValue}>
-                          <input type="radio" name="ratingStar" value={ratingValue} onClick={()=>setStar(ratingValue)}/>
+                          <input type="radio" name="ratingStar" value={ratingValue} onClick={()=>setStar(ratingValue)} onBlur={handleBlur}/>
                           <FaStar
                               color={ratingValue <= (star || hover) ? "black": "grey"}
                               size={20}
