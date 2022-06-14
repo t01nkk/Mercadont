@@ -5,7 +5,6 @@ const cors = require("cors");
 const { modifyStock } = require("../middlewares/middlewares");
 const { validateInputProduct } = require("../middlewares/middlewares");
 const { Op, where, Sequelize } = require("sequelize");
-const { set } = require("../app");
 
 const router = Router();
 
@@ -331,8 +330,8 @@ router.get("/recommendation/mostSold", async (req, res) => {
       products.splice(12);
       return res.status(200).send(products);
     }
-    
-    product.details = await Product.findOne({where: {id: orders[0].productId}}) ;
+
+    product.details = await Product.findOne({ where: { id: orders[0].productId } });
     product.quantity = orders[0].productQuantity;
 
     for (let i = 1; i < orders.length; i++) {
@@ -352,13 +351,13 @@ router.get("/recommendation/mostSold", async (req, res) => {
     }
     productsSold.push(product);
 
-    productsSold.sort((a,b) =>{
-      return  b.details.rating - a.details.rating
+    productsSold.sort((a, b) => {
+      return b.details.rating - a.details.rating
     })
 
     productsSold.splice(12)
-    let arrayProducts =[]
-    for(let p of productsSold){
+    let arrayProducts = []
+    for (let p of productsSold) {
       arrayProducts.push(p.details)
 
     }
@@ -405,8 +404,8 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
     if (!userProducts) {
       return res.status(400).send("No orders found");
     }
-    
-    product.id = userProducts[0].productId;
+
+    product.id = userProducts[0]?.productId;
     for (let i = 1; i < userProducts.length; i++) {
       if (product.id !== userProducts[i].productId) {
         products.push(product);
@@ -427,7 +426,7 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
             through: { attributes: [] },
           },
         ],
-        where: { id: pro.id },
+        where: { id: pro?.id },
       });
       for (let category of item[0]?.categories) {
         if (!categories.includes(category.name)) categories.push(category.name);
@@ -447,8 +446,8 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
       ],
     });
 
-  
- console.log("Hola recommended",recommended)
+
+    console.log("Hola recommended", recommended)
     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
     res.status(200).send(recommended);
 
