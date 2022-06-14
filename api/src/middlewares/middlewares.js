@@ -25,7 +25,6 @@ const modifyStockStripe = async (local) => {
           msg: "There's not enough products to fulfill this purchase",
         });
       }
-
     }
     return updateProduct
   } catch (error) {
@@ -54,6 +53,10 @@ const modifyStockPaypal = async (orderId) => {
           { stock: findProduct.stock - product.dataValues.productQuantity, status: "inactive" },
           { where: { id: product.dataValues.productId } }
         );
+      } else if (findProduct.stock - product.dataValues.productQuantity < 0) {
+        updateProduct = await Product.update(
+          { stock: 666 } , {where: {id: product.dataValues.productId}}
+        )
       } else {
         throw new Error({
           msg: "There's not enough products to fulfill this purchase",
