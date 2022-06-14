@@ -12,6 +12,8 @@ export default function AccountDetails() {
   const [state, dispatch] = useStore();
   const history = useHistory();
 
+ 
+
   const fetchUser = async () => {
     let userCookie = JSON.parse(localStorage.getItem("myUser"));
     try {
