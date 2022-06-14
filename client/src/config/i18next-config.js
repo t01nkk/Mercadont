@@ -69,6 +69,7 @@ i18n
             buy: "Realizar la compra",
             successfulPurchase: "¡Compra realizada con éxito!",
             cancelPurchaseSuccess: "Compra cancelada con éxito",
+            addressDetailsMissing:" Por favor completa los datos de tu domicilio"
           },
           categoriesComp: {
             error_pos_numbers: "Solo se aceptan números positivos",
@@ -310,6 +311,7 @@ i18n
             buy: "Buy",
             successfulPurchase: "Purchase successfully done!",
             cancelPurchaseSuccess: "Purchase successfully cancelled",
+            addressDetailsMissing: "Please fill out your Address details so that the package can be sent"
           },
           categoriesComp: {
             error_pos_numbers: "Only positive numbers allowed",

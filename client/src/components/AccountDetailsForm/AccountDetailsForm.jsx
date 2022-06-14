@@ -157,16 +157,6 @@ export default function AccountDetailsForm() {
       <h2>{t("accountDetailsForm.updateInfo")}</h2>
       <form onSubmit={handleSubmit}>
         <div className="divInputUser">
-          <label className="title">{t("accountDetailsForm.email")}: </label>
-          <input
-            type="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="divInputUser">
           <p className="title">{t("accountDetailsForm.name")}: </p>
           <input
             type="text"
@@ -189,9 +179,31 @@ export default function AccountDetailsForm() {
           />
           {errors.lastname && <p className="error-input">{errors.lastname}</p>}{" "}
         </div>
-
         <div className="divInputUser">
           <p className="title">{t("accountDetailsForm.address")}</p>
+          <input
+            type="text"
+            name="country"
+            required
+            placeholder={t("accountDetailsForm.country")}
+            value={user.country}
+            onChange={handleChangeName}
+          />
+          {errors.country && <p className="error-input">{errors.country}</p>}{" "}
+        </div>
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="province"
+            placeholder={t("accountDetailsForm.province")}
+            value={user.province}
+            onChange={handleChangeName}
+          />
+          {errors.province && <p className="error-input">{errors.province}</p>}{" "}
+        </div>
+
+        <div className="divInputUser">
+
           <input
             type="text"
             name="city"
@@ -243,6 +255,16 @@ export default function AccountDetailsForm() {
           {errors.street && <p className="error-input">{errors.street}</p>}{" "}
         </div>
 
+        <div className="divInputUser">
+          <input
+            type="text"
+            name="postalCode"
+            placeholder={t("accountDetailsForm.postalCode")}
+            value={user.postalCode}
+            onChange={handleChange}
+          />
+        </div>
+
         <div className="">
           <p className="title">{t("accountDetailsForm.password")}: </p>
           <button onClick={(e) => handleResetPassword(e)}>
@@ -264,7 +286,7 @@ export default function AccountDetailsForm() {
         <div className="btn-login">
           <input type="submit" name="Update info" className="input-submit" />
         </div>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 }

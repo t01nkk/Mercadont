@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
-export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProduct, orderNumber }) => {
+export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProduct, orderId }) => {
     date = date.slice(0, 10)
     const [cant, setCant] = useState(0)
     const [idProduct, setIdProduct] = useState([])
@@ -31,7 +31,7 @@ export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProdu
                 {
                     order: idProduct
                 })
-            history.push(`/admin/Buys?${orderNumber}`)
+            history.push(`/admin/Buys?${orderId}`)
             await setDetailsProduct(foundProducts.data)
             await setChangeSection(false)
         } catch (error) {
