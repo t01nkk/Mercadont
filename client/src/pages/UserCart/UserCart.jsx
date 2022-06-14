@@ -1,7 +1,7 @@
-import { t } from 'i18next'
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { Cart } from '../../components/Cart/Cart'
+import { t } from "i18next";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { Cart } from "../../components/Cart/Cart";
 
 export default function UserCart() {
   const history = useHistory();
@@ -13,8 +13,7 @@ export default function UserCart() {
 
   return (
     <>
-      <Cart/>
-      <button onClick={(e) => handleBack(e)}>{t("navigation.goBack")}</button>
+      <Cart />
     </>
   );
 }

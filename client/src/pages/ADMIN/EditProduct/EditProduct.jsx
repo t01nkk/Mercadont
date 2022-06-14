@@ -4,7 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
 import { fetchCategories } from "../../../redux/actions/actions.js";
 import "./EditProduct.css";
-import { alertInfo, alertSuccess } from "../../../helpers/toast.js";
+import { alertInfo, alertSuccess, alertWarning } from "../../../helpers/toast.js";
 import { useTranslation } from "react-i18next";
 export default function EditProduct() {
   const { t } = useTranslation()
@@ -21,25 +21,26 @@ export default function EditProduct() {
   });
   const expression = {
     nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-    priceExpression: /^\d{1,14}$/,
-    descriptionExpression: /^[a-zA-ZÀ-ÿ\s]{1,200}$/,
+    priceExpression: /^[d*.?d*]{1,14}$/,
+    descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,'*¿?¡!\s]{1,200}$/,
     stockExpression: /^\d{1,14}$/,
+    
   };
 
   function validator(input) {
     let errors = {};
 
     if (!expression.nameExpression.test(input.name)) {
-      errors.name = `{t("adminSellProduct.errors.name")}`;
+      errors.name = t("adminSellProduct.errors.name");
     }
     if (!expression.priceExpression.test(input.price)) {
-      errors.price = `{t("adminSellProduct.errors.price")}`;
+      errors.price = t("adminSellProduct.errors.price");
     }
     if (!expression.descriptionExpression.test(input.description)) {
-      errors.description = `{t("adminSellProduct.errors.description")}`;
+      errors.description = t("adminSellProduct.errors.description");
     }
     if (!expression.stockExpression.test(input.stock)) {
-      errors.stock = `{t("adminSellProduct.errors.stock")}`;
+      errors.stock = t("adminSellProduct.errors.stock");
     }
     return errors;
   }
@@ -98,7 +99,7 @@ export default function EditProduct() {
     }
     fetchedProduct.data.categories = destructuringCats;
     setProduct(fetchedProduct.data);
-   
+
   };
 
   useEffect(() => {
@@ -106,11 +107,14 @@ export default function EditProduct() {
     fetchCategories(dispatch);
   }, []);
 
+  console.log(errors)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, description, price, stock, image, categories, status } =
       product;
-    try {
+    if (!errors.length !== 0) {
+      try {
       await axios.put(
         `${process.env.REACT_APP_DOMAIN}/product/update/${id}`,
         {
@@ -125,17 +129,23 @@ export default function EditProduct() {
       );
       alertSuccess(t("adminEditProduct.updated"))
       setTimeout(() => {
-          alert("Acá debería redirigir.")
+          window.location.reload()
       }, 2000);
     } catch (err) {
       console.log(err);
     }
+    } else {
+      alertWarning(t("adminEditProduct.fixErrors"))
+    }
+    
   };
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
   const handleDelete = async () => {
-    try {
+    let executed = window.confirm(t("adminEditProduct.confirmDelete"))
+    if (executed) {
+       try {
       await axios.delete(
         `${process.env.REACT_APP_DOMAIN}/product/delete/${id}`
       );
@@ -145,11 +155,12 @@ export default function EditProduct() {
       }, 2000);
     } catch (err) {
       console.log(err);
+      }
     }
+   
   };
   return (
     <div className="container-edit-admin">
-      {product && console.log(product)}
       <div className="delete-product">
         <button onClick={handleDelete}>{t("adminEditProduct.deleteProduct")}</button>
       </div>
@@ -237,7 +248,7 @@ export default function EditProduct() {
                     >X</button>
                   </p>
                 )))
-                }
+              }
             </div>
           </div>
         </div>

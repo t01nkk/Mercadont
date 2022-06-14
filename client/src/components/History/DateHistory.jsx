@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from "react-router-dom"
 import "./History.css"
 import axios from 'axios'
 
-export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsProduct }) => {
-    // console.log(count)
-    date = date.slice(0,10)
+export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsProduct, orderStatus, orderNumber, setIsReview, review, setIsOrder }) => {
+
+    const history = useHistory()
+    //pm_1LAFPdL7xpNkb3eJ9QXGOVtC
+    date = date.slice(0, 10)
     const [cant, setcant] = useState(0)
     const [idProduct, setIdProduct] = useState([])
     let total = 0
     useEffect(() => {
         sumarCount()
-        // console.log(count)
     }, [count.length])
 
     const sumarCount = async () => {
@@ -31,9 +33,11 @@ export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsP
                 {
                     order: idProduct
                 })
-                console.log(foundProducts)
-                await setDetailsProduct(foundProducts.data)
-                await setChangeSection(false)
+            setIsReview(review)
+            setIsOrder(orderStatus)
+            history.push(`/history?${orderNumber}`)
+            await setDetailsProduct(foundProducts.data)
+            await setChangeSection(false)
         } catch (error) {
             console.log(error)
         }
@@ -45,6 +49,7 @@ export const DateHistory = ({ amount, date, count, setChangeSection, setDetailsP
             <div>
                 <p>Quantity of Product: <span>{cant !== 0 && cant}</span></p>
                 <p>Total: <span>{amount}</span></p>
+                {orderStatus === "accepted" && review == false && <button onClick={getDetailsHistory}>Dejar Reviews</button>}
             </div>
             <br />
         </div>

@@ -15,11 +15,10 @@ export default function GuestNavBar() {
         style={{ backgroundColor: "black" }}
       >
         <div className="container-fluid">
-          <a className="navbar-brand">
-            <Link to="/">
-              <img src={logo} alt="" height="80" />
-            </Link>
-          </a>
+          <Link to="/" className="navbar-brand">
+            <img src={logo} alt="" height="80" />
+          </Link>
+
           <button
             className="navbar-toggler"
             type="button"

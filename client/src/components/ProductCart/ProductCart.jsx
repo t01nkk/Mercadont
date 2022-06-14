@@ -5,6 +5,7 @@ import accounting from "accounting";
 import { MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 export const ProductCart = ({
   name,
   stock,
@@ -23,6 +24,8 @@ export const ProductCart = ({
   const [permitLess, setPermitLess] = useState(false);
   const [permitMore, setPermitMore] = useState(true);
   const [count, setCount] = useState(storageCart[pos].quantity);
+
+  const { t } = useTranslation()
 
   const oneMore = (stock, name, price) => {
     setCount(count + 1);
@@ -59,7 +62,7 @@ export const ProductCart = ({
           </p>
           <div className="cart-info-prices">
             <div className="cart-sum">
-              <span>QTY:{storageCart[pos].quantity}</span>
+              <span>{t("cart.qty") }{storageCart[pos].quantity}</span>
               <div className="cart-btn-sum">
                 {count !== stock ? (
                   <button

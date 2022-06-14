@@ -172,8 +172,7 @@ router.get("/manyProducts", async (req, res) => {
   const { arrayProducts } = req.body;
   let array = [];
   try {
-
-    for (let item of arrayProducts){
+    for (let item of arrayProducts) {
       const product = await Product.findOne({
         include: [
           {
@@ -196,7 +195,7 @@ router.get("/manyProducts", async (req, res) => {
           id: item,
         },
       });
-      array.push(product)
+      array.push(product);
     }
     return res.status(200).send(array);
   } catch (error) {
@@ -318,34 +317,36 @@ router.put("/update/:id", async (req, res) => {
 });
 
 //-------------------RECOMMENDATION - MOST SOLD PRODUCTS------------------------------ //
-router.get("/recommendation/mostSold", async (req, res) =>{
- 
+router.get("/recommendation/mostSold", async (req, res) => {
   let product = {
     details: {},
     quantity: 0,
-  }
-  let productsSold = []
+  };
+  let productsSold = [];
   try {
     const orders = await PurchaseOrder.findAll();
-  
-    if(!orders?.length){
+
+    if (!orders?.length) {
       const products = await Product.findAll();
-      products.splice(12)
+      products.splice(12);
       return res.status(200).send(products);
     }
+    
     product.details = await Product.findOne({where: {id: orders[0].productId}}) ;
     product.quantity = orders[0].productQuantity;
 
-    for (let i = 1; i < orders.length; i++){
-      if(product.details.id === orders[i].productId){
+    for (let i = 1; i < orders.length; i++) {
+      if (product.details.id === orders[i].productId) {
         product.quantity += orders[i].productQuantity;
-      }else{
+      } else {
         productsSold.push(product);
         product = {
           details: {},
           quantity: 0,
-        }
-        product.details = await Product.findOne({where: {id: orders[i].productId}}) ;
+        };
+        product.details = await Product.findOne({
+          where: { id: orders[i].productId },
+        });
         product.quantity = orders[i].productQuantity;
       }
     }
@@ -355,32 +356,34 @@ router.get("/recommendation/mostSold", async (req, res) =>{
       return  b.details.rating - a.details.rating
     })
 
-    productsSold.splice(10)
+    productsSold.splice(12)
     let arrayProducts =[]
     for(let p of productsSold){
       arrayProducts.push(p.details)
+
     }
     // Devuelve un array de productos mas comprados ordenados de manera DESCENDENTE
     res.status(200).send(arrayProducts);
   } catch (error) {
-    console.log(error)
-    res.status(400).send(error)
+    console.log(error);
+    res.status(400).send(error);
   }
-})
+});
 
 //-------------------RECOMMENDATION - PRODUCTS BY RATING ------------------------------ //
-router.get("/recommendation/byRating", async (req, res) =>{
+router.get("/recommendation/byRating", async (req, res) => {
   try {
     const products = await Product.findAll();
-    products.sort((a,b) =>{
-      return  b.rating - a.rating
+    products.sort((a, b) => {
+      return b.rating - a.rating
     })
-    products.splice(10)
+    products.splice(12)
     // Devuelve los 12 productos con mas rating de manera DESCENDENTE
     res.status(200).send(products)
+
   } catch (error) {
-    console.log(error)
-    res.status(400).send(error)
+    console.log(error);
+    res.status(400).send(error);
   }
 });
 //-------------------RECOMMENDATION - PRODUCTS BY HISTORY ------------------------------ //
@@ -389,14 +392,14 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
   const { userId } = req.params;
   let product = {
     id: "",
-  }
-  let products = []
-  let categories = []
+  };
+  let products = [];
+  let categories = [];
   try {
     const userProducts = await PurchaseOrder.findAll({
       where: {
-        userId: userId
-      }
+        userId: userId,
+      },
     });
 
     if (!userProducts) {
@@ -409,7 +412,7 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
         products.push(product);
         product = {
           id: "",
-        }
+        };
         product.id = userProducts[i].productId;
       }
     }
@@ -418,39 +421,42 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
 
     for (let pro of products) {
       const item = await Product.findAll({
-        // include: Category,
         include: [
           {
             model: Category,
             through: { attributes: [] },
-          }
+          },
         ],
-        where: { id: pro.id }
-      })
-      for(let category of item[0]?.categories){
-        if(!categories.includes(category.name))categories.push(category.name)
+        where: { id: pro.id },
+      });
+      for (let category of item[0]?.categories) {
+        if (!categories.includes(category.name)) categories.push(category.name);
       }
     }
 
     let recommended = await Product.findAll({
-      include:[{
-        model: Category,
-        attributes:["name"],
-        through:{attributes:[]},
-        where:{
-          name: categories
-        }
-      }]
-    })
+      include: [
+        {
+          model: Category,
+          attributes: ["name"],
+          through: { attributes: [] },
+          where: {
+            name: categories,
+          },
+        },
+      ],
+    });
 
   
  console.log("Hola recommended",recommended)
     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
-    res.status(200).send(recommended)
+    res.status(200).send(recommended);
+
   } catch (error) {
-    console.log(error)
-    res.status(400).send(error)
+    console.log(error);
+    res.status(400).send(error);
   }
 });
+
 
 module.exports = router;

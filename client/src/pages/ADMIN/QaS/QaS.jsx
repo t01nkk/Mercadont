@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { QaSIndividual } from './QaSIndividual'
+import { useTranslation } from 'react-i18next'
+
 
 export const QaS = () => {
+    const { t } = useTranslation()
+
     const [stateQas, setStateQas] = useState(false)
     const [dataQaS, setDataQaS] = useState("")
 
-    useEffect(()=>{
+    useEffect(() => {
         getStateQaS()
-    },[stateQas])
+    }, [stateQas])
 
-    let getStateQaS = async ()=>{
+    let getStateQaS = async () => {
         try {
             let qas = await axios(`${process.env.REACT_APP_DOMAIN}/admin/all/${stateQas}`)
             setDataQaS(qas.data)
-            console.log(qas)
-            
+
         } catch (error) {
             console.log(error)
         }
@@ -23,17 +26,17 @@ export const QaS = () => {
     }
   return (
     <div>
-        <h2>Preguntas</h2>
+          {stateQas ? <h2>{t("adminQaS.solvedQuestions") }</h2>:<h2>{t("adminQaS.pendingQuestions") }</h2>}
+        <h2></h2>
         <div>
-          <button onClick={()=>setStateQas(false)} disabled={!stateQas}> View pendientes</button>
-          <button onClick={()=>setStateQas(true)} disabled={stateQas}> View Contestadas</button>
+            <button onClick={()=>setStateQas(true)}>{t("adminQaS.answered") }</button>
+            <button onClick={()=>setStateQas(false)}>{t("adminQaS.pending") }</button>
         </div>
-        <div className="cardContainer">
+        <div>
            {dataQaS?.length?
             React.Children.toArray(dataQaS.map(e=>
                 <QaSIndividual
                     id={e.id}
-                    image={e.products[0].image}
                     createdAt={e.createdAt}
                     name={e.products[0].name}
                     idProduct={e.products[0].id}
@@ -42,7 +45,7 @@ export const QaS = () => {
                     answer={e.answer}
                 />
                 )
-             ):<h5>No hay consultas pendientes</h5>
+             ):<h5>{t("adminQaS.noPending") }</h5>
             }
         </div>
     </div>
