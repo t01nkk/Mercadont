@@ -158,6 +158,11 @@ router.get("/filterOrders/:status", async (req, res) => {
       return res.status(200).send([]);
     }
     let purchaseOrders = groupPurchaseOrders(orders)
+
+    for(let order of purchaseOrders){
+      const user = await User.findOne({where: {id: order.user}})
+      order.user = user
+    }
     return res.status(200).send(purchaseOrders)
   } catch (error) {
     return res.status(404).send(error);
