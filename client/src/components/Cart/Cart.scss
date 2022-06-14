@@ -139,7 +139,7 @@
   }
 }
 
-.empty-cart-btn {
+.button-danger {
   border: none;
   outline: none;
   background-color: #990404;
@@ -160,6 +160,6 @@
     height: unset;
   }
 }
-.empty-cart-btn:hover {
+.button-danger:hover {
   box-shadow: 0 5px 13px rgba(133, 2, 2, 0.409);
 }

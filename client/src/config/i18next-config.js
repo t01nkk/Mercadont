@@ -69,7 +69,8 @@ i18n
             buy: "Comprar",
             successfulPurchase: "¡Compra realizada con éxito!",
             cancelPurchaseSuccess: "Compra cancelada con éxito",
-            addressDetailsMissing:" Por favor completa los datos de tu domicilio"
+            addressDetailsMissing:
+              " Por favor completa los datos de tu domicilio",
           },
           categoriesComp: {
             error_pos_numbers: "Solo se aceptan números positivos",
@@ -129,8 +130,8 @@ i18n
           },
           adminEditProduct: {
             delete: "Producto borrado con éxito",
-            deleteProduct: "Eliminar producto",
-            update: "Actualizar el producto",
+            deleteProduct: "Eliminar",
+            update: "Editar producto",
             updated: "¡Producto actualizado con éxito!",
             status: "Estado: ",
             active: "Disponible",
@@ -156,13 +157,13 @@ i18n
             errors_stock:
               "Es obligatorio introducir la cantidad de unidades disponibles.",
             postProduct: "Nuevo producto",
-            name: "Nombre del producto...",
-            price: "Precio del producto...",
-            description: "Descripción del producto...",
+            name: "Nombre",
+            price: "Precio",
+            description: "Descripción",
             categories: "Categorías",
-            image: "Imagen del producto...",
-            status: "Disponibilidad del producto: ",
-            stock: "Cantidad disponible: ",
+            image: "Imagen",
+            status: "Disponibilidad:",
+            stock: "Unidades disponibles:",
             submit: "¡Publicar!",
             select: "Seleccionar",
           },
@@ -232,7 +233,7 @@ i18n
           productDetailsInfo: {
             categories: "Categorías: ",
             description: "Detalles del producto: ",
-            stock: "Stock actual: ",
+            stock: "Unidades disponibles:",
             price: "Precio: ",
             qa: "Preguntas acerca de este producto: ",
           },
@@ -312,7 +313,8 @@ i18n
             buy: "Buy",
             successfulPurchase: "Purchase successfully done!",
             cancelPurchaseSuccess: "Purchase successfully cancelled",
-            addressDetailsMissing: "Please fill out your Address details so that the package can be sent"
+            addressDetailsMissing:
+              "Please fill out your Address details so that the package can be sent",
           },
           categoriesComp: {
             error_pos_numbers: "Only positive numbers allowed",
