@@ -21,7 +21,7 @@ export default function ProductCardAdmin({
       <img className="card-image-admin" src={`${image}`} alt={`${name}`} />
       <div className="card-info-wrapper-admin">
         <div className="card-info-details-admin">
-          <p className="card-title-admin">{name}</p>
+          <p className="card-title-admin">{name.toUpperCase()}</p>
           <p className="description">{description}</p>
         </div>
         <div className="card-rating-admin">

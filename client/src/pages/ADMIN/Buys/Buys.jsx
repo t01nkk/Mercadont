@@ -31,8 +31,6 @@ export const Buys = () => {
 
     let changeStateBuys = async (changeState) => {
         try {
-            console.log(dataBuys)
-            console.log(dataBuys[0].orderNumber)
             let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/admin/setOrderStatus`, {
                 orderStatus: changeState,
                 orderId: search.substring(1)
@@ -41,7 +39,6 @@ export const Buys = () => {
                 history.push(`/admin/Buys`)
                 window.location.reload()
             }
-            console.log(resp)
         } catch (error) {
             console.log(error)
         }
