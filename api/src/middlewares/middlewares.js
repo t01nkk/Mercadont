@@ -13,7 +13,9 @@ const modifyStockStripe = async (local) => {
 
       const findProduct = await Product.findByPk(local[i].id);
 
-      if (findProduct.stock <= 0 && findProduct.stock - local[i].quantity < 0) throw new Error({ msg: "This item is out of stock" });
+      if (findProduct.stock <= 0 && findProduct.stock - local[i].quantity < 0) {
+        return false;
+      }
 
       if (findProduct.stock - local[i].quantity > 0) {
         updateProduct = await Product.update(
