@@ -5,7 +5,7 @@ import { getFavorites } from "../../redux/actions/actions";
 import { handleDeleteFavorite } from "../Cart/actionsCart.js";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-// import "./Favorite.css"
+import "./Favorite.scss";
 
 export const Favorites = () => {
   const { t } = useTranslation();
@@ -34,9 +34,9 @@ export const Favorites = () => {
   };
 
   return (
-    <div>
-      <h3>{t("favorites.favorites")}</h3>
-      <div className="container container-all-favorites">
+    <div className="home-favorite-wrapper">
+      <p className="favorite-list-title">{t("favorites.favorites")}</p>
+      <div className="section-products-favorite">
         {favorites.length !== 0 &&
           favorites.map((e) => (
             <ArticleFavorites
@@ -46,6 +46,8 @@ export const Favorites = () => {
               price={e.price}
               rating={e.rating}
               image={e.image}
+              stock={e.stock}
+              description={e.description}
               removeFavorite={removeFavorite}
             />
           ))}

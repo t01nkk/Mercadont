@@ -11,7 +11,6 @@ import {
 } from "../../../redux/actions/actionTypes";
 import PaginationAdmin from "./PaginationADMIN/PaginationAdmin";
 export default function HomeAdmin() {
-
   const [state, dispatch] = useStore();
   const [status, setStatus] = useState("");
   const [category, setCategory] = useState("");
@@ -26,7 +25,7 @@ export default function HomeAdmin() {
     indexLastProduct
   );
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const page = (numPage) => {
     setCurrentPage(numPage);
@@ -103,15 +102,16 @@ export default function HomeAdmin() {
     }
   };
   useEffect(() => {
+    fetchProducts(dispatch);
+    fetchCategories(dispatch);
+  }, []);
+  useEffect(() => {
     handleFilter();
   }, [status, state.products, category]);
   useEffect(() => {
     handleOrder();
   }, [atribute, order]);
-  useEffect(() => {
-    fetchProducts(dispatch);
-    fetchCategories(dispatch);
-  }, []);
+
   return (
     <div className="home-admin-wrapper">
       <div className="filter-admin-wrapper">
@@ -150,15 +150,17 @@ export default function HomeAdmin() {
           >
             <option value="">-</option>
 
-            {
-              React.Children.toArray(
-
-                state.categories?.map((category) => (
-                  <option value={category.name} key={category.id} id={category.id}>
-                    {category.name}
-                  </option>
-                ))
-              )}
+            {React.Children.toArray(
+              state.categories?.map((category) => (
+                <option
+                  value={category.name}
+                  key={category.id}
+                  id={category.id}
+                >
+                  {category.name}
+                </option>
+              ))
+            )}
           </select>
         </div>
         <div className="selectContainer">
@@ -188,10 +190,9 @@ export default function HomeAdmin() {
         {state.products &&
           React.Children.toArray(
             currentProducts.map((product) => {
-             
               return (
                 <ProductCardAdmin
-                  id={product.id}                 
+                  id={product.id}
                   name={product.name}
                   stock={product.stock}
                   price={product.price}
