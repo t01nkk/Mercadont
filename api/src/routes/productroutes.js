@@ -1,17 +1,9 @@
-const { Product, User, Category, Qa, Review, PurchaseOrder } = require("../db");
+const { Product, Category, Qa, Review, PurchaseOrder } = require("../db");
 const { Router } = require("express");
-const Stripe = require("stripe");
-const cors = require("cors");
-const { modifyStock } = require("../middlewares/middlewares");
 const { validateInputProduct } = require("../middlewares/middlewares");
-const { Op, where, Sequelize } = require("sequelize");
-
+const { Op } = require("sequelize");
 
 const router = Router();
-
-const stripe = new Stripe(
-  "sk_test_51L4snIL7xpNkb3eJIsYUyZ8SYO4cHXX3GyMVVgp1lJ56KTEq6Mc8qtENUNlam4mslm4pwNXq48uFQYLrDPldNso900jpNAxL5e"
-);
 //----------------------PRODUCT FILTER---------------------------------- //
 //Get All Products, Filter By Category, Name, Price
 router.get("/", async (req, res) => {
@@ -331,8 +323,8 @@ router.get("/recommendation/mostSold", async (req, res) => {
       products.splice(12);
       return res.status(200).send(products);
     }
-    
-    product.details = await Product.findOne({where: {id: orders[0].productId}}) ;
+
+    product.details = await Product.findOne({ where: { id: orders[0].productId } });
     product.quantity = orders[0].productQuantity;
 
     for (let i = 1; i < orders.length; i++) {
@@ -352,13 +344,13 @@ router.get("/recommendation/mostSold", async (req, res) => {
     }
     productsSold.push(product);
 
-    productsSold.sort((a,b) =>{
-      return  b.details.rating - a.details.rating
+    productsSold.sort((a, b) => {
+      return b.details.rating - a.details.rating
     })
 
     productsSold.splice(12)
-    let arrayProducts =[]
-    for(let p of productsSold){
+    let arrayProducts = []
+    for (let p of productsSold) {
       arrayProducts.push(p.details)
 
     }

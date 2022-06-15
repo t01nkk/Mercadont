@@ -1,31 +1,36 @@
 const { PurchaseOrder, User } = require("../db");
 const { mailPayment } = require("../middlewares/middlewares");
 
-const createPurchaseOrder = async (orderId,userId,local,amount,status) => {
+const createPurchaseOrder = async (orderId, userId, local, amount, address, status ) => {
     let created;
     try {
-        for(let product of local){
+        for (let product of local) {
             created = await PurchaseOrder.create({
                 orderId,
                 userId,
                 productId: product.id,
                 productQuantity: product.quantity,
                 totalAmount: amount,
-                paymentStatus: status
+                paymentStatus: status,
+                country: address.country, 
+                province: address.province,
+                city: address.city,
+                street: address.street,
+                postalCode: address.postalCode,
             })
         }
-    
-        if(status === "completed"){
+
+        if (status === "completed") {
             const user = await User.findOne({
-                where: { id: userId}
+                where: { id: userId }
             })
             // DESCOMENTAR PARA ENVIAR MAIL AL USER CUANDO SE HACE EL PAGO.
 
-            // mailPayment(user.email, orderId);
+            mailPayment(user.email, orderId);
 
             // 
         }
-        return created; 
+        return created;
     } catch (error) {
         return error
     }
@@ -36,23 +41,23 @@ const createPurchaseCompleted = async (orderId) => {
     try {
         updated = await PurchaseOrder.update({
             paymentStatus: "completed",
-        },{
-            where:{
+        }, {
+            where: {
                 orderId,
             }
         })
 
         const order = await PurchaseOrder.findOne({
-            where: { orderId: orderId}
+            where: { orderId: orderId }
         })
 
         const user = await User.findOne({
-            where: {id: order.userId}
+            where: { id: order.userId }
         })
 
         // DESCOMENTAR PARA ENVIAR MAIL AL USER CUANDO SE HACE EL PAGO.
 
-        // mailPayment(user.email, orderId);
+        mailPayment(user.email, orderId);
 
         // 
         return updated;
@@ -62,17 +67,17 @@ const createPurchaseCompleted = async (orderId) => {
 
 }
 
-const createPurchaseCanceled= async (orderId) => {
+const createPurchaseCanceled = async (orderId) => {
     let updated;
     try {
         updated = await PurchaseOrder.update({
             paymentStatus: "canceled",
-        },{
-            where:{
+        }, {
+            where: {
                 orderId,
             }
         })
-        return updated; 
+        return updated;
     } catch (error) {
         return error
     }

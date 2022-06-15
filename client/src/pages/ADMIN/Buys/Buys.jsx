@@ -46,7 +46,7 @@ export const Buys = () => {
             console.log(error)
         }
     }
-
+    console.log("dataBuys:", dataBuys)
     return (
         <div>
             {changeSection ?

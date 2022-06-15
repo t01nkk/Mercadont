@@ -147,8 +147,7 @@ export default function SlideRating() {
             <div className="container-loader">
               <Loader />
             </div>
-          )}
-       
+          )}    
       </Swiper>
     </div>
   );
