@@ -103,7 +103,6 @@ export default function AccountDetailsForm() {
       street,
       postalCode,
     } = user;
-    // console.log(id)
     try {
       await axios.put(
         `${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`,
@@ -135,7 +134,6 @@ export default function AccountDetailsForm() {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    // console.log("handleResetPassword USER:",user)
     const answer = window.confirm(t("accountDetailsForm.askPasswordChange"));
     if (answer) {
       try {

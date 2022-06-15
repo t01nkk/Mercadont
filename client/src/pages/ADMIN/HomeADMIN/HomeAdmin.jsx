@@ -11,7 +11,7 @@ import {
 } from "../../../redux/actions/actionTypes";
 import PaginationAdmin from "./PaginationADMIN/PaginationAdmin";
 export default function HomeAdmin() {
- 
+
   const [state, dispatch] = useStore();
   const [status, setStatus] = useState("");
   const [category, setCategory] = useState("");
@@ -27,7 +27,7 @@ export default function HomeAdmin() {
   );
 
   const { t } = useTranslation()
-  
+
   const page = (numPage) => {
     setCurrentPage(numPage);
   };
@@ -116,33 +116,33 @@ export default function HomeAdmin() {
     <div className="home-admin-wrapper">
       <div className="filter-admin-wrapper">
         <div className="selectContainer">
-          <label className="labels">{t("adminHome.filter") }</label>
+          <label className="labels">{t("adminHome.filter")}</label>
           <select
             className="select"
             value={atribute}
             onChange={(e) => setAtribute(e.target.value)}
           >
             <option value="">-</option>
-            <option value="name">{t("adminHome.name") }</option>
-            <option value="stock">{t("adminHome.stock") }</option>
-            <option value="rating">{t("adminHome.rating") }</option>
-            <option value="price">{t("adminHome.price") }</option>
+            <option value="name">{t("adminHome.name")}</option>
+            <option value="stock">{t("adminHome.stock")}</option>
+            <option value="rating">{t("adminHome.rating")}</option>
+            <option value="price">{t("adminHome.price")}</option>
           </select>
         </div>
         <div className="selectContainer">
-          <label className="labels">{t("adminHome.status") }</label>
+          <label className="labels">{t("adminHome.status")}</label>
           <select
             className="select"
             value={status}
             onChange={(e) => setStatus(e.target.value)}
           >
             <option value="">-</option>
-            <option value="active">{t("adminHome.active") }</option>
-            <option value="inactive">{t("adminHome.inactive") }</option>
+            <option value="active">{t("adminHome.active")}</option>
+            <option value="inactive">{t("adminHome.inactive")}</option>
           </select>
         </div>
         <div className="selectContainer">
-          <label className="labels">{t("adminHome.category") }</label>
+          <label className="labels">{t("adminHome.category")}</label>
           <select
             className="select"
             value={category}
@@ -152,7 +152,7 @@ export default function HomeAdmin() {
 
             {
               React.Children.toArray(
-                
+
                 state.categories?.map((category) => (
                   <option value={category.name} key={category.id} id={category.id}>
                     {category.name}
@@ -162,14 +162,14 @@ export default function HomeAdmin() {
           </select>
         </div>
         <div className="selectContainer">
-          <label className="labels">{t("adminHome.order") }</label>
+          <label className="labels">{t("adminHome.order")}</label>
           <select
             className="select"
             value={order}
             onChange={(e) => setOrder(e.target.value)}
           >
-            <option value="ASC">{t("adminHome.valueAsc") }</option>
-            <option value="DESC">{t("adminHome.valueDes") }</option>
+            <option value="ASC">{t("adminHome.valueAsc")}</option>
+            <option value="DESC">{t("adminHome.valueDes")}</option>
           </select>
         </div>
         <button
@@ -188,12 +188,14 @@ export default function HomeAdmin() {
         {state.products &&
           React.Children.toArray(
             currentProducts.map((product) => {
+             
               return (
                 <ProductCardAdmin
-                  id={product.id}
+                  id={product.id}                 
                   name={product.name}
                   stock={product.stock}
                   price={product.price}
+                  rating={product.rating}
                   image={product.image}
                   categories={product.categories}
                   status={product.status}

@@ -29,9 +29,9 @@ export default function ProductDetailsInfoAdmin({
       <div className="img-container">
         <img src={image} alt={` ${name}`} className="product-img" />
       </div>
-      {/* <p>Hijo de puta</p> */}
+
       <div className="product-info">
-        <p className="title">{name}</p>
+        <p className="title">{name.toUpperCase()}</p>
         <p className="title">{t("adminProductDetails.categories")}</p>
         {React.Children.toArray(categories.map((category) => (
           <p>{category.name}</p>

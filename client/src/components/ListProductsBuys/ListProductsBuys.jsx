@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import "./ListProductsBuys.css";
+import "./ListProductsBuys.scss";
 import accounting from "accounting";
 
 export const ListProductsBuys = ({
@@ -11,6 +11,9 @@ export const ListProductsBuys = ({
 }) => {
   return (
     <article className="articleBuys">
+      {/* <figure>
+        <img src={image} alt={name} />
+      </figure> */}
       <div>
         <p>{name}</p>
         <div className="container-details-buys">

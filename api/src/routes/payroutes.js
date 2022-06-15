@@ -24,21 +24,13 @@ router.post("/card", async (req, res) => {
       payment_method: id,
       confirm: true
     })
+
     let updatedStock = await modifyStockStripe(local)
-    if (updatedStock) {
-      await createPurchaseOrder(
-      id,
-      userId,
-      local,
-      amount / 100,
-      "completed"
-      );
-      console.log("Seh. Todo bien, manitou.")
-    res.status(200).send(payment);
+    if (!updatedStock) {
+      return res.status(400).send({ msg: "WHY U NO CUM?" })
     }
-    else {
-      res.status(200).send('Tuvimos un problemita.')
-    }
+    let created = await createPurchaseOrder(id, userId, local, (amount / 100), "completed")
+    return res.status(200).send(payment);
   } catch (error) {
     return res.status(400).send(error)
   }

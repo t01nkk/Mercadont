@@ -6,13 +6,16 @@ const { Op } = require("sequelize");
 // const { genPassword } = require('./password_utils');
 
 const modifyStockStripe = async (local) => {
+
   let updateProduct;
   try {
     for (let i = 0; i < local.length; i++) {
+
       const findProduct = await Product.findByPk(local[i].id);
 
-      if (findProduct.stock <= 0 && findProduct.stock - local[i].quantity < 0)
-        throw new Error({ msg: "This item is out of stock" });
+      if (findProduct.stock <= 0 && findProduct.stock - local[i].quantity < 0) {
+        return false;
+      }
 
       if (findProduct.stock - local[i].quantity > 0) {
         updateProduct = await Product.update(

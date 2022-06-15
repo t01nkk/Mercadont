@@ -1,0 +1,182 @@
+.container-edit-admin {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 80px;
+}
+.container-edit-admin p {
+  font-size: 1.32rem;
+  font-weight: 300;
+}
+.form-edit-admin h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.form-edit-admin {
+  display: flex;
+  width: 80%;
+  position: relative;
+  margin-top: 40px;
+  @media only screen and (max-width: 1080px) {
+    flex-direction: column;
+    align-items: center;
+  }
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+}
+.title-details-info {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.duo-inputs {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.duo-inputs-selector {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.selector-cats {
+  display: flex;
+  text-align: center;
+  align-items: flex-start;
+  width: 80%;
+}
+
+.cat-name {
+  font-size: 0.8rem;
+}
+.edit-cat-delete {
+  display: flex;
+  margin: 15px 10px;
+}
+.img-product {
+  height: auto;
+  width: 22%;
+}
+.edit-info {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+  margin-top: 40px;
+  @media only screen and (max-width: 1080px) {
+    width: unset;
+  }
+}
+.edit-info select {
+  width: 15rem;
+  text-align: center;
+  margin: 5px;
+  height: 1.42rem;
+}
+.edit-info input {
+  width: 80%;
+  text-align: center;
+  height: 3rem;
+  margin: 5px;
+}
+.edit-price-stock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+}
+.edit-textarea {
+  width: 80%;
+  height: 210px;
+  margin-bottom: 20px;
+}
+.edit-status {
+  display: flex;
+  align-items: flex-start;
+  width: 80%;
+  margin: 20px 0;
+}
+.btn-del-edit {
+  width: max-content;
+  border-radius: 50%;
+  background-color: #fff;
+  border: solid 1px black;
+  height: 25px;
+  width: 25px;
+  align-items: center;
+}
+.btn-del-edit:hover {
+  background-color: #e6ccb274;
+}
+.select-categories-del {
+  display: flex;
+  width: 80%;
+  flex-wrap: wrap;
+}
+.btn-update-info {
+  border: none;
+  outline: none;
+  background-color: #4caf50;
+  height: 40px;
+  color: #fff;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  cursor: pointer;
+
+  width: 60%;
+  text-align: center;
+  align-items: center;
+  @media only screen and (max-width: 550px) {
+    width: 60%;
+  }
+  @media only screen and (max-width: 430px) {
+    width: 60%;
+    height: unset;
+  }
+}
+.btn-update-info:hover {
+  box-shadow: rgba(1, 130, 22, 0.5) 0px 4px 8px 0px;
+}
+.delete-product {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.delete-product button {
+  background-color: rgba(255, 255, 255, 0.68);
+  border: 2px solid rgb(143, 0, 0);
+  border-radius: 50px;
+  width: 15rem;
+  text-transform: uppercase;
+  margin-top: 30px;
+}
+.delete-product button:hover {
+  background-color: rgba(255, 0, 0, 0.103);
+}
+.button-danger-del {
+  border: none;
+  outline: none;
+  background-color: #990404;
+  height: 40px;
+  color: #fff;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 40%;
+  text-align: center;
+  align-items: center;
+  margin-top: 25px;
+  @media only screen and (max-width: 550px) {
+    width: 60%;
+  }
+  @media only screen and (max-width: 430px) {
+    width: 60%;
+    height: unset;
+  }
+}
+.button-danger-del:hover {
+  box-shadow: 0 5px 13px rgba(133, 2, 2, 0.409);
+}
