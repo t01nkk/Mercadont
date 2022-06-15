@@ -3,8 +3,8 @@ import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
 import { fetchCategories } from "../../../redux/actions/actions.js";
-import "./EditProduct.scss";
-import { alertInfo, alertSuccess } from "../../../helpers/toast.js";
+import "./EditProduct.css";
+import { alertInfo, alertSuccess, alertWarning } from "../../../helpers/toast.js";
 import { useTranslation } from "react-i18next";
 export default function EditProduct() {
   const { t } = useTranslation();
@@ -22,9 +22,10 @@ export default function EditProduct() {
   const history = useHistory();
   const expression = {
     nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-    priceExpression: /^\d{1,14}$/,
-    descriptionExpression: /^[a-zA-ZÀ-ÿ\s]{1,200}$/,
+    priceExpression: /^[d*.?d*]{1,14}$/,
+    descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,'*¿?¡!\s]{1,200}$/,
     stockExpression: /^\d{1,14}$/,
+
   };
 
   function validator(input) {
@@ -106,39 +107,55 @@ export default function EditProduct() {
     fetchCategories(dispatch);
   }, []);
 
+  console.log(errors)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, description, price, stock, image, categories, status } =
       product;
-    try {
-      await axios.put(`${process.env.REACT_APP_DOMAIN}/product/update/${id}`, {
-        name,
-        description,
-        price,
-        stock,
-        image,
-        status,
-        categories,
-      });
-      alertSuccess(t("adminEditProduct.updated"));
-      history.push("/admin/home");
-    } catch (err) {
-      console.log(err);
+    if (!errors.length !== 0) {
+      try {
+        await axios.put(
+          `${process.env.REACT_APP_DOMAIN}/product/update/${id}`,
+          {
+            name,
+            description,
+            price,
+            stock,
+            image,
+            status,
+            categories,
+          }
+        );
+        alertSuccess(t("adminEditProduct.updated"))
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      alertWarning(t("adminEditProduct.fixErrors"))
     }
+
   };
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
   const handleDelete = async () => {
-    try {
-      await axios.delete(
-        `${process.env.REACT_APP_DOMAIN}/product/delete/${id}`
-      );
-      alertInfo(t("adminEditProduct.delete"));
-      history.push("/admin/home");
-    } catch (err) {
-      console.log(err);
+    let executed = window.confirm(t("adminEditProduct.confirmDelete"))
+    if (executed) {
+      try {
+        await axios.delete(
+          `${process.env.REACT_APP_DOMAIN}/product/delete/${id}`
+        );
+        alertInfo(t("adminEditProduct.delete"));
+        history.push("/admin/home");
+      } catch (err) {
+        console.log(err);
+      }
     }
+
   };
   console.log(product.status);
   return (
