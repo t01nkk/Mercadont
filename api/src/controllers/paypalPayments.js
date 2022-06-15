@@ -61,6 +61,14 @@ const createOrder = async (req, res) => {
 const captureOrder = async (req, res) => {
   let completedOrder;
   const { token } = req.query;
+  // console.log("req:", req)
+
+  const stock = await modifyStockPaypal(token)
+  // console.log("stock:", stock)
+  if(!stock){
+    createPurchaseCanceled(req.query?.token)
+    return res.status(400).redirect(`${process.env.HOST_PORT_FRONT}/cart?buy=noStock`);
+  }
 
   const { data } = await axios.post(
     `${process.env.PAYPAL_API}/v2/checkout/orders/${token}/capture`,
@@ -72,8 +80,8 @@ const captureOrder = async (req, res) => {
       },
     }
   );
+
   completedOrder = createPurchaseCompleted(data.id)
-  modifyStockPaypal(data.id)
   res.status(200).redirect(`${process.env.HOST_PORT_FRONT}/cart?buy=true`);
 };
 

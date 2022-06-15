@@ -74,6 +74,7 @@ i18n
             cancelPurchaseSuccess: "Compra cancelada con éxito",
             addressDetailsMissing:
               "Por favor completa los datos de tu domicilio",
+            noStock: "El stock es insuficiente"
           },
           categoriesComp: {
             error_pos_numbers: "Solo se aceptan números positivos",
@@ -275,6 +276,9 @@ i18n
             paypalConfirm: "Realizar la compra mediante PayPal",
             totalPrice: "Precio total: ",
             processingCard: "Procesando el pago. Aguarde un instante...",
+            insuficientQuantity: "El stock actual es insuficiente.",
+            error: "Hubo un problema con tu compra.",
+            cardProblem: "Hubo un problema con tu tarjeta"
           },
         },
       },
@@ -340,6 +344,7 @@ i18n
             cancelPurchaseSuccess: "Purchase successfully cancelled",
             addressDetailsMissing:
               "Please fill out your Address details so that the package can be sent",
+            noStock: "Stock not available"
           },
           categoriesComp: {
             error_pos_numbers: "Only positive numbers allowed",
@@ -536,6 +541,9 @@ i18n
             processingCard: "Processing payment. Please hold on a while...",
             paypalConfirm: "Continue to PayPal",
             totalPrice: "Total price: ",
+            insuficientQuantity: "Current is insuficient.",
+            error: "There's been a problem with your purchase.",
+            cardProblem: "There was a problem with your card"
           },
         },
       },

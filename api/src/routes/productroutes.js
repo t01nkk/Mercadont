@@ -329,7 +329,7 @@ router.get("/recommendation/mostSold", async (req, res) => {
     product.quantity = orders[0].productQuantity;
 
     for (let i = 1; i < orders.length; i++) {
-      if (product.details.id === orders[i].productId) {
+      if (product.details?.id === orders[i].productId) {
         product.quantity += orders[i].productQuantity;
       } else {
         productsSold.push(product);

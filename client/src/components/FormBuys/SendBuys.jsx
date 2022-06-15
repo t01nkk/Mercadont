@@ -7,7 +7,7 @@ import { ListProductsBuys } from "../ListProductsBuys/ListProductsBuys.jsx"
 import { PruebaListProduct } from '../ListProductsBuys/PruebaListProduct'
 import { useTranslation } from 'react-i18next';
 import accounting from 'accounting'
-import {alertInfo} from '../../helpers/toast'
+import {alertInfo, alertWarning} from '../../helpers/toast'
 import { Loader } from "../Loader/Loader.jsx"
 import "./SendBuys.css"
 
@@ -82,13 +82,34 @@ export const SendBuys = () => {
             setLoadingBuys(true)
             if (!error) {
                 const { id } = paymentMethod
-                await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
-                    id,
-                    amount: Math.round(priceTotal * 100),
-                    local,
-                    userId: user,
-                    address
-                })
+                try {
+                    await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
+                        id,
+                        amount: Math.round(priceTotal * 100),
+                        local,
+                        userId: user,
+                        address
+                    })
+                } catch (error) {
+                    if(error.message === 'insuficientStock'){
+                        alertWarning(t("sendBuys.insuficientQuantity"))
+                        setLoadingBuys(false)
+                        localStorage.removeItem(user)
+                        return history.push("/cart?buy=false")
+                    }else{
+                        alertWarning(t("sendBuys.error"))
+                        setLoadingBuys(false)
+                        localStorage.removeItem(user)
+                        console.log(error)
+                        return history.push("/cart?buy=false")
+                        
+                    }
+                }
+            }else{
+                alertWarning(t("sendBuys.cardProblem"))
+                setLoadingBuys(false)
+                localStorage.removeItem(user)
+                return history.push("/cart?buy=false")
             }
             // loadingBuys()
             if (paymentMethod) {
