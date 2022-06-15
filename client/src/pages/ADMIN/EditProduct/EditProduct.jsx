@@ -7,7 +7,7 @@ import "./EditProduct.css";
 import { alertInfo, alertSuccess, alertWarning } from "../../../helpers/toast.js";
 import { useTranslation } from "react-i18next";
 export default function EditProduct() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
   const [product, setProduct] = useState({
@@ -19,12 +19,13 @@ export default function EditProduct() {
     categories: [],
     status: "",
   });
+  const history = useHistory();
   const expression = {
     nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
     priceExpression: /^[d*.?d*]{1,14}$/,
     descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,'*¿?¡!\s]{1,200}$/,
     stockExpression: /^\d{1,14}$/,
-    
+
   };
 
   function validator(input) {
@@ -99,7 +100,6 @@ export default function EditProduct() {
     }
     fetchedProduct.data.categories = destructuringCats;
     setProduct(fetchedProduct.data);
-
   };
 
   useEffect(() => {
@@ -115,29 +115,29 @@ export default function EditProduct() {
       product;
     if (!errors.length !== 0) {
       try {
-      await axios.put(
-        `${process.env.REACT_APP_DOMAIN}/product/update/${id}`,
-        {
-          name,
-          description,
-          price,
-          stock,
-          image,
-          status,
-          categories,
-        }
-      );
-      alertSuccess(t("adminEditProduct.updated"))
-      setTimeout(() => {
+        await axios.put(
+          `${process.env.REACT_APP_DOMAIN}/product/update/${id}`,
+          {
+            name,
+            description,
+            price,
+            stock,
+            image,
+            status,
+            categories,
+          }
+        );
+        alertSuccess(t("adminEditProduct.updated"))
+        setTimeout(() => {
           window.location.reload()
-      }, 2000);
-    } catch (err) {
-      console.log(err);
-    }
+        }, 2000);
+      } catch (err) {
+        console.log(err);
+      }
     } else {
       alertWarning(t("adminEditProduct.fixErrors"))
     }
-    
+
   };
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
@@ -145,47 +145,53 @@ export default function EditProduct() {
   const handleDelete = async () => {
     let executed = window.confirm(t("adminEditProduct.confirmDelete"))
     if (executed) {
-       try {
-      await axios.delete(
-        `${process.env.REACT_APP_DOMAIN}/product/delete/${id}`
-      );
-      alertInfo(t("adminEditProduct.delete"))
-      setTimeout(() => {
-        alert('Acá tendría que redireccionar.')
-      }, 2000);
-    } catch (err) {
-      console.log(err);
+      try {
+        await axios.delete(
+          `${process.env.REACT_APP_DOMAIN}/product/delete/${id}`
+        );
+        alertInfo(t("adminEditProduct.delete"));
+        history.push("/admin/home");
+      } catch (err) {
+        console.log(err);
       }
     }
-   
+
   };
+  console.log(product.status);
   return (
     <div className="container-edit-admin">
-      <div className="delete-product">
-        <button onClick={handleDelete}>{t("adminEditProduct.deleteProduct")}</button>
-      </div>
       <form onSubmit={handleSubmit} className="form-edit-admin">
-        <input
-          type="submit"
-          name="Update info"
-          value={t("adminEditProduct.update")}
-          className="btn-update-info"
-        />
-
-        <img src={`${product.image}`} alt="" className="img-product" />
-        <div></div>
-        <div className="divInputadmin">
-          <div className="duo-inputs">
-            <p>{t("adminSellProduct.name")}</p>
-            <input
-              type="text"
-              name="name"
-              value={product.name}
-              onTouchStart={handleChangeName}
-              onChange={handleChangeName}
-            />
-            {errors.name && <p className="error-input">{errors.name}</p>}{" "}
-            <p>{t("adminSellProduct.price")}</p>
+        <div className="details-image">
+          <img src={`${product.image}`} alt="" className="product-img" />
+        </div>
+        <div className="edit-info">
+          <label className="titleDetails">{t("adminSellProduct.name")}</label>
+          <input
+            type="text"
+            name="name"
+            value={product.name}
+            onTouchStart={handleChangeName}
+            onChange={handleChangeName}
+          />
+          {errors.name && <p className="error-input">{errors.name}</p>}
+          <label className="title-details-info-description">
+            {t("adminSellProduct.description")}
+          </label>
+          {errors.description && (
+            <p className="error-input">{errors.description}</p>
+          )}
+          <textarea
+            name="description"
+            value={product.description}
+            onChange={handleChangeDescription}
+            className="edit-textarea"
+          >
+            {product.description}
+          </textarea>
+          <div className="edit-price-stock">
+            <label className="title-details-info">
+              {t("adminSellProduct.price")}
+            </label>
             <input
               type="number"
               name="price"
@@ -194,9 +200,9 @@ export default function EditProduct() {
               onChange={handleChangePrice}
             />
             {errors.price && <p className="error-input">{errors.price}</p>}
-          </div>
-          <div className="duo-inputs">
-            <p>{t("adminSellProduct.stock")}</p>
+            <label className="title-details-info">
+              {t("adminSellProduct.stock")}
+            </label>
             <input
               type="number"
               name="stock"
@@ -204,27 +210,20 @@ export default function EditProduct() {
               onChange={handleChangeStock}
             />
             {errors.stock && <p className="error-input">{errors.stock}</p>}
-            <p>{t("adminSellProduct.status")}</p>
+          </div>
+          <div className="edit-status">
+            <label className="title-details-info">
+              {t("adminSellProduct.status")}
+            </label>
             <select name="status" onChange={handleChange}>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
           </div>
-          <p>{t("adminSellProduct.description")}</p>
-          <textarea
-            name="description"
-            cols="50"
-            rows="3"
-            value={product.description}
-            onChange={handleChangeDescription}
-          >
-            {product.description}
-          </textarea>
-          {errors.description && (
-            <p className="error-input">{errors.description}</p>
-          )}
           <div className="selector-cats">
-            <p>{t("adminSellProduct.select")}</p>
+            <label className="title-details-info">
+              {t("adminSellProduct.select")}
+            </label>
             <select onChange={handleChangeCat}>
               <option value="" hidden>
                 {t("adminSellProduct.categories")}
@@ -237,22 +236,34 @@ export default function EditProduct() {
                   </option>
                 ))}
             </select>
-            <div className="select-categories-del">
-              {product.categories.length &&
-                React.Children.toArray(product.categories?.map((category) => (
-                  <p className="cat-name">
-                    {category.name || category}
+          </div>
+          <div className="select-categories-del">
+            {product.categories.length &&
+              React.Children.toArray(
+                product.categories?.map((category) => (
+                  <div className="edit-cat-delete">
+                    <p className="cat-name">{category.name || category}</p>{" "}
                     <button
                       className="btn-del-edit"
                       onClick={(event) => handleDeleteCat(category, event)}
-                    >X</button>
-                  </p>
-                )))
-              }
-            </div>
+                    >
+                      X
+                    </button>
+                  </div>
+                ))
+              )}
           </div>
+          <input
+            type="submit"
+            name="Update info"
+            value={t("adminEditProduct.update")}
+            className="btn-update-info"
+          />
         </div>
       </form>
+      <button className="button-danger-del" onClick={handleDelete}>
+        {t("adminEditProduct.deleteProduct")}
+      </button>
     </div>
   );
 }

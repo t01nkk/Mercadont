@@ -10,7 +10,7 @@ export default function ProductDetails() {
     const fetchedProduct = await axios.get(
       `${process.env.REACT_APP_DOMAIN}/product/${id}`
     );
-
+      console.log(fetchedProduct.data)
     setProduct(fetchedProduct.data);
   };
 

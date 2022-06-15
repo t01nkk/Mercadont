@@ -1,13 +1,15 @@
 .container-login {
-  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
 }
 .form-container {
   width: 50%;
+  @media only screen and (max-width: 1080px) {
+    width: 90%;
+  }
 }
 .loginCard {
   display: flex;
@@ -15,34 +17,59 @@
   justify-content: center;
   align-content: center;
   background-color: #fff;
-  width: 40%;
-  margin: 4rem 30%;
-
+  width: 60%;
+  margin: 130px 20%;
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  @media only screen and (max-width: 1080px) {
+    width: 80%;
+    margin: 130px 10%;
+  }
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+    margin: 50px 0;
+  }
+}
+.google-plus {
+  width: 40%;
+  margin: 0 35% 10px;
+  align-self: auto;
+  margin-left: 30%;
+  background: white;
+  border: 1px solid dodgerblue;
+  color: dodgerblue;
+}
+.google-plus:hover {
+  background: dodgerblue;
 }
 
-.loginCard form {
-  width: 100%;
-}
-.loginCard h2 {
-  padding: 0 15%;
-}
-.input-submit-create {
-  background-color: black;
+.input-submit-login {
   border: none;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  align-items: center;
-  font-size: 1.14rem;
-  height: 3rem;
-  width: 10rem;
-  border-radius: 25px;
-  margin-bottom: 20px;
+  outline: none;
+  background-color: #000000;
+  height: 40px;
+  color: #fff;
+  font-size: 1.2rem;
   text-transform: uppercase;
-  font-family: "Montserrat", sans-serif;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 335px;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 25px 0;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+    margin: unset;
+  }
+}
+.login-welcome {
+  font-size: 1.4rem;
+  font-weight: 600;
+  width: 74%;
+  margin: 15px 13%;
+  letter-spacing: 4px;
 }
 .btn-login {
   display: flex;
@@ -51,12 +78,13 @@
   align-items: center;
   text-align: center;
   text-transform: uppercase;
+  margin-bottom: 20px;
 }
 form .btn-login input:hover {
   background: gray;
 }
-.input-submit-create:link,
-.input-submit-create:visited {
+.input-submit:link,
+.input-submit:visited {
   text-transform: uppercase;
   text-decoration: none;
   padding: 15px 40px;
@@ -66,11 +94,11 @@ form .btn-login input:hover {
   position: relative;
 }
 
-.input-submit-create:hover {
+.input-submit:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
-.input-submit-create:active {
+.input-submit:active {
   transform: translateY(-1px);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
@@ -106,14 +134,14 @@ form .btn-login input:hover {
   transition: all 0.3s ease;
 }
 
-small {
-  font-size: 12px;
-}
 .error-style {
   margin: 0 10%;
+  color: red;
+  font-size: 0.7rem;
+  text-align: center;
 }
 
-.input-submit[disabled] {
-  opacity: 0.3;
-  pointer-events: none;
+.create-container {
+  display: flex;
+  flex-direction: column;
 }
