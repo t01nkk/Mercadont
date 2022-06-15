@@ -77,7 +77,6 @@ const createPurchaseCanceled = async (orderId) => {
                 orderId,
             }
         })
-        reStockOrderCancelled(orderId)
         return updated;
     } catch (error) {
         return error
