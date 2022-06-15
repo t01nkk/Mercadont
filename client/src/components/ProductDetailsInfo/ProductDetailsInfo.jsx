@@ -25,9 +25,6 @@ export default function ProductDetailsInfo({
   price,
 }) {
 
-//52264991-e6e0-4a72-b741-cd330dd160bf
-//52264991-e6e0-4a72-b741-cd330dd160bf
-
   const { t } = useTranslation();
   const [state, dispatch] = useStore();
   const [changeButton, setChangeButton] = useState();

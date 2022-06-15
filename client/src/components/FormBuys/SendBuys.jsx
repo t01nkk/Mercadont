@@ -59,11 +59,11 @@ export const SendBuys = () => {
 
     const validateForm = ()=>{
         let error ={}
-        if(!/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(address.country) && address.country !== "") error.country = "La dirección solo puede contener numero y caracteres alfabeticos"
-        if(!/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(address.province) && address.province !== "") error.province = "La dirección solo puede contener numero y caracteres alfabeticos"
-        if(!/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(address.city) && address.city !== "") error.city = "La dirección solo puede contener numero y caracteres alfabeticos"
-        if(!/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(address.street) && address.street !== "") error.street = "La dirección solo puede contener numero y caracteres alfabeticos"
-        if(!/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(address.postalCode) && address.postalCode !== "") error.postalCode = "La dirección solo puede contener numero y caracteres alfabeticos"
+        if(!/^[A-Za-z0-9\s]+$/.test(address.country) && address.country !== "") error.country = "La dirección solo puede contener numero y caracteres alfabeticos"
+        if(!/^[A-Za-z0-9\s]+$/.test(address.province) && address.province !== "") error.province = "La dirección solo puede contener numero y caracteres alfabeticos"
+        if(!/^[A-Za-z0-9\s]+$/.test(address.city) && address.city !== "") error.city = "La dirección solo puede contener numero y caracteres alfabeticos"
+        if(!/^[A-Za-z0-9\s]+$/.test(address.street) && address.street !== "") error.street = "La dirección solo puede contener numero y caracteres alfabeticos"
+        if(!/^[A-Za-z0-9\s]+$/.test(address.postalCode) && address.postalCode !== "") error.postalCode = "La dirección solo puede contener numero y caracteres alfabeticos"
         
         setError(error)
     
