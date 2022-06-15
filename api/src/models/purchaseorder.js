@@ -29,6 +29,26 @@ module.exports = (sequelize) => {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
         },
+        country: {
+            type: DataTypes.STRING,
+            defaultValue: ""         
+        },
+        province: {
+            type: DataTypes.STRING,
+            defaultValue: ""
+        },
+        city: {
+            type: DataTypes.STRING,
+            defaultValue: ""
+        },
+        street: {
+            type: DataTypes.STRING,
+            defaultValue: ""
+        },
+        postalCode: {
+            type: DataTypes.STRING,
+            defaultValue: ""
+        },
         paymentStatus: {
             type: DataTypes.ENUM("pending", "completed", "canceled"),
             defaultValue: "pending"

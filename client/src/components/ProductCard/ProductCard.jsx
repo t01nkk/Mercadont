@@ -7,6 +7,7 @@ import imgDeleteFavorite from "../../media/heart-delete-cart.png";
 import { alertInfo, alertWarning, alertSuccess } from "../../helpers/toast";
 import accounting from "accounting";
 import { useTranslation } from "react-i18next";
+import { totalCount } from "../../redux/actions/actions";
 export default function ProductCard({
   name,
   price,

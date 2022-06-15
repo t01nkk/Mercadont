@@ -116,8 +116,6 @@ export default function SlideRating() {
         className="mySwiper"
       >
 
-        {/* <button onClick={() => mostra()}>mostra storage</button> */}
-
         {state.rating && state.favorites ? (
           React.Children.toArray(
             state.rating.map((product) => {
@@ -147,7 +145,6 @@ export default function SlideRating() {
             <Loader />
           </div>
         )}
-
       </Swiper>
     </div>
   );

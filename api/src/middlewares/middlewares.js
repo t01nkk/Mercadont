@@ -283,13 +283,8 @@ function groupPurchaseOrders(purchaseOrders) {
     orderStatus: "",
     review: false,
     user: "",
+    deliveryAddress: ""
   };
-  // order.orderNumber = purchaseOrders[0].orderId;
-  // order.date = purchaseOrders[0].date;
-  // order.amount = purchaseOrders[0].totalAmount;
-  // order.orderStatus = purchaseOrders[0].orderStatus;
-  // order.review = purchaseOrders[0].review;
-  // order.user = purchaseOrders[0].userId;
 
   for (let item of purchaseOrders) {
     if (order.orderNumber === item.orderId) {
@@ -306,6 +301,8 @@ function groupPurchaseOrders(purchaseOrders) {
         amount: 0,
         orderStatus: "",
         review: false,
+        user: "",
+        deliveryAddress: ""
       };
       order.user = item.userId;
       order.orderNumber = item.orderId;
@@ -317,6 +314,7 @@ function groupPurchaseOrders(purchaseOrders) {
         product: item.productId,
         productQuantity: item.productQuantity,
       });
+      order.deliveryAddress = `${item.country},${item.province},${item.city},${item.street},${item.postalCode}`
     }
   }
   orders.push(order);
