@@ -72,7 +72,7 @@ export const DateHistory = ({
       <p className="history-labels">
         {t("dateHistory.total")}<span>U$D</span> <span>{amount}</span>
       </p>
-      {orderStatus === "accepted" && review == false && (
+      {orderStatus === "accepted" && review === false && (
         <button className="history-btn-leaveReview" onClick={getDetailsHistory}>
           {t("dateHistory.review")}
         </button>

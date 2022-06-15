@@ -26,16 +26,16 @@ export const Cart = () => {
 
   let { search } = useLocation();
   useEffect(() => {
-    if (search == "?buy=false") {
+    if (search === "?buy=false") {
       alertInfo(t("cart.cancelPurchaseSuccess"));
     }
-    if (search == "?buy=noStock") {
+    if (search === "?buy=noStock") {
       alertWarning(t("cart.noStock"));
       localStorage.removeItem(user);
       setStorageCart([]);
       totalCount(dispatch);
     }
-    if (search == "?buy=true") {
+    if (search === "?buy=true") {
       localStorage.removeItem(user);
       alertSuccess(t("cart.successfulPurchase"));
       setStorageCart([]);
@@ -88,15 +88,6 @@ export const Cart = () => {
       const city = userDetails.data.city
       const street = userDetails.data.street
       const postalCode = userDetails.data.postalCode
-
-      // if( country === "" || province === "" || city === "" || street === "" || postalCode=== "" ){
-      //   alertWarning(t("cart.addressDetailsMissing"))
-      //   setTimeout(() => {
-      //     history.push("/accountDetails")
-      //   }, 1000);
-      //   return
-      // }
-
 
       localStorage?.setItem("myPrice", JSON.stringify(priceTotal));
       history.push("/buysProducts");

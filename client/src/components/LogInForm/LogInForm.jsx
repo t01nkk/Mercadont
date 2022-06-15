@@ -5,7 +5,7 @@ import { useAuth } from "../../context/authContext";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Formik } from "formik";
-import { alertError, alertSuccess } from "../../helpers/toast";
+import { alertError, alertInfo, alertSuccess } from "../../helpers/toast";
 import { ToastContainer } from "react-toastify";
 export default function LogInForm() {
   let errorMsg = "";
@@ -30,10 +30,11 @@ export default function LogInForm() {
             "myUser",
             JSON.stringify(userCredentials.user.uid)
           );
+          alertSuccess(t("logInForm.loggedIn"))
           setRedirect(true);
         }
       } else {
-        console.log("Check your mail box for the authentification email")
+        alertInfo(t("logInForm.checkEmailConfirmation"))
       }
     } catch (err) {
       // console.log(err);

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProduct, orderId, deliveryAddress, email, setQuantity, setCant }) => {
     date = date.slice(0, 10)
+
+    const {t} = useTranslation()
 
     const [idProduct, setIdProduct] = useState([])
     const history = useHistory()
@@ -37,7 +40,6 @@ export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProdu
                 })
             history.push(`/admin/Buys?${orderId}`)
             await setDetailsProduct(foundProducts.data)
-            console.log(foundProducts.data)
             await setChangeSection(false)
         } catch (error) {
             console.log(error)
@@ -46,11 +48,11 @@ export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProdu
 
     return (
         <div className='container-data-history' onClick={getDetailsBuys}>
-            <p>Date of Purchase: <span>{date}</span></p>
+            <p>{t("dateHistory.dateOfPurchase")}<span>{date}</span></p>
             <p>{email}</p>
-            <p>Address:{deliveryAddress}</p>
+            <p>{t("dateHistory.address")}{deliveryAddress}</p>
             <div>
-                <p>Total: <span>{amount}</span></p>
+                <p>{t("dateHistory.total")}<span>{amount}</span></p>
             </div>
             <br />
         </div>

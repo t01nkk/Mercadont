@@ -50,8 +50,6 @@ export default function SearchBarAdmin() {
       alert(err);
     }
   };
-
-  console.log(state.products);
   return (
     <div className="nav-language-search nav-item">
       <form role="search" className="d-flex" onSubmit={handleSearch}>

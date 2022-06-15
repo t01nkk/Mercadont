@@ -76,7 +76,7 @@ i18n
             cancelPurchaseSuccess: "Compra cancelada con éxito",
             addressDetailsMissing:
               "Por favor completa los datos de tu domicilio",
-            noStock: "El stock es insuficiente"
+            noStock: "El stock es insuficiente",
           },
           categoriesComp: {
             error_pos_numbers: "Solo se aceptan números positivos",
@@ -108,6 +108,7 @@ i18n
           },
           dateHistory: {
             dateOfPurchase: "Fecha de la compra: ",
+            address: "Dirección",
             quantityOfProduct: "Cantidad de productos: ",
             total: "Monto total: ",
             review: "Compartir tu opinión",
@@ -286,15 +287,18 @@ i18n
             notUser: "¿No tienes una cuenta?",
             newUser: "Crear un nuevo usuario",
             loggedIn: "¡Ingreso exitoso!",
+            checkEmailConfirmation: "Revisa tu correo para la confirmación",
           },
           productDetailsInfo: {
             categories: "Categorías: ",
             description: "Detalles del producto: ",
             stock: "Unidades disponibles:",
             price: "Precio: ",
+            productReviews: "Reseñas acerca de este producto",
             qa: "Preguntas acerca de este producto: ",
             q: "P: ",
             a: "R: ",
+
           },
           searchBar: {
             placeholder: "Buscar...",
@@ -315,7 +319,7 @@ i18n
             processingCard: "Procesando el pago. Aguarde un instante...",
             insuficientQuantity: "El stock actual es insuficiente.",
             error: "Hubo un problema con tu compra.",
-            cardProblem: "Hubo un problema con tu tarjeta"
+            cardProblem: "Hubo un problema con tu tarjeta",
           },
         },
       },
@@ -372,7 +376,8 @@ i18n
             qty: "Qty: ",
             removeFromCart: "Product removed from the cart",
             removeEverythingFromCart: "Cart successfully emptied out.",
-            confirmClearCart: "Are you really sure you want to discard your entire cart?",
+            confirmClearCart:
+              "Are you really sure you want to discard your entire cart?",
             emptyTheCart: "Discard the cart",
             welcome: "Welcome to your shopping cart",
             emptyCart: "Your shopping cart is currently empty",
@@ -380,8 +385,9 @@ i18n
             buy: "Buy",
             successfulPurchase: "Purchase successfully done!",
             cancelPurchaseSuccess: "Purchase successfully cancelled",
-            addressDetailsMissing: "Please complete your missing billing address",
-            noStock: "Stock not available"
+            addressDetailsMissing:
+              "Please complete your missing billing address",
+            noStock: "Stock not available",
           },
           categoriesComp: {
             error_pos_numbers: "Only positive numbers allowed",
@@ -413,6 +419,7 @@ i18n
           },
           dateHistory: {
             dateOfPurchase: "Date of purchase: ",
+            address: "Address: ",
             quantityOfProduct: "Product amount: ",
             total: "Total price: ",
             review: "Share a review",
@@ -469,7 +476,8 @@ i18n
             active: "Active",
             inactive: "Inactive",
             fixErrors: "Please correct the mistakes and try again",
-            confirmDelete: "Are you really sure you want to delete this product?",
+            confirmDelete:
+              "Are you really sure you want to delete this product?",
           },
           adminProductCard: {
             edit: "Edit",
@@ -580,8 +588,7 @@ i18n
           },
           logInForm: {
             errors_mail_required: "Email address is required.",
-            errors_mail_invalid:
-              "Email address is invalid. Try another one.",
+            errors_mail_invalid: "Email address is invalid. Try another one.",
             errors_password: "Password is required.",
             logIn: "Welcome!",
             mail: "Email address...",
@@ -591,12 +598,14 @@ i18n
             notUser: "Don't have an account yet?",
             newUser: "Create a new user",
             loggedIn: "Successfully logged in!",
+            checkEmailConfirmation: "Check your email for confirmation",
           },
           productDetailsInfo: {
             categories: "Categories: ",
             description: "Product details: ",
             stock: "Stock:",
             price: "Price: ",
+            productReviews: "Reviews about this product",
             qa: "Questions about this product: ",
             q: "Q: ",
             a: "A: ",
@@ -620,7 +629,7 @@ i18n
             totalPrice: "Total price: ",
             insuficientQuantity: "Current is insuficient.",
             error: "There's been a problem with your purchase.",
-            cardProblem: "There was a problem with your card"
+            cardProblem: "There was a problem with your card",
           },
         },
       },

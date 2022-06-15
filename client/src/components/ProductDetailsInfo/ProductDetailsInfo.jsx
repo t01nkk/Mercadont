@@ -195,7 +195,7 @@ export default function ProductDetailsInfo({
       </div>
 
       <div className="details-qua">
-      <p className="title-details-info-qua">Product Reviews</p>
+        <p className="title-details-info-qua">{t("productDetailsInfo.productReviews")}</p>
            {reviews && (
             <div className="details-questions-list">
               {React.Children.toArray(

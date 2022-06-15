@@ -26,7 +26,6 @@ export const Buys = () => {
     let getDataBuys = async () => {
         try {
             let buys = await axios(`${process.env.REACT_APP_DOMAIN}/admin/filterOrders/${stateBuys}`)
-            console.log(buys.data)
             setDataBuys(buys.data)
         } catch (error) {
             console.log(error)
@@ -65,9 +64,8 @@ export const Buys = () => {
                         <button onClick={() => setStateBuys("rejected")}>{t("adminBuys.rejected")}</button>
                     </div>
                     <div>
-                        {dataBuys.length > 0 && dataBuys.map(e => (
+                        {dataBuys.length > 0 && React.Children.toArray(dataBuys.map(e => (
                             <ItemBuy
-                                key={e.orderNumber}
                                 orderId={e.orderNumber}
                                 amount={e.amount}
                                 date={e.date}
@@ -79,13 +77,13 @@ export const Buys = () => {
                                 setQuantity={setQuantity}
                                 setDetailsProduct={setDetailsProduct}
                             />
-                        ))}
+                        )))}
                     </div>
                 </div>
                 :
                 <div>
                     <div>
-                        <button onClick={() => back()}>Back</button>
+                        <button onClick={() => back()}>{t("navigation.return")}</button>
                         {detailsProduct.length && detailsProduct.map((e, i) => (
                             <DetailsBuys
                                 // amount={history[index].amount}
