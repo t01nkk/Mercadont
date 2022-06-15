@@ -9,8 +9,6 @@ export default function SellProductForm() {
   const { t } = useTranslation()
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
-  const [selected, setSelected] = useState([]);
-
   const [data, setData] = useState({
     name: "",
     price: "",
@@ -29,9 +27,9 @@ export default function SellProductForm() {
     categories: [],
   });
   const expression = {
-    nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-    priceExpression: /^\d{1,14}$/,
-    descriptionExpression: /^[a-zA-ZÀ-ÿ\s]{1,200}$/,
+    nameExpression: /^[\da-zA-ZÀ-ÿ\s]{1,40}$/,
+    priceExpression: /^\d{1,3}(\.\d{1,3})?$/,
+    descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,®'*¿?¡!\s]{30,200}$/,
     stockExpression: /^\d{1,14}$/,
   };
 
@@ -94,6 +92,8 @@ export default function SellProductForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, price, description, image, status, stock, categories } = data;
+    
+    if (!errors.length !== 0) {
     try {
       await axios.post(`${process.env.REACT_APP_DOMAIN}/product/create`, {
         name: name,
@@ -109,7 +109,8 @@ export default function SellProductForm() {
     } catch (err) {
       console.log(err);
     }
-  };
+  }
+}
   useEffect(() => {
     fetchCategories(dispatch);
   }, []);
@@ -124,12 +125,11 @@ export default function SellProductForm() {
               type="text"
               name="name"
               placeholder={t("adminSellProduct.name")}
-              onChange={handleChangeName}
-              required
+              onChange={handleChangeName}             
               value={data.name}
             />
           </div>
-          {errors.name && <p className="error-input">{errors.name}</p>}
+          {errors.name && <p className="error-input-edit">{errors.name}</p>}
 
           <div className="divInputUser">
             <input
@@ -137,11 +137,11 @@ export default function SellProductForm() {
               name="price"
               placeholder={t("adminSellProduct.price")}
               onChange={handleChangePrice}
-              required
+             
               value={data.price}
             />
           </div>
-          {errors.price && <p className="error-input">{errors.price}</p>}
+          {errors.price && <p className="error-input-edit">{errors.price}</p>}
           <div className="divInputUser">
             <textarea
               cols="30"
@@ -150,12 +150,12 @@ export default function SellProductForm() {
               name="description"
               placeholder={t("adminSellProduct.description")}
               onChange={handleChangeDescription}
-              required
+            
               value={data.description}
             ></textarea>
           </div>
           {errors.description && (
-            <p className="error-input">{errors.description}</p>
+            <p className="error-input-edit">{errors.description}</p>
           )}
           <select onChange={handleChangeCat} className="divInputUser">
             <option value="" hidden className="divInputUser">
@@ -209,7 +209,7 @@ export default function SellProductForm() {
               value={data.stock}
             />
           </div>
-          {errors.stock && <p className="error-input">{errors.stock}</p>}
+          {errors.stock && <p className="error-input-edit">{errors.stock}</p>}
           <div className="btn-login">
             <input type="submit" value={t("adminSellProduct.submit")} className="input-submit" />
           </div>

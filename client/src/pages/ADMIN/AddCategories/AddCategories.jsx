@@ -74,7 +74,7 @@ export default function EditProduct() {
           value={product.name}
           onChange={handleChange}
         />
-        {!error ? null : <div className="error">{error}</div>}
+        {!error ? null : <div  className="error-input-edit">{error}</div>}
         <div className="btn-addCat">
           <input
             type="submit"
