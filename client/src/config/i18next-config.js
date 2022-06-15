@@ -276,7 +276,11 @@ i18n
             processingCard: "Procesando el pago. Aguarde un instante...",
             insuficientQuantity: "El stock actual es insuficiente.",
             error: "Hubo un problema con tu compra.",
-            cardProblem: "Hubo un problema con tu tarjeta"
+            cardProblem: "Hubo un problema con tu tarjeta",
+            chooseAddress: "Elegir una direccion de envio",
+            accountAddress: "Mi direccion",
+            newAddress: "Agregar nueva direccion",
+            addressNotComplete: "Informacion incompleta. Completar informacion en el perfil para continuar"
           },
         },
       },
@@ -541,7 +545,11 @@ i18n
             totalPrice: "Total price: ",
             insuficientQuantity: "Current is insuficient.",
             error: "There's been a problem with your purchase.",
-            cardProblem: "There was a problem with your card"
+            cardProblem: "There was a problem with your card",
+            chooseAddress: "Choose a shipping address",
+            accountAddress: "My address",
+            newAddress: "Add a new shipping address",
+            addressNotComplete: "Information incomplete. Please, complete your profile info first"
           },
         },
       },
