@@ -22,17 +22,17 @@ export default function AdminUser({ name, email, isAdmin }) {
   return (
     <li className="list-group-item flex-fill history-list-direction">
       <p className="history-labels">
-        Name: <span>{name}</span>
+        {t("adminUser.username")} <span>{name}</span>
       </p>
       <p className="history-labels">
-        Email: <span>{email}</span>
+        {t("adminUser.email")} <span>{email}</span>
       </p>
       <p className="history-labels">
-        Admin: <span>{`${isAdmin}`}</span>
+        {t("adminUser.admin")} <span>{`${isAdmin}`}</span>
       </p>
 
       <button onClick={handleAdmin} className="history-btn-leaveReview">
-        SWITCH ADMIN STATUS
+        {t("adminUser.setAdmin")}
       </button>
       {/* <button onClick={handleAdmin} className="button">
     <div>

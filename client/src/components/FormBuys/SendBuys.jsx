@@ -78,9 +78,9 @@ export const SendBuys = () => {
                 type: "card",
                 card: elements.getElement(CardElement)
             })
-            alertInfo(t("sendBuys.processingCard"))
             setLoadingBuys(true)
             if (!error) {
+                alertInfo(t("sendBuys.processingCard"))
                 const { id } = paymentMethod
                 // console.log("address:",address)
                 try {
@@ -214,27 +214,27 @@ export const SendBuys = () => {
                     <div>
                         {selectShipping === "newAddress" ?
                             <>
-                                <label htmlFor="country">Country;
+                                <label htmlFor="country">{t("accountDetails.country")}
                                 <input type="text" name='country' value={address.country} onChange={handleAdress} onBlur={blurAddress}/>
                                 </label>
                                 {error.country && <p>{error.country}</p>}
 
-                                <label htmlFor="province">Province:
+                                <label htmlFor="province">{t("accountDetails.province")}
                                     <input type="text" name='province' value={address.province} onChange={handleAdress} onBlur={blurAddress}/>
                                 </label>
                                 {error.province && <p>{error.province}</p>}
 
-                                <label htmlFor="city">City:
+                                <label htmlFor="city">{t("accountDetails.city")}
                                     <input type="text" name='city' value={address.city} onChange={handleAdress} onBlur={blurAddress}/>
                                 </label>
                                 {error.city && <p>{error.city}</p>}
 
-                                <label htmlFor="street">Street:
+                                <label htmlFor="street">{t("accountDetails.street")}
                                     <input type="text" name='street' value={address.street} onChange={handleAdress} onBlur={blurAddress}/>
                                 </label>
                                 {error.street && <p>{error.street}</p>}
 
-                                <label htmlFor="postalCode">PostalCode:
+                                <label htmlFor="postalCode">{t("accountDetails.postalCode")}
                                     <input type="text" name='postalCode' value={address.postalCode} onChange={handleAdress} onBlur={blurAddress}/>
                                 </label>
                                 {error.postalCode && <p>{error.postalCode}</p>}

@@ -36,7 +36,7 @@ i18n
             askPasswordChange:
               "¿Estás seguro de querer modificar tu actual contraseña?",
             confirmPasswordChange:
-              "Contraseña actualiza. Por favor revise su casilla de correo.",
+              "Contraseña actualizada. Por favor revise su casilla de correo.",
             updateInfo: "Actualizar información",
             email: "Dirección de correo",
             name: "Nombre",
@@ -100,7 +100,7 @@ i18n
             errors_password_match: "Las contraseñas deben coincidir.",
             createAccount: "Crear una cuenta nueva",
             accountCreated:
-              "¡Cuenta registrada exitosamente! Por favor, chequea tu mail para confirmar tu cuenta",
+              "Por favor, chequea tu mail para confirmar tu cuenta",
             name: "Primer nombre...",
             email: "Dirección de correo...",
             password: "Contraseña...",
@@ -200,9 +200,11 @@ i18n
             select: "Seleccionar",
           },
           adminUser: {
+            manageRoles: "Administrar roles de usuario",
             setAdmin: "Convertir en administrador",
             username: "Nombre de usuario: ",
             email: "Dirección de correo: ",
+            admin: "Administrador: "
           },
           adminQaS: {
             solvedQuestions: "Preguntas resueltas",
@@ -270,6 +272,8 @@ i18n
           history: {
             shoppingHistory: "Historial de compras",
             instructions: "Haga click sobre las órdenes para ver los detalles",
+            submit: "Enviar",
+            sendReview: "¡Reseña enviada con éxito!",
           },
           loginAdmin: {
             login: "Ingreso a Administración",
@@ -298,7 +302,6 @@ i18n
             qa: "Preguntas acerca de este producto: ",
             q: "P: ",
             a: "R: ",
-
           },
           searchBar: {
             placeholder: "Buscar...",
@@ -323,7 +326,8 @@ i18n
             chooseAddress: "Elegir una dirección de envío",
             accountAddress: "Mi dirección",
             newAddress: "Agregar nueva dirección",
-            addressNotComplete: "Información incompleta. Completar información en el perfil para continuar"
+            addressNotComplete:
+              "Complete su información personal para continuar",
           },
         },
       },
@@ -426,7 +430,7 @@ i18n
             address: "Address: ",
             quantityOfProduct: "Product amount: ",
             total: "Total price: ",
-            review: "Share a review",
+            review: "Add review",
             price: "Price",
           },
           formQA: {
@@ -516,9 +520,11 @@ i18n
             select: "Select",
           },
           adminUser: {
+            manageRoles: "Manage user roles",
             setAdmin: "Set admin status",
             username: "Username: ",
             email: "Email addres: ",
+            admin: "Administrator: ",
           },
           adminQaS: {
             solvedQuestions: "Solved questions",
@@ -586,6 +592,8 @@ i18n
           history: {
             shoppingHistory: "Shopping history",
             instructions: "Click on the orders to see more info",
+            submit: "Send",
+            sendReview: "Review successfully sent!",
           },
           loginAdmin: {
             login: "Access to Administration",
@@ -637,7 +645,8 @@ i18n
             chooseAddress: "Choose a shipping address",
             accountAddress: "My address",
             newAddress: "Add a new shipping address",
-            addressNotComplete: "Information incomplete. Please, complete your profile info first"
+            addressNotComplete:
+              "Information incomplete. Please, complete your profile info first",
           },
         },
       },

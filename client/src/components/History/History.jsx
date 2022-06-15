@@ -5,7 +5,7 @@ import { DateHistory } from "./DateHistory";
 import "./History.scss";
 import { DetailsBuysHistory } from "./DetailsBuysHistory";
 import { useTranslation } from "react-i18next";
-
+import {alertSuccess} from '../../helpers/toast'
 export const History = () => {
   const { t } = useTranslation()
   const [history, setHistory] = useState([]);
@@ -40,6 +40,7 @@ export const History = () => {
       producto: reviewText,
     });
     if (resp) {
+      alertSuccess(t("history.sendReview"))
       redirect.push("/home");
     }
     //id => por params
@@ -120,7 +121,7 @@ export const History = () => {
                 className="history-btn-goback "
                 onClick={() => sendReview()}
               >
-                Enviar review
+                {t("history.submit")}
               </button>
             </div>
           ) : null}
