@@ -5,6 +5,7 @@ import { getFavorites } from "../../redux/actions/actions";
 import { handleDeleteFavorite } from "../Cart/actionsCart.js";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
+import { alertInfo } from '../../helpers/toast'
 // import "./Favorite.css"
 
 export const Favorites = () => {
@@ -26,6 +27,7 @@ export const Favorites = () => {
     let newArrayFavorites = favorites.filter((e) => e.id !== id);
     setFavorites(newArrayFavorites);
     handleDeleteFavorite(id);
+    alertInfo(t("home.altRemoveFromFavorites"))
   };
 
   const handleBack = async (e) => {

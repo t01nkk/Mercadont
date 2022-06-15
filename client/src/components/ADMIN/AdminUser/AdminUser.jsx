@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 export default function AdminUser({ name, email }) {
+  const { t }= useTranslation()
   const handleAdmin = async (e) => {
     e.preventDefault();
     try {
@@ -17,10 +19,10 @@ export default function AdminUser({ name, email }) {
     <div>
       <article>
         <div>
-          <span>{`Name: ${name} Email: ${email}`}</span>
+          <span>{t("adminUser.username")}{name} {t("adminUser.email")}{email}</span>
 
           <button onClick={handleAdmin} className="button">
-            SWITCH ADMIN STATUS
+            {t("adminUser.setAdmin")}
           </button>
           {/* <button onClick={handleAdmin} className="button">
             BAN USER

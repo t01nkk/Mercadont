@@ -45,20 +45,20 @@ export default function LoggedAdmin() {
                   data-bs-auto-close="outside"
                   aria-expanded="false"
                 >
-                  ADMIN
+                  {t("adminLoggedNavBar.admin")}
                 </Link>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <Link
                     className="dropdown-item category-list-item"
                     to="/admin/user"
                   >
-                    User
+                    {t("adminLoggedNavBar.user")}
                   </Link>
                   <Link
                     className="dropdown-item category-list-item"
                     to="/admin/Buys"
                   >
-                    Buys
+                    {t("adminLoggedNavBar.buys")}
                   </Link>
                   <Link
                     className="dropdown-item category-list-item"
@@ -82,7 +82,7 @@ export default function LoggedAdmin() {
               </li>
               <li className="nav-item white-text-nav">
                 <Link className="nav-item white-text-nav" to="/admin/QaS">
-                  QaS
+                  {t("adminLoggedNavBar.qas")}
                 </Link>
               </li>
               <li className="nav-item white-text-nav">

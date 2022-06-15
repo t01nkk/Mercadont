@@ -70,7 +70,6 @@ export default function AccountDetailsForm() {
 
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  console.log(errors);
   let id = localStorage.getItem("myUser");
 
   const fetchUser = async () => {
@@ -190,7 +189,7 @@ export default function AccountDetailsForm() {
                 {errors.lastname && <p>{errors.lastname}</p>}{" "}
               </div>
               <div className="input-details">
-                <p>City</p>
+                <p>{t("accountDetails.city")}</p>
                 <input
                   className="input-line"
                   type="text"
@@ -218,7 +217,7 @@ export default function AccountDetailsForm() {
             </div>
             <div className="address-details2">
               <div className="input-details">
-                <p>PostalCode</p>
+                <p>{t("accountDetails.postalCode")}</p>
                 <input
                   className="input-line"
                   type="text"
@@ -229,7 +228,7 @@ export default function AccountDetailsForm() {
                 />
               </div>
               <div className="input-details">
-                <p>Province</p>
+                <p>{t("accountDetails.province")}</p>
                 <input
                   className="input-line"
                   type="text"
@@ -241,7 +240,7 @@ export default function AccountDetailsForm() {
                 {errors.province && <p>{errors.province}</p>}{" "}
               </div>
               <div className="input-details">
-                <p> Street</p>
+                <p> {t("accountDetails.street")}</p>
                 <input
                   className="input-line"
                   type="text"
@@ -267,7 +266,6 @@ export default function AccountDetailsForm() {
           </div>
 
           <div className="password-user ">
-            <p>{t("accountDetailsForm.password")}: </p>
             <div className="button-user">
               <button
                 className="button-details"
@@ -279,7 +277,7 @@ export default function AccountDetailsForm() {
           </div>
 
           <div className="button-user">
-            <button className="button-details">Actualizar</button>
+            <button className="button-details">{t("accountDetailsForm.submit")}</button>
           </div>
         </form>
       </div>

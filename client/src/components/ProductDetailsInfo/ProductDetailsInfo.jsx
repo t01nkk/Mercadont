@@ -52,6 +52,7 @@ export default function ProductDetailsInfo({
   const deleteFavorite = () => {
     setChangeButton(false);
     handleDeleteFavorite(id);
+    alertInfo(t("home.altRemoveFromFavorites"))
   };
 
   const postFavorite = () => {
@@ -189,9 +190,9 @@ export default function ProductDetailsInfo({
             {React.Children.toArray(
               qas.map((qa) => (
                 <div className="question">
-                  <p className="questionText">Q: {qa.question}</p>
+                  <p className="questionText">{t("productDetailsInfo.q")}{qa.question}</p>
                   {qa.answer ? (
-                    <div className="answerText">A: {qa.answer}</div>
+                    <div className="answerText">{t("productDetailsInfo.a")}{qa.answer}</div>
                   ) : null}
                 </div>
               ))

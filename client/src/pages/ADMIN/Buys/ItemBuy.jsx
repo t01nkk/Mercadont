@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProduct, orderId }) => {
+    const { t } = useTranslation()
     date = date.slice(0, 10)
     const [cant, setCant] = useState(0)
     const [idProduct, setIdProduct] = useState([])
@@ -41,10 +43,10 @@ export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProdu
 
     return (
         <div className='container-data-history' onClick={getDetailsBuys}>
-            <p>Date of Purchase: <span>{date}</span></p>
+            <p>{t("dateHistory.dateOfPurchase")} <span>{date}</span></p>
             <div>
-                <p>Quantity of Product: <span>{cant !== 0 && cant}</span></p>
-                <p>Total: <span>{amount}</span></p>
+                <p>{t("dateHistory.quantityOfProduct")} <span>{cant !== 0 && cant}</span></p>
+                <p>{t("dateHistory.total")} <span>{amount}</span></p>
             </div>
             <br />
         </div>

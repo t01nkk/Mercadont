@@ -34,7 +34,6 @@ export default function SlideRating() {
   const [inCart, setInCart] = useState(false);
   const history = useHistory();
   let person = JSON.parse(localStorage.getItem("myUser"));
-  console.log("Hola rating", state.rating);
 
   const sold = state.soldMost[0]?.details;
   const handleSaveCart = (name, price, image, id, stock) => {

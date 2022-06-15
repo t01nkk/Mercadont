@@ -34,7 +34,6 @@ export const SendBuys = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         let el = elements.getElement(CardElement)
-        console.log(el)
         if (selectBuys === "card") {
             const { error, paymentMethod } = await stripe.createPaymentMethod({
                 type: "card",
@@ -123,7 +122,7 @@ export const SendBuys = () => {
                     </div>
                 </div>
                 <div>
-                    {amountTotal && <p>{t("sendBuys.totalprice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
+                    {amountTotal && <p>{t("sendBuys.totalPrice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
                     <p>{t("sendBuys.paymentMethod")}</p>
                     <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
                     <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>

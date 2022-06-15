@@ -155,9 +155,7 @@ export default function EditProduct() {
         console.log(err);
       }
     }
-
   };
-  console.log(product.status);
   return (
     <div className="container-edit-admin">
       <form onSubmit={handleSubmit} className="form-edit-admin">
