@@ -140,7 +140,7 @@
 }
 .details-price {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   margin-top: 5rem;
 }
@@ -166,4 +166,17 @@
   align-items: center;
   margin-top: 30px;
   width: 100%;
+}
+
+.container-reviews{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.container-reviews>p:first-child{
+  width: 60%;
+}
+.container-reviews>p:last-child{
+  width: 20%;
+  text-align: center;
 }

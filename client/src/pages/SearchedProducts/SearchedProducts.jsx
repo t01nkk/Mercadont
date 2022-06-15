@@ -8,7 +8,7 @@ import {
   FILTER_BY_PRICE,
 } from "../../redux/actions/actionTypes";
 import { alertSuccess, alertInfo } from "../../helpers/toast";
-import { getFavorites } from "../../redux/actions/actions";
+import { getFavorites, totalCount } from "../../redux/actions/actions";
 import "react-toastify/dist/ReactToastify.css";
 import {
   handleDeleteFavorite,
@@ -104,12 +104,14 @@ export default function SearchedProducts() {
     setUser(myUser);
     if (myCart) {
       setCart(myCart);
+      totalCount(dispatch)
     } else {
       setCart([]);
     }
   }, []);
   useEffect(() => {
     localStorage.setItem(user, JSON.stringify(cart));
+    totalCount(dispatch)
   }, [cart]);
 
   return (
