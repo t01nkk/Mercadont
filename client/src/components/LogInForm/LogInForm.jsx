@@ -19,24 +19,6 @@ export default function LogInForm() {
 
       //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
 
-      // if (userCredentials.user.emailVerified) {
-
-      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
-        id: userCredentials.user.uid,
-        name: userCredentials.user.displayName,
-        email: userCredentials.user.email,
-        image: userCredentials.user.photoURL,
-        isVerified: userCredentials.user.emailVerified,
-      });
-
-      if (userCredentials.user.uid) {
-        localStorage.setItem(
-          "myUser",
-          JSON.stringify(userCredentials.user.uid)
-        );
-        alertSuccess(t("logInForm.loggedIn"));
-        setRedirect(true);
-      }
       if (userCredentials.user.emailVerified) {
         await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
           id: userCredentials.user.uid,
@@ -56,7 +38,6 @@ export default function LogInForm() {
         //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
       } else {
         console.log("Check your mail box for the authentification email")
-
       }
     } catch (err) {
       // console.log(err);

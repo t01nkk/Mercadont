@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
-export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProduct, orderId }) => {
+export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProduct, orderId, deliveryAddress, email ,setQuantity, setCant }) => {
     date = date.slice(0, 10)
-    const [cant, setCant] = useState(0)
+    
     const [idProduct, setIdProduct] = useState([])
     const history = useHistory()
     let total = 0
@@ -16,11 +16,15 @@ export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProdu
     const sumarCount = async () => {
         if (count.length) {
             let newArray = []
+            let arrayQuantity = []
             count.forEach(e => {
                 total += e.productQuantity
                 newArray.push(e.product)
+                arrayQuantity.push(e.productQuantity)
             });
+
             setIdProduct(newArray)
+            setQuantity(arrayQuantity)
         }
         setCant(total)
     }
@@ -33,6 +37,7 @@ export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProdu
                 })
             history.push(`/admin/Buys?${orderId}`)
             await setDetailsProduct(foundProducts.data)
+            console.log(foundProducts.data)
             await setChangeSection(false)
         } catch (error) {
             console.log(error)
@@ -42,8 +47,9 @@ export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProdu
     return (
         <div className='container-data-history' onClick={getDetailsBuys}>
             <p>Date of Purchase: <span>{date}</span></p>
+            <p>{email}</p>
+            <p>Address:{deliveryAddress}</p>
             <div>
-                <p>Quantity of Product: <span>{cant !== 0 && cant}</span></p>
                 <p>Total: <span>{amount}</span></p>
             </div>
             <br />

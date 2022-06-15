@@ -10,6 +10,8 @@ export const Buys = () => {
     const [dataBuys, setDataBuys] = useState("")
     const [detailsProduct, setDetailsProduct] = useState([])
     const [changeSection, setChangeSection] = useState(true)
+    const [quantity, setQuantity] = useState([])
+    const [cant, setCant] = useState(0)
     const history = useHistory()
     let { search } = useLocation()
 
@@ -23,10 +25,16 @@ export const Buys = () => {
     let getDataBuys = async () => {
         try {
             let buys = await axios(`${process.env.REACT_APP_DOMAIN}/admin/filterOrders/${stateBuys}`)
+            console.log(buys.data)
             setDataBuys(buys.data)
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const back = ()=>{
+        setChangeSection(true)
+        history.push("/admin/Buys")
     }
 
     let changeStateBuys = async (changeState) => {
@@ -43,7 +51,6 @@ export const Buys = () => {
             console.log(error)
         }
     }
-
     return (
         <div>
             {changeSection ?
@@ -60,8 +67,12 @@ export const Buys = () => {
                                 orderId={e.orderNumber}
                                 amount={e.amount}
                                 date={e.date}
+                                email={e.user.email}
                                 count={e.products}
+                                deliveryAddress={e.deliveryAddress}
+                                setCant={setCant}
                                 setChangeSection={setChangeSection}
+                                setQuantity={setQuantity}
                                 setDetailsProduct={setDetailsProduct}
                             />
                         ))}
@@ -70,9 +81,11 @@ export const Buys = () => {
                 :
                 <div>
                     <div>
-                        {detailsProduct.length && detailsProduct.map(e => (
+                         <button onClick={()=>back()}>Back</button>
+                        {detailsProduct.length && detailsProduct.map((e,i) => (
                             <DetailsBuys
                                 // amount={history[index].amount}
+                                amountProduct={quantity[i]}
                                 key={e.id}
                                 name={e.name}
                                 id={e.id}
@@ -80,9 +93,11 @@ export const Buys = () => {
                                 price={e.price}
                             />
                         ))}
-                        <>
-                            <button onClick={() => { changeStateBuys("accepted") }}>Aceptar pedido</button>
-                            <button onClick={() => { changeStateBuys("rejected") }}>Rechazaar pedido</button>
+                        <>{dataBuys[0].orderStatus === "pending" &&
+                             <div>
+                                <button onClick={() => { changeStateBuys("accepted") }}>Aceptar pedido</button>
+                                <button onClick={() => { changeStateBuys("rejected") }}>Rechazaar pedido</button> 
+                            </div>}
                         </>
                     </div>
                 </div>

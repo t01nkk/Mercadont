@@ -1,7 +1,7 @@
 const { PurchaseOrder, User } = require("../db");
-const { mailPayment } = require("../middlewares/middlewares");
+const { mailPayment, reStockOrderCancelled } = require("../middlewares/middlewares");
 
-const createPurchaseOrder = async (orderId, userId, local, amount, status) => {
+const createPurchaseOrder = async (orderId, userId, local, amount, address, status ) => {
     let created;
     try {
         for (let product of local) {
@@ -11,7 +11,12 @@ const createPurchaseOrder = async (orderId, userId, local, amount, status) => {
                 productId: product.id,
                 productQuantity: product.quantity,
                 totalAmount: amount,
-                paymentStatus: status
+                paymentStatus: status,
+                country: address.country, 
+                province: address.province,
+                city: address.city,
+                street: address.street,
+                postalCode: address.postalCode,
             })
         }
 
