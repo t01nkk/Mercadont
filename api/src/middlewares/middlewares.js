@@ -71,6 +71,33 @@ const modifyStockPaypal = async (orderId) => {
   }
 };
 
+const reStockOrderCancelled = async (orderId) => {
+  let updateProduct;
+  try {
+    const findProducts = await PurchaseOrder.findAll({
+      where: {orderId}
+    });
+
+    for (let product of findProducts) {
+      const findProduct = await Product.findByPk(product.dataValues.productId);
+      if (findProduct.status === "inactive"){
+        updateProduct = await Product.update(
+          { stock: findProduct.stock + product.dataValues.productQuantity, status: "active" },
+          { where: { id: product.dataValues.productId } }
+        );
+      }else{
+        updateProduct = await Product.update(
+          { stock: findProduct.stock + product.dataValues.productQuantity },
+          { where: { id: product.dataValues.productId } }
+        );
+      }
+    }
+    return { msg: "stock updated" };
+  } catch (error) {
+    return error;
+  }
+};
+
 function validateInputProduct(
   name,
   price,
@@ -330,6 +357,7 @@ module.exports = {
   validateInputProduct,
   modifyStockStripe,
   modifyStockPaypal,
+  reStockOrderCancelled,
   // checkAuthenticated,
   // checkNotAuthenticated,
   mailPayment,
