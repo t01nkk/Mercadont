@@ -314,12 +314,11 @@ router.get("/recommendation/mostSold", async (req, res) => {
     details: {},
     quantity: 0,
   };
-  let productsSold = [];
+  let productsSold = []
   try {
     const orders = await PurchaseOrder.findAll();
 
     if (!orders?.length) {
-
       const products = await Product.findAll({ where: { status: "active" } });
       products.splice(12);
       return res.status(200).send(products);
@@ -353,7 +352,6 @@ router.get("/recommendation/mostSold", async (req, res) => {
     let arrayProducts = []
     for (let p of productsSold) {
       arrayProducts.push(p.details)
-
     }
     // Devuelve un array de productos mas comprados ordenados de manera DESCENDENTE
     res.status(200).send(arrayProducts);

@@ -155,7 +155,6 @@ export default function EditProduct() {
         console.log(err);
       }
     }
-
   };
   return (
     <div className="container-edit-admin">

@@ -2,9 +2,11 @@ import React from "react";
 import axios from "axios";
 import { fetchUsers } from "../../../redux/actions/actions";
 import { useStore } from "../../../context/store";
+import { useTranslation } from "react-i18next";
 
 export default function AdminUser({ name, email, isAdmin }) {
   const [state, dispatch] = useStore();
+  const { t } = useTranslation()
   const handleAdmin = async (e) => {
     e.preventDefault();
     try {
@@ -33,6 +35,15 @@ export default function AdminUser({ name, email, isAdmin }) {
         SWITCH ADMIN STATUS
       </button>
       {/* <button onClick={handleAdmin} className="button">
+    <div>
+      <article>
+        <div>
+          <span>{t("adminUser.username")}{name} {t("adminUser.email")}{email}</span>
+
+          <button onClick={handleAdmin} className="button">
+            {t("adminUser.setAdmin")}
+          </button>
+          {/* <button onClick={handleAdmin} className="button">
             BAN USER
           </button> */}
     </li>
