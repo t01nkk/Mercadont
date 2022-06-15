@@ -21,9 +21,9 @@ export default function EditProduct() {
   });
   const history = useHistory();
   const expression = {
-    nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-    priceExpression: /^[d*.?d*]{1,14}$/,
-    descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,'*¿?¡!\s]{1,200}$/,
+    nameExpression: /^[\da-zA-ZÀ-ÿ\s]{1,40}$/,
+    priceExpression: /^\d{1,3}(\.\d{1,3})?$/,
+    descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,®'*¿?¡!\s]{30,200}$/,
     stockExpression: /^\d{1,14}$/,
 
   };
@@ -32,16 +32,16 @@ export default function EditProduct() {
     let errors = {};
 
     if (!expression.nameExpression.test(input.name)) {
-      errors.name = t("adminSellProduct.errors.name");
+      errors.name = t("adminSellProduct.errors_name");
     }
     if (!expression.priceExpression.test(input.price)) {
-      errors.price = t("adminSellProduct.errors.price");
+      errors.price = t("adminSellProduct.errors_price");
     }
     if (!expression.descriptionExpression.test(input.description)) {
-      errors.description = t("adminSellProduct.errors.description");
+      errors.description = t("adminSellProduct.errors_description");
     }
     if (!expression.stockExpression.test(input.stock)) {
-      errors.stock = t("adminSellProduct.errors.stock");
+      errors.stock = t("adminSellProduct.errors_stock");
     }
     return errors;
   }
@@ -157,7 +157,6 @@ export default function EditProduct() {
     }
 
   };
-  console.log(product.status);
   return (
     <div className="container-edit-admin">
       <form onSubmit={handleSubmit} className="form-edit-admin">
@@ -238,7 +237,7 @@ export default function EditProduct() {
             </select>
           </div>
           <div className="select-categories-del">
-            {product.categories.length &&
+            {product.categories.length ?
               React.Children.toArray(
                 product.categories?.map((category) => (
                   <div className="edit-cat-delete">
@@ -251,7 +250,7 @@ export default function EditProduct() {
                     </button>
                   </div>
                 ))
-              )}
+              ) : <p>{t("adminSellProduct.errors_categories")}</p>}
           </div>
           <input
             type="submit"

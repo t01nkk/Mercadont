@@ -55,7 +55,8 @@ export default function LogInForm() {
         }
         //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
       } else {
-        console.log("Check your mail box for the authentification email");
+        console.log("Check your mail box for the authentification email")
+
       }
     } catch (err) {
       // console.log(err);
@@ -81,7 +82,7 @@ export default function LogInForm() {
           "myUser",
           JSON.stringify(userCredentials.user.uid)
         );
-      alertSuccess(t("logInForm.loggedIn"));
+      alertSuccess(t("logInForm.loggedIn"))
       setRedirect(true);
     } catch (err) {
       console.log(err);

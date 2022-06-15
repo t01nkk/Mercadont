@@ -220,7 +220,7 @@ router.post("/create", async (req, res) => {
 
   try {
     const newProduct = await Product.create({
-      name,
+      name: name.toUpperCase(),
       price,
       description,
       status,
@@ -290,7 +290,7 @@ router.put("/update/:id", async (req, res) => {
 
     await Product.update(
       {
-        name,
+        name: name.toUpperCase(),
         price,
         description,
         image,
@@ -319,7 +319,8 @@ router.get("/recommendation/mostSold", async (req, res) => {
     const orders = await PurchaseOrder.findAll();
 
     if (!orders?.length) {
-      const products = await Product.findAll();
+
+      const products = await Product.findAll({ where: { status: "active" } });
       products.splice(12);
       return res.status(200).send(products);
     }
@@ -345,7 +346,7 @@ router.get("/recommendation/mostSold", async (req, res) => {
     productsSold.push(product);
 
     productsSold.sort((a, b) => {
-      return b.details.rating - a.details.rating
+      return b.details.quantity - a.details.quantity
     })
 
     productsSold.splice(12)
@@ -382,23 +383,25 @@ router.get("/recommendation/byRating", async (req, res) => {
 
 router.get("/recommendation/byHistory/:userId", async (req, res) => {
   const { userId } = req.params;
+  if (!userId) return res.status(200).send([]);
   let product = {
     id: "",
   };
   let products = [];
   let categories = [];
   try {
+
     const userProducts = await PurchaseOrder.findAll({
       where: {
         userId: userId,
       },
     });
 
-    if (!userProducts) {
-      return res.status(400).send("No orders found");
+    if (!userProducts.length) {
+      return res.status(200).send([]);
     }
 
-    product.id = userProducts[0].productId;
+    product.id = userProducts[0]?.productId;
     for (let i = 1; i < userProducts.length; i++) {
       if (product.id !== userProducts[i].productId) {
         products.push(product);
@@ -408,6 +411,7 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
         product.id = userProducts[i].productId;
       }
     }
+
     products.push(product);
 
     for (let pro of products) {
@@ -418,7 +422,7 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
             through: { attributes: [] },
           },
         ],
-        where: { id: pro.id },
+        where: { id: pro?.id },
       });
       for (let category of item[0]?.categories) {
         if (!categories.includes(category.name)) categories.push(category.name);
@@ -437,6 +441,7 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
         },
       ],
     });
+
 
     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
     res.status(200).send(recommended);
