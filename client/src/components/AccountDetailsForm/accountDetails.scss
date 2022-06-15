@@ -2,51 +2,42 @@
   margin-top: 2%;
 }
 
-.account-details{
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-  align-items: center;
-  flex-direction: column;
- 
-}
 
-.form-details{
-  padding-top: 1%;
+
+.form-details {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 70%;
-  height: 80%;
+  height: 90%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(to right,
-  black 10%, white 10%);
- 
-  @media only screen and (max-width: 850px) {
-    height: 90%;
-    padding-left: 9%;
-    padding-top: 5%;
+  background: linear-gradient(to right, black 10%, white 10%);
+
+  @media only screen and (max-width: 1080px) {
+    height: 100%;
+    width: 100%;
+  }
+  @media only screen and (max-width: 450px) {
+    background: unset;
   }
 }
 
-.input-details{
-  padding-top: 15%;   
-  padding-left:2% ;
+.input-details {
+  padding-top: 15%;
+  padding-left: 2%;
   @media only screen and (max-width: 850px) {
-  
     padding-top: 5%;
   }
 }
-.input-line{
-   border: none;
-   border-bottom: 2px solid black;
+.input-line {
+  border: none;
+  border-bottom: 2px solid black;
 }
-.title-details{
+.title-details {
   margin-top: 5%;
   font-size: 1.5rem;
   font-weight: 400;
 }
-
 
 .address-details {
   padding-top: 5%;
@@ -55,40 +46,34 @@
   @media only screen and (max-width: 850px) {
     display: unset;
   }
-  
 }
-.address-details1{
+.address-details1 {
   display: flex;
-  padding-right:20% ;
+  padding-right: 20%;
   flex-direction: column;
-  
 }
 .address-details2 {
   display: flex;
-  padding-right:20% ;
+  padding-right: 20%;
   flex-direction: column;
   word-wrap: break-word;
-  
- 
 }
-.password-user{
+.password-user {
   display: flex;
   flex-direction: row;
-  padding-top: 5%;   
-  padding-left:2% ;
-
+  padding-top: 5%;
+  padding-left: 2%;
 }
 
-.button-user{
+.button-user {
   margin-top: 5%;
   display: flex;
   justify-content: flex-end;
   @media only screen and (max-width: 850px) {
     margin-top: 0%;
-
   }
 }
-.button-details{
+.button-details {
   display: flex;
   justify-content: flex-end;
   background-color: black;
@@ -107,10 +92,42 @@
   @media only screen and (max-width: 850px) {
     padding: 0%;
     font-size: 0.8rem;
-
   }
 }
 .input-edit-profile:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.input-submit-editProfile {
+  border: none;
+  outline: none;
+  background-color: #000000;
+  height: 40px;
+  color: #fff;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 335px;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 5px 0;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+.btn-editProfile {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 20px 10%;
+  @media only screen and (max-width: 500px) {
+    margin: 20px 0;
+  }
 }

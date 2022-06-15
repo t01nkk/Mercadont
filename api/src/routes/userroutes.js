@@ -201,7 +201,7 @@ router.post('/product/history', async (req, res) => {
     for (var i = 0; i < order.length; i++) {
       let found = await Product.findOne({ where: { id: order[i] } });
       if (!found) {
-        res.status(404).send({ msg: `The product id:  ${order[i]}  doesn't exist` })
+        return res.status(404).send({ msg: `The product id:  ${order[i]}  doesn't exist` })
       }
       foundProducts.push(found);
     }

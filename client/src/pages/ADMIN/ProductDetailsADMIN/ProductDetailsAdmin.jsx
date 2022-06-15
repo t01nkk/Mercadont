@@ -25,7 +25,7 @@ export default function ProductDetails() {
           key={product.id}
           id={product.id}
           image={product.image}
-          name={product.name}
+          name={product.name.toUpperCase()}
           description={product.description}
           stock={product.stock}
           price={product.price}

@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react'
 import { ItemBuy } from './ItemBuy.jsx'
 import { DetailsBuys } from './DetailsBuys.jsx'
 import { useHistory, useLocation } from "react-router-dom";
-
+import { useTranslation } from 'react-i18next';
+import { alertSuccess, alertInfo } from '../../../helpers/toast'
 export const Buys = () => {
-
+    const { t } = useTranslation()
     const [stateBuys, setStateBuys] = useState("pending")
     const [dataBuys, setDataBuys] = useState("")
     const [detailsProduct, setDetailsProduct] = useState([])
@@ -32,24 +33,24 @@ export const Buys = () => {
         }
     }
 
-    const back = ()=>{
+    const back = () => {
         setChangeSection(true)
         history.push("/admin/Buys")
     }
 
     let changeStateBuys = async (changeState) => {
         try {
-            console.log(dataBuys)
-            console.log(dataBuys[0].orderNumber)
             let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/admin/setOrderStatus`, {
                 orderStatus: changeState,
                 orderId: search.substring(1)
             })
             if (resp) {
                 history.push(`/admin/Buys`)
-                window.location.reload()
+                alertSuccess(t("adminBuys.confirmPurchase"))
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000);
             }
-            console.log(resp)
         } catch (error) {
             console.log(error)
         }
@@ -59,9 +60,9 @@ export const Buys = () => {
             {changeSection ?
                 <div>
                     <div>
-                        <button onClick={() => setStateBuys("pending")}>Pendientes</button>
-                        <button onClick={() => setStateBuys("accepted")}>Aceptadas</button>
-                        <button onClick={() => setStateBuys("rejected")}>Rechazadas</button>
+                        <button onClick={() => setStateBuys("pending")}>{t("adminBuys.pending")}</button>
+                        <button onClick={() => setStateBuys("accepted")}>{t("adminBuys.accepted")}</button>
+                        <button onClick={() => setStateBuys("rejected")}>{t("adminBuys.rejected")}</button>
                     </div>
                     <div>
                         {dataBuys.length > 0 && dataBuys.map(e => (
@@ -84,8 +85,8 @@ export const Buys = () => {
                 :
                 <div>
                     <div>
-                         <button onClick={()=>back()}>Back</button>
-                        {detailsProduct.length && detailsProduct.map((e,i) => (
+                        <button onClick={() => back()}>Back</button>
+                        {detailsProduct.length && detailsProduct.map((e, i) => (
                             <DetailsBuys
                                 // amount={history[index].amount}
                                 amountProduct={quantity[i]}
@@ -97,9 +98,9 @@ export const Buys = () => {
                             />
                         ))}
                         <>{dataBuys[0].orderStatus === "pending" &&
-                             <div>
-                                <button onClick={() => { changeStateBuys("accepted") }}>Aceptar pedido</button>
-                                <button onClick={() => { changeStateBuys("rejected") }}>Rechazaar pedido</button> 
+                            <div>
+                                <button onClick={() => { changeStateBuys("accepted") }}>{t("adminBuys.acceptPurchase")}</button>
+                                <button onClick={() => { changeStateBuys("rejected") }}>{t("adminBuys.rejectPurchase")}</button>
                             </div>}
                         </>
                     </div>

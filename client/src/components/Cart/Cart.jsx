@@ -29,12 +29,20 @@ export const Cart = () => {
     if (search == "?buy=false") {
       alertInfo(t("cart.cancelPurchaseSuccess"));
     }
+    if (search == "?buy=noStock") {
+      alertWarning(t("cart.noStock"));
+      localStorage.removeItem(user);
+      setStorageCart([]);
+      totalCount(dispatch);
+    }
     if (search == "?buy=true") {
       localStorage.removeItem(user);
       alertSuccess(t("cart.successfulPurchase"));
       setStorageCart([]);
       totalCount(dispatch);
     }
+
+    
   }, [search]);
 
   const deleteDatatoStorage = (name) => {
@@ -59,17 +67,6 @@ export const Cart = () => {
 
   //Funcion para limpiar carro
   const clearCart = (e) => {
-    // const answer = window.confirm("Are you sure you want to clear your cart?")
-    // // if (answer) {
-    // setStorageCart([]);
-    // setPriceTotal(totalPrice());
-    // localStorage?.removeItem(user);
-    // }
-    setStorageCart([]);
-    setPriceTotal(totalPrice());
-    localStorage?.removeItem(user);
-    totalCount(dispatch);
-
     const answer = window.confirm(t("cart.confirmClearCart"));
     if (answer) {
       setStorageCart([]);
@@ -227,13 +224,17 @@ export const Cart = () => {
             <button className="buy-btn-responsive">{t("cart.buy")}</button>
           </>
         ) : null}
-        <button
+        {
+          storageCart?.length >= 1 ?
+           <button
           className="button-danger"
           onClick={() => clearCart()}
           disabled={storageCart?.length < 1}
         >
           {t("cart.emptyTheCart")}
-        </button>
+        </button> : null
+        }
+       
       </div>
     </section>
   );

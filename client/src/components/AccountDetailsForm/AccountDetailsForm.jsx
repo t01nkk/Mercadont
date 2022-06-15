@@ -17,7 +17,7 @@ export default function AccountDetailsForm() {
   const [user, setUser] = useState({
     email: state.user.email,
     name: "",
-    lastname: "",
+
     address: "",
     country: "",
     province: "",
@@ -37,11 +37,6 @@ export default function AccountDetailsForm() {
 
     if (!expression.Expression.test(input.name)) {
       errors.name = `Name is neccesary`;
-    } else if (input === "") {
-      setErrors("");
-    }
-    if (!expression.Expression.test(input.lastname)) {
-      errors.lastname = `Lastname is neccesary`;
     } else if (input === "") {
       setErrors("");
     }
@@ -70,7 +65,6 @@ export default function AccountDetailsForm() {
 
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  console.log(errors);
   let id = localStorage.getItem("myUser");
 
   const fetchUser = async () => {
@@ -103,7 +97,6 @@ export default function AccountDetailsForm() {
       street,
       postalCode,
     } = user;
-    // console.log(id)
     try {
       await axios.put(
         `${process.env.REACT_APP_DOMAIN}/user/details/${state.user}`,
@@ -123,7 +116,7 @@ export default function AccountDetailsForm() {
       alertInfo(t("accountDetailsForm.toastInfo"));
       setTimeout(() => {
         history.push("/accountDetails");
-      }, 2000);
+      }, 1000);
     } catch (err) {
       // console.log(err);
       return err;
@@ -135,7 +128,6 @@ export default function AccountDetailsForm() {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    // console.log("handleResetPassword USER:",user)
     const answer = window.confirm(t("accountDetailsForm.askPasswordChange"));
     if (answer) {
       try {
@@ -148,143 +140,110 @@ export default function AccountDetailsForm() {
   };
 
   return (
-    <div className="account-details navPush-accountDetails">
-      <div className="form-details">
-        <h2 className="title-details">{t("accountDetailsForm.updateInfo")}</h2>
-        <form onSubmit={handleSubmit}>
-          {/* <div className="input-details">
-          <label >{t("accountDetailsForm.email")}: </label>
-          <input 
-           className="input-line"
-            type="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-            required
-          />
-        </div> */}
-          <div className="address-details">
-            {/* <p >{t("accountDetailsForm.address")}</p> */}
-            <div className="address-details1">
-              <div className="input-details">
-                <p>{t("accountDetailsForm.name")}: </p>
-                <input
-                  className="input-line"
-                  type="text"
-                  name="name"
-                  value={user.name}
-                  required
-                  onChange={handleChangeName}
-                />
-                {errors.name && <p>{errors.name}</p>}{" "}
-              </div>
-
-              <div className="input-details">
-                <p>{t("accountDetailsForm.lastname")}: </p>
-                <input
-                  className="input-line"
-                  type="text"
-                  name="lastname"
-                  value={user.lastname}
-                  required
-                  onChange={handleChangeName}
-                />
-                {errors.lastname && <p>{errors.lastname}</p>}{" "}
-              </div>
-              <div className="input-details">
-                <p>City</p>
-                <input
-                  className="input-line"
-                  type="text"
-                  name="city"
-                  required
-                  placeholder={t("accountDetailsForm.city")}
-                  value={user.city}
-                  onChange={handleChangeName}
-                />
-                {errors.city && <p>{errors.city}</p>}{" "}
-              </div>
-              <div className="input-details">
-                <p>Country</p>
-                <input
-                  className="input-line"
-                  type="text"
-                  name="country"
-                  required
-                  placeholder={t("accountDetailsForm.country")}
-                  value={user.country}
-                  onChange={handleChangeName}
-                />
-                {errors.country && <p>{errors.country}</p>}{" "}
-              </div>
+    <div className="form-details">
+      <p className="title-details">{t("accountDetailsForm.updateInfo")}</p>
+      <form onSubmit={handleSubmit} className="form-editProfile">
+        <div className="address-details">
+          <div className="address-details1">
+            <div className="input-details">
+              <p>{t("accountDetailsForm.name")}: </p>
+              <input
+                className="input-line"
+                type="text"
+                name="name"
+                value={user.name}
+                required
+                onChange={handleChangeName}
+              />
+              {errors.name && <p>{errors.name}</p>}{" "}
             </div>
-            <div className="address-details2">
-              <div className="input-details">
-                <p>PostalCode</p>
-                <input
-                  className="input-line"
-                  type="text"
-                  name="postalCode"
-                  placeholder={t("accountDetailsForm.postalCode")}
-                  value={user.postalCode}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="input-details">
-                <p>Province</p>
-                <input
-                  className="input-line"
-                  type="text"
-                  name="province"
-                  placeholder={t("accountDetailsForm.province")}
-                  value={user.province}
-                  onChange={handleChangeName}
-                />
-                {errors.province && <p>{errors.province}</p>}{" "}
-              </div>
-              <div className="input-details">
-                <p> Street</p>
-                <input
-                  className="input-line"
-                  type="text"
-                  name="street"
-                  placeholder={t("accountDetailsForm.street")}
-                  value={user.street}
-                  onChange={handleChangeName}
-                />
-                {errors.street && <p>{errors.street}</p>}{" "}
-              </div>
-              <div className="input-details">
-                <p>{t("accountDetailsForm.image")}: </p>
-                <input
-                  className="input-line"
-                  type="text"
-                  name="image"
-                  placeholder="Image..."
-                  onChange={handleChange}
-                  value={user.image}
-                />
-              </div>
+            <div className="input-details">
+              <p>City</p>
+              <input
+                className="input-line"
+                type="text"
+                name="city"
+                required
+                placeholder={t("accountDetailsForm.city")}
+                value={user.city}
+                onChange={handleChangeName}
+              />
+              {errors.city && <p>{errors.city}</p>}{" "}
+            </div>
+            <div className="input-details">
+              <p>Country</p>
+              <input
+                className="input-line"
+                type="text"
+                name="country"
+                required
+                placeholder={t("accountDetailsForm.country")}
+                value={user.country}
+                onChange={handleChangeName}
+              />
+              {errors.country && <p>{errors.country}</p>}{" "}
+            </div>
+            <div className="input-details">
+              <p>PostalCode</p>
+              <input
+                className="input-line"
+                type="text"
+                name="postalCode"
+                placeholder={t("accountDetailsForm.postalCode")}
+                value={user.postalCode}
+                onChange={handleChange}
+              />
             </div>
           </div>
-
-          <div className="password-user ">
-            <p>{t("accountDetailsForm.password")}: </p>
-            <div className="button-user">
-              <button
-                className="button-details"
-                onClick={(e) => handleResetPassword(e)}
-              >
-                {t("accountDetailsForm.changePassword")}
-              </button>
+          <div className="address-details2">
+            <div className="input-details">
+              <p>Province</p>
+              <input
+                className="input-line"
+                type="text"
+                name="province"
+                placeholder={t("accountDetailsForm.province")}
+                value={user.province}
+                onChange={handleChangeName}
+              />
+              {errors.province && <p>{errors.province}</p>}{" "}
+            </div>
+            <div className="input-details">
+              <p> Street</p>
+              <input
+                className="input-line"
+                type="text"
+                name="street"
+                placeholder={t("accountDetailsForm.street")}
+                value={user.street}
+                onChange={handleChangeName}
+              />
+              {errors.street && <p>{errors.street}</p>}{" "}
+            </div>
+            <div className="input-details">
+              <p>{t("accountDetailsForm.image")}: </p>
+              <input
+                className="input-line"
+                type="text"
+                name="image"
+                placeholder="Image..."
+                onChange={handleChange}
+                value={user.image}
+              />
             </div>
           </div>
+        </div>
 
-          <div className="button-user">
-            <button className="button-details">Actualizar</button>
-          </div>
-        </form>
-      </div>
+        <div className="btn-editProfile">
+          <button
+            className="input-submit-editProfile"
+            onClick={(e) => handleResetPassword(e)}
+          >
+            {t("accountDetailsForm.changePassword")}
+          </button>
+          <button className="input-submit-editProfile">Actualizar</button>
+        </div>
+      </form>
     </div>
   );
 }
