@@ -121,7 +121,7 @@ export const SendBuys = () => {
 
     const handleShipping = async (e) => {
         e.preventDefault()
-        if (e.target.id === "accountAddress"){
+        if (e.target.id === "accountAddress") {
             try {
                 const userAddress = await axios.get(`${process.env.REACT_APP_DOMAIN}/user/details/${user}`)
                 // console.log(userAddress.data)
@@ -130,16 +130,16 @@ export const SendBuys = () => {
                 // console.log("city:",userAddress.data.city)
                 // console.log("street:",userAddress.data.street)
                 // console.log("postalCode:",userAddress.data.postalCode)
-                if(userAddress.data.country === "" || userAddress.data.province === "" || userAddress.data.city === "" || userAddress.data.street  === "" || userAddress.data.postalCode === ""){
+                if (userAddress.data.country === "" || userAddress.data.province === "" || userAddress.data.city === "" || userAddress.data.street === "" || userAddress.data.postalCode === "") {
                     alertWarning(t("sendBuys.addressNotComplete"))
-                }else{
+                } else {
                     setSelectShipping("accountAddress")
-                    setAdress({country :userAddress.data.country, province:userAddress.data.province, city: userAddress.data.city, street: userAddress.data.street, postalCode: userAddress.data.postalCode})
+                    setAdress({ country: userAddress.data.country, province: userAddress.data.province, city: userAddress.data.city, street: userAddress.data.street, postalCode: userAddress.data.postalCode })
                 }
             } catch (error) {
                 console.log(error)
             }
-        } 
+        }
 
         if (e.target.id === "newAddress") {
             setSelectShipping("newAddress")
@@ -239,25 +239,24 @@ export const SendBuys = () => {
                                 </label>
                                 {error.postalCode && <p>{error.postalCode}</p>}
                             </>
-                        : null}   
-                    </div>    
+                            : null}
+                    </div>
                 </div>
-                {selectShipping === "newAddress" && address.country&&address.province&&address.city&&address.street&&address.postalCode&&Object.keys(error).length === 0&&
-                <div>
-                    <p>{t("sendBuys.paymentMethod")}</p>
-                    <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
-                    <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
-                </div>
+                {selectShipping === "newAddress" && address.country && address.province && address.city && address.street && address.postalCode && Object.keys(error).length === 0 &&
+                    <div>
+                        <p>{t("sendBuys.paymentMethod")}</p>
+                        <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
+                        <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
+                    </div>
                 }
 
                 {selectShipping === "accountAddress" &&
-                <div>
-                    <p>{t("sendBuys.paymentMethod")}</p>
-                    <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
-                    <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
-                </div>
+                    <div>
+                        <p>{t("sendBuys.paymentMethod")}</p>
+                        <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
+                        <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
+                    </div>
                 }
-                
                 {
                     <div>
                         {selectBuys === "card" ?
