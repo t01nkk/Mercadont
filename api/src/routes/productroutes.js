@@ -326,8 +326,8 @@ router.get("/recommendation/mostSold", async (req, res) => {
     const orders = await PurchaseOrder.findAll();
 
     if (!orders?.length) {
-   
-      const products = await Product.findAll({where: {status: "active"}});
+
+      const products = await Product.findAll({ where: { status: "active" } });
       products.splice(12);
       return res.status(200).send(products);
     }
@@ -390,14 +390,14 @@ router.get("/recommendation/byRating", async (req, res) => {
 
 router.get("/recommendation/byHistory/:userId", async (req, res) => {
   const { userId } = req.params;
-  if(!userId) return res.status(200).send([]);
+  if (!userId) return res.status(200).send([]);
   let product = {
     id: "",
   };
   let products = [];
   let categories = [];
   try {
-    
+
     const userProducts = await PurchaseOrder.findAll({
       where: {
         userId: userId,
@@ -450,7 +450,6 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
     });
 
 
-    console.log("Hola recommended", recommended)
     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
     res.status(200).send(recommended);
 
