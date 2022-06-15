@@ -353,7 +353,7 @@ router.get("/recommendation/mostSold", async (req, res) => {
     productsSold.push(product);
 
     productsSold.sort((a, b) => {
-      return b.details.rating - a.details.rating
+      return b.details.quantity - a.details.quantity
     })
 
     productsSold.splice(12)

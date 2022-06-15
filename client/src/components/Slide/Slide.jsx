@@ -62,7 +62,7 @@ export default function Slide() {
                     // console.log("index:", index)
                     if(!recommended.includes(state.products[index])){
                         
-                        console.log("state.products[index]:", state.products[index])
+             /*            console.log("state.products[index]:", state.products[index]) */
                         recommended.push(state.products[index])
                     }
                 }
@@ -129,10 +129,10 @@ export default function Slide() {
     //   let miStorage = JSON.parse(localStorage.getItem("myUser"));
     //   console.log(miStorage);
     // };
-    console.log("Hola sold",sold)
+    //console.log("Hola sold",sold)
     return (
         <div className="div-slide">
-            
+
             <Swiper
 
                 spaceBetween={0}
