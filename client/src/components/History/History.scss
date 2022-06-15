@@ -152,7 +152,13 @@
   justify-content: center;
   align-items: center;
 }
-
+// .container-star {
+//   display: flex;
+// }
+.history-card-stars {
+  display: flex;
+  width: 50%;
+}
 .history-container {
   display: flex;
   flex-direction: column;

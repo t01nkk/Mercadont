@@ -32,6 +32,7 @@ export const History = () => {
 
   //AXIOS
   const sendReview = async () => {
+    // console.log(reviewText)
     let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/review`, {
       userId: myUser,
       orderId: search.substring(1),
@@ -50,6 +51,7 @@ export const History = () => {
       let idFIndReview = reviewText.find((e) => data.id === e.id);
       if (idFIndReview) {
         idFIndReview.text = data.text;
+        idFIndReview.rating = data.rating;
       } else {
         setReviewText(reviewText.concat(data));
       }
