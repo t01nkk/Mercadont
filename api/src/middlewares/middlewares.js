@@ -13,7 +13,7 @@ const modifyStockStripe = async (local) => {
 
       const findProduct = await Product.findByPk(local[i].id);
 
-      if (findProduct.stock <= 0 && findProduct.stock - local[i].quantity < 0) {
+      if (findProduct.stock <= 0 || findProduct.stock - local[i].quantity < 0) {
         return false;
       }
 
@@ -49,21 +49,29 @@ const modifyStockPaypal = async (orderId) => {
     });
     for (let product of findProducts) {
       const findProduct = await Product.findByPk(product.dataValues.productId);
+
+      if (findProduct.stock <= 0 || findProduct.stock - product.dataValues.productQuantity < 0) {
+        return false;
+      }
+
       if (findProduct.stock - product.dataValues.productQuantity > 0) {
         updateProduct = await Product.update(
           { stock: findProduct.stock - product.dataValues.productQuantity },
           { where: { id: product.dataValues.productId } }
         );
-      } else if (findProduct.stock - product.dataValues.productQuantity === 0) {
+      } 
+      
+      if (findProduct.stock - product.dataValues.productQuantity === 0) {
         updateProduct = await Product.update(
           { stock: findProduct.stock - product.dataValues.productQuantity, status: "inactive" },
           { where: { id: product.dataValues.productId } }
         );
-      } else {
-        throw new Error({
-          msg: "There's not enough products to fulfill this purchase",
-        });
-      }
+      } 
+      // else {
+      //   throw new Error({
+      //     msg: "There's not enough products to fulfill this purchase",
+      //   });
+      // }
     }
     return { msg: "stock updated" };
   } catch (error) {

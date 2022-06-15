@@ -27,12 +27,12 @@ router.post("/card", async (req, res) => {
 
     let updatedStock = await modifyStockStripe(local)
     if (!updatedStock) {
-      return res.status(400).send({ msg: "WHY U NO CUM?" })
+      return res.status(400).send({ msg: "insuficientStock" })
     }
     let created = await createPurchaseOrder(id, userId, local, (amount / 100), address, "completed")
     return res.status(200).send(payment);
   } catch (error) {
-    return res.status(400).send(error)
+    return res.status(400).send(error.message)
   }
 })
 
