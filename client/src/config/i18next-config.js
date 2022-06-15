@@ -69,7 +69,7 @@ i18n
             buy: "Comprar",
             successfulPurchase: "¡Compra realizada con éxito!",
             cancelPurchaseSuccess: "Compra cancelada con éxito",
-            addressDetailsMissing:" Por favor completa los datos de tu domicilio"
+            addressDetailsMissing: " Por favor completa los datos de tu domicilio"
           },
           categoriesComp: {
             error_pos_numbers: "Solo se aceptan números positivos",
@@ -430,7 +430,7 @@ i18n
           adminHome: {
             filter: "Filter by: ",
             name: "Name",
-            stock: "Stocl",
+            stock: "Stock",
             rating: "Rating",
             price: "Price",
             status: "Status:",
