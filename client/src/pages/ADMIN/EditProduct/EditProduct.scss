@@ -5,10 +5,7 @@
   align-items: center;
   padding-bottom: 80px;
 }
-.container-edit-admin p {
-  font-size: 1.32rem;
-  font-weight: 300;
-}
+
 .form-edit-admin h2 {
   font-size: 1.5rem;
   font-weight: 500;
@@ -179,4 +176,15 @@
 }
 .button-danger-del:hover {
   box-shadow: 0 5px 13px rgba(133, 2, 2, 0.409);
+}
+.error-input-edit {
+  color: red;
+  font-size:0.8rem;
+  
+}
+.edit-stock-price-error{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
 }

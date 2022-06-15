@@ -173,12 +173,12 @@ export default function EditProduct() {
             onTouchStart={handleChangeName}
             onChange={handleChangeName}
           />
-          {errors.name && <p className="error-input">{errors.name}</p>}
+          {errors.name && <p className="error-input-edit" id="error-edit">{errors.name}</p>}
           <label className="title-details-info-description">
             {t("adminSellProduct.description")}
           </label>
           {errors.description && (
-            <p className="error-input">{errors.description}</p>
+            <p className="error-input-edit" id="error-edit">{errors.description}</p>
           )}
           <textarea
             name="description"
@@ -199,7 +199,7 @@ export default function EditProduct() {
               value={product.price}
               onChange={handleChangePrice}
             />
-            {errors.price && <p className="error-input">{errors.price}</p>}
+            
             <label className="title-details-info">
               {t("adminSellProduct.stock")}
             </label>
@@ -209,8 +209,12 @@ export default function EditProduct() {
               value={product.stock}
               onChange={handleChangeStock}
             />
-            {errors.stock && <p className="error-input">{errors.stock}</p>}
+          
           </div>
+          <div className="edit-stock-price-error">
+            {errors.price && <p className="error-input-edit" id="error-edit" >{errors.price}</p>}
+            {errors.stock && <p className="error-input-edit" id="error-edit">{errors.stock}</p>}
+           </div>
           <div className="edit-status">
             <label className="title-details-info">
               {t("adminSellProduct.status")}
@@ -251,7 +255,7 @@ export default function EditProduct() {
                     </button>
                   </div>
                 ))
-              ):<p>{t("adminSellProduct.errors_categories")}</p>}
+              ):<p className="error-input-edit">{t("adminSellProduct.errors_categories")}</p>}
           </div>
           <input
             type="submit"
