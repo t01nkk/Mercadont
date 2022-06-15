@@ -21,7 +21,6 @@ export default function EditProduct() {
     status: "",
   });
   const history = useHistory();
-
   const expression = {
     nameExpression: /^[\da-zA-ZÀ-ÿ\s]{1,40}$/,
     priceExpression: /^\d{1,5}(\.\d{1,3})?$/,
@@ -158,7 +157,9 @@ export default function EditProduct() {
         console.log(err);
       }
     }
+
   };
+  console.log(product.status);
   return (
     <div className="container-edit-admin">
       <form onSubmit={handleSubmit} className="form-edit-admin">
@@ -192,7 +193,7 @@ export default function EditProduct() {
           <div className="edit-price-stock">
             <label className="title-details-info">
               {t("adminSellProduct.price")}
-            </label> {errors.price && <p className="error-input">{errors.price}</p>}
+            </label>
             <input
               type="number"
               name="price"
@@ -200,7 +201,7 @@ export default function EditProduct() {
               value={product.price}
               onChange={handleChangePrice}
             />
-           
+            
             <label className="title-details-info">
               {t("adminSellProduct.stock")}
             </label>
@@ -256,7 +257,7 @@ export default function EditProduct() {
                     </button>
                   </div>
                 ))
-              ) : <p>{t("adminSellProduct.errors_categories")}</p>}
+              ):<p className="error-input-edit">{t("adminSellProduct.errors_categories")}</p>}
           </div>
           <input
             type="submit"
