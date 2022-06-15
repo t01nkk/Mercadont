@@ -1,0 +1,28 @@
+.input-submit-create {
+  border: none;
+  outline: none;
+  background-color: #000000;
+  height: 40px;
+  color: #fff;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 335px;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 25px 0;
+  
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+    margin: unset;
+  }
+}
+.form-createUser {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}

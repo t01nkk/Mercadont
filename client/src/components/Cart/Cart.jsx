@@ -228,7 +228,7 @@ export const Cart = () => {
           </>
         ) : null}
         <button
-          className="empty-cart-btn"
+          className="button-danger"
           onClick={() => clearCart()}
           disabled={storageCart?.length < 1}
         >

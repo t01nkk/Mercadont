@@ -32,9 +32,7 @@ export default function NavBarADMIN() {
           sessionAdmin: loggedAdmin,
         },
       });
-      history.push(
-        "/admin/login"
-      );
+      history.push("/admin/login");
     }
   };
   useEffect(() => {
@@ -43,16 +41,5 @@ export default function NavBarADMIN() {
   useEffect(() => {
     checkSessionADMIN(dispatch);
   }, [state.sessionAdmin]);
-  return (
-    <div>
-      <header className="header">
-        <div className="header-logo">
-          <Link to="/">
-            <img src={logo} alt="" />
-          </Link>
-        </div>
-        {state.sessionAdmin ? <LoggedAdmin /> : <UnloggedAdmin />}
-      </header>
-    </div>
-  );
+  return <> {state.sessionAdmin ? <LoggedAdmin /> : <UnloggedAdmin />}</>;
 }

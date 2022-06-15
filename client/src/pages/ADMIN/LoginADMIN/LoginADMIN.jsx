@@ -5,12 +5,22 @@ import { Formik } from "formik";
 import { useAuth } from "../../../context/authContext";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
+import { useStore } from "../../../context/store";
 export default function LoginADMIN() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [redirect, setRedirect] = useState(false);
   const { login } = useAuth();
-  const handleLogin = async (values) => {
+  const [state, dispatch] = useStore();
+  const logOutAdmin = () => {
+    if (state.sessionAdmin === true) {
+      localStorage.clear();
+    }
+  };
 
+  useEffect(() => {
+    logOutAdmin();
+  }, [state.sessionAdmin]);
+  const handleLogin = async (values) => {
     try {
       const userCredentials = await login(values.email, values.password);
 
@@ -35,7 +45,7 @@ export default function LoginADMIN() {
     }
   };
   useEffect(() => {
-    localStorage.clear();
+    logOutAdmin();
   }, []);
   return (
     <div className="container-login">
@@ -72,13 +82,8 @@ export default function LoginADMIN() {
       >
         {({ errors, handleSubmit, handleChange, isSubmitting, touched }) => (
           <div className="loginCard">
-            {redirect ? (
-              <Redirect
-                push
-                to="/admin/home"
-              />
-            ) : null}
-            <h2>{t("loginAdmin.login")}</h2>
+            {redirect ? <Redirect push to="/admin/home" /> : null}
+            <p className="loginCard-text">{t("loginAdmin.login")}</p>
             <form
               method="POST"
               action={`${process.env.REACT_APP_DOMAIN}/user/login`}
