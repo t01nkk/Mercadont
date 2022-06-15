@@ -78,7 +78,7 @@ export default function Slide() {
     localStorage.setItem(user, JSON.stringify(cart));
     totalCount(dispatch);
   }, [cart]);
-
+  console.log("Sold Most:", state.soldMost)
   return (
     <div className="div-slide">
       <Swiper
@@ -116,6 +116,7 @@ export default function Slide() {
           {state.soldMost && state.favorites ? (
             React.Children.toArray(
               state.soldMost.map((product) => {
+                console.log(product)
                 if (product.status === "active") {
                   return (
                     <SwiperSlide>

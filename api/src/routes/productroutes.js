@@ -310,50 +310,56 @@ router.put("/update/:id", async (req, res) => {
 
 //-------------------RECOMMENDATION - MOST SOLD PRODUCTS------------------------------ //
 router.get("/recommendation/mostSold", async (req, res) => {
-  let product = {
-    details: {},
-    quantity: 0,
-  };
-  let productsSold = [];
+  let productSet = {};
   try {
     const orders = await PurchaseOrder.findAll();
+    const products = await Product.findAll({ where: { status: "active" } });
 
     if (!orders?.length) {
-
-      const products = await Product.findAll({ where: { status: "active" } });
       products.splice(12);
       return res.status(200).send(products);
     }
 
-    product.details = await Product.findOne({ where: { id: orders[0].productId } });
-    product.quantity = orders[0].productQuantity;
-
-    for (let i = 1; i < orders.length; i++) {
-      if (product.details?.id === orders[i].productId) {
-        product.quantity += orders[i].productQuantity;
-      } else {
-        productsSold.push(product);
-        product = {
-          details: {},
-          quantity: 0,
-        };
-        product.details = await Product.findOne({
-          where: { id: orders[i].productId },
-        });
-        product.quantity = orders[i].productQuantity;
+    for(let order of orders){
+      if(productSet[order.productId]){
+        productSet[order.productId] += order.productQuantity
+      }
+      else{
+        productSet[order.productId] = order.productQuantity
       }
     }
-    productsSold.push(product);
+    //{ id:value, id:value}
+    //console.log("Products Set",productSet)
+    const keys = Object.keys(productSet)
+    const values = Object.values(productSet)
+    let productsSold = []
+    for(let i = 0; i<keys.length; i++){
+        productsSold.push({
+          id: keys[i],
+          quantity: values[i]
+        })
+   }
 
     productsSold.sort((a, b) => {
-      return b.details.quantity - a.details.quantity
+      return b.quantity - a.quantity
     })
 
     productsSold.splice(12)
-    let arrayProducts = []
-    for (let p of productsSold) {
-      arrayProducts.push(p.details)
+    //console.log("Products Sold:", productsSold)
 
+    let arrayProducts = []
+    for( let element of productsSold){
+      let product = await Product.findOne({
+        where:{
+          id:element.id
+       }
+      })
+      arrayProducts.push(product)
+    }
+
+    for( let i = 0; arrayProducts.length < 12; i++){
+      if( arrayProducts.includes(products[i])) continue
+      arrayProducts.push(products[i])
     }
     // Devuelve un array de productos mas comprados ordenados de manera DESCENDENTE
     res.status(200).send(arrayProducts);

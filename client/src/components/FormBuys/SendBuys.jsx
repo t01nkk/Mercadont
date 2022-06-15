@@ -108,8 +108,6 @@ export const SendBuys = () => {
             }else{
                 alertWarning(t("sendBuys.cardProblem"))
                 setLoadingBuys(false)
-                localStorage.removeItem(user)
-                return history.push("/cart?buy=false")
             }
             // loadingBuys()
             if (paymentMethod) {
