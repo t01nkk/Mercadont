@@ -56,7 +56,7 @@ i18n
             removeFavorite: "Remover favorito",
           },
           favorites: {
-            favorites: "Favoritos",
+            favorites: "Tus productos favoritos",
           },
           cart: {
             removeFromCart: "Producto apartado del carrito",

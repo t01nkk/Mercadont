@@ -49,10 +49,7 @@ export default function ProductCardAdmin({
           </div>
         </div>
       </div>
-      <Link
-        className="button-container"
-        to={`/admin/edit/${id}`}
-      >
+      <Link className="button-container" to={`/admin/edit/${id}`}>
         <FiEdit size={40} />
       </Link>
     </div>

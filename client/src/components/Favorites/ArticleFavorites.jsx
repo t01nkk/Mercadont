@@ -1,43 +1,72 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import "./Favorite.css"
-import { useTranslation } from 'react-i18next'
-export const ArticleFavorites = ({id,name,price,rating,image,removeFavorite}) => {
-  
-    const { t } = useTranslation()
-    const history = useHistory()
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
+import "./Favorite.scss";
+import { useTranslation } from "react-i18next";
+import { FiEdit } from "react-icons/fi";
+import accounting from "accounting";
+export const ArticleFavorites = ({
+  name,
+  price,
+  image,
+  rating,
+  id,
+  stock,
+  description,
+  removeFavorite,
+}) => {
+  const { t } = useTranslation();
+  const history = useHistory();
 
-    const viewProduct = (id) => {
-        history.push(`/home/${id}`);
-      };
-      const articleStyle = {
-        height: "18rem"
-      }
-      const divPStyle = {
-        height: "11rem"
-      }
-  return (  
-  <div>
-    <div className="row container-div-favorite">
-      <div className="col-sm-7">
-        <div className="card-block">
-          <h4 className='card-title'>{name}</h4>
-          <p>{t("articleFavorites.price")}{price}$USD</p>
-          <p>{t("articleFavorites.rating")}{rating}</p>
-          <button className="btn btn-primary btn-sm" onClick={()=> viewProduct(id)}>
-            {t("articleFavorites.productDetails")}
-          </button>
-          <button className="btn btn-primary btn-sm" onClick={()=> removeFavorite(id)}>
-            {t("articleFavorites.removeFavorite")}
-          </button>
+  const viewProduct = (id) => {
+    history.push(`/home/${id}`);
+  };
+  const articleStyle = {
+    height: "18rem",
+  };
+  const divPStyle = {
+    height: "11rem",
+  };
+  return (
+    <div className="card-body-favorite">
+      <img className="card-image-favorite" src={`${image}`} alt={`${name}`} />
+      <div className="card-info-wrapper-favorite">
+        <div className="card-info-details-favorite">
+          <p className="card-title-favorite">{name}</p>
+          <p className="description-favorite">{description}</p>
+          <div className="favorite-btn-wrapper">
+            <button
+              className="btn-edit-favorite"
+              onClick={() => viewProduct(id)}
+            >
+              {t("articleFavorites.productDetails")}
+            </button>
+            <button
+              className="btn-edit-favorite"
+              onClick={() => removeFavorite(id)}
+            >
+              {t("articleFavorites.removeFavorite")}
+            </button>
+          </div>
+        </div>
+        <div className="card-rating-favorite">
+          <div className="card-stats">
+            <p className="stat">
+              {t("adminProductCard.rating")}
+              <span>{rating}</span>
+            </p>
+            <p className="stat">
+              {`Price: U$D `}
+              <span className="price-favorite">
+                {accounting.formatMoney(price, "", 0)}
+              </span>
+            </p>
+            <p className="stat">
+              {t("adminProductCard.stock")}
+              <span>{stock}</span>
+            </p>
           </div>
         </div>
       </div>
-
-      <div className="col-sm-5 container-img-favorite">
-        <img className="d-block w-100 img-favorite" src={image} alt=""/>
-      </div>
-  </div>
-
-  )
-}
+    </div>
+  );
+};
