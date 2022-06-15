@@ -157,7 +157,6 @@ export default function EditProduct() {
     }
 
   };
-  console.log(product.status);
   return (
     <div className="container-edit-admin">
       <form onSubmit={handleSubmit} className="form-edit-admin">
@@ -251,7 +250,7 @@ export default function EditProduct() {
                     </button>
                   </div>
                 ))
-              ):<p>{t("adminSellProduct.errors_categories")}</p>}
+              ) : <p>{t("adminSellProduct.errors_categories")}</p>}
           </div>
           <input
             type="submit"
