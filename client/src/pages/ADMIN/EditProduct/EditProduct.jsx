@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
@@ -7,6 +7,7 @@ import "./EditProduct.scss";
 import { alertInfo, alertSuccess, alertWarning } from "../../../helpers/toast.js";
 import { useTranslation } from "react-i18next";
 export default function EditProduct() {
+  const selectRef= useRef();
   const { t } = useTranslation();
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
@@ -99,6 +100,7 @@ export default function EditProduct() {
       destructuringCats.push(name);
     }
     fetchedProduct.data.categories = destructuringCats;
+    selectRef.current.value = fetchedProduct.data.status
     setProduct(fetchedProduct.data);
   };
 
@@ -219,7 +221,7 @@ export default function EditProduct() {
             <label className="title-details-info">
               {t("adminSellProduct.status")}
             </label>
-            <select name="status" onChange={handleChange}>
+            <select name="status" onChange={handleChange} ref={selectRef}>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
