@@ -159,6 +159,7 @@ i18n
             errors_name: "Es obligatorio introducir un nombre.",
             errors_price: "Es obligatorio introducir un precio.",
             errors_description: "Es obligatorio introducir una descripción.",
+            errors_categories:"Es obligatorio introducir al menos una categoria",
             errors_stock:
               "Es obligatorio introducir la cantidad de unidades disponibles.",
             postProduct: "Nuevo producto",

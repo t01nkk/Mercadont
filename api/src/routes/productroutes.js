@@ -227,7 +227,7 @@ router.post("/create", async (req, res) => {
 
   try {
     const newProduct = await Product.create({
-      name,
+      name:name.toUpperCase(),
       price,
       description,
       status,
@@ -297,7 +297,7 @@ router.put("/update/:id", async (req, res) => {
 
     await Product.update(
       {
-        name,
+        name:name.toUpperCase(),
         price,
         description,
         image,

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
 import { fetchCategories } from "../../../redux/actions/actions.js";
-import "./EditProduct.css";
+import "./EditProduct.scss";
 import { alertInfo, alertSuccess, alertWarning } from "../../../helpers/toast.js";
 import { useTranslation } from "react-i18next";
 export default function EditProduct() {
@@ -21,9 +21,9 @@ export default function EditProduct() {
   });
   const history = useHistory();
   const expression = {
-    nameExpression: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-    priceExpression: /^[d*.?d*]{1,14}$/,
-    descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,'*¿?¡!\s]{1,200}$/,
+    nameExpression: /^[\da-zA-ZÀ-ÿ\s]{1,40}$/,
+    priceExpression: /^\d{1,3}(\.\d{1,3})?$/,
+    descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,®'*¿?¡!\s]{30,200}$/,
     stockExpression: /^\d{1,14}$/,
 
   };
@@ -32,16 +32,16 @@ export default function EditProduct() {
     let errors = {};
 
     if (!expression.nameExpression.test(input.name)) {
-      errors.name = t("adminSellProduct.errors.name");
+      errors.name = t("adminSellProduct.errors_name");
     }
     if (!expression.priceExpression.test(input.price)) {
-      errors.price = t("adminSellProduct.errors.price");
+      errors.price = t("adminSellProduct.errors_price");
     }
     if (!expression.descriptionExpression.test(input.description)) {
-      errors.description = t("adminSellProduct.errors.description");
+      errors.description = t("adminSellProduct.errors_description");
     }
     if (!expression.stockExpression.test(input.stock)) {
-      errors.stock = t("adminSellProduct.errors.stock");
+      errors.stock = t("adminSellProduct.errors_stock");
     }
     return errors;
   }
@@ -238,7 +238,7 @@ export default function EditProduct() {
             </select>
           </div>
           <div className="select-categories-del">
-            {product.categories.length &&
+            {product.categories.length ?
               React.Children.toArray(
                 product.categories?.map((category) => (
                   <div className="edit-cat-delete">
@@ -251,7 +251,7 @@ export default function EditProduct() {
                     </button>
                   </div>
                 ))
-              )}
+              ):<p>{t("adminSellProduct.errors_categories")}</p>}
           </div>
           <input
             type="submit"

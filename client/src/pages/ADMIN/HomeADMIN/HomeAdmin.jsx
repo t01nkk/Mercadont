@@ -188,9 +188,10 @@ export default function HomeAdmin() {
         {state.products &&
           React.Children.toArray(
             currentProducts.map((product) => {
+             
               return (
                 <ProductCardAdmin
-                  id={product.id}
+                  id={product.id}                 
                   name={product.name}
                   stock={product.stock}
                   price={product.price}
