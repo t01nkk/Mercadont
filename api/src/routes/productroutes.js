@@ -447,6 +447,21 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
         },
       ],
     });
+    if (recommended.length > 12) {
+      recommended = recommended.slice(0, 12)
+    }
+    if(recommended.length<12){
+      const products = await Product.findAll({
+        where:{
+          status:"active"
+        }})
+      for (let i = products.length; recommended.length < 12; i--) {
+        if (recommended.includes(products[i])){
+          continue
+        }
+        recommended.push(products[i])
+      }
+    }
 
 
     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
