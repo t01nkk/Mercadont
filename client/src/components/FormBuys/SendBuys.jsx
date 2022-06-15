@@ -145,9 +145,9 @@ export const SendBuys = () => {
     return (
         <div>
             <form onSubmit={handleSubmit} className="form-buys">
-                <div>
-                    <h2>{t("sendBuys.productsList")}</h2>
-                    <div>
+                <div className="cart-container">
+                    <h2 className="cart-container-title">{t("sendBuys.productsList")}</h2>
+                    <div className="list-group container-fluid ">
                         {React.Children.toArray(products && products.map((el) =>
                         (<ListProductsBuys
                             name={el.name}
@@ -159,9 +159,9 @@ export const SendBuys = () => {
                         }
                     </div>
                 </div>
-                {amountTotal && <p>{t("sendBuys.totalprice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
                 
-                <div>
+                
+                <div className="cart-container">
                     <label htmlFor="country">Country;
                         <input type="text" name='country' value={address.country} onChange={handleAdress} onBlur={blurAddress}/>
                     </label>
@@ -187,6 +187,8 @@ export const SendBuys = () => {
                     </label>
                     {error.postalCode && <p>{error.postalCode}</p>}
                 </div>
+
+                {amountTotal && <p>{t("sendBuys.totalprice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
 
                 {address.country&&address.province&&address.city&&address.street&&address.postalCode&&Object.keys(error).length === 0&&
                 <div>

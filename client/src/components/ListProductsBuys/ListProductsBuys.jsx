@@ -10,7 +10,7 @@ export const ListProductsBuys = ({
   amount,
 }) => {
   return (
-    <article className="articleBuys">
+    <article className="list-group-item flex-fill articleBuys">
       {/* <figure>
         <img src={image} alt={name} />
       </figure> */}
