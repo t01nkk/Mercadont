@@ -101,10 +101,7 @@ export default function HomeAdmin() {
       });
     }
   };
-  useEffect(() => {
-    fetchProducts(dispatch);
-    fetchCategories(dispatch);
-  }, []);
+
   useEffect(() => {
     handleFilter();
   }, [status, state.products, category]);

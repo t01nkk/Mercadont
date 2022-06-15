@@ -223,7 +223,7 @@ export default function ProductDetailsInfo({
                 <div className="question">
                   <p className="questionText">Q: {qa.question}</p>
                   {qa.answer ? (
-                    <div className="answerText">A: {qa.answer}</div>
+                    <p className="answerText">A: {qa.answer}</p>
                   ) : null}
                 </div>
               ))
