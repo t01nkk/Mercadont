@@ -28,7 +28,7 @@ export default function ProductCardAdmin({
           <div className="card-stats">
             <p className="stat">
               {t("adminProductCard.rating")}
-              <span> 5.0{rating}</span>
+              <span>{rating}</span>
             </p>
             <p className="stat">
               {`U$D `}

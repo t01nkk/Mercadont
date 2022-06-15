@@ -254,7 +254,7 @@
   },
   {
     "name": "PRINTED SWEATSHIRT",
-    "price": "12.99",
+    "price": "31.99",
     "description": "Round neck sweatshirt with long sleeves. Rib trim.",
     "categories": [
       "women's clothing",
@@ -278,7 +278,7 @@
   },
   {
     "name": "PRINTED CUFF LINEN BLEND BLAZER",
-    "price": "12.99",
+    "price": "54.19",
     "description": "Open front blazer made of linen blend fabric. Lapel collar and long sleeves with printed turned-up cuffs and shoulder pads. Front flap pockets.",
     "categories": [
       "women's clothing",
@@ -302,7 +302,7 @@
   },
   {
     "name": "LACE BODYSUIT",
-    "price": "12.99",
+    "price": "232.99",
     "description": "V-neck bodysuit with spaghetti straps. Bottom snap button closure.",
     "categories": [
       "women's clothing",
@@ -326,7 +326,7 @@
   },
   {
     "name": "PRINTED HALTER NECK BODYSUIT",
-    "price": "12.99",
+    "price": "23.99",
     "description": "Bodysuit with tied halter neck. Bottom snap button closure.",
     "categories": [
       "women's clothing",
@@ -338,7 +338,7 @@
   },
   {
     "name": "BUCKLED CROSS STRAP FLAT SANDALS",
-    "price": "12.99",
+    "price": "122.99",
     "description": "Flat sandals with crossed straps. Buckle closure at ankle. ",
     "categories": [
       "women's clothing",
@@ -350,7 +350,7 @@
   },
   {
     "name": "X RHUIGI PRINTED POLO",
-    "price": "12.99",
+    "price": "18.99",
     "description": "Polo shirt made of technical fabric. Lapel collar with contrasting jacquard detail and front vent. Long sleeves with rib cuffs. Front and back contrast x Rhuigi logo prints. Side vents at hem.",
     "categories": [
       "men's clothing",
@@ -373,14 +373,14 @@
     "stock": "25"
   },
   {
-    "name": "PIQUÉ TEXTURED POLO SHIRT SLEEVES",
-    "price": "12.99",
-    "description": "Lapel collar polo with front button closure. Long sleeves with rib cuffs. Side vents at hem.",
+    "name": "NEON STRIPED KNIT POLO SHIRT",
+    "price": "49.90",
+    "description": "Knit polo shirt with lapel collar and front button closure. Short sleeves.",
     "categories": [
       "men's clothing",
       "polo shirts"
     ],
-    "image": "https://static.zara.net/photos///2022/V/0/2/p/0761/417/677/2/w/850/0761417677_6_1_1.jpg?ts=1649341906810",
+    "image": "https://static.zara.net/photos///2022/I/0/2/p/4231/315/401/2/w/850/4231315401_6_1_1.jpg?ts=1654093021124",
     "rating": "4.5",
     "stock": "25"
   },

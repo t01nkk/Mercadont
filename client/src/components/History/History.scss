@@ -1,0 +1,205 @@
+.container-dateHistory {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.container-data-history {
+  display: flex;
+  justify-content: space-evenly;
+  cursor: pointer;
+}
+
+.container-details-history {
+}
+.history-labels {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 10px 20px;
+}
+.history-list-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.history-list-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+}
+.history-list-direction {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100vw;
+
+  cursor: pointer;
+  @media only screen and (max-width: 900px) {
+    flex-direction: column;
+  }
+}
+.history-list-container ul {
+  border-radius: 0;
+}
+.history-list-title-details {
+  font-size: 0.9rem;
+  text-align: center;
+  justify-content: center;
+  font-weight: 400;
+}
+.history-btn-goback-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+.history-btn-goback {
+  border: none;
+  outline: none;
+  background-color: #000000;
+  height: 40px;
+  color: #fff;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 220px;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 25px 0;
+  justify-content: center;
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+    margin: unset;
+  }
+}
+.history-btn-goback:hover {
+  box-shadow: rgba(0, 9, 61, 0.4) 0px 4px 10px 0px;
+}
+.card-body-history {
+  display: flex;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  transition: transform 50ms ease-out;
+  text-align: center;
+  @media only screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.card-body-history:hover {
+  display: flex;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  position: relative;
+  transform: scale(1.01);
+  @media only screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.card-image-history {
+  width: 50%;
+  object-fit: cover;
+  @media only screen and (max-width: 900px) {
+    height: 25rem;
+    width: 100%;
+  }
+}
+.history-info-wrapper {
+  width: 50%;
+  margin: 0 5%;
+  display: flex;
+  justify-content: center;
+
+  @media only screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.history-info-title {
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  height: 25%;
+  justify-content: center;
+}
+.history-info-details {
+  @media only screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.history-info-price {
+  display: flex;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+.history-info-prices {
+  font-weight: 300;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+// .container-star {
+//   display: flex;
+// }
+.history-card-stars {
+  display: flex;
+  width: 50%;
+}
+.history-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 10%;
+  padding-bottom: 100px;
+}
+.history-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 35rem));
+  gap: 1.2rem;
+  justify-content: center;
+}
+.history-leave-review {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0;
+}
+.history-btn-leaveReview {
+  border: none;
+  outline: none;
+  background-color: #000000;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 220px;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  @media only screen and (max-width: 900px) {
+    margin-left: 15px;
+  }
+}
+.history-btn-review-container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 100px;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0;
+}
