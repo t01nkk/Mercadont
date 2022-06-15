@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
-export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProduct, orderId, deliveryAddress, email ,setQuantity, setCant }) => {
+export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProduct, orderId, deliveryAddress, email, setQuantity, setCant }) => {
     date = date.slice(0, 10)
-    
+
     const [idProduct, setIdProduct] = useState([])
     const history = useHistory()
     let total = 0

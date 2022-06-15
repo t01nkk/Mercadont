@@ -1,5 +1,5 @@
 const { PurchaseOrder, User } = require("../db");
-const { mailPayment } = require("../middlewares/middlewares");
+const { mailPayment, reStockOrderCancelled } = require("../middlewares/middlewares");
 
 const createPurchaseOrder = async (orderId, userId, local, amount, address, status ) => {
     let created;

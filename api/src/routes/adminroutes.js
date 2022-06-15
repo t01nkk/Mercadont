@@ -3,7 +3,7 @@ const { Router } = require("express");
 const { Sequelize, Op } = require("sequelize");
 const router = Router();
 const createdOrders = require("../../purchaseOrders.json");
-const { groupPurchaseOrders, mailQuestion, mailOrderRejected, mailOrderAccepted } = require("../middlewares/middlewares");
+const { groupPurchaseOrders, mailQuestion, mailOrderRejected, mailOrderAccepted, reStockOrderCancelled } = require("../middlewares/middlewares");
 
 // Working
 //Get all Users
@@ -199,6 +199,7 @@ router.put("/setOrderStatus", async (req, res) => {
     }
 
     if (orderStatus === "rejected") {
+      reStockOrderCancelled(orderId)
       // DESCOMENTAR PARA ENVIAR MAIL
       mailOrderRejected(user.email, orderId)
       // 

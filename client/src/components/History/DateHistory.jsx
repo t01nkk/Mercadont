@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./History.scss";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 export const DateHistory = ({
   amount,
@@ -15,6 +16,7 @@ export const DateHistory = ({
   review,
   setIsOrder,
 }) => {
+  const { t } = useTranslation()
   const history = useHistory();
   date = date.slice(0, 10);
   const [cant, setcant] = useState(0);
@@ -60,18 +62,18 @@ export const DateHistory = ({
       onClick={getDetailsHistory}
     >
       <p className="history-labels">
-        Date of Purchase: <span>{date}</span>
+        {t("dateHistory.dateOfPurchase")}<span>{date}</span>
       </p>
 
       <p className="history-labels">
-        Quantity of Product: <span>{cant !== 0 && cant}</span>
+        {t("dateHistory.quantityOfProduct")}<span>{cant !== 0 && cant}</span>
       </p>
       <p className="history-labels">
-        Total: <span>U$D</span> <span>{amount}</span>
+        {t("dateHistory.total")}<span>U$D</span> <span>{amount}</span>
       </p>
       {orderStatus === "accepted" && review == false && (
         <button className="history-btn-leaveReview" onClick={getDetailsHistory}>
-          Dejar Reviews
+          {t("dateHistory.review")}
         </button>
       )}
     </li>

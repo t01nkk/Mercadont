@@ -11,7 +11,6 @@ import {
 } from "../../../redux/actions/actionTypes";
 import PaginationAdmin from "./PaginationADMIN/PaginationAdmin";
 export default function HomeAdmin() {
-
   const [state, dispatch] = useStore();
   const [status, setStatus] = useState("");
   const [category, setCategory] = useState("");
@@ -26,7 +25,7 @@ export default function HomeAdmin() {
     indexLastProduct
   );
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const page = (numPage) => {
     setCurrentPage(numPage);
@@ -103,15 +102,16 @@ export default function HomeAdmin() {
     }
   };
   useEffect(() => {
+    fetchProducts(dispatch);
+    fetchCategories(dispatch);
+  }, []);
+  useEffect(() => {
     handleFilter();
   }, [status, state.products, category]);
   useEffect(() => {
     handleOrder();
   }, [atribute, order]);
-  useEffect(() => {
-    fetchProducts(dispatch);
-    fetchCategories(dispatch);
-  }, []);
+
   return (
     <div className="home-admin-wrapper">
       <div className="filter-admin-wrapper">
@@ -122,7 +122,7 @@ export default function HomeAdmin() {
             value={atribute}
             onChange={(e) => setAtribute(e.target.value)}
           >
-            <option value="">-</option>
+            <option value="" disabled>-</option>
             <option value="name">{t("adminHome.name")}</option>
             <option value="stock">{t("adminHome.stock")}</option>
             <option value="rating">{t("adminHome.rating")}</option>
@@ -136,7 +136,7 @@ export default function HomeAdmin() {
             value={status}
             onChange={(e) => setStatus(e.target.value)}
           >
-            <option value="">-</option>
+            <option value="" disabled>-</option>
             <option value="active">{t("adminHome.active")}</option>
             <option value="inactive">{t("adminHome.inactive")}</option>
           </select>
@@ -148,17 +148,19 @@ export default function HomeAdmin() {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            <option value="">-</option>
+            <option value="" disabled>-</option>
 
-            {
-              React.Children.toArray(
-
-                state.categories?.map((category) => (
-                  <option value={category.name} key={category.id} id={category.id}>
-                    {category.name}
-                  </option>
-                ))
-              )}
+            {React.Children.toArray(
+              state.categories?.map((category) => (
+                <option
+                  value={category.name}
+                  key={category.id}
+                  id={category.id}
+                >
+                  {category.name}
+                </option>
+              ))
+            )}
           </select>
         </div>
         <div className="selectContainer">

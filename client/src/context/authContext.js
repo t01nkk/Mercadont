@@ -26,10 +26,6 @@ export function AuthProvider({ children }) {
 
   const signup = async (email, password) => {
 
-    //////////COMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
-
-    // return await createUserWithEmailAndPassword(auth, email, password);
-
     //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
 
     const userCredentials = await createUserWithEmailAndPassword(auth, email, password);

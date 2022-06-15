@@ -35,7 +35,6 @@ export default function LoggedNavBar() {
 
   useEffect(() => {
     let myUser = JSON.parse(localStorage.getItem("myUser"));
-    // console.log(myCart.length)
     if (myUser) {
       getFavorites(dispatch, myUser);
     }
