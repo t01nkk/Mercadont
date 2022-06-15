@@ -44,6 +44,11 @@ export default function SlideRecommended() {
                     `${process.env.REACT_APP_DOMAIN}/product/recommendation/byHistory/${miStorage}`
                 );
                 recommended = recommendedProducts.data
+            } else if (!miStorage) {
+                const recommendedProducts = await axios.get(
+                    `${process.env.REACT_APP_DOMAIN}/product/recommendation/byHistory/0`
+                );
+                recommended = recommendedProducts.data
             }
             setSold(recommended);
         } catch (err) {

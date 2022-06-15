@@ -6,8 +6,11 @@ import "./Home.scss";
 export default function Home() {
   return (
     <div className="color">
+      <h3>Recomended</h3>
       <SlideRecommended />
+      <h3>Rating</h3>
       <SlideRating />
+      <h3>Most Sold!</h3>
       <SlideMostSold />
     </div>
   );
