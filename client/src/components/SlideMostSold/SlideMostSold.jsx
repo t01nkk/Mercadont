@@ -35,7 +35,6 @@ export default function Slide() {
   const history = useHistory();
   let person = JSON.parse(localStorage.getItem("myUser"));
 
-
   const sold = state.soldMost[0]?.details;
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;

@@ -320,6 +320,10 @@ i18n
             insuficientQuantity: "El stock actual es insuficiente.",
             error: "Hubo un problema con tu compra.",
             cardProblem: "Hubo un problema con tu tarjeta",
+            chooseAddress: "Elegir una dirección de envío",
+            accountAddress: "Mi dirección",
+            newAddress: "Agregar nueva dirección",
+            addressNotComplete: "Información incompleta. Completar información en el perfil para continuar"
           },
         },
       },
@@ -630,6 +634,10 @@ i18n
             insuficientQuantity: "Current is insuficient.",
             error: "There's been a problem with your purchase.",
             cardProblem: "There was a problem with your card",
+            chooseAddress: "Choose a shipping address",
+            accountAddress: "My address",
+            newAddress: "Add a new shipping address",
+            addressNotComplete: "Information incomplete. Please, complete your profile info first"
           },
         },
       },
