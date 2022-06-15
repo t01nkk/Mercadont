@@ -5,7 +5,7 @@ const cors = require("cors");
 const { modifyStock } = require("../middlewares/middlewares");
 const { validateInputProduct } = require("../middlewares/middlewares");
 const { Op, where, Sequelize } = require("sequelize");
-const { set } = require("../app");
+
 
 const router = Router();
 
@@ -331,9 +331,8 @@ router.get("/recommendation/mostSold", async (req, res) => {
       products.splice(12);
       return res.status(200).send(products);
     }
-    product.details = await Product.findOne({
-      where: { id: orders[0].productId },
-    });
+    
+    product.details = await Product.findOne({where: {id: orders[0].productId}}) ;
     product.quantity = orders[0].productQuantity;
 
     for (let i = 1; i < orders.length; i++) {
@@ -353,14 +352,15 @@ router.get("/recommendation/mostSold", async (req, res) => {
     }
     productsSold.push(product);
 
-    productsSold.sort((a, b) => {
-      return b.details.rating - a.details.rating;
-    });
+    productsSold.sort((a,b) =>{
+      return  b.details.rating - a.details.rating
+    })
 
-    productsSold.splice(10);
-    let arrayProducts = [];
-    for (let p of productsSold) {
-      arrayProducts.push(p.details);
+    productsSold.splice(12)
+    let arrayProducts =[]
+    for(let p of productsSold){
+      arrayProducts.push(p.details)
+
     }
     // Devuelve un array de productos mas comprados ordenados de manera DESCENDENTE
     res.status(200).send(arrayProducts);
@@ -375,11 +375,12 @@ router.get("/recommendation/byRating", async (req, res) => {
   try {
     const products = await Product.findAll();
     products.sort((a, b) => {
-      return b.rating - a.rating;
-    });
-    products.splice(10);
+      return b.rating - a.rating
+    })
+    products.splice(12)
     // Devuelve los 12 productos con mas rating de manera DESCENDENTE
-    res.status(200).send(products);
+    res.status(200).send(products)
+
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
@@ -419,7 +420,6 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
 
     for (let pro of products) {
       const item = await Product.findAll({
-        // include: Category,
         include: [
           {
             model: Category,
@@ -448,10 +448,12 @@ router.get("/recommendation/byHistory/:userId", async (req, res) => {
 
     // Por ahora solo devuelve un array con todas las categorias relacionadas a los productos comprados por el user
     res.status(200).send(recommended);
+
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
   }
 });
+
 
 module.exports = router;

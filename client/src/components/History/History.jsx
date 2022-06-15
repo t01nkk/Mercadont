@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react'
-import axios from "axios"
-import { useLocation, useHistory } from 'react-router-dom'
-import { DateHistory } from './DateHistory';
-import "./History.css"
-import { DetailsBuysHistory } from './DetailsBuysHistory';
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useLocation, useHistory } from "react-router-dom";
+import { DateHistory } from "./DateHistory";
+import "./History.scss";
+import { DetailsBuysHistory } from "./DetailsBuysHistory";
 
 export const History = () => {
-  const [history, setHistory] = useState([])
-  const [detailsProduct, setDetailsProduct] = useState([])
-  const [changeSection, setChangeSection] = useState(true)
-  const [isReview, setIsReview] = useState(false)
-  const [ isOrder, setIsOrder] = useState(false)
-  const [reviewText, setReviewText] = useState([])
-//255742ff-1d7f-45d1-a5d9-7a5989ade570
+  const [history, setHistory] = useState([]);
+  const [detailsProduct, setDetailsProduct] = useState([]);
+  const [changeSection, setChangeSection] = useState(true);
+  const [isReview, setIsReview] = useState(false);
+  const [isOrder, setIsOrder] = useState(false);
+  const [reviewText, setReviewText] = useState([]);
 
   let redirect = useHistory();
   let myUser = JSON.parse(localStorage.getItem("myUser"));
-  let { search } = useLocation()
+  let { search } = useLocation();
 
   useEffect(() => {
     if (myUser) {
-      getHistory()
+      getHistory();
     }
   }, [history.length]);
 
   const getHistory = async () => {
-    let arrayHistory = await axios(`${process.env.REACT_APP_DOMAIN}/user/history/${myUser}`)
-    setHistory(arrayHistory.data)
-  }
+    let arrayHistory = await axios(
+      `${process.env.REACT_APP_DOMAIN}/user/history/${myUser}`
+    );
+    setHistory(arrayHistory.data);
+  };
 
   //AXIOS
   const sendReview = async () => {
@@ -36,39 +36,42 @@ export const History = () => {
     let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/review`, {
       userId: myUser,
       orderId: search.substring(1),
-      producto: reviewText
-    })
-
-    console.log("usario",myUser)
-    console.log("orderId",search.substring(1))
-    console.log("reviewText",reviewText)
-
-    // if (resp) {
-    //   redirect.push("/home")
-    // }
+      producto: reviewText,
+    });
+    if (resp) {
+      redirect.push("/home");
+    }
     //id => por params
     //rating, text,userId,orderId => body
-  }
+  };
 
   let updateDataText = (data) => {
-    // console.log(data)
-    if (!reviewText.length) setReviewText(reviewText.concat(data))
+    if (!reviewText.length) setReviewText(reviewText.concat(data));
     else {
-      let idFIndReview = reviewText.find(e => data.id === e.id)
+      let idFIndReview = reviewText.find((e) => data.id === e.id);
       if (idFIndReview) {
-        idFIndReview.text = data.text
-        idFIndReview.rating = data.rating
+        idFIndReview.text = data.text;
+        idFIndReview.rating = data.rating;
+      } else {
+        setReviewText(reviewText.concat(data));
       }
-      else { setReviewText(reviewText.concat(data)) }
     }
-  }
-
+  };
+  console.log(history);
   return (
-    <div>
-      {changeSection ?
-        <div>
-          <div className='container-dateHistory'>
-            {history.length > 0 && history.map(e => (
+    <>
+      <div className="history-list-container">
+        <p className="history-list-title">
+          Historial de compra: <br />
+          <span className="history-list-title-details">
+            Click the orders to see the details
+          </span>
+        </p>
+      </div>
+      {changeSection ? (
+        <ul className="list-group container-fluid ">
+          {history.length > 0 &&
+            history.map((e) => (
               <DateHistory
                 key={e.orderNumber}
                 amount={e.amount}
@@ -82,34 +85,47 @@ export const History = () => {
                 setChangeSection={setChangeSection}
                 setDetailsProduct={setDetailsProduct}
               />
-            ))
-            }
+            ))}
+        </ul>
+      ) : (
+        <section className="history-container">
+          <div className="history-btn-goback-container">
+            <button
+              className="history-btn-goback"
+              onClick={() => setChangeSection(true)}
+            >
+              go back
+            </button>
           </div>
-        </div>
-        :
-        <div>
-          {detailsProduct.length && detailsProduct.map((e, i) =>
-            <DetailsBuysHistory
-              key={e.id}
-              name={e.name}
-              id={e.id}
-              image={e.image}
-              price={e.price}
-              myUser={myUser}
-              isReview={isReview}
-              isOrder={isOrder}
-              updateDataText={updateDataText}
-            />
-          )
-          }
-          {!isReview && isOrder === "accepted"?
-            <div>
-              <button onClick={() => sendReview()}>Enviar review</button>
+          <article className="history-cards">
+            {detailsProduct.length &&
+              detailsProduct.map((e, i) => (
+                <DetailsBuysHistory
+                  key={e.id}
+                  name={e.name}
+                  id={e.id}
+                  image={e.image}
+                  price={e.price}
+                  myUser={myUser}
+                  isReview={isReview}
+                  isOrder={isOrder}
+                  updateDataText={updateDataText}
+                  setChangeSection={setChangeSection}
+                />
+              ))}
+          </article>
+          {!isReview && isOrder === "accepted" ? (
+            <div className="history-btn-review-container">
+              <button
+                className="history-btn-goback "
+                onClick={() => sendReview()}
+              >
+                Enviar review
+              </button>
             </div>
-            :null
-          }
-        </div>
-      }
-    </div>
-  )
-}
+          ) : null}
+        </section>
+      )}
+    </>
+  );
+};

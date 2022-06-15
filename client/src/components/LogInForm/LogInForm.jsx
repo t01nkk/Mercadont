@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./LoginForm.css";
+import "./LoginForm.scss";
 import { Link, Redirect } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import axios from "axios";
@@ -33,11 +33,10 @@ export default function LogInForm() {
           "myUser",
           JSON.stringify(userCredentials.user.uid)
         );
-        alertSuccess(t("logInForm.loggedIn"))
+        alertSuccess(t("logInForm.loggedIn"));
         setRedirect(true);
       }
       if (userCredentials.user.emailVerified) {
-
         await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
           id: userCredentials.user.uid,
           name: userCredentials.user.displayName,
@@ -53,9 +52,9 @@ export default function LogInForm() {
           );
           setRedirect(true);
         }
-      //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
-      }else{
-        console.log("Check your mail box for the authentification email")
+        //////////DESCOMENTAR PARA ACTIVAR VERIFICACION POR EMAIL ///////////////////////////////
+      } else {
+        console.log("Check your mail box for the authentification email");
       }
     } catch (err) {
       // console.log(err);
@@ -63,7 +62,7 @@ export default function LogInForm() {
       if (err.code === "auth/user-not-found")
         errorMsg = "Email doesn't belong to a user";
       if (err.code === "auth/wrong-password") errorMsg = "Wrong Password";
-      alertError(errorMsg)
+      alertError(errorMsg);
     }
   };
   const handleGoogleSignin = async () => {
@@ -81,7 +80,7 @@ export default function LogInForm() {
           "myUser",
           JSON.stringify(userCredentials.user.uid)
         );
-        alertSuccess(t("logInForm.loggedIn"))
+      alertSuccess(t("logInForm.loggedIn"));
       setRedirect(true);
     } catch (err) {
       console.log(err);
@@ -119,7 +118,7 @@ export default function LogInForm() {
         {({ errors, handleSubmit, handleChange, isSubmitting, touched }) => (
           <div className="loginCard">
             {redirect ? <Redirect push to="/home" /> : null}
-            <h2>{t("logInForm.logIn")}</h2>
+            <p className="login-welcome">{t("logInForm.logIn")}</p>
             <form onSubmit={handleSubmit}>
               <div className="divInputUser">
                 <input
@@ -157,7 +156,7 @@ export default function LogInForm() {
                   disabled={isSubmitting}
                   type="submit"
                   value={t("logInForm.submit")}
-                  className="input-submit"
+                  className="input-submit-login"
                 />
               </div>
               {/*<div>
