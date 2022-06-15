@@ -5,7 +5,7 @@ const cors = require("cors");
 const { modifyStock } = require("../middlewares/middlewares");
 const { validateInputProduct } = require("../middlewares/middlewares");
 const { Op, where, Sequelize } = require("sequelize");
-const { set } = require("../app");
+
 
 const router = Router();
 
