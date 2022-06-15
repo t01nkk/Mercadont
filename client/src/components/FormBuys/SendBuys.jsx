@@ -15,6 +15,13 @@ export const SendBuys = () => {
     const { t } = useTranslation()
     const stripe = useStripe()
     const elements = useElements()
+    const [address, setAdress] = useState({
+        country:"",
+        province:"",
+        city:"",
+        street:"",
+        postalCode:""
+    })
 
     let user = JSON.parse(localStorage.getItem("myUser"))
     let local = JSON.parse(localStorage.getItem(user));
@@ -30,6 +37,12 @@ export const SendBuys = () => {
         setAmounTotal(totalPrice())
     }, [])
 
+    const handleAdress = (e)=>{
+        setAdress({
+            ...address,
+            [e.target.name]:e.target.value
+        })
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -38,8 +51,7 @@ export const SendBuys = () => {
         if (selectBuys === "card") {
             const { error, paymentMethod } = await stripe.createPaymentMethod({
                 type: "card",
-                card: elements.getElement(CardElement)
-               
+                card: elements.getElement(CardElement) 
             })
             alertInfo(t("sendBuys.processingCard"))
             setLoadingBuys(true)
@@ -49,10 +61,10 @@ export const SendBuys = () => {
                     id,
                     amount: Math.round(priceTotal * 100),
                     local,
-                    userId: user
+                    userId: user,
+                    address
                 })
             }
-           
             // loadingBuys()
             if (paymentMethod) {
                 setLoadingBuys(false)
@@ -80,7 +92,8 @@ export const SendBuys = () => {
                     }
                 ],
                 user,
-                local
+                local,
+                address
             })
             setRedirect(purchase.data)
             // localStorage.removeItem(user)
@@ -128,6 +141,13 @@ export const SendBuys = () => {
                     <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
                     <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
                 </div>
+                <form>
+                    <input type="text" name='country' value={address.country} onChange={handleAdress}/>
+                    <input type="text" name='province' value={address.province} onChange={handleAdress}/>
+                    <input type="text" name='city' value={address.city} onChange={handleAdress}/>
+                    <input type="text" name='street' value={address.street} onChange={handleAdress}/>
+                    <input type="text" name='postalCode' value={address.postalCode} onChange={handleAdress}/>
+                </form>
                 {
                     <div>
                         {selectBuys === "card" ?

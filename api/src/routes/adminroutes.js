@@ -228,6 +228,11 @@ router.get("/history", async (req, res) => {
       return res.status(200).send([]);
     }
     let historyPurchaseOrders = groupPurchaseOrders(userHistory)
+
+    for (let order of historyPurchaseOrders) {
+      const user = await User.findOne({ where: { id: order.user } })
+      order.user = user
+    }
     return res.status(200).send(historyPurchaseOrders)
   } catch (error) {
     return res.status(404).send(error);

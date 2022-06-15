@@ -7,7 +7,7 @@ const {
 } = require("./purchase_order");
 
 const createOrder = async (req, res) => {
-  const { purchase_units, user, local } = req.body;
+  const { purchase_units, user, local, address } = req.body;
   try {
     const order = {
       intent: "CAPTURE",
@@ -46,7 +46,7 @@ const createOrder = async (req, res) => {
         },
       }
     );
-    createPurchaseOrder(data.id, user, local, purchase_units[0].amount.value);
+    createPurchaseOrder(data.id, user, local, purchase_units[0].amount.value, address);
     res.status(200).send(data.links[1].href);
   } catch (error) {
     console.log("error:", error);

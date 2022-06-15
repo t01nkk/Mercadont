@@ -24,8 +24,7 @@ module.exports = (sequelize) => {
       },
       country: {
         type: DataTypes.STRING,
-        defaultValue: ""
-                
+        defaultValue: ""         
       },
       province: {
         type: DataTypes.STRING,
@@ -43,7 +42,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         defaultValue: ""
       },
-      
       image: {
         type: DataTypes.STRING,
         // allowNull: false
