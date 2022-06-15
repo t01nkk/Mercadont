@@ -18,26 +18,26 @@ router.put("/", async (req, res) => {
 
     try {
         for (var i = 0; i < producto.length; i++) {
-            console.log("ESTOY ABAJO DEL FOR",producto[i].id)
+            console.log("ESTOY ABAJO DEL FOR", producto[i].id)
             if (!producto[i].rating) continue;
 
             const product = await Product.findOne({
-                where: { id: producto[i].id } ,
+                where: { id: producto[i].id },
                 include: {
                     model: Review,
                     attributes: ["rating", "text"],
                     through: { attributes: [] }
                 }
             }
-                )
+            )
 
             if (!product) return res.status(400).send(`The product Id:  ${producto[i].id}  doesn't exist`);
 
             const user = await User.findOne({ where: { id: userId } })
-            console.log("SOY EL PRODUCTLINEA 37",product)
+            console.log("SOY EL PRODUCTLINEA 37", product)
 
             if (!user) return res.status(400).send(`The user Id:  ${userId}  doesn't exist`);
-            console.log("LINEA 40 soy el product.ID",product.id, "soy el producto[i].id", producto[i].id )
+            console.log("LINEA 40 soy el product.ID", product.id, "soy el producto[i].id", producto[i].id)
             const fullReview = await Review.create({
                 rating: producto[i].rating,
                 text: producto[i].text,
