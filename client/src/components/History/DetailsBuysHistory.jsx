@@ -53,7 +53,6 @@ export const DetailsBuysHistory = ({amount,name,id,image,price,date,myUser,isRev
             <div>
               {
               [...Array(5)].map((e,i)=>{
-              
                   const ratingValue = i + 1
                   return (
                       <label className='container-star' key={"fostar" + ratingValue}>

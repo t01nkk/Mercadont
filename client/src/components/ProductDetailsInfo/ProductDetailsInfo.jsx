@@ -17,13 +17,17 @@ export default function ProductDetailsInfo({
   name,
   description,
   stock,
-  // rating,
+  rating,
   categories,
-  // reviews,
+  reviews,
   qas,
   status,
   price,
 }) {
+
+//52264991-e6e0-4a72-b741-cd330dd160bf
+//52264991-e6e0-4a72-b741-cd330dd160bf
+
   const { t } = useTranslation();
   const [state, dispatch] = useStore();
   const [changeButton, setChangeButton] = useState();
@@ -171,7 +175,9 @@ export default function ProductDetailsInfo({
               <p>{stock}</p>
             </div>
           </div>
+
           <div className="details-price">
+            <div className="details-categories">
             <p className="title-details-info-price">
               {t("productDetailsInfo.price")}
             </p>
@@ -179,9 +185,38 @@ export default function ProductDetailsInfo({
               <span className="details-currency">U$D</span>
               {`${accounting.formatMoney(price, "", 2, ".")}`}
             </p>
+           </div>
+           <div className="details-stock">
+            <p className="title-details-info-price">Rating:</p>
+              <p>
+                <span className="details-currency">{rating}</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
+
+      <div className="details-qua">
+      <p className="title-details-info-qua">Product Reviews</p>
+           {reviews && (
+            <div className="details-questions-list">
+              {React.Children.toArray(
+               reviews.map((e) => {
+                if(e.text){
+                  return (
+                  <div className="container-reviews">
+                    <p className="questionText">{e.text}</p>
+                    <p>{e.rating}</p>
+                  </div>
+                  )
+                }
+                return null
+              })
+            )}
+            </div>
+           )}         
+      </div>
+
       <div className="details-qua">
         <p className="title-details-info-qua">{t("productDetailsInfo.qa")}</p>
         {qas && (
@@ -200,6 +235,8 @@ export default function ProductDetailsInfo({
         )}
         <FormQA productId={id} />
       </div>
+
+     
     </div>
   );
 }
