@@ -9,31 +9,35 @@ const router = Router()
 
 router.put("/", async (req, res) => {
     const { userId, orderId, producto } = req.body
+    // console.log(req.body)
+    // console.log("SOY EL PRDUCTO",producto)
+    // console.log(typeof(producto[0].rating))
     const findOrder = await PurchaseOrder.findAll({ where: { orderId: orderId } });
     if (!findOrder?.length) return res.status(400).send({ msg: "This order Id isn't valid" });
     // if (findOrder.orderStatus !== "accepted") return res.status(400).send({ msg: "The order must be accepted before being able to send a review" });
 
     try {
         for (var i = 0; i < producto.length; i++) {
-
+            console.log("ESTOY ABAJO DEL FOR",producto[i].id)
             if (!producto[i].rating) continue;
 
             const product = await Product.findOne({
+                where: { id: producto[i].id } ,
                 include: {
                     model: Review,
                     attributes: ["rating", "text"],
                     through: { attributes: [] }
                 }
-            },
-                { where: { id: producto[i].id } })
+            }
+                )
 
             if (!product) return res.status(400).send(`The product Id:  ${producto[i].id}  doesn't exist`);
 
             const user = await User.findOne({ where: { id: userId } })
-
+            console.log("SOY EL PRODUCTLINEA 37",product)
 
             if (!user) return res.status(400).send(`The user Id:  ${userId}  doesn't exist`);
-
+            console.log("LINEA 40 soy el product.ID",product.id, "soy el producto[i].id", producto[i].id )
             const fullReview = await Review.create({
                 rating: producto[i].rating,
                 text: producto[i].text,

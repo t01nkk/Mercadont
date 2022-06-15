@@ -13,7 +13,7 @@ export const History = () => {
   const [isReview, setIsReview] = useState(false)
   const [ isOrder, setIsOrder] = useState(false)
   const [reviewText, setReviewText] = useState([])
-
+//255742ff-1d7f-45d1-a5d9-7a5989ade570
 
   let redirect = useHistory();
   let myUser = JSON.parse(localStorage.getItem("myUser"));
@@ -38,9 +38,14 @@ export const History = () => {
       orderId: search.substring(1),
       producto: reviewText
     })
-    if (resp) {
-      redirect.push("/home")
-    }
+
+    console.log("usario",myUser)
+    console.log("orderId",search.substring(1))
+    console.log("reviewText",reviewText)
+
+    // if (resp) {
+    //   redirect.push("/home")
+    // }
     //id => por params
     //rating, text,userId,orderId => body
   }
