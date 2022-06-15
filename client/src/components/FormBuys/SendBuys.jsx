@@ -30,6 +30,13 @@ export const SendBuys = () => {
     const [selectBuys, setSelectBuys] = useState("")
     const [amountTotal, setAmounTotal] = useState("")
     const [loadingBuys, setLoadingBuys] = useState(false)
+    const [error, setError] = useState({
+        country:"",
+        province:"",
+        city:"",
+        street:"",
+        postalCode:""
+    })
     const history = useHistory()
 
 
@@ -42,6 +49,24 @@ export const SendBuys = () => {
             ...address,
             [e.target.name]:e.target.value
         })
+    }
+
+    const blurAddress = (e)=>{
+        e.stopPropagation()
+        handleAdress(e)
+        validateForm(address)
+    }
+
+    const validateForm = ()=>{
+        let error ={}
+        if(!/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(address.country) && address.country !== "") error.country = "La dirección solo puede contener numero y caracteres alfabeticos"
+        if(!/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(address.province) && address.province !== "") error.province = "La dirección solo puede contener numero y caracteres alfabeticos"
+        if(!/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(address.city) && address.city !== "") error.city = "La dirección solo puede contener numero y caracteres alfabeticos"
+        if(!/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(address.street) && address.street !== "") error.street = "La dirección solo puede contener numero y caracteres alfabeticos"
+        if(!/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(address.postalCode) && address.postalCode !== "") error.postalCode = "La dirección solo puede contener numero y caracteres alfabeticos"
+        
+        setError(error)
+    
     }
 
     const handleSubmit = async (e) => {
@@ -73,6 +98,8 @@ export const SendBuys = () => {
             }
         }
     }
+
+    
 
     const handelClik = async (e) => {
         e.preventDefault()
@@ -115,9 +142,6 @@ export const SendBuys = () => {
         setPrice(priceTotal)
     }, [])
 
-    const mostra = () => {
-    };
-
     return (
         <div>
             <form onSubmit={handleSubmit} className="form-buys">
@@ -135,19 +159,44 @@ export const SendBuys = () => {
                         }
                     </div>
                 </div>
+                {amountTotal && <p>{t("sendBuys.totalprice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
+                
                 <div>
-                    {amountTotal && <p>{t("sendBuys.totalprice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
+                    <label htmlFor="country">Country;
+                        <input type="text" name='country' value={address.country} onChange={handleAdress} onBlur={blurAddress}/>
+                    </label>
+                    {error.country && <p>{error.country}</p>}
+
+                    <label htmlFor="province">Province:
+                        <input type="text" name='province' value={address.province} onChange={handleAdress} onBlur={blurAddress}/>
+                    </label>
+                    {error.province && <p>{error.province}</p>}
+
+                    <label htmlFor="city">City:
+                        <input type="text" name='city' value={address.city} onChange={handleAdress} onBlur={blurAddress}/>
+                    </label>
+                    {error.city && <p>{error.city}</p>}
+
+                    <label htmlFor="street">Street:
+                        <input type="text" name='street' value={address.street} onChange={handleAdress} onBlur={blurAddress}/>
+                    </label>
+                    {error.street && <p>{error.street}</p>}
+
+                    <label htmlFor="postalCode">PostalCode:
+                        <input type="text" name='postalCode' value={address.postalCode} onChange={handleAdress} onBlur={blurAddress}/>
+                    </label>
+                    {error.postalCode && <p>{error.postalCode}</p>}
+                </div>
+
+                {address.country&&address.province&&address.city&&address.street&&address.postalCode&&Object.keys(error).length === 0&&
+                <div>
                     <p>{t("sendBuys.paymentMethod")}</p>
                     <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
                     <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
                 </div>
-                <form>
-                    <input type="text" name='country' value={address.country} onChange={handleAdress}/>
-                    <input type="text" name='province' value={address.province} onChange={handleAdress}/>
-                    <input type="text" name='city' value={address.city} onChange={handleAdress}/>
-                    <input type="text" name='street' value={address.street} onChange={handleAdress}/>
-                    <input type="text" name='postalCode' value={address.postalCode} onChange={handleAdress}/>
-                </form>
+                 }
+               
+                
                 {
                     <div>
                         {selectBuys === "card" ?
@@ -167,7 +216,10 @@ export const SendBuys = () => {
                             : <p>{t("sendBuys.paypalProcessing")}</p>
                         }
                     </button>
-                    : null}
+                    : null
+                }
+                
+                
             </form>
             <button onClick={(e) => handleBack(e)}>{t("navigation.returnToCart")}</button>
         </div>
