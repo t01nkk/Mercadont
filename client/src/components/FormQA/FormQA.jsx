@@ -57,7 +57,7 @@ export const FormQA = ({ productId }) => {
             onChange={(e) => handleChange(e)}
             value={data.question}
           />
-          <button className="button-qua">Preguntar</button>
+          <button className="button-qua">{t("formQA.postQuestion")}</button>
         </div>
       </form>
     </div>

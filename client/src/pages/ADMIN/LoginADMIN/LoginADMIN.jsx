@@ -83,7 +83,7 @@ export default function LoginADMIN() {
         {({ errors, handleSubmit, handleChange, isSubmitting, touched }) => (
           <div className="loginCard">
             {redirect ? <Redirect push to="/admin/home" /> : null}
-            <p className="loginCard-text">{t("loginAdmin.login")}</p>
+            <p className="login-welcome">{t("loginAdmin.login")}</p>
             <form
               method="POST"
               action={`${process.env.REACT_APP_DOMAIN}/user/login`}
@@ -122,8 +122,8 @@ export default function LoginADMIN() {
                 <input
                   disabled={isSubmitting}
                   type="submit"
-                  value="Submit"
-                  className="input-submit"
+                  value="Log in"
+                  className="input-submit-login"
                 />
               </div>
             </form>

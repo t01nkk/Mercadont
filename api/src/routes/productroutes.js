@@ -1,16 +1,9 @@
-const { Product, User, Category, Qa, Review, PurchaseOrder } = require("../db");
+const { Product, Category, Qa, Review, PurchaseOrder } = require("../db");
 const { Router } = require("express");
-const Stripe = require("stripe");
-const cors = require("cors");
-const { modifyStock } = require("../middlewares/middlewares");
 const { validateInputProduct } = require("../middlewares/middlewares");
 const { Op, where, Sequelize } = require("sequelize");
 
 const router = Router();
-
-const stripe = new Stripe(
-  "sk_test_51L4snIL7xpNkb3eJIsYUyZ8SYO4cHXX3GyMVVgp1lJ56KTEq6Mc8qtENUNlam4mslm4pwNXq48uFQYLrDPldNso900jpNAxL5e"
-);
 //----------------------PRODUCT FILTER---------------------------------- //
 //Get All Products, Filter By Category, Name, Price
 router.get("/", async (req, res) => {
@@ -227,7 +220,7 @@ router.post("/create", async (req, res) => {
 
   try {
     const newProduct = await Product.create({
-      name:name.toUpperCase(),
+      name: name.toUpperCase(),
       price,
       description,
       status,
@@ -297,7 +290,7 @@ router.put("/update/:id", async (req, res) => {
 
     await Product.update(
       {
-        name:name.toUpperCase(),
+        name: name.toUpperCase(),
         price,
         description,
         image,
@@ -321,12 +314,11 @@ router.get("/recommendation/mostSold", async (req, res) => {
     details: {},
     quantity: 0,
   };
-  let productsSold = [];
+  let productsSold = []
   try {
     const orders = await PurchaseOrder.findAll();
 
     if (!orders?.length) {
-
       const products = await Product.findAll({ where: { status: "active" } });
       products.splice(12);
       return res.status(200).send(products);
@@ -336,7 +328,7 @@ router.get("/recommendation/mostSold", async (req, res) => {
     product.quantity = orders[0].productQuantity;
 
     for (let i = 1; i < orders.length; i++) {
-      if (product.details.id === orders[i].productId) {
+      if (product.details?.id === orders[i].productId) {
         product.quantity += orders[i].productQuantity;
       } else {
         productsSold.push(product);
@@ -353,14 +345,13 @@ router.get("/recommendation/mostSold", async (req, res) => {
     productsSold.push(product);
 
     productsSold.sort((a, b) => {
-      return b.details.quantity - a.details.quantity
+      return b.details.rating - a.details.rating
     })
 
     productsSold.splice(12)
     let arrayProducts = []
     for (let p of productsSold) {
       arrayProducts.push(p.details)
-
     }
     // Devuelve un array de productos mas comprados ordenados de manera DESCENDENTE
     res.status(200).send(arrayProducts);

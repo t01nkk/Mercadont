@@ -34,7 +34,6 @@ export default function SlideRating() {
   const [inCart, setInCart] = useState(false);
   const history = useHistory();
   let person = JSON.parse(localStorage.getItem("myUser"));
-  console.log("Hola rating", state.rating);
 
   const sold = state.soldMost[0]?.details;
   const handleSaveCart = (name, price, image, id, stock) => {
@@ -116,39 +115,36 @@ export default function SlideRating() {
         }}
         className="mySwiper"
       >
-      
-          {/* <button onClick={() => mostra()}>mostra storage</button> */}
 
-          {state.rating && state.favorites ? (
-            React.Children.toArray(
-              state.rating.map((product) => {
-                if (product.status === "active") {
-                  return (
-                    <SwiperSlide>
-                      <ProductCardSlide
-                        id={product.id}
-                        name={product.name}
-                        stock={product.stock}
-                        price={product.price}
-                        image={product.image}
-                        handleSaveCart={handleSaveCart}
-                        handleSaveFavorite={handleSaveFavorite}
-                        handleDeleteFavorite={handleDeleteFavorite}
-                        isAdd={state.favorites.find((e) => e.id === product.id)}
-                        alertSuccess={alertSuccess}
-                      />
-                    </SwiperSlide>
-                  );
-                }
-                return null;
-              })
-            )
-          ) : (
-            <div className="container-loader">
-              <Loader />
-            </div>
-          )}
-       
+        {state.rating && state.favorites ? (
+          React.Children.toArray(
+            state.rating.map((product) => {
+              if (product.status === "active") {
+                return (
+                  <SwiperSlide>
+                    <ProductCardSlide
+                      id={product.id}
+                      name={product.name}
+                      stock={product.stock}
+                      price={product.price}
+                      image={product.image}
+                      handleSaveCart={handleSaveCart}
+                      handleSaveFavorite={handleSaveFavorite}
+                      handleDeleteFavorite={handleDeleteFavorite}
+                      isAdd={state.favorites.find((e) => e.id === product.id)}
+                      alertSuccess={alertSuccess}
+                    />
+                  </SwiperSlide>
+                );
+              }
+              return null;
+            })
+          )
+        ) : (
+          <div className="container-loader">
+            <Loader />
+          </div>
+        )}
       </Swiper>
     </div>
   );

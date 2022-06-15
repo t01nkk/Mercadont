@@ -158,9 +158,7 @@ export default function EditProduct() {
         console.log(err);
       }
     }
-
   };
-  console.log(product.status);
   return (
     <div className="container-edit-admin">
       <form onSubmit={handleSubmit} className="form-edit-admin">
@@ -194,7 +192,7 @@ export default function EditProduct() {
           <div className="edit-price-stock">
             <label className="title-details-info">
               {t("adminSellProduct.price")}
-            </label>
+            </label> {errors.price && <p className="error-input">{errors.price}</p>}
             <input
               type="number"
               name="price"
@@ -202,7 +200,7 @@ export default function EditProduct() {
               value={product.price}
               onChange={handleChangePrice}
             />
-            
+           
             <label className="title-details-info">
               {t("adminSellProduct.stock")}
             </label>
@@ -258,7 +256,7 @@ export default function EditProduct() {
                     </button>
                   </div>
                 ))
-              ):<p className="error-input-edit">{t("adminSellProduct.errors_categories")}</p>}
+              ) : <p>{t("adminSellProduct.errors_categories")}</p>}
           </div>
           <input
             type="submit"

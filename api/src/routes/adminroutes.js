@@ -3,13 +3,14 @@ const { Router } = require("express");
 const { Sequelize, Op } = require("sequelize");
 const router = Router();
 const createdOrders = require("../../purchaseOrders.json");
-const { groupPurchaseOrders, mailQuestion, mailOrderRejected, mailOrderAccepted } = require("../middlewares/middlewares");
+const { groupPurchaseOrders, mailQuestion, mailOrderRejected, mailOrderAccepted, reStockOrderCancelled } = require("../middlewares/middlewares");
 
 // Working
 //Get all Users
 router.get("/users", async (req, res) => {
   try {
     const user = await User.findAll();
+    console.log(user)
     if (!user) {
       return res.status(404).send("Users Not Found");
     }
@@ -159,8 +160,8 @@ router.get("/filterOrders/:status", async (req, res) => {
     }
     let purchaseOrders = groupPurchaseOrders(orders)
 
-    for(let order of purchaseOrders){
-      const user = await User.findOne({where: {id: order.user}})
+    for (let order of purchaseOrders) {
+      const user = await User.findOne({ where: { id: order.user } })
       order.user = user
     }
     return res.status(200).send(purchaseOrders)
@@ -192,14 +193,15 @@ router.put("/setOrderStatus", async (req, res) => {
     })
     if (orderStatus === "accepted") {
       // DESCOMENTAR PARA ENVIAR MAIL
-      // mailOrderAccepted(user.email, orderId)
+      mailOrderAccepted(user.email, orderId)
       // 
       return res.status(200).send(`Order updated to ${orderStatus}, and mail sent to the buyer (${user.email})`)
     }
 
     if (orderStatus === "rejected") {
+      reStockOrderCancelled(orderId)
       // DESCOMENTAR PARA ENVIAR MAIL
-      // mailOrderRejected(user.email, orderId)
+      mailOrderRejected(user.email, orderId)
       // 
       return res.status(200).send(`Order updated to ${orderStatus}, and mail sent to the buyer (${user.email})`)
     }
@@ -227,6 +229,11 @@ router.get("/history", async (req, res) => {
       return res.status(200).send([]);
     }
     let historyPurchaseOrders = groupPurchaseOrders(userHistory)
+
+    for (let order of historyPurchaseOrders) {
+      const user = await User.findOne({ where: { id: order.user } })
+      order.user = user
+    }
     return res.status(200).send(historyPurchaseOrders)
   } catch (error) {
     return res.status(404).send(error);
@@ -257,6 +264,8 @@ router.put("/:questionId/answer", async (req, res) => {
     const { id, name } = userMail.dataValues.products[0].dataValues
 
     mailQuestion(email, name, id)
+
+    // 
     return res.status(200).send("Question answered")
   }
   catch (err) {

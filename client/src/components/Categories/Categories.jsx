@@ -6,7 +6,7 @@ import {
   SORT_BY_PRICE_CAT,
   FILTER_BY_PRICE_CATEGORY,
 } from "../../redux/actions/actionTypes";
-import { getFavorites } from "../../redux/actions/actions.js";
+import { getFavorites, totalCount } from "../../redux/actions/actions.js";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader/Loader";
 import "./categories.scss";
@@ -14,6 +14,7 @@ import { handleDeleteFavorite, handleSaveFavorite } from "../Cart/actionsCart";
 import { useTranslation } from "react-i18next";
 import { alertInfo, alertSuccess, alertWarning } from "../../helpers/toast";
 import { IoSearchSharp } from "react-icons/io5";
+
 export default function Categories() {
   // let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const { t } = useTranslation();
@@ -104,6 +105,7 @@ export default function Categories() {
 
   useEffect(() => {
     localStorage.setItem(user, JSON.stringify(cart));
+    totalCount(dispatch)
   }, [cart]);
 
   useEffect(() => {
@@ -156,8 +158,8 @@ export default function Categories() {
             }}
             className="sortSelector"
           >
-            <option value="DESCENDING">MAX-MIN</option>
-            <option value="ASCENDING">MIN-MAX</option>
+            <option value="DESCENDING">{t("categoriesComp.des")}</option>
+            <option value="ASCENDING">{t("categoriesComp.asc")}</option>
           </select>
         </div>
       </div>

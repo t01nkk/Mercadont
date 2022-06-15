@@ -10,7 +10,6 @@ export default function ProductDetails() {
     const fetchedProduct = await axios.get(
       `${process.env.REACT_APP_DOMAIN}/product/${id}`
     );
-      console.log(fetchedProduct.data)
     setProduct(fetchedProduct.data);
   };
 
@@ -29,9 +28,9 @@ export default function ProductDetails() {
           description={product.description}
           stock={product.stock}
           price={product.price}
-          // rating={product.rating}
+          rating={product.rating}
           categories={product.categories}
-          // reviews={product.reviews}
+          reviews={product.reviews}
           qas={product.qas}
           status={product.status}
         />

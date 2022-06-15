@@ -4,8 +4,10 @@ import { useLocation, useHistory } from "react-router-dom";
 import { DateHistory } from "./DateHistory";
 import "./History.scss";
 import { DetailsBuysHistory } from "./DetailsBuysHistory";
+import { useTranslation } from "react-i18next";
 
 export const History = () => {
+  const { t } = useTranslation()
   const [history, setHistory] = useState([]);
   const [detailsProduct, setDetailsProduct] = useState([]);
   const [changeSection, setChangeSection] = useState(true);
@@ -32,7 +34,6 @@ export const History = () => {
 
   //AXIOS
   const sendReview = async () => {
-    // console.log(reviewText)
     let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/review`, {
       userId: myUser,
       orderId: search.substring(1),
@@ -57,14 +58,13 @@ export const History = () => {
       }
     }
   };
-  console.log(history);
   return (
     <>
       <div className="history-list-container">
         <p className="history-list-title">
-          Historial de compra: <br />
+          {t("history.shoppingHistory")}
           <span className="history-list-title-details">
-            Click the orders to see the details
+            {t("history.instructions")}
           </span>
         </p>
       </div>
@@ -94,7 +94,7 @@ export const History = () => {
               className="history-btn-goback"
               onClick={() => setChangeSection(true)}
             >
-              go back
+              {t("navigation.return")}
             </button>
           </div>
           <article className="history-cards">
