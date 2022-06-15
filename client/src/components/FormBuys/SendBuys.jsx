@@ -28,6 +28,7 @@ export const SendBuys = () => {
     let priceTotal = JSON.parse(localStorage.getItem("myPrice"))
     const [redirect, setRedirect] = useState("")
     const [selectBuys, setSelectBuys] = useState("")
+    const [selectShipping, setSelectShipping] = useState("")
     const [amountTotal, setAmounTotal] = useState("")
     const [loadingBuys, setLoadingBuys] = useState(false)
     const [error, setError] = useState({
@@ -81,6 +82,7 @@ export const SendBuys = () => {
             setLoadingBuys(true)
             if (!error) {
                 const { id } = paymentMethod
+                // console.log("address:",address)
                 try {
                     await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
                         id,
@@ -107,8 +109,6 @@ export const SendBuys = () => {
             } else {
                 alertWarning(t("sendBuys.cardProblem"))
                 setLoadingBuys(false)
-                localStorage.removeItem(user)
-                return history.push("/cart?buy=false")
             }
             // loadingBuys()
             if (paymentMethod) {
@@ -119,7 +119,32 @@ export const SendBuys = () => {
         }
     }
 
+    const handleShipping = async (e) => {
+        e.preventDefault()
+        if (e.target.id === "accountAddress") {
+            try {
+                const userAddress = await axios.get(`${process.env.REACT_APP_DOMAIN}/user/details/${user}`)
+                // console.log(userAddress.data)
+                // console.log("country:",userAddress.data.country)
+                // console.log("province:",userAddress.data.province)
+                // console.log("city:",userAddress.data.city)
+                // console.log("street:",userAddress.data.street)
+                // console.log("postalCode:",userAddress.data.postalCode)
+                if (userAddress.data.country === "" || userAddress.data.province === "" || userAddress.data.city === "" || userAddress.data.street === "" || userAddress.data.postalCode === "") {
+                    alertWarning(t("sendBuys.addressNotComplete"))
+                } else {
+                    setSelectShipping("accountAddress")
+                    setAdress({ country: userAddress.data.country, province: userAddress.data.province, city: userAddress.data.city, street: userAddress.data.street, postalCode: userAddress.data.postalCode })
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
 
+        if (e.target.id === "newAddress") {
+            setSelectShipping("newAddress")
+        }
+    }
 
     const handelClik = async (e) => {
         e.preventDefault()
@@ -161,7 +186,7 @@ export const SendBuys = () => {
         setProducts(local)
         setPrice(priceTotal)
     }, [])
-
+    // console.log("user:", user)
     return (
         <div>
             <form onSubmit={handleSubmit} className="form-buys">
@@ -182,41 +207,56 @@ export const SendBuys = () => {
                 {amountTotal && <p>{t("sendBuys.totalprice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
 
                 <div>
-                    <label htmlFor="country">Country;
-                        <input type="text" name='country' value={address.country} onChange={handleAdress} onBlur={blurAddress} />
-                    </label>
-                    {error.country && <p>{error.country}</p>}
+                    <p>{t("sendBuys.chooseAddress")}</p>
+                    <button id="accountAddress" onClick={e => handleShipping(e)}>{t("sendBuys.accountAddress")}</button>
+                    <button id="newAddress" onClick={e => handleShipping(e)}>{t("sendBuys.newAddress")}</button>
 
-                    <label htmlFor="province">Province:
-                        <input type="text" name='province' value={address.province} onChange={handleAdress} onBlur={blurAddress} />
-                    </label>
-                    {error.province && <p>{error.province}</p>}
-
-                    <label htmlFor="city">City:
-                        <input type="text" name='city' value={address.city} onChange={handleAdress} onBlur={blurAddress} />
-                    </label>
-                    {error.city && <p>{error.city}</p>}
-
-                    <label htmlFor="street">Street:
-                        <input type="text" name='street' value={address.street} onChange={handleAdress} onBlur={blurAddress} />
-                    </label>
-                    {error.street && <p>{error.street}</p>}
-
-                    <label htmlFor="postalCode">PostalCode:
-                        <input type="text" name='postalCode' value={address.postalCode} onChange={handleAdress} onBlur={blurAddress} />
-                    </label>
-                    {error.postalCode && <p>{error.postalCode}</p>}
-                </div>
-
-                {address.country && address.province && address.city && address.street && address.postalCode && Object.keys(error).length === 0 &&
                     <div>
-                        {amountTotal && <p>{t("sendBuys.totalPrice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
+                        {selectShipping === "newAddress" ?
+                            <>
+                                <label htmlFor="country">Country;
+                                    <input type="text" name='country' value={address.country} onChange={handleAdress} onBlur={blurAddress} />
+                                </label>
+                                {error.country && <p>{error.country}</p>}
+
+                                <label htmlFor="province">Province:
+                                    <input type="text" name='province' value={address.province} onChange={handleAdress} onBlur={blurAddress} />
+                                </label>
+                                {error.province && <p>{error.province}</p>}
+
+                                <label htmlFor="city">City:
+                                    <input type="text" name='city' value={address.city} onChange={handleAdress} onBlur={blurAddress} />
+                                </label>
+                                {error.city && <p>{error.city}</p>}
+
+                                <label htmlFor="street">Street:
+                                    <input type="text" name='street' value={address.street} onChange={handleAdress} onBlur={blurAddress} />
+                                </label>
+                                {error.street && <p>{error.street}</p>}
+
+                                <label htmlFor="postalCode">PostalCode:
+                                    <input type="text" name='postalCode' value={address.postalCode} onChange={handleAdress} onBlur={blurAddress} />
+                                </label>
+                                {error.postalCode && <p>{error.postalCode}</p>}
+                            </>
+                            : null}
+                    </div>
+                </div>
+                {selectShipping === "newAddress" && address.country && address.province && address.city && address.street && address.postalCode && Object.keys(error).length === 0 &&
+                    <div>
                         <p>{t("sendBuys.paymentMethod")}</p>
                         <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
                         <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
                     </div>
                 }
 
+                {selectShipping === "accountAddress" &&
+                    <div>
+                        <p>{t("sendBuys.paymentMethod")}</p>
+                        <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
+                        <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
+                    </div>
+                }
 
                 {
                     <div>
