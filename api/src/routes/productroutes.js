@@ -228,7 +228,7 @@ router.post("/create", async (req, res) => {
 
   try {
     const newProduct = await Product.create({
-      name,
+      name: name.toUpperCase(),
       price,
       description,
       status,
@@ -298,7 +298,7 @@ router.put("/update/:id", async (req, res) => {
 
     await Product.update(
       {
-        name,
+        name: name.toUpperCase(),
         price,
         description,
         image,
@@ -322,12 +322,12 @@ router.get("/recommendation/mostSold", async (req, res) => {
     details: {},
     quantity: 0,
   };
-  let productsSold = [];
+  let productsSold = []
   try {
     const orders = await PurchaseOrder.findAll();
 
     if (!orders?.length) {
-      const products = await Product.findAll();
+      const products = await Product.findAll({where: {status: "active"}});
       products.splice(12);
       return res.status(200).send(products);
     }
@@ -357,7 +357,7 @@ router.get("/recommendation/mostSold", async (req, res) => {
     })
 
     productsSold.splice(12)
-    let arrayProducts =[]
+    let arrayProducts = []
     for(let p of productsSold){
       arrayProducts.push(p.details)
 

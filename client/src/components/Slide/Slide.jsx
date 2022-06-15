@@ -58,8 +58,6 @@ export default function Slide() {
                 recommended.push(state.products[index])
 
                         }
-
-                        console.log("hola recommended",recommended)
             setSold(recommended);
    
 
@@ -120,8 +118,6 @@ export default function Slide() {
     //   let miStorage = JSON.parse(localStorage.getItem("myUser"));
     //   console.log(miStorage);
     // };
-     
-     console.log("Hola sold",sold)
     return (
         <div className="div-slide">
             <Swiper
