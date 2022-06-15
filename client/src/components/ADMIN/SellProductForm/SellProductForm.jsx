@@ -28,7 +28,7 @@ export default function SellProductForm() {
   });
   const expression = {
     nameExpression: /^[\da-zA-ZÀ-ÿ\s]{1,40}$/,
-    priceExpression: /^\d{1,3}(\.\d{1,3})?$/,
+    priceExpression: /^\d{1,5}(\.\d{1,3})?$/,
     descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,®'*¿?¡!\s]{30,200}$/,
     stockExpression: /^\d{1,14}$/,
   };
@@ -36,20 +36,22 @@ export default function SellProductForm() {
   function validator(input) {
     let errors = {};
 
-    if (!expression.nameExpression.test(input.name)) {
+    if (!expression.nameExpression.test(input.name)  && input.name !== "") {
       errors.name = `${t("adminSellProduct.errors_name")}`;
     }
-    if (!expression.priceExpression.test(input.price)) {
+    if (!expression.priceExpression.test(input.price) && input.price !== "" ) {
       errors.price = `${t("adminSellProduct.errors_price")}`;
     }
-    if (!expression.descriptionExpression.test(input.description)) {
+    if (!expression.descriptionExpression.test(input.description) && input.description !== "") {
       errors.description = `${t("adminSellProduct.errors_description")}`;
     }
-    if (!expression.stockExpression.test(input.stock)) {
+    if (!expression.stockExpression.test(input.stock) && input.stock !== "") {
       errors.stock = `${t("adminSellProduct.errors_stock")}`;
     }
     return errors;
   }
+
+ 
 
   const handleChangeName = (e) => {
     setErrors("");
@@ -211,7 +213,7 @@ export default function SellProductForm() {
           </div>
           {errors.stock && <p className="error-input-edit">{errors.stock}</p>}
           <div className="btn-login">
-            <input type="submit" value={t("adminSellProduct.submit")} className="input-submit" />
+            <input type="submit" value={t("adminSellProduct.submit")}  className="input-submit" />
           </div>
         </form>
       </div>

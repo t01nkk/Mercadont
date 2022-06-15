@@ -21,10 +21,10 @@ export default function EditProduct() {
     status: "",
   });
   const history = useHistory();
-  
+
   const expression = {
     nameExpression: /^[\da-zA-ZÀ-ÿ\s]{1,40}$/,
-    priceExpression: /^\d{1,3}(\.\d{1,3})?$/,
+    priceExpression: /^\d{1,5}(\.\d{1,3})?$/,
     descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,®'*¿?¡!\s]{30,200}$/,
     stockExpression: /^\d{1,14}$/,
 
