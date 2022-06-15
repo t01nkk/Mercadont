@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
 import { fetchCategories } from "../../../redux/actions/actions.js";
-import "./EditProduct.css";
+import "./EditProduct.scss";
 import { alertInfo, alertSuccess, alertWarning } from "../../../helpers/toast.js";
 import { useTranslation } from "react-i18next";
 export default function EditProduct() {
