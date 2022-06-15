@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useStore } from "../../../../context/store";
 import { useTranslation } from "react-i18next";
 import logo from "../../../../media/logonavbar.png";
+import SearchBar from "../../../SearchBar/SearchBar";
+import SearchBarAdmin from "../../SearchBarADMIN/SearchBarAdmin";
 export default function LoggedAdmin() {
   const { t } = useTranslation();
   const [state] = useStore();
@@ -58,13 +60,20 @@ export default function LoggedAdmin() {
                     className="dropdown-item category-list-item"
                     to="/admin/Buys"
                   >
-                    Buys
+                    Purchase Orders
                   </Link>
                   <Link
                     className="dropdown-item category-list-item"
                     to="/admin/addCategories"
                   >
                     {t("adminLoggedNavBar.adminCategories")}
+                  </Link>
+                  <Link
+                    onClick={logOutSession}
+                    className="dropdown-item category-list-item log-out"
+                    to="/home"
+                  >
+                    {t("adminLoggedNavBar.switch")}
                   </Link>
                   <Link
                     className="dropdown-item category-list-item log-out"
@@ -95,11 +104,7 @@ export default function LoggedAdmin() {
               </li>
             </ul>
           </div>
-          <div className="white-text-nav nav-item">
-            <Link onClick={logOutSession} to="/home">
-              {t("adminLoggedNavBar.switch")}
-            </Link>
-          </div>
+          <SearchBarAdmin />
         </div>
       </nav>
     </div>

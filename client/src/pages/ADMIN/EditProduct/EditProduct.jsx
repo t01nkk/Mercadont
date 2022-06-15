@@ -190,7 +190,7 @@ export default function EditProduct() {
           <div className="edit-price-stock">
             <label className="title-details-info">
               {t("adminSellProduct.price")}
-            </label>
+            </label> {errors.price && <p className="error-input">{errors.price}</p>}
             <input
               type="number"
               name="price"
@@ -198,7 +198,7 @@ export default function EditProduct() {
               value={product.price}
               onChange={handleChangePrice}
             />
-            {errors.price && <p className="error-input">{errors.price}</p>}
+           
             <label className="title-details-info">
               {t("adminSellProduct.stock")}
             </label>

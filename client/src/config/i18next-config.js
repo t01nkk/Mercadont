@@ -56,7 +56,7 @@ i18n
             removeFavorite: "Remover favorito",
           },
           favorites: {
-            favorites: "Favoritos",
+            favorites: "Tus productos favoritos",
           },
           cart: {
             qty: "Uds: ",
@@ -68,7 +68,7 @@ i18n
 
             emptyCart: "Tu carrito se encuentra vacío.",
             totalPrice: "Precio total de la compra: ",
-            buy: "Realizar la compra",
+            buy: "Comprar",
 
             successfulPurchase: "¡Compra realizada con éxito!",
             cancelPurchaseSuccess: "Compra cancelada con éxito",
@@ -160,7 +160,8 @@ i18n
             errors_name: "Es obligatorio introducir un nombre.",
             errors_price: "Es obligatorio introducir un precio.",
             errors_description: "Es obligatorio introducir una descripción.",
-            errors_categories:"Es obligatorio introducir al menos una categoria",
+            errors_categories:
+              "Es obligatorio introducir al menos una categoria",
             errors_stock:
               "Es obligatorio introducir la cantidad de unidades disponibles.",
             postProduct: "Nuevo producto",
