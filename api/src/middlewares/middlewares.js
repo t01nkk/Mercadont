@@ -6,24 +6,29 @@ const { Op } = require("sequelize");
 const nodemailer = require("nodemailer");
 
 const modifyStockStripe = async (local) => {
+
   let updateProduct;
   try {
     for (let i = 0; i < local.length; i++) {
+
       const findProduct = await Product.findByPk(local[i].id);
+
+      if (findProduct.stock <= 0 && findProduct.stock - local[i].quantity < 0) {
+        return false;
+      }
+
       if (findProduct.stock - local[i].quantity > 0) {
         updateProduct = await Product.update(
           { stock: findProduct.stock - local[i].quantity },
           { where: { id: local[i].id } }
         );
-      } else if (findProduct.stock - local[i].quantity === 0) {
+      }
+
+      if (findProduct.stock - local[i].quantity === 0) {
         updateProduct = await Product.update(
           { stock: findProduct.stock - local[i].quantity, status: "inactive" },
           { where: { id: local[i].id } }
         );
-      } else {
-        throw new Error({
-          msg: "There's not enough products to fulfill this purchase",
-        });
       }
 
     }
