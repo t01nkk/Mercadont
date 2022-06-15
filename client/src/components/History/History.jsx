@@ -32,7 +32,6 @@ export const History = () => {
 
   //AXIOS
   const sendReview = async () => {
-    // console.log(reviewText)
     let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/review`, {
       userId: myUser,
       orderId: search.substring(1),
@@ -57,7 +56,6 @@ export const History = () => {
       }
     }
   };
-  console.log(history);
   return (
     <>
       <div className="history-list-container">

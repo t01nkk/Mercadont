@@ -32,7 +32,8 @@ export default function LogInForm() {
           setRedirect(true);
         }
       } else {
-        console.log("Check your mail box for the authentification email");
+        console.log("Check your mail box for the authentification email")
+
       }
     } catch (err) {
       // console.log(err);
@@ -58,7 +59,7 @@ export default function LogInForm() {
           "myUser",
           JSON.stringify(userCredentials.user.uid)
         );
-      alertSuccess(t("logInForm.loggedIn"));
+      alertSuccess(t("logInForm.loggedIn"))
       setRedirect(true);
     } catch (err) {
       console.log(err);
@@ -155,15 +156,6 @@ export default function LogInForm() {
                   {t("logInForm.logInGoogle")}
                 </button>
               </div>
-              {/* 
-              <GoogleLoginButton />
-          <GoogleLogin
-            clientId={process.env.GOOGLE_CLIENT_ID}
-            buttonText="Log in with Google"
-            onSuccess={handleLoginGoogle}
-            onFailure={handleLoginGoogle}
-            cookiePolicy={"single_host_origin"}
-          /> */}
               <div className="create-container">
                 <p>{t("logInForm.notUser")}</p>
                 <div className="btn-createUser">

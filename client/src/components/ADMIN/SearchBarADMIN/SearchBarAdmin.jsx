@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
-import "./SearchBar.css";
-import icon from "../../media/search.png";
 import axios from "axios";
-import { SEARCH_PRODUCT } from "../../redux/actions/actionTypes";
-import { Link, Redirect } from "react-router-dom";
-import { useStore } from "../../context/store";
-import { useTranslation } from "react-i18next";
 import i18next from "i18next";
-export default function SearchBar() {
+import { FETCH_PRODUCTS } from "../../../redux/actions/actionTypes";
+import { useTranslation } from "react-i18next";
+import { useStore } from "../../../context/store";
+import { Link, useHistory } from "react-router-dom";
+import { fetchCategories, fetchProducts } from "../../../redux/actions/actions";
+export default function SearchBarAdmin() {
   const { t } = useTranslation();
-  const [redirect, setRedirect] = useState(false);
   const [state, dispatch] = useStore();
   const [error, setError] = useState(false);
   const [input, setInput] = useState("");
-
+  const history = useHistory();
   function validate(value) {
     var expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
 
@@ -40,22 +38,22 @@ export default function SearchBar() {
       const res = await axios.get(
         `${process.env.REACT_APP_DOMAIN}/product/search?name=${input}`
       );
-      dispatch({
-        type: SEARCH_PRODUCT,
-        payload: res.data,
-      });
+      if (res.data.length) {
+        dispatch({
+          type: FETCH_PRODUCTS,
+          payload: res.data,
+        });
+      }
+
       setInput("");
-      setRedirect(true);
     } catch (err) {
       alert(err);
     }
   };
-  useEffect(() => {
-    setRedirect(false);
-  }, []);
+
+  console.log(state.products);
   return (
     <div className="nav-language-search nav-item">
-      {redirect ? <Redirect push to="/search" /> : null}
       <form role="search" className="d-flex" onSubmit={handleSearch}>
         <input
           id="search"
@@ -65,7 +63,6 @@ export default function SearchBar() {
           type="search"
           placeholder={t("searchBar.placeholder")}
           aria-label="Search"
-          required
           onChange={handleChange}
         />
       </form>
@@ -85,13 +82,13 @@ export default function SearchBar() {
             className="dropdown-item category-list-item"
             onClick={() => handleLanguage("en")}
           >
-            <Link to="">En</Link>
+            <Link to="/admin/home">En</Link>
           </li>
           <li
             className="dropdown-item category-list-item"
             onClick={() => handleLanguage("es")}
           >
-            <Link to="">Es</Link>
+            <Link to="/admin/home">Es</Link>
           </li>
         </ul>
       </li>
