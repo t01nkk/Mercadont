@@ -21,6 +21,7 @@ export default function EditProduct() {
     status: "",
   });
   const history = useHistory();
+  
   const expression = {
     nameExpression: /^[\da-zA-ZÀ-ÿ\s]{1,40}$/,
     priceExpression: /^\d{1,3}(\.\d{1,3})?$/,
