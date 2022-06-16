@@ -36,16 +36,16 @@ export default function SellProductForm() {
   function validator(input) {
     let errors = {};
 
-    if (!expression.nameExpression.test(input.name)) {
+    if (!expression.nameExpression.test(input.name) && input.name !== "") {
       errors.name = `${t("adminSellProduct.errors_name")}`;
     }
-    if (!expression.priceExpression.test(input.price)) {
+    if (!expression.priceExpression.test(input.price) && input.price !== "") {
       errors.price = `${t("adminSellProduct.errors_price")}`;
     }
-    if (!expression.descriptionExpression.test(input.description)) {
+    if (!expression.descriptionExpression.test(input.description) && input.description !== "") {
       errors.description = `${t("adminSellProduct.errors_description")}`;
     }
-    if (!expression.stockExpression.test(input.stock)) {
+    if (!expression.stockExpression.test(input.stock) && input.stock !== "") {
       errors.stock = `${t("adminSellProduct.errors_stock")}`;
     }
     return errors;
