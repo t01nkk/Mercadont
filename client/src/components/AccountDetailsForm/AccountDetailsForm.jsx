@@ -75,7 +75,6 @@ export default function AccountDetailsForm() {
       );
       setUser(userDB.data);
     } catch (err) {
-      
       return err;
     }
   };
@@ -118,7 +117,6 @@ export default function AccountDetailsForm() {
         history.push("/accountDetails");
       }, 1000);
     } catch (err) {
-     
       return err;
     }
   };
@@ -138,6 +136,15 @@ export default function AccountDetailsForm() {
       }
     }
   };
+  const handleKick = async () => {
+    const check = await JSON.parse(localStorage.getItem("myUser"));
+    if (check === null) {
+      history.push("/login");
+    }
+  };
+  useEffect(() => {
+    handleKick();
+  }, []);
 
   return (
     <div className="form-details">
