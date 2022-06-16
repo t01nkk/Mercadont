@@ -39,7 +39,7 @@ export const DetailsBuysHistory = ({
 
   const handleBlur = (e) => {
     e.stopPropagation();
-
+    // handleChange(e)
     updateDataText({
       id,
       text: valueText,

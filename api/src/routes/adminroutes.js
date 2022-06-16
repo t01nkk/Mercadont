@@ -10,7 +10,6 @@ const { groupPurchaseOrders, mailQuestion, mailOrderRejected, mailOrderAccepted,
 router.get("/users", async (req, res) => {
   try {
     const user = await User.findAll();
-    console.log(user)
     if (!user) {
       return res.status(404).send("Users Not Found");
     }

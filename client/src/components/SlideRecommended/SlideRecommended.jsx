@@ -103,8 +103,6 @@ export default function SlideRecommended() {
   useEffect(() => {
     fetchSold();
   }, [state.products]);
-
-
   return (
     <div className="div-slide">
       <Swiper

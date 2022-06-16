@@ -260,7 +260,7 @@ router.put("/update/:id", async (req, res) => {
   let { name, price, description, image, stock, categories, sizes, status } =
     req.body;
   if (stock === 0) {
-    status = "inactive";
+    status = "inactive"
   }
 
   const errors = validateInputProduct(
@@ -329,10 +329,9 @@ router.get("/recommendation/mostSold", async (req, res) => {
       }
     }
     //{ id:value, id:value}
-    //console.log("Products Set",productSet)
-    const keys = Object.keys(productSet);
-    const values = Object.values(productSet);
-    let productsSold = [];
+    const keys = Object.keys(productSet)
+    const values = Object.values(productSet)
+    let productsSold = []
     for (let i = 0; i < keys.length; i++) {
       productsSold.push({
         id: keys[i],
@@ -344,8 +343,7 @@ router.get("/recommendation/mostSold", async (req, res) => {
       return b.quantity - a.quantity;
     });
 
-    productsSold.splice(12);
-    //console.log("Products Sold:", productsSold)
+    productsSold.splice(12)
 
     let arrayProducts = [];
     for (let element of productsSold) {

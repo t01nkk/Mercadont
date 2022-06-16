@@ -78,8 +78,6 @@ export default function SlideRating() {
     totalCount(dispatch);
   }, [cart]);
 
-
-
   return (
     <div className="div-slide">
       <Swiper

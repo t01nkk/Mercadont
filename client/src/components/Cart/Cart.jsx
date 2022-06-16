@@ -41,7 +41,7 @@ export const Cart = () => {
     }
     if (search == "?buy=noStock") {
       totalCount(dispatch);
-      history.push("/");
+      history.push('/home')
     }
     if (search == "?buy=true") {
       localStorage.removeItem(user);
@@ -49,6 +49,8 @@ export const Cart = () => {
       totalCount(dispatch);
       setStorageCart([]);
     }
+
+
   }, [search]);
 
   const deleteDatatoStorage = (name) => {

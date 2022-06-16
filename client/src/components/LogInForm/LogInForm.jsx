@@ -23,7 +23,7 @@ export default function LogInForm() {
           image: userCredentials.user.photoURL,
           isVerified: userCredentials.user.emailVerified,
         });
-        if(account.data[0].banned)
+        if (account.data[0].banned)
           return alertError("User is banned")
 
 
@@ -36,10 +36,8 @@ export default function LogInForm() {
         }
       } else {
         alertWarning(`${t("createUserTest.errors_mail_checkemail")}`)
-       
       }
     } catch (err) {
-     
       if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
       if (err.code === "auth/user-not-found")
         errorMsg = "Email doesn't belong to a user";
@@ -59,7 +57,7 @@ export default function LogInForm() {
         isVerified: userCredentials.user.emailVerified,
       });
       console.log(account)
-      if(account.data[0].banned)
+      if (account.data[0].banned)
         return alertError("User is banned")
 
       if (userCredentials.user.uid)

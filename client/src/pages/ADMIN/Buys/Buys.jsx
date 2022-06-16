@@ -25,7 +25,6 @@ export const Buys = () => {
       let buys = await axios(
         `${process.env.REACT_APP_DOMAIN}/admin/filterOrders/${stateBuys}`
       );
-
       setDataBuys(buys.data);
     } catch (error) {
       console.log(error);

@@ -100,7 +100,6 @@ export default function SellProductForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, price, description, image, status, stock, categories } = data;
-
     if (!errors.name && !errors.price && !errors.description && !errors.stock) {
       try {
         await axios.post(`${process.env.REACT_APP_DOMAIN}/product/create`, {

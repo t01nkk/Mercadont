@@ -49,7 +49,6 @@ export const ItemBuy = ({
       );
       history.push(`/admin/Buys?${orderId}`);
       await setDetailsProduct(foundProducts.data);
-
       await setChangeSection(false);
     } catch (error) {
       console.log(error);

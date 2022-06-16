@@ -93,7 +93,7 @@ export const SendBuys = () => {
       setLoadingBuys(true);
       if (!error) {
         const { id } = paymentMethod;
-      
+
         try {
           await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
             id,
@@ -112,7 +112,7 @@ export const SendBuys = () => {
             alertWarning(t("sendBuys.error"));
             setLoadingBuys(false);
             localStorage.removeItem(user);
-     
+
             return history.push("/cart?buy=false");
           }
         }
