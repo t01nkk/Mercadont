@@ -73,14 +73,15 @@ export const SendBuys = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        let el = elements.getElement(CardElement)
+        // let el = elements.getElement(CardElement)
         if (selectBuys === "card") {
             const { error, paymentMethod } = await stripe.createPaymentMethod({
                 type: "card",
                 card: elements.getElement(CardElement)
             })
             alertInfo(t("sendBuys.processingCard"))
-            setLoadingBuys(true)
+            console.log("error",error, "paymentMethod",paymentMethod)
+            // setLoadingBuys(true)
             if (!error) {
                 const { id } = paymentMethod
                 // console.log("address:",address)
@@ -104,14 +105,13 @@ export const SendBuys = () => {
                         localStorage.removeItem(user)
                         console.log(error)
                         return history.push("/cart?buy=false")
-
                     }
                 }
             } else {
                 alertWarning(t("sendBuys.cardProblem"))
                 setLoadingBuys(false)
             }
-            // loadingBuys()
+            loadingBuys()
             if (paymentMethod) {
                 setLoadingBuys(false)
                 localStorage.removeItem(user)
@@ -190,7 +190,7 @@ export const SendBuys = () => {
     // console.log("user:", user)
     return (
         <div>
-            <button onClick={(e) => handleBack(e)}>{t("navigation.returnToCart")}</button>
+            <button className='navigation-return-cart' onClick={(e) => handleBack(e)}>{t("navigation.returnToCart")}</button>
             <form onSubmit={handleSubmit} className="form-buys">
                 <div className="cart-container">
                     <h2 className="cart-container-title">{t("sendBuys.productsList")}</h2>

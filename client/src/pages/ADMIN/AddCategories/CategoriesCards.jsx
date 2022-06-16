@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CategoryCard from "./CategoryCard.jsx";
 import { useStore } from "../../../context/store.js";
 import { fetchCategories } from "../../../redux/actions/actions.js";
+import { MdDeleteForever } from "react-icons/md";
 import { MdOutlineAddCircle } from "react-icons/md";
 import { Link } from "react-router-dom";
 
@@ -16,17 +17,20 @@ export default function CategoriesCards() {
     <div className="cardsContainer">
       <div className="add-button-div">
         <Link to={`/admin/createCategory`}>
-          <button className="create add-button">
+            Crear Categorias
+          {/* <button className="create add-button">
             <MdOutlineAddCircle size={32} />
-          </button>
+          </button> */}
         </Link>
       </div>
-      {state.categories &&
-        React.Children.toArray(
-          state.categories.map((product) => {
-            return <CategoryCard id={product.id} name={product.name} />;
-          })
-        )}
+        <div className="container-categories-card">
+          {state.categories &&
+          React.Children.toArray(
+            state.categories.map((product) => {
+              return <CategoryCard id={product.id} name={product.name} />;
+            })
+            )}
+        </div>
     </div>
   );
 }

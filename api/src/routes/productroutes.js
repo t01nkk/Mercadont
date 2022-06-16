@@ -259,8 +259,11 @@ router.delete("/delete/:id", async (req, res) => {
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, price, description, image, stock, categories, sizes, status } =
-    req.body;
+  let {name, price, description, image, stock, categories, sizes, status} =
+      req.body;
+  if (stock === 0){
+    status = "inactive"
+  }
 
   const errors = validateInputProduct(
     name,

@@ -1,10 +1,9 @@
 .cardsContainer {
-  height: 50px;
-  width: 200px;
-  display: grid;
-  align-self: center;
-  margin: 0%;
+  width: 100vw;
+  display: flex;
+  margin: auto;
   text-align: center;
+  flex-wrap: wrap;
 }
 .create {
   padding: 4px 0 0 0;
@@ -18,22 +17,27 @@
   margin-bottom: 5px;
   cursor: pointer;
 }
-
-.add-button:hover {
-  background-color: gainsboro;
-  transition: 0.3s;
-}
-
 .add-button-div {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  margin-left: 12px;
-  float: right;
+ width: 50%;
+ margin: auto;
 }
+
+.container-categories-card{
+  width: 80vw;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.btn-delete-category:hover{
+  color:red
+}
+
+
 .actions {
   display: flex;
-  justify-content: space-between;
+  width:30%;
 }
 
 .actions button {
