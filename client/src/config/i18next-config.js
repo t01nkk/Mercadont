@@ -72,7 +72,7 @@ i18n
             totalPrice: "Precio total de la compra: ",
             buy: "Comprar",
 
-            successfulPurchase: "¡Compra realizada con éxito!",
+            successfulPurchase: "Compra en proceso, porfavor revise su mail",
             cancelPurchaseSuccess: "Compra cancelada con éxito",
             addressDetailsMissing:
               "Por favor completa los datos de tu domicilio",
