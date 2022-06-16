@@ -17,7 +17,7 @@ import {
 } from "../Cart/actionsCart.js";
 import { useHistory } from "react-router-dom";
 import { alertInfo, alertSuccess, alertWarning } from "../../helpers/toast";
-import { Autoplay, Navigation, Pagination } from "swiper";
+import { Autoplay, FreeMode, Navigation, Pagination } from "swiper";
 // Direct React component imports
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react.js";
 // Styles must use direct files imports
@@ -34,7 +34,6 @@ export default function Slide() {
   const [inCart, setInCart] = useState(false);
   const history = useHistory();
   let person = JSON.parse(localStorage.getItem("myUser"));
-
 
   const sold = state.soldMost[0]?.details;
   const handleSaveCart = (name, price, image, id, stock) => {
@@ -78,14 +77,14 @@ export default function Slide() {
     localStorage.setItem(user, JSON.stringify(cart));
     totalCount(dispatch);
   }, [cart]);
-  console.log("Sold Most:", state.soldMost)
+  console.log("Sold Most:", state.soldMost);
   return (
     <div className="div-slide">
       <Swiper
-        spaceBetween={0}
         loop={true}
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, FreeMode]}
         navigation={true}
+        freeMode={true}
         breakpoints={{
           500: {
             slidesPerView: 1,
@@ -116,7 +115,7 @@ export default function Slide() {
           {state.soldMost && state.favorites ? (
             React.Children.toArray(
               state.soldMost.map((product) => {
-                console.log(product)
+                console.log(product);
                 if (product.status === "active") {
                   return (
                     <SwiperSlide>

@@ -32,3 +32,20 @@
   flex-direction: column;
   align-items: center;
 }
+.home-title-carrusel {
+  display: flex;
+  width: 100%;
+  font-size: 2.5rem;
+  justify-content: center;
+  font-weight: 300;
+}
+.promo-container {
+  display: flex;
+  width: 85%;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  @media only screen and (max-width: 900px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}

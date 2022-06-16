@@ -45,8 +45,14 @@
   justify-content: flex-end;
   @media only screen and (max-width: 1080px) {
     position: absolute;
-    top: 20px;
+    top: 135px;
     left: calc(0% - 20px);
+  }
+  @media only screen and (max-width: 552px) {
+    top: 170px;
+  }
+  @media only screen and (max-width: 290px) {
+    top: 210px;
   }
 }
 .b-w {

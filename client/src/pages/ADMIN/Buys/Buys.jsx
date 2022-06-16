@@ -78,10 +78,10 @@ export const Buys = () => {
               Rechazadas
             </button>
           </div>
-          <div>
+          <div className="orders-list-container">
             {dataBuys.length > 0 &&
               dataBuys.map((e) => (
-                <ul className="list-group container-fluid ">
+                <ul className="list-group container-fluid long-list">
                   <ItemBuy
                     key={e.orderNumber}
                     orderId={e.orderNumber}
