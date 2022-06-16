@@ -66,7 +66,6 @@ export default function SearchBar() {
   }, [input]);
   return (
     <div className="nav-language-search nav-item">
-      {console.log(suggested)}
       {redirect ? <Redirect push to="/search" /> : null}
       <form
         autoComplete="off"
@@ -76,7 +75,7 @@ export default function SearchBar() {
       >
         <div className="search-suggest-wrap">
           <input
-          
+
             id="search"
             name="search"
             value={input}

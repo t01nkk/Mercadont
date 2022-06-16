@@ -93,7 +93,6 @@ export const SendBuys = () => {
             setLoadingBuys(true);
             if (!error) {
                 const { id } = paymentMethod;
-                // console.log("address:",address)
                 try {
                     await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
                         id,
@@ -136,12 +135,6 @@ export const SendBuys = () => {
                 const userAddress = await axios.get(
                     `${process.env.REACT_APP_DOMAIN}/user/details/${user}`
                 );
-                // console.log(userAddress.data)
-                // console.log("country:",userAddress.data.country)
-                // console.log("province:",userAddress.data.province)
-                // console.log("city:",userAddress.data.city)
-                // console.log("street:",userAddress.data.street)
-                // console.log("postalCode:",userAddress.data.postalCode)
                 if (
                     userAddress.data.country === "" ||
                     userAddress.data.province === "" ||
@@ -213,7 +206,6 @@ export const SendBuys = () => {
         setProducts(local);
         setPrice(priceTotal);
     }, []);
-    // console.log("user:", user)
     return (
         <div>
             <button className="navigation-return-cart" onClick={(e) => handleBack(e)}>

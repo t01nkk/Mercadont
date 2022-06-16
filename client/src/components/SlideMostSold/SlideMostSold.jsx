@@ -35,7 +35,7 @@ export default function Slide() {
   const history = useHistory();
   let person = JSON.parse(localStorage.getItem("myUser"));
 
-  const sold = state.soldMost[0]?.details;
+  // const sold = state.soldMost[0]?.details;
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
     let totalPrice = price;
@@ -111,10 +111,10 @@ export default function Slide() {
         <section className="section-products-slider">
           {/* <button onClick={() => mostra()}>mostra storage</button> */}
 
-          {state.soldMost && state.favorites ? (
+          {state.soldMost.length && state.favorites ? (
             React.Children.toArray(
               state.soldMost.map((product) => {
-                if (product.status === "active") {
+                if (product?.status === "active") {
                   return (
                     <SwiperSlide>
                       <ProductCardSlide
