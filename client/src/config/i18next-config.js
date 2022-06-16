@@ -23,6 +23,10 @@ i18n
             error_country: "Se requiere un país",
             error_city: "Se requiere una ciudad",
             error_province: "Se requiere una provincia",
+            error_addressFormLetters_validate:
+              "Solo se aceptan caracteres alfabéticos",
+            error_addressFormAlphaNumbers_validate:
+              "Solo se aceptan caracteres alfanuméricos",
           },
           accountDetails: {
             btnEditProfile: "Editar",
@@ -95,11 +99,16 @@ i18n
             sortBy: "Orden",
             asc: "Ascendente",
             des: "Descendente",
+            noCats:
+              "No pudimos hallar ningún producto con las categorías seleccionadas",
           },
           createUserTest: {
             errors_mail_required: "Se requiere una dirección de correo.",
             errors_mail_invalid:
               "Dirección de correo inválida. Prueba con otra.",
+            errors_mail_checkemail:
+              "Por favor checkea tu email para verificar tu cuenta!",
+            errors_mail_taken: "Dirección de correo ya está en uso.",
             errors_password: "Se requiere una contraseña.",
             errors_password_invalid:
               "La contraseña debe tener entre 8 y 16 caracteres, debe contener contener caracteres en mayúsculas y minúsculas, y al menos 1 número.",
@@ -204,6 +213,7 @@ i18n
             stock: "Unidades disponibles:",
             submit: "¡Publicar!",
             select: "Seleccionar",
+            productSubmitted: "¡Producto añadido exitosamente!",
           },
           adminUser: {
             manageRoles: "Administrar roles de usuario",
@@ -283,6 +293,7 @@ i18n
           },
           loginAdmin: {
             login: "Ingreso a Administración",
+            wrongCredentials: "Credenciales incorrectas",
           },
           logInForm: {
             errors_mail_required: "Se requiere una dirección de correo.",
@@ -313,6 +324,9 @@ i18n
             placeholder: "Buscar...",
             language: "Idioma",
           },
+          searchedProducts: {
+            noValidInputs: "Por favor ingrese números válidos",
+          },
           sendBuys: {
             price: "Precio: ",
             amount: "Cantidad: ",
@@ -332,6 +346,7 @@ i18n
             chooseAddress: "Elegir una dirección de envío",
             accountAddress: "Mi dirección",
             newAddress: "Agregar nueva dirección",
+            fillShippingAddress: "Por favor complete el formulario de envío",
             addressNotComplete:
               "Complete su información personal para continuar",
           },
@@ -420,11 +435,15 @@ i18n
             sortBy: "Order",
             asc: "Ascending",
             des: "Descending",
+            noCats: "We couldn't find any product with the chosen categories",
           },
           createUserTest: {
             errors_mail_required: "Email address is required.",
             errors_mail_invalid:
               "Email address invalid. Please try another one.",
+            errors_mail_taken: "This email is already taken.",
+            errors_mail_checkemail:
+              "Please check your email to verify your account!",
             errors_password: "Password is required.",
             errors_password_invalid:
               "Password must have between 8 to 16 characteres, uppercase and lowercase, and at least 1 number.",
@@ -530,6 +549,7 @@ i18n
             stock: "Stock: ",
             submit: "Publish!",
             select: "Select",
+            productSubmitted: "Product added successfully!",
           },
           adminUser: {
             manageRoles: "Manage user roles",
@@ -609,6 +629,7 @@ i18n
           },
           loginAdmin: {
             login: "Access to Administration",
+            wrongCredentials: "Wrong credentials",
           },
           logInForm: {
             errors_mail_required: "Email address is required.",
@@ -638,6 +659,9 @@ i18n
             placeholder: "Search...",
             language: "Language",
           },
+          searchedProducts: {
+            noValidInputs: "Please use valid inputs",
+          },
           sendBuys: {
             price: "Price: ",
             amount: "Amount: ",
@@ -657,6 +681,7 @@ i18n
             chooseAddress: "Choose a shipping address",
             accountAddress: "My address",
             newAddress: "Add a new shipping address",
+            fillShippingAddress: "Please fill the shipping form first",
             addressNotComplete:
               "Information incomplete. Please, complete your profile info first",
           },

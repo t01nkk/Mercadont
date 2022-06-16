@@ -5,8 +5,7 @@ import { useAuth } from "../../context/authContext";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Formik } from "formik";
-import { alertError, alertInfo, alertSuccess } from "../../helpers/toast";
-import { ToastContainer } from "react-toastify";
+import { alertError, alertSuccess, alertInfo } from "../../helpers/toast";
 export default function LogInForm() {
   let errorMsg = "";
   const { t } = useTranslation();

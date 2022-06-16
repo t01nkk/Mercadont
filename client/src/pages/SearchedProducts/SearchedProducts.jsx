@@ -9,14 +9,15 @@ import {
 } from "../../redux/actions/actionTypes";
 import { alertSuccess, alertInfo } from "../../helpers/toast";
 import { getFavorites, totalCount } from "../../redux/actions/actions";
-import "react-toastify/dist/ReactToastify.css";
+import { alertInfo } from '../../helpers/toast'
+import { useTranslation } from 'react-i18next'
 import {
   handleDeleteFavorite,
   handleSaveFavorite,
 } from "../../components/Cart/actionsCart";
-import { t } from "i18next";
 import { IoSearchSharp } from "react-icons/io5";
 export default function SearchedProducts() {
+  const { t } = useTranslation()
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
   const [state, dispatch] = useStore();
@@ -76,7 +77,7 @@ export default function SearchedProducts() {
       filter = [];
     }
     if (error) {
-      alert("Please Add Valid inputs");
+      alertInfo(t("searchedProducts.noValidInputs"));
       filter = state.filter;
     }
     dispatch({

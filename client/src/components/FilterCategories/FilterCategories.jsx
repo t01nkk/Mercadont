@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useStore } from "../../context/store";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import {
   CATEGORIES_PRODUCT,
   FETCH_PRODUCTS,
 } from "../../redux/actions/actionTypes";
 import { fetchCategories } from "../../redux/actions/actions.js";
 import axios from "axios";
+import { useTranslation } from 'react-i18next'
+import { alertInfo } from '../../helpers/toast'
 import "./FilterCategories.scss";
 export default function FilerCategories() {
+  const { t } = useTranslation()
   const [state, dispatch] = useStore();
   const [redirect, setRedirect] = useState(false);
   const [filter, setFilter] = useState({
@@ -42,7 +45,7 @@ export default function FilerCategories() {
         setFilter({
           categories: state.filter,
         });
-        alert("No products with those selected categories where found");
+        alertInfo(t("categoriesComp.noCats"));
         dispatch({
           type: FETCH_PRODUCTS,
           payload: state.products,

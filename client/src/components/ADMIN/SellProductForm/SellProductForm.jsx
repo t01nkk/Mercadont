@@ -35,16 +35,16 @@ export default function SellProductForm() {
   function validator(input) {
     let errors = {};
 
-    if (!expression.nameExpression.test(input.name) && input.name ) {
+    if (!expression.nameExpression.test(input.name) && input.name !== "") {
       errors.name = `${t("adminSellProduct.errors_name")}`;
     }
-    if (!expression.priceExpression.test(input.price) && input.price ) {
+    if (!expression.priceExpression.test(input.price) && input.price !== "") {
       errors.price = `${t("adminSellProduct.errors_price")}`;
     }
-    if (!expression.descriptionExpression.test(input.description) && input.description  ) {
+    if (!expression.descriptionExpression.test(input.description) && input.description !== "") {
       errors.description = `${t("adminSellProduct.errors_description")}`;
     }
-    if (!expression.stockExpression.test(input.stock) && input.stock ) {
+    if (!expression.stockExpression.test(input.stock) && input.stock !== "") {
       errors.stock = `${t("adminSellProduct.errors_stock")}`;
     }
     return errors;
@@ -93,7 +93,6 @@ export default function SellProductForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, price, description, image, status, stock, categories } = data;
-    console.log("Hola errors",errors.length)
     if (!errors.name && !errors.price && !errors.description && !errors.stock)  {
        console.log(name, price, description, stock, image, status, categories)
     try {
@@ -107,7 +106,7 @@ export default function SellProductForm() {
         categories: categories,
       });
 
-      alert("se envio la peticion");
+      alertSuccess(t("adminSellProduct.productSubmitted"));
     } catch (err) {
       console.log(err);
     }
@@ -172,7 +171,7 @@ export default function SellProductForm() {
               state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
               React.Children.toArray(
                 state.categories.map((category) => (
-                  <option key={category.id} value={category.name}>
+                  <option value={category.name}>
                     {category.name}
                   </option>
                 ))

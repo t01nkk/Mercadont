@@ -24,7 +24,7 @@ import 'swiper/modules/navigation/navigation.scss'; // Navigation module
 import 'swiper/modules/pagination/pagination.scss'; // Pagination module
 import "../SlideMostSold/SlideMostSold.scss"
 
-export default function Slide() {
+export default function SlideRecommended() {
     const { t, i18n } = useTranslation()
     const [user, setUser] = useState([]);
     const [sold, setSold] = useState([])
@@ -34,40 +34,28 @@ export default function Slide() {
     const history = useHistory();
     let person = JSON.parse(localStorage.getItem("myUser"));
 
-    function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+
     const fetchSold = async () => {
-        if (state.products.length) {
-            try {
-                let recommended = [];
-                let miStorage = JSON.parse(localStorage.getItem("myUser"));
-                if (miStorage) {
-                    const recommendedProducts = await axios.get(
-                        `${process.env.REACT_APP_DOMAIN}/product/recommendation/byHistory/${miStorage}`
-                    );
-                    recommended = recommendedProducts.data
-                }
-                if (recommended.length > 12) {
-                    recommended = recommended.slice(0, 12)
-                }
-                for (let i = 0; i < 12; i++) {
-                    let index = getRandomInt(0, state.products.length - 1)
-                    if (!recommended.includes(state.products[index])) {
-                        recommended.push(state.products[index])
-                    }
-                }
-                if (recommended.length > 12) {
-                    recommended = recommended.slice(0, 12)
-                }
-                setSold(recommended);
-            } catch (err) {
-                return err;
+        try {
+            let recommended = [];
+            let miStorage = JSON.parse(localStorage.getItem("myUser"));
+            if (miStorage) {
+                const recommendedProducts = await axios.get(
+                    `${process.env.REACT_APP_DOMAIN}/product/recommendation/byHistory/${miStorage}`
+                );
+                recommended = recommendedProducts.data
+            } else if (!miStorage) {
+                const recommendedProducts = await axios.get(
+                    `${process.env.REACT_APP_DOMAIN}/product/recommendation/byHistory/0`
+                );
+                recommended = recommendedProducts.data
             }
+            setSold(recommended);
+        } catch (err) {
+            return err;
         }
-    };
+    }
+
 
     const handleSaveCart = (name, price, image, id, stock) => {
         let quantity = 1;

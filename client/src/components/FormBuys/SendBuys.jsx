@@ -9,7 +9,8 @@ import { useTranslation } from 'react-i18next';
 import accounting from 'accounting'
 import { alertInfo, alertWarning } from '../../helpers/toast'
 import { Loader } from "../Loader/Loader.jsx"
-import "./SendBuys.css"
+import "./SendBuys.scss"
+
 
 export const SendBuys = () => {
     const { t } = useTranslation()
@@ -60,11 +61,11 @@ export const SendBuys = () => {
 
     const validateForm = () => {
         let error = {}
-        if (!/^[A-Za-z0-9\s]+$/.test(address.country) && address.country !== "") error.country = "La dirección solo puede contener numero y caracteres alfabeticos"
-        if (!/^[A-Za-z0-9\s]+$/.test(address.province) && address.province !== "") error.province = "La dirección solo puede contener numero y caracteres alfabeticos"
-        if (!/^[A-Za-z0-9\s]+$/.test(address.city) && address.city !== "") error.city = "La dirección solo puede contener numero y caracteres alfabeticos"
-        if (!/^[A-Za-z0-9\s]+$/.test(address.street) && address.street !== "") error.street = "La dirección solo puede contener numero y caracteres alfabeticos"
-        if (!/^[A-Za-z0-9\s]+$/.test(address.postalCode) && address.postalCode !== "") error.postalCode = "La dirección solo puede contener numero y caracteres alfabeticos"
+        if (!/^[A-Za-z\s]+$/.test(address.country) && address.country !== "") error.country = t("errors.error_addressForm_validate")
+        if (!/^[A-Za-z\s]+$/.test(address.province) && address.province !== "") error.province = t("errors.error_addressForm_validate")
+        if (!/^[A-Za-z\s]+$/.test(address.city) && address.city !== "") error.city = t("errors.error_addressForm_validate")
+        if (!/^[A-Za-z0-9\s]+$/.test(address.street) && address.street !== "") error.street =  t("errors.error_addressFormAlphaNumbers_validate")
+        if (!/^[A-Za-z0-9\s]+$/.test(address.postalCode) && address.postalCode !== "") error.postalCode =  t("errors.error_addressFormAlphaNumbers_validate")
 
         setError(error)
 
@@ -189,10 +190,11 @@ export const SendBuys = () => {
     // console.log("user:", user)
     return (
         <div>
+            <button onClick={(e) => handleBack(e)}>{t("navigation.returnToCart")}</button>
             <form onSubmit={handleSubmit} className="form-buys">
-                <div>
-                    <h2>{t("sendBuys.productsList")}</h2>
-                    <div>
+                <div className="cart-container">
+                    <h2 className="cart-container-title">{t("sendBuys.productsList")}</h2>
+                    <div className="list-group container-fluid ">
                         {React.Children.toArray(products && products.map((el) =>
                         (<ListProductsBuys
                             name={el.name}
@@ -203,85 +205,103 @@ export const SendBuys = () => {
                         />)))
                         }
                     </div>
+                {amountTotal && <p className='total-price-cart-send'>{t("sendBuys.totalPrice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
                 </div>
                 {amountTotal && <p>{t("sendBuys.totalPrice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
 
-                <div>
-                    <p>{t("sendBuys.chooseAddress")}</p>
-                    <button id="accountAddress" onClick={e => handleShipping(e)}>{t("sendBuys.accountAddress")}</button>
-                    <button id="newAddress" onClick={e => handleShipping(e)}>{t("sendBuys.newAddress")}</button>
-
-                    <div>
+                <div className='container-direction-form-button'>
+                    <div className='container-select-address'>
+                        <h4>{t("sendBuys.chooseAddress")}</h4>
+                        <div>
+                            <button id="accountAddress" onClick={e => handleShipping(e)}>{t("sendBuys.accountAddress")}</button>
+                            <button id="newAddress" onClick={e => handleShipping(e)}>{t("sendBuys.newAddress")}</button>
+                        </div>
+                    </div>
+                    <div className='form-direction-cart'>
                         {selectShipping === "newAddress" ?
                             <>
+                                <h3 className="cart-container-title-direction">{t("sendBuys.fillShippingAddress")}</h3>
+                            <div>
                                 <label htmlFor="country">{t("accountDetails.country")}
-                                <input type="text" name='country' value={address.country} onChange={handleAdress} onBlur={blurAddress}/>
                                 </label>
+                                    <input type="text" name='country' value={address.country} onChange={handleAdress} onBlur={blurAddress} />
                                 {error.country && <p>{error.country}</p>}
 
                                 <label htmlFor="province">{t("accountDetails.province")}
-                                    <input type="text" name='province' value={address.province} onChange={handleAdress} onBlur={blurAddress}/>
                                 </label>
+                                    <input type="text" name='province' value={address.province} onChange={handleAdress} onBlur={blurAddress} />
                                 {error.province && <p>{error.province}</p>}
-
+                            </div>
+                            <div>
                                 <label htmlFor="city">{t("accountDetails.city")}
-                                    <input type="text" name='city' value={address.city} onChange={handleAdress} onBlur={blurAddress}/>
                                 </label>
+                                    <input type="text" name='city' value={address.city} onChange={handleAdress} onBlur={blurAddress} />
                                 {error.city && <p>{error.city}</p>}
 
                                 <label htmlFor="street">{t("accountDetails.street")}
-                                    <input type="text" name='street' value={address.street} onChange={handleAdress} onBlur={blurAddress}/>
                                 </label>
+                                    <input type="text" name='street' value={address.street} onChange={handleAdress} onBlur={blurAddress} />
                                 {error.street && <p>{error.street}</p>}
-
+                            </div>
+                            <div>
                                 <label htmlFor="postalCode">{t("accountDetails.postalCode")}
-                                    <input type="text" name='postalCode' value={address.postalCode} onChange={handleAdress} onBlur={blurAddress}/>
                                 </label>
+                                    <input type="text" name='postalCode' value={address.postalCode} onChange={handleAdress} onBlur={blurAddress} />
                                 {error.postalCode && <p>{error.postalCode}</p>}
+                            </div>
                             </>
                             : null}
                     </div>
                 </div>
                 {selectShipping === "newAddress" && address.country && address.province && address.city && address.street && address.postalCode && Object.keys(error).length === 0 &&
-                    <div>
+                    <div className='container-select-address'>
                         <p>{t("sendBuys.paymentMethod")}</p>
-                        <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
-                        <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
+                        <div>
+                            <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
+                            <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
+                        </div>
                     </div>
                 }
 
                 {selectShipping === "accountAddress" &&
-                    <div>
+                    <div className='container-select-address'>
                         <p>{t("sendBuys.paymentMethod")}</p>
-                        <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
-                        <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
+                        <div>
+                            <button id="card" onClick={e => handelClik(e)}>{t("sendBuys.card")}</button>
+                            <button id="paypal" onClick={e => handelClik(e)} type='submit'>{t("sendBuys.paypal")}</button>
+                        </div>
                     </div>
                 }
                 {
                     <div>
                         {selectBuys === "card" ?
-                            <>
-                                <CardElement className='cardElement' />
-                                <button type='submit'>{t("sendBuys.cardPay")}</button>
+                            <>  <p>Por favor ingrese los datos de su tarjeta</p>
+                                <CardElement id='carElement' className='form-control'/>
+
+                            <div className='container-select-address'>
+                                    <button className='make-buys-sendBuys' type='submit'>{t("sendBuys.cardPay")}</button>
+                            </div>
                                 {loadingBuys && <div className='buys-loader'><Loader /></div>}
-                                <PruebaListProduct />
+                                {/* <PruebaListProduct /> */}
                             </>
                             : null}
                     </div>
                 }
                 {selectBuys === "paypal" ?
-                    <button type='submit'>
+                <div className='container-select-address'>
+                    <button type='submit' className='paypal-shipping' >
                         {redirect ?
                             <a href={redirect}>{t("sendBuys.paypalConfirm")}</a>
-                            : <p>{t("sendBuys.paypalProcessing")}</p>
+                            : <span>{t("sendBuys.paypalProcessing")}</span>
                         }
                     </button>
+                </div>
                     : null
                 }
 
 
             </form>
-            <button onClick={(e) => handleBack(e)}>{t("navigation.returnToCart")}</button>
+            
         </div>
 
     )

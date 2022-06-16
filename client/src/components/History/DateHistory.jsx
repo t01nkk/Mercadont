@@ -18,7 +18,6 @@ export const DateHistory = ({
 }) => {
   const { t } = useTranslation()
   const history = useHistory();
-  //pm_1LAFPdL7xpNkb3eJ9QXGOVtC
   date = date.slice(0, 10);
   const [cant, setcant] = useState(0);
   const [idProduct, setIdProduct] = useState([]);

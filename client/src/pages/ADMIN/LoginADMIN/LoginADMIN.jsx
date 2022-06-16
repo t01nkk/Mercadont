@@ -4,7 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import { Formik } from "formik";
 import { useAuth } from "../../../context/authContext";
 import { useTranslation } from "react-i18next";
-import { t } from "i18next";
+import { alertWarning } from '../../helpers/toast'
 import { useStore } from "../../../context/store";
 export default function LoginADMIN() {
   const { t } = useTranslation();
@@ -37,7 +37,7 @@ export default function LoginADMIN() {
           localStorage.setItem("myAdmin", JSON.stringify(admin));
           setRedirect(true);
         } else {
-          alert("WRONG CREDENTIALS");
+          alertWarning(t("loginAdmin.wrongCredentials"));
         }
       }
     } catch (err) {

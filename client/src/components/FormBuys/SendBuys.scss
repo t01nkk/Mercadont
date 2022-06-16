@@ -1,0 +1,166 @@
+// .form-buys{
+//     height: 80vh;
+// }
+.buys-loader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+.container-direction-form-button{
+    height:80%;
+    width: 100%;
+}
+
+.cart-container-title-direction{
+    text-align: center;
+}
+
+.container-select-address{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4%;
+}
+
+.container-select-address>div{
+    display: flex;
+    justify-content: space-evenly;
+    width: 40%;
+    margin-top: 2%;
+    margin-bottom: 4%;
+    @media only screen and (max-width: 960px) {
+       flex-direction: column;
+      }
+      @media only screen and (max-width: 570px) {
+        width: 80%;
+       }
+}
+.container-select-address>div button{
+    padding: 2% 3%;
+    font-weight: 500;
+    background-color: white;
+    margin-bottom: 4%;
+    @media only screen and (max-width: 960px) {
+        margin: 1%;
+       }
+}
+
+.container-select-address>div button:active{
+    transform: scale(.95);
+}
+.container-select-address>div button:last-child{
+    color:wheat;
+    background-color: rgb(66, 64, 64);
+}
+
+.form-direction-cart{
+    width: 60vw;
+    padding-bottom: 3%;
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    @media only screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        width: 86vw;
+        align-items: center;
+      }
+}
+
+.form-direction-cart div{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @media only screen and (max-width: 1024px) {
+        width: 80%;
+        margin: auto;
+      }
+
+    @media only screen and (max-width: 768px) {
+        width: 100%;
+        margin: auto;
+      }
+}
+
+
+.form-direction-cart div>label{
+    display: block;
+    font-weight: 500;
+    margin: 2% 0 1% 0;
+}
+
+.form-direction-cart div>input{
+    width: 60%;
+    line-height: 30px;
+    padding-left: 3%;
+    margin: auto;
+    @media only screen and (max-width: 1024px) {
+        width: 80%;
+        margin: auto;
+      }
+    @media only screen and (max-width: 768px) {
+        width: 100%;
+      }
+}
+
+.form-direction-cart div:last-child{
+    width: 20%;
+    @media only screen and (max-width: 1024px) {
+        width: 80%;
+        margin: auto;
+      }
+    @media only screen and (max-width: 768px) {
+        width: 80%;
+      }
+}
+
+.total-price-cart-send{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-weight: 800;
+    margin-top: 2%;
+}
+
+.paypal-shipping{
+    padding: 1% 3%;
+    border: none;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+}
+
+.cardElement{
+    width: 80vw;
+    margin: auto;
+}
+.StripeElement{
+    line-height:50px;
+    font-size: 24px;
+    text-align: center;
+}
+.StripeElement--empty{
+    font-size: 24px;
+    text-align: center;
+    line-height:50px;
+}
+
+// #carElement{
+//     font-size: 50px;
+//     height: 50px;
+//     border: 1px solid black;
+// }
+// #carElement>input{
+//     height: 50px;
+//     font-size: 50px;
+// }
+
+.make-buys-sendBuys{
+    padding: 1% 2%;
+    margin: 2% 0 0 8%;
+    background-color: black;
+    color: white;
+}
