@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./SellProductForm.css";
+import "./SellProductForm.scss";
 import axios from "axios";
 import { fetchCategories } from "../../../redux/actions/actions";
 import { useStore } from "../../../context/store";
@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { alertInfo, alertSuccess, alertWarning } from "../../../helpers/toast.js";
 
 export default function SellProductForm() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({
     name: "",
@@ -122,11 +122,12 @@ export default function SellProductForm() {
   return (
     <div className="container-login">
       <div className="sellProductCard">
-        <h2>{t("adminSellProduct.postProduct")}</h2>
+        <p className="sellProduct-title">{t("adminSellProduct.postProduct")}</p>
 
-        <form onSubmit={(e) => handleSubmit(e)} className="sellProductForm">
-          <div className="divInputUser">
+        <form onSubmit={handleSubmit} className="sellProductForm">
+          <div className="sell-inputs-container">
             <input
+              className="sell-input"
               type="text"
               name="name"
               required
@@ -134,11 +135,11 @@ export default function SellProductForm() {
               onChange={handleChangeName}
               value={data.name}
             />
-          </div>
-          {errors.name && <p className="error-input-edit">{errors.name}</p>}
 
-          <div className="divInputUser">
+            {errors.name && <p className="error-input-edit">{errors.name}</p>}
+
             <input
+              className="sell-input"
               type="number"
               name="price"
               required
@@ -146,69 +147,39 @@ export default function SellProductForm() {
               onChange={handleChangePrice}
               value={data.price}
             />
-          </div>
-          {errors.price && <p className="error-input-edit">{errors.price}</p>}
-          <div className="divInputUser">
+
+            {errors.price && <p className="error-input-edit">{errors.price}</p>}
+
             <textarea
-              cols="30"
-              rows="15"
+              className="sellProductForm-textarea"
               type="textarea"
               required
               name="description"
               placeholder={t("adminSellProduct.description")}
               onChange={handleChangeDescription}
-
               value={data.description}
             ></textarea>
-          </div>
-          {errors.description && (
-            <p className="error-input-edit">{errors.description}</p>
-          )}
-          <select onChange={handleChangeCat} className="divInputUser">
-            <option value="" hidden className="divInputUser">
-              {t("adminSellProduct.categories")}
-            </option>
-            {state.categories?.length &&
-              state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
-              React.Children.toArray(
-                state.categories.map((category) => (
-                  <option key={category.id} value={category.name}>
-                    {category.name}
-                  </option>
-                ))
 
-              )}
-
-          </select>
-          {data.categories?.map((category, i) => (
-            <div key={i} className="button-x-container">
-              <p>{category}</p>
-              <button
-                onClick={(event) => handleDeleteCat(category, event)}
-                className="button-delete-category"
-              >
-                x
-              </button>
-            </div>
-          ))}
-          <div className="divInputUser">
+            {errors.description && (
+              <p className="error-input-edit">{errors.description}</p>
+            )}
             <input
+              className="sell-input"
               type="text"
               name="image"
               placeholder={t("adminSellProduct.image")}
               onChange={handleChange}
               value={data.image}
             />
-          </div>
-          <div className="divInputUser">
-            <label>{t("adminSellProduct.status")}</label>
-            <select name="status" value={data.status} onChange={handleChange}>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
-          </div>
-          <div className="divInputUser">
+            <div className="sellproduct-status">
+              <label>{t("adminSellProduct.status")}</label>
+              <select name="status" value={data.status} onChange={handleChange}>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
             <input
+              className="sell-input"
               type="number"
               name="stock"
               required
@@ -216,10 +187,42 @@ export default function SellProductForm() {
               onChange={handleChangeStock}
               value={data.stock}
             />
-          </div>
-          {errors.stock && <p className="error-input-edit">{errors.stock}</p>}
-          <div className="btn-login">
-            <input type="submit" value={t("adminSellProduct.submit")} className="input-submit" />
+            {errors.stock && <p className="error-input-edit">{errors.stock}</p>}
+            <select onChange={handleChangeCat} className="sell-input">
+              <option value="" hidden className="">
+                {t("adminSellProduct.categories")}
+              </option>
+              {state.categories?.length &&
+                state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
+                React.Children.toArray(
+                  state.categories.map((category) => (
+                    <option key={category.id} value={category.name}>
+                      {category.name}
+                    </option>
+                  ))
+                )}
+            </select>
+            <div className="sell-select-categories-del">
+              {data.categories?.map((category, i) => (
+                <div key={i} className="edit-cat-delete">
+                  <p className="cat-name">{category}</p>
+                  <button
+                    onClick={(event) => handleDeleteCat(category, event)}
+                    className="btn-del-edit"
+                  >
+                    x
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <div className="btn-login">
+              <input
+                type="submit"
+                value={t("adminSellProduct.submit")}
+                className="input-submit"
+              />
+            </div>
           </div>
         </form>
       </div>

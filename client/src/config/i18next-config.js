@@ -76,7 +76,7 @@ i18n
             cancelPurchaseSuccess: "Compra cancelada con éxito",
             addressDetailsMissing:
               "Por favor completa los datos de tu domicilio",
-            noStock: "El stock es insuficiente"
+            noStock: "El stock es insuficiente",
           },
           categoriesComp: {
             error_pos_numbers: "Solo se aceptan números positivos",
@@ -246,7 +246,7 @@ i18n
             loggedOut: "Sesión cerrada. Hasta luego",
           },
           adminHome: {
-            filter: "Filtrar por:",
+            filter: "Filtrar:",
             name: "Nombre",
             stock: "Unidades disponibles",
             rating: "Valoración",
@@ -258,9 +258,20 @@ i18n
             order: "Orden:",
             valueAsc: "Ascendente",
             valueDes: "Descendente",
-            reset: "Reestablecer los filtros",
+            reset: "Limpiar filtros",
           },
           home: {
+            promoCard: {
+              cuotes: {
+                title: "3 Cuotas sin interes",
+                subTitle: "Con todos los bancos",
+              },
+              return: {
+                title: "Devolucion gratis",
+                subTitle: "Cambios sin cargo",
+              },
+              delivery: { title: "Envios Express", subTitle: "CABA y GBA" },
+            },
             altAddToCart: "¡Añadido al carrito!",
             altAlreadyInCart: "El producto ya se encuentra en tu carrito",
             altAddToFavs: "¡Añadido a favoritos!",
@@ -323,7 +334,8 @@ i18n
             chooseAddress: "Elegir una direccion de envio",
             accountAddress: "Mi direccion",
             newAddress: "Agregar nueva direccion",
-            addressNotComplete: "Informacion incompleta. Completar informacion en el perfil para continuar"
+            addressNotComplete:
+              "Informacion incompleta. Completar informacion en el perfil para continuar",
           },
         },
       },
@@ -380,7 +392,8 @@ i18n
             qty: "Qty: ",
             removeFromCart: "Product removed from the cart",
             removeEverythingFromCart: "Cart successfully emptied out.",
-            confirmClearCart: "Are you really sure you want to discard your entire cart?",
+            confirmClearCart:
+              "Are you really sure you want to discard your entire cart?",
             emptyTheCart: "Discard the cart",
             welcome: "Welcome to your shopping cart",
             emptyCart: "Your shopping cart is currently empty",
@@ -388,8 +401,9 @@ i18n
             buy: "Buy",
             successfulPurchase: "Purchase successfully done!",
             cancelPurchaseSuccess: "Purchase successfully cancelled",
-            addressDetailsMissing: "Please complete your missing billing address",
-            noStock: "Stock not available"
+            addressDetailsMissing:
+              "Please complete your missing billing address",
+            noStock: "Stock not available",
           },
           categoriesComp: {
             error_pos_numbers: "Only positive numbers allowed",
@@ -481,7 +495,8 @@ i18n
             active: "Active",
             inactive: "Inactive",
             fixErrors: "Please correct the mistakes and try again",
-            confirmDelete: "Are you really sure you want to delete this product?",
+            confirmDelete:
+              "Are you really sure you want to delete this product?",
           },
           adminProductCard: {
             edit: "Edit",
@@ -559,7 +574,7 @@ i18n
             loggedOut: "Successfully logged out. See you later",
           },
           adminHome: {
-            filter: "Filter by:",
+            filter: "Filter:",
             name: "Name",
             stock: "Stock",
             rating: "Rating",
@@ -592,8 +607,7 @@ i18n
           },
           logInForm: {
             errors_mail_required: "Email address is required.",
-            errors_mail_invalid:
-              "Email address is invalid. Try another one.",
+            errors_mail_invalid: "Email address is invalid. Try another one.",
             errors_password: "Password is required.",
             logIn: "Welcome!",
             mail: "Email address...",
@@ -636,7 +650,8 @@ i18n
             chooseAddress: "Choose a shipping address",
             accountAddress: "My address",
             newAddress: "Add a new shipping address",
-            addressNotComplete: "Information incomplete. Please, complete your profile info first"
+            addressNotComplete:
+              "Information incomplete. Please, complete your profile info first",
           },
         },
       },

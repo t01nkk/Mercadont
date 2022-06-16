@@ -1,0 +1,30 @@
+.promo-card-container {
+  display: flex;
+  width: 25%;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 5px;
+  @media only screen and (max-width: 900px) {
+    width: 80%;
+    margin: 10px 0;
+  }
+}
+.promo-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+}
+.promo-text-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+.promo-title {
+  font-weight: 700;
+  margin: 0;
+}
+.promo-subTitle {
+  margin: 0;
+  text-transform: none;
+}

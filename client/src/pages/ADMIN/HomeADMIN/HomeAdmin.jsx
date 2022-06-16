@@ -101,10 +101,7 @@ export default function HomeAdmin() {
       });
     }
   };
-  useEffect(() => {
-    fetchProducts(dispatch);
-    fetchCategories(dispatch);
-  }, []);
+
   useEffect(() => {
     handleFilter();
   }, [status, state.products, category]);
@@ -115,66 +112,76 @@ export default function HomeAdmin() {
   return (
     <div className="home-admin-wrapper">
       <div className="filter-admin-wrapper">
-        <div className="selectContainer">
-          <label className="labels">{t("adminHome.filter")}</label>
-          <select
-            className="select"
-            value={atribute}
-            onChange={(e) => setAtribute(e.target.value)}
-          >
-            <option value="" disabled>-</option>
-            <option value="name">{t("adminHome.name")}</option>
-            <option value="stock">{t("adminHome.stock")}</option>
-            <option value="rating">{t("adminHome.rating")}</option>
-            <option value="price">{t("adminHome.price")}</option>
-          </select>
-        </div>
-        <div className="selectContainer">
-          <label className="labels">{t("adminHome.status")}</label>
-          <select
-            className="select"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            <option value="" disabled>-</option>
-            <option value="active">{t("adminHome.active")}</option>
-            <option value="inactive">{t("adminHome.inactive")}</option>
-          </select>
-        </div>
-        <div className="selectContainer">
-          <label className="labels">{t("adminHome.category")}</label>
-          <select
-            className="select"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="" disabled>-</option>
+        <div className="admin-filter-wrapper">
+          <div className="selectContainer">
+            <label className="admin-labels">{t("adminHome.filter")}</label>
+            <select
+              className="select"
+              value={atribute}
+              onChange={(e) => setAtribute(e.target.value)}
+            >
+              <option value="" disabled>
+                -
+              </option>
+              <option value="name">{t("adminHome.name")}</option>
+              <option value="stock">{t("adminHome.stock")}</option>
+              <option value="rating">{t("adminHome.rating")}</option>
+              <option value="price">{t("adminHome.price")}</option>
+            </select>
+          </div>
+          <div className="selectContainer">
+            <label className="admin-labels">{t("adminHome.status")}</label>
+            <select
+              className="select"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="" disabled>
+                -
+              </option>
+              <option value="active">{t("adminHome.active")}</option>
+              <option value="inactive">{t("adminHome.inactive")}</option>
+            </select>
+          </div>
+          <div className="selectContainer">
+            <label className="admin-labels">{t("adminHome.category")}</label>
+            <select
+              className="select"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="" disabled>
+                -
+              </option>
 
-            {React.Children.toArray(
-              state.categories?.map((category) => (
-                <option
-                  value={category.name}
-                  key={category.id}
-                  id={category.id}
-                >
-                  {category.name}
-                </option>
-              ))
-            )}
-          </select>
+              {React.Children.toArray(
+                state.categories?.map((category) => (
+                  <option
+                    value={category.name}
+                    key={category.id}
+                    id={category.id}
+                  >
+                    {category.name}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+          <div className="selectContainer">
+            <label className="admin-labels">{t("adminHome.order")}</label>
+            <select
+              className="select"
+              value={order}
+              onChange={(e) => setOrder(e.target.value)}
+            >
+              <option value="ASC">{t("adminHome.valueAsc")}</option>
+              <option value="DESC">{t("adminHome.valueDes")}</option>
+            </select>
+          </div>
         </div>
-        <div className="selectContainer">
-          <label className="labels">{t("adminHome.order")}</label>
-          <select
-            className="select"
-            value={order}
-            onChange={(e) => setOrder(e.target.value)}
-          >
-            <option value="ASC">{t("adminHome.valueAsc")}</option>
-            <option value="DESC">{t("adminHome.valueDes")}</option>
-          </select>
-        </div>
+
         <button
+          className="admin-reset-btn"
           onClick={() => {
             fetchProducts(dispatch);
             setStatus("");
@@ -186,6 +193,7 @@ export default function HomeAdmin() {
           {t("adminHome.reset")}
         </button>
       </div>
+
       <div className="section-products-admin">
         {state.products &&
           React.Children.toArray(
@@ -206,7 +214,7 @@ export default function HomeAdmin() {
             })
           )}
       </div>
-      <div className="page-btns-wrapper">
+      <div className="page-btns-wrapper-home">
         <PaginationAdmin
           productNum={state.filterProductsAdmin.length}
           setCurrentPage={setCurrentPage}

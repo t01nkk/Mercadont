@@ -43,11 +43,17 @@
   display: flex;
   width: 100%;
   justify-content: flex-end;
-  // @media only screen and (max-width: 1080px) {
-  //   position: absolute;
-  //   top: 20px;
-  //   left: calc(0% - 20px);
-  // }
+  @media only screen and (max-width: 1080px) {
+    position: absolute;
+    top: 135px;
+    left: calc(0% - 20px);
+  }
+  @media only screen and (max-width: 552px) {
+    top: 170px;
+  }
+  @media only screen and (max-width: 290px) {
+    top: 210px;
+  }
 }
 .b-w {
   background-color: #fff;
@@ -157,7 +163,7 @@
 }
 
 .answerText {
-  background: darkgray;
+  background: rgb(140, 140, 140);
   color: white;
 }
 .details-qua {
@@ -168,15 +174,20 @@
   width: 100%;
 }
 
-.container-reviews{
+.container-reviews {
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.container-reviews>p:first-child{
+.container-reviews > p:first-child {
   width: 60%;
 }
-.container-reviews>p:last-child{
+.container-reviews > p:last-child {
   width: 20%;
   text-align: center;
+}
+
+.question p {
+  margin: 0;
+  padding: 5px 0;
 }
