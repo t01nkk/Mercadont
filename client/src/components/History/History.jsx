@@ -4,8 +4,10 @@ import { useLocation, useHistory } from "react-router-dom";
 import { DateHistory } from "./DateHistory";
 import "./History.scss";
 import { DetailsBuysHistory } from "./DetailsBuysHistory";
+import { useTranslation } from "react-i18next";
 
 export const History = () => {
+  const { t } = useTranslation()
   const [history, setHistory] = useState([]);
   const [detailsProduct, setDetailsProduct] = useState([]);
   const [changeSection, setChangeSection] = useState(true);
@@ -60,9 +62,9 @@ export const History = () => {
     <>
       <div className="history-list-container">
         <p className="history-list-title">
-          Historial de compra: <br />
+          {t("history.shoppingHistory")}
           <span className="history-list-title-details">
-            Click the orders to see the details
+            {t("history.instructions")}
           </span>
         </p>
       </div>
@@ -92,7 +94,7 @@ export const History = () => {
               className="history-btn-goback"
               onClick={() => setChangeSection(true)}
             >
-              go back
+              {t("navigation.return")}
             </button>
           </div>
           <article className="history-cards">

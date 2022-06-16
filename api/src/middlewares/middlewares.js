@@ -30,9 +30,8 @@ const modifyStockStripe = async (local) => {
           { where: { id: local[i].id } }
         );
       }
-
     }
-    return updateProduct
+    return updateProduct;
   } catch (error) {
     return error.message;
   }
@@ -59,19 +58,14 @@ const modifyStockPaypal = async (orderId) => {
           { stock: findProduct.stock - product.dataValues.productQuantity },
           { where: { id: product.dataValues.productId } }
         );
-      } 
-      
+      }
+
       if (findProduct.stock - product.dataValues.productQuantity === 0) {
         updateProduct = await Product.update(
           { stock: findProduct.stock - product.dataValues.productQuantity, status: "inactive" },
           { where: { id: product.dataValues.productId } }
         );
-      } 
-      // else {
-      //   throw new Error({
-      //     msg: "There's not enough products to fulfill this purchase",
-      //   });
-      // }
+      }
     }
     return { msg: "stock updated" };
   } catch (error) {
@@ -83,17 +77,17 @@ const reStockOrderCancelled = async (orderId) => {
   let updateProduct;
   try {
     const findProducts = await PurchaseOrder.findAll({
-      where: {orderId}
+      where: { orderId }
     });
 
     for (let product of findProducts) {
       const findProduct = await Product.findByPk(product.dataValues.productId);
-      if (findProduct.status === "inactive"){
+      if (findProduct.status === "inactive") {
         updateProduct = await Product.update(
           { stock: findProduct.stock + product.dataValues.productQuantity, status: "active" },
           { where: { id: product.dataValues.productId } }
         );
-      }else{
+      } else {
         updateProduct = await Product.update(
           { stock: findProduct.stock + product.dataValues.productQuantity },
           { where: { id: product.dataValues.productId } }
@@ -204,21 +198,7 @@ const calcProdRating = async (rating, prod) => {
   )
 }
 
-// async function getUsers() {
-//   const findCreated = await User.findAll({ where: { userCreated: true } });
-//   const count = await User.count();
-//   if (findCreated?.length === count) {
-//     for (let i = 0; i < users.length; i++) {
-//       await User.create({
-//         email: users[i].email,
-//         name: users[i].name,
-//         image: users[i].image,
-//         banned: users[i].banned,
-//         isAdmin: users[i].isAdmin,
-//       });
-//     }
-//   }
-// }
+
 
 // async..await is not allowed in global scope, must use a wrapper
 async function mailPayment(recipient, orderId) {

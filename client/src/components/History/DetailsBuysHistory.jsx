@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { StarRating } from "../StarRating/StarRating";
+import { useTranslation } from "react-i18next";
 // import { useLocation } from 'react-router-dom'
 
 import "./History.scss";
@@ -17,6 +18,7 @@ export const DetailsBuysHistory = ({
   isOrder,
   updateDataText,
 }) => {
+  const { t } = useTranslation()
   const [valueText, setValueText] = useState("");
   const [star, setStar] = useState(null);
   const [hover, setHover] = useState(null);
@@ -51,10 +53,10 @@ export const DetailsBuysHistory = ({
       <div className="history-info-wrapper">
         <div className="history-info-details">
           <p className="history-info-title">{name}</p>
-          <p className="history-info-price">Price: U$D {price}</p>
+          <p className="history-info-price">{t("dateHistory.price")} U$D {price}</p>
           {!isReview && isOrder === "accepted" ? (
             <div className="history-leave-review">
-              <label htmlFor="">Leave a review:</label>
+              <label htmlFor="">{t("dateHistory.review")}</label>
               <textarea
                 name=""
                 id=""

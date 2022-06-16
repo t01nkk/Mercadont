@@ -65,7 +65,6 @@ export default function AccountDetailsForm() {
 
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  console.log(errors);
   let id = localStorage.getItem("myUser");
 
   const fetchUser = async () => {

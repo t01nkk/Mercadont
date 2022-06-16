@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
@@ -7,6 +7,7 @@ import "./EditProduct.scss";
 import { alertInfo, alertSuccess, alertWarning } from "../../../helpers/toast.js";
 import { useTranslation } from "react-i18next";
 export default function EditProduct() {
+  const selectRef= useRef();
   const { t } = useTranslation();
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
@@ -20,6 +21,7 @@ export default function EditProduct() {
     status: "",
   });
   const history = useHistory();
+  
   const expression = {
     nameExpression: /^[\da-zA-ZÀ-ÿ\s]{1,40}$/,
     priceExpression: /^\d{1,3}(\.\d{1,3})?$/,
@@ -99,6 +101,7 @@ export default function EditProduct() {
       destructuringCats.push(name);
     }
     fetchedProduct.data.categories = destructuringCats;
+    selectRef.current.value = fetchedProduct.data.status
     setProduct(fetchedProduct.data);
   };
 
@@ -155,8 +158,8 @@ export default function EditProduct() {
         console.log(err);
       }
     }
-
   };
+  console.log(product.status);
   return (
     <div className="container-edit-admin">
       <form onSubmit={handleSubmit} className="form-edit-admin">
@@ -172,12 +175,12 @@ export default function EditProduct() {
             onTouchStart={handleChangeName}
             onChange={handleChangeName}
           />
-          {errors.name && <p className="error-input">{errors.name}</p>}
+          {errors.name && <p className="error-input-edit" id="error-edit">{errors.name}</p>}
           <label className="title-details-info-description">
             {t("adminSellProduct.description")}
           </label>
           {errors.description && (
-            <p className="error-input">{errors.description}</p>
+            <p className="error-input-edit" id="error-edit">{errors.description}</p>
           )}
           <textarea
             name="description"
@@ -190,7 +193,7 @@ export default function EditProduct() {
           <div className="edit-price-stock">
             <label className="title-details-info">
               {t("adminSellProduct.price")}
-            </label> {errors.price && <p className="error-input">{errors.price}</p>}
+            </label>
             <input
               type="number"
               name="price"
@@ -198,7 +201,7 @@ export default function EditProduct() {
               value={product.price}
               onChange={handleChangePrice}
             />
-           
+            
             <label className="title-details-info">
               {t("adminSellProduct.stock")}
             </label>
@@ -208,13 +211,17 @@ export default function EditProduct() {
               value={product.stock}
               onChange={handleChangeStock}
             />
-            {errors.stock && <p className="error-input">{errors.stock}</p>}
+          
           </div>
+          <div className="edit-stock-price-error">
+            {errors.price && <p className="error-input-edit" id="error-edit" >{errors.price}</p>}
+            {errors.stock && <p className="error-input-edit" id="error-edit">{errors.stock}</p>}
+           </div>
           <div className="edit-status">
             <label className="title-details-info">
               {t("adminSellProduct.status")}
             </label>
-            <select name="status" onChange={handleChange}>
+            <select name="status" onChange={handleChange} ref={selectRef}>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
@@ -250,7 +257,7 @@ export default function EditProduct() {
                     </button>
                   </div>
                 ))
-              ) : <p>{t("adminSellProduct.errors_categories")}</p>}
+              ):<p className="error-input-edit">{t("adminSellProduct.errors_categories")}</p>}
           </div>
           <input
             type="submit"
