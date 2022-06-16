@@ -56,7 +56,6 @@ export default function LogInForm() {
         image: userCredentials.user.photoURL,
         isVerified: userCredentials.user.emailVerified,
       });
-      console.log(account)
       if (account.data[0].banned)
         return alertError("User is banned")
 

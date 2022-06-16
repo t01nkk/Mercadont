@@ -64,7 +64,7 @@ export default function SearchedProducts() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    let filter = state.filter;
+    let filter = state.searchedProducts;
     if (min) {
       filter = filter.filter((product) => product.price >= min);
     }
@@ -104,16 +104,16 @@ export default function SearchedProducts() {
     setUser(myUser);
     if (myCart) {
       setCart(myCart);
-      totalCount(dispatch)
+      totalCount(dispatch);
     } else {
       setCart([]);
     }
   }, []);
   useEffect(() => {
     localStorage.setItem(user, JSON.stringify(cart));
-    totalCount(dispatch)
+    totalCount(dispatch);
   }, [cart]);
-
+  
   return (
     <div className="searched-container">
       <div className="SortAndReset">
@@ -147,7 +147,9 @@ export default function SearchedProducts() {
           </div>
         </div>
         <div className="order-options">
-          <label className="order-label" htmlFor="">{t("categoriesComp.sortBy")}</label>
+          <label className="order-label" htmlFor="">
+            {t("categoriesComp.sortBy")}
+          </label>
           <select
             defaultValue=""
             onChange={(e) => {

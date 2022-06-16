@@ -105,7 +105,7 @@ export default function Categories() {
 
   useEffect(() => {
     localStorage.setItem(user, JSON.stringify(cart));
-    totalCount(dispatch)
+    totalCount(dispatch);
   }, [cart]);
 
   useEffect(() => {
@@ -158,8 +158,11 @@ export default function Categories() {
             }}
             className="sortSelector"
           >
-            <option value="DESCENDING">{t("categoriesComp.des")}</option>
-            <option value="ASCENDING">{t("categoriesComp.asc")}</option>
+            <option hidden value="">
+              -
+            </option>
+            <option value="DESCENDING">MAX-MIN</option>
+            <option value="ASCENDING">MIN-MAX</option>
           </select>
         </div>
       </div>
