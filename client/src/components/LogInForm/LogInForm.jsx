@@ -5,7 +5,7 @@ import { useAuth } from "../../context/authContext";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Formik } from "formik";
-import { alertError, alertSuccess } from "../../helpers/toast";
+import { alertError, alertSuccess, alertWarning } from "../../helpers/toast";
 export default function LogInForm() {
   let errorMsg = "";
   const { t } = useTranslation();
@@ -32,6 +32,7 @@ export default function LogInForm() {
           setRedirect(true);
         }
       } else {
+        alertWarning(`${t("createUserTest.errors_mail_checkemail")}`)
         console.log("Check your mail box for the authentification email")
       }
     } catch (err) {
