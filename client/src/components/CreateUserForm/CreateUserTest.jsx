@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/authContext";
-import { alertSuccess } from "../../helpers/toast";
+import { alertSuccess, alertWarning } from "../../helpers/toast";
 import "./CreateUserForm.scss";
 export default function LogInForm() {
   const history = useHistory();
@@ -31,8 +31,12 @@ export default function LogInForm() {
       }, 2000);
     } catch (err) {
       if (err.code === "auth/internal-error") setError("Correo Invalido");
-      if (err.code === "auth/email-already-in-use")
+      console.log(err)
+      if (err.code === "auth/email-already-in-use") {
+        alertWarning(`${t("createUserTest.errors_mail_taken")}`)
+
         setError("El correo ya se encuentra en uso");
+      }
     }
   };
 

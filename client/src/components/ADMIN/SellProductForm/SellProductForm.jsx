@@ -4,11 +4,17 @@ import axios from "axios";
 import { fetchCategories } from "../../../redux/actions/actions";
 import { useStore } from "../../../context/store";
 import { useTranslation } from "react-i18next";
+import { alertInfo, alertSuccess, alertWarning } from "../../../helpers/toast.js";
 
 export default function SellProductForm() {
   const { t } = useTranslation();
   const [state, dispatch] = useStore();
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    name: "",
+    price: "",
+    description: "",
+    stock: ""
+  });
   const [data, setData] = useState({
     name: "",
     price: "",
@@ -17,18 +23,11 @@ export default function SellProductForm() {
       "https://static.zara.net/photos///2022/V/1/1/p/6469/910/060/2/w/850/6469910060_6_4_1.jpg?ts=1651057109246",
     status: "inactive",
     stock: "",
-    address: {
-      country: "",
-      province: "",
-      city: "",
-      street: "",
-      postalCode: "",
-    },
     categories: [],
   });
   const expression = {
     nameExpression: /^[\da-zA-ZÀ-ÿ\s]{1,40}$/,
-    priceExpression: /^\d{1,3}(\.\d{1,3})?$/,
+    priceExpression: /^\d{1,5}(\.\d{1,3})?$/,
     descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,®'*¿?¡!\s]{30,200}$/,
     stockExpression: /^\d{1,14}$/,
   };
@@ -36,20 +35,22 @@ export default function SellProductForm() {
   function validator(input) {
     let errors = {};
 
-    if (!expression.nameExpression.test(input.name)) {
+    if (!expression.nameExpression.test(input.name) && input.name) {
       errors.name = `${t("adminSellProduct.errors_name")}`;
     }
-    if (!expression.priceExpression.test(input.price)) {
+    if (!expression.priceExpression.test(input.price) && input.price) {
       errors.price = `${t("adminSellProduct.errors_price")}`;
     }
-    if (!expression.descriptionExpression.test(input.description)) {
+    if (!expression.descriptionExpression.test(input.description) && input.description) {
       errors.description = `${t("adminSellProduct.errors_description")}`;
     }
-    if (!expression.stockExpression.test(input.stock)) {
+    if (!expression.stockExpression.test(input.stock) && input.stock) {
       errors.stock = `${t("adminSellProduct.errors_stock")}`;
     }
     return errors;
   }
+
+
 
   const handleChangeName = (e) => {
     setErrors("");
@@ -92,8 +93,9 @@ export default function SellProductForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, price, description, image, status, stock, categories } = data;
-
-    if (!errors.length !== 0) {
+    console.log("Hola errors", errors.length)
+    if (!errors.name && !errors.price && !errors.description && !errors.stock) {
+      console.log(name, price, description, stock, image, status, categories)
       try {
         await axios.post(`${process.env.REACT_APP_DOMAIN}/product/create`, {
           name: name,
@@ -110,7 +112,10 @@ export default function SellProductForm() {
         console.log(err);
       }
     }
-  };
+    else {
+      alertWarning(t("adminEditProduct.fixErrors"))
+    }
+  }
   useEffect(() => {
     fetchCategories(dispatch);
   }, []);
@@ -125,6 +130,7 @@ export default function SellProductForm() {
               className="sell-input"
               type="text"
               name="name"
+              required
               placeholder={t("adminSellProduct.name")}
               onChange={handleChangeName}
               value={data.name}
@@ -136,6 +142,7 @@ export default function SellProductForm() {
               className="sell-input"
               type="number"
               name="price"
+              required
               placeholder={t("adminSellProduct.price")}
               onChange={handleChangePrice}
               value={data.price}
@@ -146,6 +153,7 @@ export default function SellProductForm() {
             <textarea
               className="sellProductForm-textarea"
               type="textarea"
+              required
               name="description"
               placeholder={t("adminSellProduct.description")}
               onChange={handleChangeDescription}
@@ -174,6 +182,7 @@ export default function SellProductForm() {
               className="sell-input"
               type="number"
               name="stock"
+              required
               placeholder={t("adminSellProduct.stock")}
               onChange={handleChangeStock}
               value={data.stock}
