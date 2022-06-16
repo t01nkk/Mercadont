@@ -47,7 +47,7 @@ export const FormQA = ({ productId }) => {
   return (
     <div className="qua-container">
       <p className="qua-ask">{t("formQA.askSeller")}</p>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
         <div className="input-info">
           <textarea
             className="qua-textarea"

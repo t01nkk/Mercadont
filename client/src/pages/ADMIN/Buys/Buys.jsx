@@ -100,9 +100,13 @@ export const Buys = () => {
           </div>
         </div>
       ) : (
-        <div>
-          <div>
-            <button onClick={() => back()}>Back</button>
+        <section className="history-container">
+          <div className="history-btn-goback-container">
+            <button className="history-btn-goback" onClick={() => back()}>
+              Back
+            </button>
+          </div>
+          <article className="history-cards">
             {detailsProduct.length &&
               detailsProduct.map((e, i) => (
                 <DetailsBuys
@@ -115,28 +119,30 @@ export const Buys = () => {
                   price={e.price}
                 />
               ))}
-            <>
-              {dataBuys[0].orderStatus === "pending" && (
-                <div>
-                  <button
-                    onClick={() => {
-                      changeStateBuys("accepted");
-                    }}
-                  >
-                    Aceptar pedido
-                  </button>
-                  <button
-                    onClick={() => {
-                      changeStateBuys("rejected");
-                    }}
-                  >
-                    Rechazaar pedido
-                  </button>
-                </div>
-              )}
-            </>
-          </div>
-        </div>
+          </article>
+          <>
+            {dataBuys[0].orderStatus === "pending" && (
+              <div className="accept-reject-container">
+                <button
+                  className="accept-order"
+                  onClick={() => {
+                    changeStateBuys("accepted");
+                  }}
+                >
+                  Aceptar pedido
+                </button>
+                <button
+                  className="reject-order"
+                  onClick={() => {
+                    changeStateBuys("rejected");
+                  }}
+                >
+                  Rechazar pedido
+                </button>
+              </div>
+            )}
+          </>
+        </section>
       )}
     </>
   );

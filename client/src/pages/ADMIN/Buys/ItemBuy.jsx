@@ -61,18 +61,18 @@ export const ItemBuy = ({
       className="list-group-item flex-fill history-list-direction"
       onClick={getDetailsBuys}
     >
-      <p className="">
-        Date of Purchase: <span>{date}</span>
+      <p className="purchase-labels">
+        Date: <span>{date}</span>
       </p>
-      <p>
+      <p className="purchase-labels">
         Email <span> {email}</span>
       </p>
-      <p>
+      <p className="purchase-labels">
         Address: <span>{deliveryAddress}</span>{" "}
       </p>
       <div>
-        <p>
-          Total: <span>{amount}</span>
+        <p className="purchase-labels">
+          Total: U$D<span>{amount}</span>
         </p>
       </div>
       <br />
