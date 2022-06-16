@@ -44,7 +44,6 @@ export const History = () => {
       setTimeout(() => {
         redirect.push("/home")
       }, 2000);
-      ;
     }
     //id => por params
     //rating, text,userId,orderId => body
