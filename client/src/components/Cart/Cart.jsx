@@ -20,6 +20,16 @@ export const Cart = () => {
   const [priceTotal, setPriceTotal] = useState(0);
   const [state, dispatch] = useStore();
 
+  const handleKick = async () => {
+    const check = await JSON.parse(localStorage?.getItem("myUser"));
+    if (check === null) {
+      history.push("/login");
+    }
+  };
+  useEffect(() => {
+    handleKick();
+  }, []);
+
   useEffect(() => {
     setPriceTotal(totalPrice());
   }, []);
@@ -31,7 +41,7 @@ export const Cart = () => {
     }
     if (search == "?buy=noStock") {
       totalCount(dispatch);
-      history.push("/")
+      history.push("/");
     }
     if (search == "?buy=true") {
       localStorage.removeItem(user);
@@ -216,7 +226,7 @@ export const Cart = () => {
                 </g>
               </svg>
             </button>
-            <button onClick={makePurchase}className="buy-btn-responsive">
+            <button onClick={makePurchase} className="buy-btn-responsive">
               {t("cart.buy")}
             </button>
           </>
