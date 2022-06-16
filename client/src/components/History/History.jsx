@@ -41,7 +41,10 @@ export const History = () => {
     });
     if (resp) {
       alertSuccess(t("history.sendReview"))
-      redirect.push("/home");
+      setTimeout(() => {
+        redirect.push("/home")
+      }, 2000);
+      ;
     }
     //id => por params
     //rating, text,userId,orderId => body

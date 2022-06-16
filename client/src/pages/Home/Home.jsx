@@ -8,7 +8,7 @@ import "./Home.scss";
 import banner1 from "media/banner1.jpg";
 import banner2 from "media/banner2.jpg";
 import banner4 from "media/banner4.jpg";
-import PromoCard from "components/PromoCard.jsx/PromoCard.jsx";
+import PromoCard from '../../components/PromoCard.jsx/PromoCard.jsx';
 import { BsCreditCard2Back } from "react-icons/bs";
 // import { TbTruck } from "react-icons/tb";
 import { TiArrowSync } from "react-icons/ti";
