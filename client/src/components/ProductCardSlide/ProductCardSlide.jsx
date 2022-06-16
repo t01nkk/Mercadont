@@ -59,10 +59,10 @@ export default function ProductCard({
   };
 
   return (
-    <div className="card-body1">
+    <>
       <Link to={`/home/${id}`}>
         <img className="card-image1" src={`${image}`} alt={`${name}`} />
       </Link>
-    </div>
+    </>
   );
 }

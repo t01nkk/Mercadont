@@ -71,9 +71,9 @@ export default function CreateCategory() {
             value={data.name}
           />
         </div>
-        {errors.name && (<p className='error-input'>{errors.name}</p>)}
+        {errors.name && (<p  className="error-input-edit">{errors.name}</p>)}
         <div className="btn-createUser">
-          <input type="submit" value={t("adminCreateCategory.submit")} className="input-submit" />
+          <input type="submit" value={t("adminCreateCategory.submit")} disabled={ errors.name} className="input-submit" />
         </div>
       </form>
     </div>

@@ -86,7 +86,6 @@ export default function SlideRating() {
   return (
     <div className="div-slide">
       <Swiper
-        spaceBetween={0}
         loop={true}
         modules={[Navigation, FreeMode]}
         navigation={true}
@@ -115,6 +114,7 @@ export default function SlideRating() {
         }}
         className="mySwiper"
       >
+        {/* <button onClick={() => mostra()}>mostra storage</button> */}
 
         {state.rating && state.favorites ? (
           React.Children.toArray(

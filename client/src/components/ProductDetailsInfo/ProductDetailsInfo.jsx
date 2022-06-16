@@ -24,7 +24,6 @@ export default function ProductDetailsInfo({
   status,
   price,
 }) {
-
   const { t } = useTranslation();
   const [state, dispatch] = useStore();
   const [changeButton, setChangeButton] = useState();
@@ -53,7 +52,7 @@ export default function ProductDetailsInfo({
   const deleteFavorite = () => {
     setChangeButton(false);
     handleDeleteFavorite(id);
-    alertInfo(t("home.altRemoveFromFavorites"))
+    alertInfo(t("home.altRemoveFromFavorites"));
   };
 
   const postFavorite = () => {
@@ -176,16 +175,16 @@ export default function ProductDetailsInfo({
 
           <div className="details-price">
             <div className="details-categories">
-            <p className="title-details-info-price">
-              {t("productDetailsInfo.price")}
-            </p>
-            <p className="details-price-number">
-              <span className="details-currency">U$D</span>
-              {`${accounting.formatMoney(price, "", 2, ".")}`}
-            </p>
-           </div>
-           <div className="details-stock">
-            <p className="title-details-info-price">Rating:</p>
+              <p className="title-details-info-price">
+                {t("productDetailsInfo.price")}
+              </p>
+              <p className="details-price-number">
+                <span className="details-currency">U$D</span>
+                {`${accounting.formatMoney(price, "", 2, ".")}`}
+              </p>
+            </div>
+            <div className="details-stock">
+              <p className="title-details-info-price">Rating:</p>
               <p>
                 <span className="details-currency">{rating}</span>
               </p>
@@ -195,24 +194,24 @@ export default function ProductDetailsInfo({
       </div>
 
       <div className="details-qua">
-      <p className="title-details-info-qua">Product Reviews</p>
-           {reviews && (
-            <div className="details-questions-list">
-              {React.Children.toArray(
-               reviews.map((e) => {
-                if(e.text){
+        <p className="title-details-info-qua">Product Reviews</p>
+        {reviews && (
+          <div className="details-questions-list">
+            {React.Children.toArray(
+              reviews.map((e) => {
+                if (e.text) {
                   return (
-                  <div className="container-reviews">
-                    <p className="questionText">{e.text}</p>
-                    <p>{e.rating}</p>
-                  </div>
-                  )
+                    <div className="container-reviews">
+                      <p className="questionText">{e.text}</p>
+                      <p>{e.rating}</p>
+                    </div>
+                  );
                 }
-                return null
+                return null;
               })
             )}
-            </div>
-           )}         
+          </div>
+        )}
       </div>
 
       <div className="details-qua">
@@ -222,9 +221,15 @@ export default function ProductDetailsInfo({
             {React.Children.toArray(
               qas.map((qa) => (
                 <div className="question">
-                  <p className="questionText">{t("productDetailsInfo.q")}{qa.question}</p>
+                  <p className="questionText">
+                    {t("productDetailsInfo.q")}
+                    {qa.question}
+                  </p>
                   {qa.answer ? (
-                    <div className="answerText">{t("productDetailsInfo.a")}{qa.answer}</div>
+                    <p className="answerText">
+                      {t("productDetailsInfo.a")}
+                      {qa.answer}
+                    </p>
                   ) : null}
                 </div>
               ))
@@ -233,8 +238,6 @@ export default function ProductDetailsInfo({
         )}
         <FormQA productId={id} />
       </div>
-
-     
     </div>
   );
 }

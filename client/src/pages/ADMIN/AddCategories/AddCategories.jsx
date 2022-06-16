@@ -73,8 +73,9 @@ export default function EditProduct() {
           placeholder={product.name}
           value={product.name}
           onChange={handleChange}
+          required
         />
-        {!error ? null : <div className="error">{error}</div>}
+        {!error ? null : <div  className="error-input-edit">{error}</div>}
         <div className="btn-addCat">
           <input
             type="submit"
