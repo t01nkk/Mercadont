@@ -39,8 +39,7 @@ export const DetailsBuysHistory = ({
 
   const handleBlur = (e) => {
     e.stopPropagation();
-    // console.log("SI o puse alrevez",star, valueText, id)
-    // handleChange(e)
+
     updateDataText({
       id,
       text: valueText,

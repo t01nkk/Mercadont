@@ -2,8 +2,6 @@
   margin-top: 2%;
 }
 
-
-
 .form-details {
   display: flex;
   flex-direction: column;
@@ -12,7 +10,7 @@
   height: 90%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   background: linear-gradient(to right, black 10%, white 10%);
-
+  margin: auto;
   @media only screen and (max-width: 1080px) {
     height: 100%;
     width: 100%;

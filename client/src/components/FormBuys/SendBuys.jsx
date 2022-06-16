@@ -83,7 +83,7 @@ export const SendBuys = () => {
             setLoadingBuys(true)
             if (!error) {
                 const { id } = paymentMethod
-                // console.log("address:",address)
+               
                 try {
                     await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
                         id,
@@ -102,7 +102,7 @@ export const SendBuys = () => {
                         alertWarning(t("sendBuys.error"))
                         setLoadingBuys(false)
                         localStorage.removeItem(user)
-                        console.log(error)
+                       
                         return history.push("/cart?buy=false")
 
                     }
@@ -125,12 +125,7 @@ export const SendBuys = () => {
         if (e.target.id === "accountAddress") {
             try {
                 const userAddress = await axios.get(`${process.env.REACT_APP_DOMAIN}/user/details/${user}`)
-                // console.log(userAddress.data)
-                // console.log("country:",userAddress.data.country)
-                // console.log("province:",userAddress.data.province)
-                // console.log("city:",userAddress.data.city)
-                // console.log("street:",userAddress.data.street)
-                // console.log("postalCode:",userAddress.data.postalCode)
+
                 if (userAddress.data.country === "" || userAddress.data.province === "" || userAddress.data.city === "" || userAddress.data.street === "" || userAddress.data.postalCode === "") {
                     alertWarning(t("sendBuys.addressNotComplete"))
                 } else {
@@ -187,7 +182,7 @@ export const SendBuys = () => {
         setProducts(local)
         setPrice(priceTotal)
     }, [])
-    // console.log("user:", user)
+  
     return (
         <div>
             <button onClick={(e) => handleBack(e)}>{t("navigation.returnToCart")}</button>
