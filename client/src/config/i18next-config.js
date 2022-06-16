@@ -124,6 +124,7 @@ i18n
           dateHistory: {
             dateOfPurchase: "Fecha de la compra: ",
             address: "Dirección",
+            email: "Correo",
             quantityOfProduct: "Cantidad de productos: ",
             total: "Monto total: ",
             review: "Compartir tu opinión",
@@ -261,7 +262,7 @@ i18n
             loggedOut: "Sesión cerrada. Hasta luego",
           },
           adminHome: {
-            filter: "Filtrar por:",
+            filter: "Filtrar:",
             name: "Nombre",
             stock: "Unidades disponibles",
             rating: "Valoración",
@@ -273,9 +274,23 @@ i18n
             order: "Orden:",
             valueAsc: "Ascendente",
             valueDes: "Descendente",
-            reset: "Reestablecer los filtros",
+            reset: "Limpiar filtros",
           },
           home: {
+            promoCard: {
+              cuotes: {
+                title: "3 Cuotas sin interés",
+                subTitle: "Con todos los bancos",
+              },
+              return: {
+                title: "Devolución gratis",
+                subTitle: "Cambios sin cargo",
+              },
+              delivery: { title: "Envíos Express", subTitle: "CABA y GBA" },
+            },
+            recommended: "Recomendados",
+            rating: "Mejor puntuados",
+            mostSold: "¡Más vendidos!",
             altAddToCart: "¡Añadido al carrito!",
             altAlreadyInCart: "El producto ya se encuentra en tu carrito",
             altAddToFavs: "¡Añadido a favoritos!",
@@ -460,6 +475,7 @@ i18n
             dateOfPurchase: "Date of purchase: ",
             address: "Address: ",
             quantityOfProduct: "Product amount: ",
+            email: "Email",
             total: "Total price: ",
             review: "Add review",
             price: "Price",
@@ -597,7 +613,7 @@ i18n
             loggedOut: "Successfully logged out. See you later",
           },
           adminHome: {
-            filter: "Filter by:",
+            filter: "Filter:",
             name: "Name",
             stock: "Stock",
             rating: "Rating",
@@ -612,6 +628,9 @@ i18n
             reset: "Reset filters",
           },
           home: {
+            recommended: "Recommended",
+            rating: "Best rated",
+            mostSold: "Most sold!",
             altAddToCart: "Added to the cart",
             altAlreadyInCart: "Product is already in the cart",
             altAddToFavs: "Added to favorites!",

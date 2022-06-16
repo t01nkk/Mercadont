@@ -1,13 +1,38 @@
 .div-slide {
-  width: 100%;
+  width: 85%;
   display: flex;
-  height: 40vh;
-  margin: 30px 0;
+  overflow: hidden;
+  margin-bottom: 100px;
+}
+.div-slide-vertical {
+  display: flex;
+  width: 85%;
+  height: 50vh;
+  overflow: hidden;
+  margin-bottom: 100px;
+}
+.home-banner {
+  width: 100vw;
+  transform: translate(0, -140px);
 }
 .mySwiper {
-  margin: 0 15px;
 }
 .section-products-slider {
   position: relative;
   height: 100%;
+}
+.swiper {
+  overflow: unset;
+}
+.swiper-slide-products {
+  margin: 0 5px;
+}
+.swiper-button-prev {
+  color: black;
+}
+.swiper-button-next {
+  color: black;
+}
+.swiper-wrapper {
+  position: unset;
 }

@@ -1,0 +1,327 @@
+.container-dateHistory {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.container-data-qas {
+  display: flex;
+  justify-content: space-evenly;
+  cursor: pointer;
+}
+
+.container-details-qas {
+}
+.qas-labels {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 10px 20px;
+}
+.qas-list-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.qas-list-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+}
+.qas-list-direction {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100vw;
+
+  cursor: pointer;
+  @media only screen and (max-width: 900px) {
+    flex-direction: column;
+  }
+}
+.qas-list-container ul {
+  border-radius: 0;
+}
+.qas-list-title-details {
+  font-size: 0.9rem;
+  text-align: center;
+  justify-content: center;
+  font-weight: 400;
+}
+.qas-btn-goback-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+.qas-btn-goback {
+  border: none;
+  outline: none;
+  background-color: #000000;
+  height: 40px;
+  color: #fff;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 220px;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 25px 0;
+  justify-content: center;
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+    margin: unset;
+  }
+}
+.qas-btn-goback:hover {
+  box-shadow: rgba(0, 9, 61, 0.4) 0px 4px 10px 0px;
+}
+.card-body-qas {
+  display: flex;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  transition: transform 50ms ease-out;
+  text-align: center;
+  @media only screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.card-body-qas:hover {
+  display: flex;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  position: relative;
+  transform: scale(1.01);
+  @media only screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.card-image-qas {
+  width: 50%;
+  object-fit: cover;
+  @media only screen and (max-width: 900px) {
+    height: 25rem;
+    width: 100%;
+  }
+}
+.qas-info-wrapper {
+  width: 50%;
+  margin: 0 5%;
+  display: flex;
+  justify-content: center;
+
+  @media only screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.qas-info-title {
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  height: 25%;
+  justify-content: center;
+}
+.qas-info-details {
+  @media only screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.qas-info-price {
+  display: flex;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+.qas-info-prices {
+  font-weight: 300;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+// .container-star {
+//   display: flex;
+// }
+.qas-card-stars {
+  display: flex;
+  width: 50%;
+}
+.qas-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 10%;
+  padding-bottom: 100px;
+}
+.qas-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 35rem));
+  gap: 1.2rem;
+  justify-content: center;
+}
+.qas-leave-review {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0;
+}
+.qas-btn-leaveReview {
+  border: none;
+  outline: none;
+  background-color: #000000;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 220px;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  @media only screen and (max-width: 900px) {
+    margin-left: 15px;
+  }
+}
+.qas-btn-review-container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 100px;
+  align-items: center;
+  width: 100%;
+}
+
+.btn-edit-qas {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: #000000;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+}
+.change-color {
+  background-color: #003584;
+}
+.btn-edit-qas:hover {
+  box-shadow: rgba(0, 9, 61, 0.4) 0px 4px 13px 0px;
+}
+.qas-btn-wrapper {
+  display: flex;
+  width: 30%;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+  }
+}
+.card-body-qas {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  @media only screen and (max-width: 1080px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+  }
+}
+.card-title-qas-container {
+  display: flex;
+  width: 100%;
+}
+.qas-question {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.qas-view-product {
+}
+.card-title-qas {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.margin-btn {
+  margin-bottom: 10px;
+}
+.btn-edit-qas-view {
+  display: flex;
+  height: 40px;
+  width: 90%;
+  border: none;
+  outline: none;
+  background-color: #003584;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+  }
+}
+.btn-edit-qas-answer {
+  display: flex;
+  height: 40px;
+  width: 90%;
+  border: none;
+  outline: none;
+  background-color: black;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+  }
+}
+.btn-edit-qas-answer-x {
+  display: flex;
+  height: 40px;
+  width: 90%;
+  border: none;
+  outline: none;
+  background-color: rgb(112, 0, 0);
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+  }
+}
+.qua-textarea-answer {
+  width: 90%;
+  margin-bottom: 15px;
+}
+.qas-notPending {
+  text-align: center;
+}

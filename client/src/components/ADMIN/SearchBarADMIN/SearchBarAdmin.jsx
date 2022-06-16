@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useStore } from "../../../context/store";
 import { Link, useHistory } from "react-router-dom";
 import { fetchCategories, fetchProducts } from "../../../redux/actions/actions";
+
 export default function SearchBarAdmin() {
   const { t } = useTranslation();
   const [state, dispatch] = useStore();
@@ -16,7 +17,7 @@ export default function SearchBarAdmin() {
     var expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
 
     if (!expression.test(value)) {
-      setError("you can use letters spaces and accents");
+      setError(t("error_addressFormAlphaNumbers_validate"));
     } else if (value === "") {
       setError("");
     }
@@ -43,13 +44,18 @@ export default function SearchBarAdmin() {
           type: FETCH_PRODUCTS,
           payload: res.data,
         });
+       
       }
-
       setInput("");
     } catch (err) {
       alert(err);
     }
   };
+  useEffect(() => {
+    fetchProducts(dispatch);
+    fetchCategories(dispatch);
+  }, []);
+
   return (
     <div className="nav-language-search nav-item">
       <form role="search" className="d-flex" onSubmit={handleSearch}>

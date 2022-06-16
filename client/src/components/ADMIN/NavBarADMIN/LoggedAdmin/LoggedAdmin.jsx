@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useStore } from "../../../../context/store";
 import { useTranslation } from "react-i18next";
 import logo from "../../../../media/logonavbar.png";
 import SearchBar from "../../../SearchBar/SearchBar";
 import SearchBarAdmin from "../../SearchBarADMIN/SearchBarAdmin";
+import {
+  fetchCategories,
+  fetchProducts,
+} from "../../../../redux/actions/actions";
 export default function LoggedAdmin() {
   const { t } = useTranslation();
-  const [state] = useStore();
+  const [state, dispatch] = useStore();
   const logOutSession = () => {
     localStorage.clear();
   };
+
   const adminName = state.admin.data.name;
   return (
     <div className="navbar-space">
