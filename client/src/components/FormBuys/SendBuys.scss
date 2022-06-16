@@ -52,7 +52,7 @@
 }
 
 .container-select-address>div button:active {
-    transform: scale(.95);
+    transform: scale(0.95);
 }
 
 .container-select-address>div button:last-child {
@@ -92,7 +92,6 @@
         margin: auto;
     }
 }
-
 
 .form-direction-cart div>label {
     display: block;
@@ -181,11 +180,12 @@
 
 .navigation-return-cart {
     margin-left: 3%;
-    padding: .5% 1%;
+    padding: 0.5% 1%;
     background-color: black;
     color: white;
+    outline: none;
+    border: none;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 
-    @media only screen and (max-width: 768px) {
-        width: 80%;
-    }
+    @media only screen and (max-width: 800px) {}
 }

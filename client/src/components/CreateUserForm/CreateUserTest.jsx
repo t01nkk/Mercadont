@@ -31,7 +31,7 @@ export default function LogInForm() {
       }, 2000);
     } catch (err) {
       if (err.code === "auth/internal-error") setError("Correo Invalido");
-      console.log(err)
+     
       if (err.code === "auth/email-already-in-use") {
         alertWarning(`${t("createUserTest.errors_mail_taken")}`)
 

@@ -36,8 +36,8 @@ export const Cart = () => {
     if (search == "?buy=true") {
       localStorage.removeItem(user);
       alertSuccess(t("cart.successfulPurchase"));
-      setStorageCart([]);
       totalCount(dispatch);
+      setStorageCart([]);
     }
 
 
@@ -80,12 +80,14 @@ export const Cart = () => {
 
   const makePurchase = async () => {
     try {
-      const userDetails = await axios.get(`${process.env.REACT_APP_DOMAIN}/user/details/${user}`)
-      const country = userDetails.data.country
-      const province = userDetails.data.province
-      const city = userDetails.data.city
-      const street = userDetails.data.street
-      const postalCode = userDetails.data.postalCode
+      const userDetails = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/user/details/${user}`
+      );
+      const country = userDetails.data.country;
+      const province = userDetails.data.province;
+      const city = userDetails.data.city;
+      const street = userDetails.data.street;
+      const postalCode = userDetails.data.postalCode;
 
       // if( country === "" || province === "" || city === "" || street === "" || postalCode=== "" ){
       //   alertWarning(t("cart.addressDetailsMissing"))
@@ -95,14 +97,11 @@ export const Cart = () => {
       //   return
       // }
 
-
       localStorage?.setItem("myPrice", JSON.stringify(priceTotal));
       history.push("/buysProducts");
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-
-
   };
 
   return (
@@ -219,20 +218,20 @@ export const Cart = () => {
                 </g>
               </svg>
             </button>
-            <button className="buy-btn-responsive">{t("cart.buy")}</button>
+            <button onClick={makePurchase} className="buy-btn-responsive">
+              {t("cart.buy")}
+            </button>
           </>
         ) : null}
-        {
-          storageCart?.length >= 1 ?
-            <button
-              className="button-danger"
-              onClick={() => clearCart()}
-              disabled={storageCart?.length < 1}
-            >
-              {t("cart.emptyTheCart")}
-            </button> : null
-        }
-
+        {storageCart?.length >= 1 ? (
+          <button
+            className="button-danger"
+            onClick={() => clearCart()}
+            disabled={storageCart?.length < 1}
+          >
+            {t("cart.emptyTheCart")}
+          </button>
+        ) : null}
       </div>
     </section>
   );

@@ -18,7 +18,7 @@ export const DetailsBuysHistory = ({
   isOrder,
   updateDataText,
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [valueText, setValueText] = useState("");
   const [star, setStar] = useState(null);
   const [hover, setHover] = useState(null);
@@ -52,7 +52,9 @@ export const DetailsBuysHistory = ({
       <div className="history-info-wrapper">
         <div className="history-info-details">
           <p className="history-info-title">{name}</p>
-          <p className="history-info-price">{t("dateHistory.price")} U$D {price}</p>
+          <p className="history-info-price">
+            {t("dateHistory.price")} U$D {price}
+          </p>
           {!isReview && isOrder === "accepted" ? (
             <div className="history-leave-review">
               <label htmlFor="">{t("dateHistory.review")}</label>

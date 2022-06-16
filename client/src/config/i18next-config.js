@@ -96,8 +96,7 @@ i18n
               "Dirección de correo inválida. Prueba con otra.",
             errors_mail_checkemail:
               "Por favor checkea tu email para verificar tu cuenta!",
-            errors_mail_taken:
-              "Dirección de correo ya está en uso.",
+            errors_mail_taken: "Dirección de correo ya está en uso.",
             errors_password: "Se requiere una contraseña.",
             errors_password_invalid:
               "La contraseña debe tener entre 8 y 16 caracteres, debe contener contener caracteres en mayúsculas y minúsculas, y al menos 1 número.",
@@ -263,8 +262,8 @@ i18n
           home: {
             promoCard: {
               cuotes: {
-                title: "3 Cuotas sin interes",
-                subTitle: "Con todos los bancos",
+                title: "Aceptamos Paypal",
+                subTitle: "Visa/Mastercard",
               },
               return: {
                 title: "Devolucion gratis",
@@ -421,8 +420,7 @@ i18n
             errors_mail_required: "Email address is required.",
             errors_mail_invalid:
               "Email address invalid. Please try another one.",
-            errors_mail_taken:
-              "This email is already taken.",
+            errors_mail_taken: "This email is already taken.",
             errors_mail_checkemail:
               "Please check your email to verify your account!",
             errors_password: "Password is required.",
