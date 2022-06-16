@@ -15,7 +15,7 @@ export default function ProductDetails() {
 
   useEffect(() => {
     fetchProductById();
-  }, []);
+  }, [id]);
 
   return (
     <>

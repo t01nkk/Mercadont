@@ -36,10 +36,10 @@ export default function LogInForm() {
         }
       } else {
         alertWarning(`${t("createUserTest.errors_mail_checkemail")}`)
-        console.log("Check your mail box for the authentification email")
+       
       }
     } catch (err) {
-      // console.log(err);
+     
       if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
       if (err.code === "auth/user-not-found")
         errorMsg = "Email doesn't belong to a user";

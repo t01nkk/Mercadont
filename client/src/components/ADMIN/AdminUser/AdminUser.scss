@@ -1,0 +1,71 @@
+.history-btn-switch {
+  border: none;
+  outline: none;
+  background-color: #000000;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 20%;
+  height: 50px;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  @media only screen and (max-width: 1080px) {
+    width: 40%;
+  }
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+.history-btn-ban {
+  border: none;
+  outline: none;
+  background-color: #970000;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 20%;
+  height: 50px;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  @media only screen and (max-width: 1080px) {
+    width: 40%;
+  }
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+.history-btn-unban {
+  border: none;
+  outline: none;
+  background-color: #007610;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 20%;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 50px;
+  justify-content: center;
+  @media only screen and (max-width: 1080px) {
+    width: 40%;
+  }
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+.adminSwitch-labels {
+  font-size: 1.2rem;
+  flex-wrap: wrap;
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+    font-size: 1rem;
+  }
+}

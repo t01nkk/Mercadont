@@ -114,6 +114,7 @@ export default function Slide() {
           {state.soldMost && state.favorites ? (
             React.Children.toArray(
               state.soldMost.map((product) => {
+               
                 if (product.status === "active") {
                   return (
                     <SwiperSlide>

@@ -75,7 +75,7 @@ export default function AccountDetailsForm() {
       );
       setUser(userDB.data);
     } catch (err) {
-      // console.log(err);
+      
       return err;
     }
   };
@@ -118,7 +118,7 @@ export default function AccountDetailsForm() {
         history.push("/accountDetails");
       }, 1000);
     } catch (err) {
-      // console.log(err);
+     
       return err;
     }
   };
