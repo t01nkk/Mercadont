@@ -44,6 +44,7 @@ export default function LogInForm() {
       alertError(errorMsg);
     }
   };
+
   const handleGoogleSignin = async () => {
     try {
       const userCredentials = await loginWithGoogle();
