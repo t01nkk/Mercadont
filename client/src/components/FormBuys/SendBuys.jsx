@@ -11,6 +11,7 @@ import { alertInfo, alertWarning } from '../../helpers/toast'
 import { Loader } from "../Loader/Loader.jsx"
 import "./SendBuys.scss"
 
+
 export const SendBuys = () => {
     const { t } = useTranslation()
     const stripe = useStripe()
@@ -274,11 +275,12 @@ export const SendBuys = () => {
                 {
                     <div>
                         {selectBuys === "card" ?
-                            <>  
-                            <div className='cardElement' >
-                                <CardElement />
-                            </div>    
-                                <button type='submit'>{t("sendBuys.cardPay")}</button>
+                            <>  <p>Por favor ingrese los datos de su tarjeta</p>
+                                <CardElement id='carElement' className='form-control'/>
+
+                            <div className='container-select-address'>
+                                    <button className='make-buys-sendBuys' type='submit'>{t("sendBuys.cardPay")}</button>
+                            </div>
                                 {loadingBuys && <div className='buys-loader'><Loader /></div>}
                                 {/* <PruebaListProduct /> */}
                             </>

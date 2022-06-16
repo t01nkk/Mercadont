@@ -20,7 +20,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 2%;
+    margin-bottom: 4%;
 }
 
 .container-select-address>div{
@@ -28,6 +28,7 @@
     justify-content: space-evenly;
     width: 40%;
     margin-top: 2%;
+    margin-bottom: 4%;
     @media only screen and (max-width: 960px) {
        flex-direction: column;
       }
@@ -39,6 +40,7 @@
     padding: 2% 3%;
     font-weight: 500;
     background-color: white;
+    margin-bottom: 4%;
     @media only screen and (max-width: 960px) {
         margin: 1%;
        }
@@ -132,7 +134,33 @@
 }
 
 .cardElement{
-    line-height: 50px;
-    background-color: red;
+    width: 80vw;
+    margin: auto;
+}
+.StripeElement{
+    line-height:50px;
+    font-size: 24px;
+    text-align: center;
+}
+.StripeElement--empty{
+    font-size: 24px;
+    text-align: center;
+    line-height:50px;
+}
 
+// #carElement{
+//     font-size: 50px;
+//     height: 50px;
+//     border: 1px solid black;
+// }
+// #carElement>input{
+//     height: 50px;
+//     font-size: 50px;
+// }
+
+.make-buys-sendBuys{
+    padding: 1% 2%;
+    margin: 2% 0 0 8%;
+    background-color: black;
+    color: white;
 }
