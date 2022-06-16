@@ -75,7 +75,6 @@ export default function SearchBar() {
       >
         <div className="search-suggest-wrap">
           <input
-
             id="search"
             name="search"
             value={input}

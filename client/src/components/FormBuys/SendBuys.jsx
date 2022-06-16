@@ -93,6 +93,7 @@ export const SendBuys = () => {
             setLoadingBuys(true);
             if (!error) {
                 const { id } = paymentMethod;
+
                 try {
                     await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
                         id,
@@ -111,7 +112,7 @@ export const SendBuys = () => {
                         alertWarning(t("sendBuys.error"));
                         setLoadingBuys(false);
                         localStorage.removeItem(user);
-                        console.log(error);
+
                         return history.push("/cart?buy=false");
                     }
                 }
@@ -135,6 +136,7 @@ export const SendBuys = () => {
                 const userAddress = await axios.get(
                     `${process.env.REACT_APP_DOMAIN}/user/details/${user}`
                 );
+
                 if (
                     userAddress.data.country === "" ||
                     userAddress.data.province === "" ||
@@ -206,6 +208,7 @@ export const SendBuys = () => {
         setProducts(local);
         setPrice(priceTotal);
     }, []);
+
     return (
         <div>
             <button className="navigation-return-cart" onClick={(e) => handleBack(e)}>

@@ -20,6 +20,16 @@ export const Cart = () => {
   const [priceTotal, setPriceTotal] = useState(0);
   const [state, dispatch] = useStore();
 
+  const handleKick = async () => {
+    const check = await JSON.parse(localStorage?.getItem("myUser"));
+    if (check === null) {
+      history.push("/login");
+    }
+  };
+  useEffect(() => {
+    handleKick();
+  }, []);
+
   useEffect(() => {
     setPriceTotal(totalPrice());
   }, []);
