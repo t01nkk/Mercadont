@@ -18,6 +18,12 @@ i18n
             returnToCart: "Volver al carrito",
             return: "Volver atrás",
           },
+          errors: {
+            error_name: "Se requiere un nombre",
+            error_country: "Se requiere un país",
+            error_city: "Se requiere una ciudad",
+            error_province: "Se requiere una provincia",
+          },
           accountDetails: {
             btnEditProfile: "Editar",
             info: "Información personal",
@@ -204,7 +210,7 @@ i18n
             setAdmin: "Convertir en administrador",
             username: "Nombre de usuario: ",
             email: "Dirección de correo: ",
-            admin: "Administrador: "
+            admin: "Administrador: ",
           },
           adminQaS: {
             solvedQuestions: "Preguntas resueltas",
@@ -337,6 +343,12 @@ i18n
             goBack: "Return to home",
             returnToCart: "Return to your cart",
             return: "Return",
+          },
+          errors: {
+            error_name: "Name is required",
+            error_country: "Country is required",
+            error_city: "City is required",
+            error_province: "State is required",
           },
           accountDetails: {
             btnEditProfile: "Edit",

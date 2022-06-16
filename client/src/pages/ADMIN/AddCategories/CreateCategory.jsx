@@ -4,7 +4,7 @@ import { fetchCategories } from "../../../redux/actions/actions";
 import { useStore } from "../../../context/store";
 import { useHistory } from "react-router-dom";
 import "./CategoryCard.css";
-import { alertSuccess } from "../../../helpers/toast";
+import { alertSuccess, alertWarning } from "../../../helpers/toast";
 import { useTranslation } from "react-i18next";
 export default function CreateCategory() {
   const { t } = useTranslation()
@@ -25,7 +25,7 @@ export default function CreateCategory() {
     let errors = {};
 
     if (!expression.name.test(input.name)) {
-      errors.name = 'Name is necessary';
+      errors.name = t("errors.error_name");
     }
 
     return errors
@@ -37,6 +37,9 @@ export default function CreateCategory() {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
+  const handleClick = async (e) => {
+    if(errors.name) alertWarning("Tu vieja")
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,7 +76,7 @@ export default function CreateCategory() {
         </div>
         {errors.name && (<p  className="error-input-edit">{errors.name}</p>)}
         <div className="btn-createUser">
-          <input type="submit" value={t("adminCreateCategory.submit")} disabled={ errors.name} className="input-submit" />
+          <input type="submit" onClick={(e) => handleClick(e)} value={t("adminCreateCategory.submit")} disabled={ errors.name} className="input-submit" />
         </div>
       </form>
     </div>
