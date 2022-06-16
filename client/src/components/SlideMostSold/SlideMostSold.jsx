@@ -77,7 +77,6 @@ export default function Slide() {
     localStorage.setItem(user, JSON.stringify(cart));
     totalCount(dispatch);
   }, [cart]);
-
   return (
     <div className="div-slide">
       <Swiper
