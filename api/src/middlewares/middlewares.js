@@ -66,6 +66,11 @@ const modifyStockPaypal = async (orderId) => {
           { where: { id: product.dataValues.productId } }
         );
       }
+      // else {
+      //   throw new Error({
+      //     msg: "There's not enough products to fulfill this purchase",
+      //   });
+      // }
     }
     return { msg: "stock updated" };
   } catch (error) {
@@ -198,7 +203,21 @@ const calcProdRating = async (rating, prod) => {
   )
 }
 
-
+// async function getUsers() {
+//   const findCreated = await User.findAll({ where: { userCreated: true } });
+//   const count = await User.count();
+//   if (findCreated?.length === count) {
+//     for (let i = 0; i < users.length; i++) {
+//       await User.create({
+//         email: users[i].email,
+//         name: users[i].name,
+//         image: users[i].image,
+//         banned: users[i].banned,
+//         isAdmin: users[i].isAdmin,
+//       });
+//     }
+//   }
+// }
 
 // async..await is not allowed in global scope, must use a wrapper
 async function mailPayment(recipient, orderId) {

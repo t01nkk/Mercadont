@@ -259,8 +259,11 @@ router.delete("/delete/:id", async (req, res) => {
 //In the update form, LOAD ALL THE DATA FOR CHANGING
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, price, description, image, stock, categories, sizes, status } =
+  let { name, price, description, image, stock, categories, sizes, status } =
     req.body;
+  if (stock === 0) {
+    status = "inactive"
+  }
 
   const errors = validateInputProduct(
     name,
@@ -329,7 +332,6 @@ router.get("/recommendation/mostSold", async (req, res) => {
       }
     }
     //{ id:value, id:value}
-    //console.log("Products Set",productSet)
     const keys = Object.keys(productSet)
     const values = Object.values(productSet)
     let productsSold = []
@@ -345,7 +347,6 @@ router.get("/recommendation/mostSold", async (req, res) => {
     })
 
     productsSold.splice(12)
-    //console.log("Products Sold:", productsSold)
 
     let arrayProducts = []
     for (let element of productsSold) {

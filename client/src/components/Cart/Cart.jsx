@@ -30,10 +30,8 @@ export const Cart = () => {
       alertInfo(t("cart.cancelPurchaseSuccess"));
     }
     if (search == "?buy=noStock") {
-      alertWarning(t("cart.noStock"));
-      localStorage.removeItem(user);
-      setStorageCart([]);
       totalCount(dispatch);
+      history.push('/home')
     }
     if (search == "?buy=true") {
       localStorage.removeItem(user);
@@ -42,7 +40,7 @@ export const Cart = () => {
       totalCount(dispatch);
     }
 
-    
+
   }, [search]);
 
   const deleteDatatoStorage = (name) => {
@@ -226,15 +224,15 @@ export const Cart = () => {
         ) : null}
         {
           storageCart?.length >= 1 ?
-           <button
-          className="button-danger"
-          onClick={() => clearCart()}
-          disabled={storageCart?.length < 1}
-        >
-          {t("cart.emptyTheCart")}
-        </button> : null
+            <button
+              className="button-danger"
+              onClick={() => clearCart()}
+              disabled={storageCart?.length < 1}
+            >
+              {t("cart.emptyTheCart")}
+            </button> : null
         }
-       
+
       </div>
     </section>
   );

@@ -78,11 +78,6 @@ export default function SlideRating() {
     totalCount(dispatch);
   }, [cart]);
 
-  // const mostra = () => {
-  //   let miStorage = JSON.parse(localStorage.getItem("myUser"));
-  //   console.log(miStorage);
-  // };
-
   return (
     <div className="div-slide">
       <Swiper

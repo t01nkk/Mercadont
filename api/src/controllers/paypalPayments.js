@@ -61,11 +61,9 @@ const createOrder = async (req, res) => {
 const captureOrder = async (req, res) => {
   let completedOrder;
   const { token } = req.query;
-  // console.log("req:", req)
 
   const stock = await modifyStockPaypal(token)
-  // console.log("stock:", stock)
-  if(!stock){
+  if (!stock) {
     createPurchaseCanceled(req.query?.token)
     return res.status(400).redirect(`${process.env.HOST_PORT_FRONT}/cart?buy=noStock`);
   }

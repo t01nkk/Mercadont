@@ -7,7 +7,7 @@ import "./EditProduct.scss";
 import { alertInfo, alertSuccess, alertWarning } from "../../../helpers/toast.js";
 import { useTranslation } from "react-i18next";
 export default function EditProduct() {
-  const selectRef= useRef();
+  const selectRef = useRef();
   const { t } = useTranslation();
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
@@ -159,7 +159,6 @@ export default function EditProduct() {
     }
 
   };
-  console.log(product.status);
   return (
     <div className="container-edit-admin">
       <form onSubmit={handleSubmit} className="form-edit-admin">
@@ -201,7 +200,7 @@ export default function EditProduct() {
               value={product.price}
               onChange={handleChangePrice}
             />
-            
+
             <label className="title-details-info">
               {t("adminSellProduct.stock")}
             </label>
@@ -211,12 +210,12 @@ export default function EditProduct() {
               value={product.stock}
               onChange={handleChangeStock}
             />
-          
+
           </div>
           <div className="edit-stock-price-error">
             {errors.price && <p className="error-input-edit" id="error-edit" >{errors.price}</p>}
             {errors.stock && <p className="error-input-edit" id="error-edit">{errors.stock}</p>}
-           </div>
+          </div>
           <div className="edit-status">
             <label className="title-details-info">
               {t("adminSellProduct.status")}
@@ -257,7 +256,7 @@ export default function EditProduct() {
                     </button>
                   </div>
                 ))
-              ):<p className="error-input-edit">{t("adminSellProduct.errors_categories")}</p>}
+              ) : <p className="error-input-edit">{t("adminSellProduct.errors_categories")}</p>}
           </div>
           <input
             type="submit"

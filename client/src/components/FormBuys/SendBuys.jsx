@@ -83,7 +83,6 @@ export const SendBuys = () => {
             setLoadingBuys(true)
             if (!error) {
                 const { id } = paymentMethod
-                // console.log("address:",address)
                 try {
                     await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
                         id,
@@ -125,12 +124,6 @@ export const SendBuys = () => {
         if (e.target.id === "accountAddress") {
             try {
                 const userAddress = await axios.get(`${process.env.REACT_APP_DOMAIN}/user/details/${user}`)
-                // console.log(userAddress.data)
-                // console.log("country:",userAddress.data.country)
-                // console.log("province:",userAddress.data.province)
-                // console.log("city:",userAddress.data.city)
-                // console.log("street:",userAddress.data.street)
-                // console.log("postalCode:",userAddress.data.postalCode)
                 if (userAddress.data.country === "" || userAddress.data.province === "" || userAddress.data.city === "" || userAddress.data.street === "" || userAddress.data.postalCode === "") {
                     alertWarning(t("sendBuys.addressNotComplete"))
                 } else {
@@ -187,10 +180,9 @@ export const SendBuys = () => {
         setProducts(local)
         setPrice(priceTotal)
     }, [])
-    // console.log("user:", user)
     return (
         <div>
-            <button onClick={(e) => handleBack(e)}>{t("navigation.returnToCart")}</button>
+            <button className='navigation-return-cart' onClick={(e) => handleBack(e)}>{t("navigation.returnToCart")}</button>
             <form onSubmit={handleSubmit} className="form-buys">
                 <div className="cart-container">
                     <h2 className="cart-container-title">{t("sendBuys.productsList")}</h2>
@@ -205,7 +197,7 @@ export const SendBuys = () => {
                         />)))
                         }
                     </div>
-                {amountTotal && <p className='total-price-cart-send'>{t("sendBuys.totalprice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
+                    {amountTotal && <p className='total-price-cart-send'>{t("sendBuys.totalPrice")}{`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}</p>}
                 </div>
 
                 <div className='container-direction-form-button'>
@@ -220,34 +212,34 @@ export const SendBuys = () => {
                         {selectShipping === "newAddress" ?
                             <>
                                 <h3 className="cart-container-title-direction">Por favor completa el formulario de envio</h3>
-                            <div>
-                                <label htmlFor="country">Country;
-                                </label>
+                                <div>
+                                    <label htmlFor="country">Country;
+                                    </label>
                                     <input type="text" name='country' value={address.country} onChange={handleAdress} onBlur={blurAddress} />
-                                {error.country && <p>{error.country}</p>}
+                                    {error.country && <p>{error.country}</p>}
 
-                                <label htmlFor="province">Province:
-                                </label>
+                                    <label htmlFor="province">Province:
+                                    </label>
                                     <input type="text" name='province' value={address.province} onChange={handleAdress} onBlur={blurAddress} />
-                                {error.province && <p>{error.province}</p>}
-                            </div>
-                            <div>
-                                <label htmlFor="city">City:
-                                </label>
+                                    {error.province && <p>{error.province}</p>}
+                                </div>
+                                <div>
+                                    <label htmlFor="city">City:
+                                    </label>
                                     <input type="text" name='city' value={address.city} onChange={handleAdress} onBlur={blurAddress} />
-                                {error.city && <p>{error.city}</p>}
+                                    {error.city && <p>{error.city}</p>}
 
-                                <label htmlFor="street">Street:
-                                </label>
+                                    <label htmlFor="street">Street:
+                                    </label>
                                     <input type="text" name='street' value={address.street} onChange={handleAdress} onBlur={blurAddress} />
-                                {error.street && <p>{error.street}</p>}
-                            </div>
-                            <div>
-                                <label htmlFor="postalCode">PostalCode:
-                                </label>
+                                    {error.street && <p>{error.street}</p>}
+                                </div>
+                                <div>
+                                    <label htmlFor="postalCode">PostalCode:
+                                    </label>
                                     <input type="text" name='postalCode' value={address.postalCode} onChange={handleAdress} onBlur={blurAddress} />
-                                {error.postalCode && <p>{error.postalCode}</p>}
-                            </div>
+                                    {error.postalCode && <p>{error.postalCode}</p>}
+                                </div>
                             </>
                             : null}
                     </div>
@@ -276,11 +268,11 @@ export const SendBuys = () => {
                     <div>
                         {selectBuys === "card" ?
                             <>  <p>Por favor ingrese los datos de su tarjeta</p>
-                                <CardElement id='carElement' className='form-control'/>
+                                <CardElement id='carElement' className='form-control' />
 
-                            <div className='container-select-address'>
+                                <div className='container-select-address'>
                                     <button className='make-buys-sendBuys' type='submit'>{t("sendBuys.cardPay")}</button>
-                            </div>
+                                </div>
                                 {loadingBuys && <div className='buys-loader'><Loader /></div>}
                                 {/* <PruebaListProduct /> */}
                             </>
@@ -288,20 +280,20 @@ export const SendBuys = () => {
                     </div>
                 }
                 {selectBuys === "paypal" ?
-                <div className='container-select-address'>
-                    <button type='submit' className='paypal-shipping' >
-                        {redirect ?
-                            <a href={redirect}>{t("sendBuys.paypalConfirm")}</a>
-                            : <span>{t("sendBuys.paypalProcessing")}</span>
-                        }
-                    </button>
-                </div>
+                    <div className='container-select-address'>
+                        <button type='submit' className='paypal-shipping' >
+                            {redirect ?
+                                <a href={redirect}>{t("sendBuys.paypalConfirm")}</a>
+                                : <span>{t("sendBuys.paypalProcessing")}</span>
+                            }
+                        </button>
+                    </div>
                     : null
                 }
 
 
             </form>
-            
+
         </div>
 
     )

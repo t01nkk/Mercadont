@@ -21,7 +21,6 @@ export const ItemBuy = ({
 
   useEffect(() => {
     sumarCount();
-    // console.log(count)
   }, [count.length]);
 
   const sumarCount = async () => {
@@ -50,7 +49,6 @@ export const ItemBuy = ({
       );
       history.push(`/admin/Buys?${orderId}`);
       await setDetailsProduct(foundProducts.data);
-      console.log(foundProducts.data);
       await setChangeSection(false);
     } catch (error) {
       console.log(error);

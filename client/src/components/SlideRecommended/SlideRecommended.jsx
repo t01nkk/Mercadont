@@ -103,11 +103,6 @@ export default function SlideRecommended() {
   useEffect(() => {
     fetchSold();
   }, [state.products]);
-
-  // const mostra = () => {
-  //   let miStorage = JSON.parse(localStorage.getItem("myUser"));
-  //   console.log(miStorage);
-  // };
   return (
     <div className="div-slide">
       <Swiper
