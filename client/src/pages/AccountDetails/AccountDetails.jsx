@@ -11,8 +11,15 @@ export default function AccountDetails() {
   const [user, setUser] = useState("");
   const [state, dispatch] = useStore();
   const history = useHistory();
-
- 
+  const handleKick = async () => {
+    const check = await JSON.parse(localStorage.getItem("myUser"));
+    if (check === null) {
+      history.push("/login");
+    }
+  };
+  useEffect(() => {
+    handleKick();
+  }, []);
 
   const fetchUser = async () => {
     let userCookie = JSON.parse(localStorage.getItem("myUser"));

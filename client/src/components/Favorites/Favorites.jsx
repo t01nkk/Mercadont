@@ -6,7 +6,7 @@ import { handleDeleteFavorite } from "../Cart/actionsCart.js";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import "./Favorite.scss";
-import { alertInfo } from '../../helpers/toast'
+import { alertInfo } from "../../helpers/toast";
 // import "./Favorite.css"
 
 export const Favorites = () => {
@@ -23,12 +23,20 @@ export const Favorites = () => {
     loadFavorite();
     setFavorites(state.favorites);
   }, [state.favorites.length]);
-
+  const handleKick = async () => {
+    const check = await JSON.parse(localStorage?.getItem("myUser"));
+    if (check === null) {
+      history.push("/login");
+    }
+  };
+  useEffect(() => {
+    handleKick();
+  }, []);
   const removeFavorite = (id) => {
     let newArrayFavorites = favorites.filter((e) => e.id !== id);
     setFavorites(newArrayFavorites);
     handleDeleteFavorite(id);
-    alertInfo(t("home.altRemoveFromFavorites"))
+    alertInfo(t("home.altRemoveFromFavorites"));
   };
 
   const handleBack = async (e) => {
