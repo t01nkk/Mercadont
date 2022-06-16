@@ -30,16 +30,14 @@ export const Cart = () => {
       alertInfo(t("cart.cancelPurchaseSuccess"));
     }
     if (search == "?buy=noStock") {
-      alertWarning(t("cart.noStock"));
-      localStorage.removeItem(user);
-      setStorageCart([]);
       totalCount(dispatch);
+      history.push("/")
     }
     if (search == "?buy=true") {
       localStorage.removeItem(user);
       alertSuccess(t("cart.successfulPurchase"));
-      setStorageCart([]);
       totalCount(dispatch);
+      setStorageCart([]);
     }
   }, [search]);
 

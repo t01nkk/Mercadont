@@ -93,7 +93,7 @@ export const SendBuys = () => {
       setLoadingBuys(true);
       if (!error) {
         const { id } = paymentMethod;
-
+        // console.log("address:",address)
         try {
           await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
             id,
@@ -112,7 +112,7 @@ export const SendBuys = () => {
             alertWarning(t("sendBuys.error"));
             setLoadingBuys(false);
             localStorage.removeItem(user);
-
+            console.log(error);
             return history.push("/cart?buy=false");
           }
         }
@@ -136,7 +136,12 @@ export const SendBuys = () => {
         const userAddress = await axios.get(
           `${process.env.REACT_APP_DOMAIN}/user/details/${user}`
         );
-
+        // console.log(userAddress.data)
+        // console.log("country:",userAddress.data.country)
+        // console.log("province:",userAddress.data.province)
+        // console.log("city:",userAddress.data.city)
+        // console.log("street:",userAddress.data.street)
+        // console.log("postalCode:",userAddress.data.postalCode)
         if (
           userAddress.data.country === "" ||
           userAddress.data.province === "" ||
@@ -208,13 +213,13 @@ export const SendBuys = () => {
     setProducts(local);
     setPrice(priceTotal);
   }, []);
-
+  // console.log("user:", user)
   return (
     <div>
-      <button onClick={(e) => handleBack(e)}>
+      <button className="navigation-return-cart" onClick={(e) => handleBack(e)}>
         {t("navigation.returnToCart")}
       </button>
-      <form autoComplete="off" onSubmit={handleSubmit} className="form-buys">
+      <form onSubmit={handleSubmit} className="form-buys">
         <div className="cart-container">
           <h2 className="cart-container-title">{t("sendBuys.productsList")}</h2>
           <div className="list-group container-fluid ">
@@ -233,7 +238,7 @@ export const SendBuys = () => {
           </div>
           {amountTotal && (
             <p className="total-price-cart-send">
-              {t("sendBuys.totalprice")}
+              {t("sendBuys.totalPrice")}
               {`${accounting.formatMoney(amountTotal, "U$D ", 0)}`}
             </p>
           )}
@@ -266,7 +271,9 @@ export const SendBuys = () => {
                     onChange={handleAdress}
                     onBlur={blurAddress}
                   />
-                  {error.country && <p>{error.country}</p>}
+                  {error.country && (
+                    <p className="error-style">{error.country}</p>
+                  )}
 
                   <label htmlFor="province">Province:</label>
                   <input
@@ -276,7 +283,9 @@ export const SendBuys = () => {
                     onChange={handleAdress}
                     onBlur={blurAddress}
                   />
-                  {error.province && <p>{error.province}</p>}
+                  {error.province && (
+                    <p className="error-style">{error.province}</p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="city">City:</label>
@@ -287,7 +296,7 @@ export const SendBuys = () => {
                     onChange={handleAdress}
                     onBlur={blurAddress}
                   />
-                  {error.city && <p>{error.city}</p>}
+                  {error.city && <p className="error-style">{error.city}</p>}
 
                   <label htmlFor="street">Street:</label>
                   <input
@@ -297,7 +306,9 @@ export const SendBuys = () => {
                     onChange={handleAdress}
                     onBlur={blurAddress}
                   />
-                  {error.street && <p>{error.street}</p>}
+                  {error.street && (
+                    <p className="error-style">{error.street}</p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="postalCode">PostalCode:</label>
@@ -308,7 +319,9 @@ export const SendBuys = () => {
                     onChange={handleAdress}
                     onBlur={blurAddress}
                   />
-                  {error.postalCode && <p>{error.postalCode}</p>}
+                  {error.postalCode && (
+                    <p className="error-style">{error.postalCode}</p>
+                  )}
                 </div>
               </>
             ) : null}

@@ -1,10 +1,9 @@
 .cardsContainer {
-  height: 50px;
-  width: 200px;
-  display: grid;
-  align-self: center;
-  margin: 0%;
+  width: 100vw;
+  display: flex;
+  margin: auto;
   text-align: center;
+  flex-wrap: wrap;
 }
 .create {
   padding: 4px 0 0 0;
@@ -18,22 +17,66 @@
   margin-bottom: 5px;
   cursor: pointer;
 }
-
-.add-button:hover {
-  background-color: gainsboro;
-  transition: 0.3s;
-}
-
 .add-button-div {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  margin-left: 12px;
-  float: right;
+  width: 50%;
+  margin: auto;
 }
+.btn-createCategory {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  width: 100%;
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+.input-submit-createCategoy {
+  border: none;
+  outline: none;
+  background-color: #000000;
+  height: 40px;
+  color: #fff;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  width: 335px;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 25px 0;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+    margin: unset;
+    height: unset;
+  }
+}
+.container-categories-card {
+  width: 80vw;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  @media only screen and (max-width: 900px) {
+    flex-direction: column;
+  }
+}
+
+.btn-delete-category:hover {
+  color: red;
+}
+
 .actions {
   display: flex;
-  justify-content: space-between;
+  width: 30%;
+  @media only screen and (max-width: 900px) {
+    width: unset;
+  }
 }
 
 .actions button {
