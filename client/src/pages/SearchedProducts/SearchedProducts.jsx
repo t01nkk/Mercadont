@@ -9,7 +9,6 @@ import {
 } from "../../redux/actions/actionTypes";
 import { alertSuccess, alertInfo } from "../../helpers/toast";
 import { getFavorites, totalCount } from "../../redux/actions/actions";
-import { alertInfo } from '../../helpers/toast'
 import { useTranslation } from 'react-i18next'
 import {
   handleDeleteFavorite,

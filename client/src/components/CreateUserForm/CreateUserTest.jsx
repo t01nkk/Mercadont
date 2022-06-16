@@ -30,12 +30,11 @@ export default function LogInForm() {
         history.push("/login");
       }, 2000);
     } catch (err) {
-      if (err.code === "auth/internal-error") setError("Correo Invalido");
-      console.log(err)
+      if (err.code === "auth/internal-error") setError(t("createUserTest.errors_mail_invalid"));
       if (err.code === "auth/email-already-in-use") {
         alertWarning(`${t("createUserTest.errors_mail_taken")}`)
 
-        setError("El correo ya se encuentra en uso");
+        setError(t("createUserTest.errors_mail_taken"));
       }
     }
   };

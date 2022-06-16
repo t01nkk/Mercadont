@@ -58,11 +58,11 @@ export default function Home() {
           icon={<AiOutlineStar size={30} />}
         />
       </div>
-      <p className="home-title-carrusel">Recomended</p>
+      <p className="home-title-carrusel">{t("home.recommended")}</p>
       <SlideRecommended />
-      <p className="home-title-carrusel">Rating</p>
+      <p className="home-title-carrusel">{t("home.rating")}</p>
       <SlideRating />
-      <p className="home-title-carrusel">Most Sold!</p>
+      <p className="home-title-carrusel">{t("home.mostSold")}</p>
       <SlideMostSold />
     </div>
   );

@@ -4,7 +4,10 @@ import { ItemBuy } from "./ItemBuy.jsx";
 import { DetailsBuys } from "./DetailsBuys.jsx";
 import { useHistory, useLocation } from "react-router-dom";
 import "./buys.scss";
+import { alertSuccess } from '../../../helpers/toast'
+import { useTranslation } from 'react-i18next'
 export const Buys = () => {
+  const { t } = useTranslation()
   const [stateBuys, setStateBuys] = useState("pending");
   const [dataBuys, setDataBuys] = useState("");
   const [detailsProduct, setDetailsProduct] = useState([]);
@@ -20,35 +23,37 @@ export const Buys = () => {
     getDataBuys();
   }, [stateBuys]);
 
-    let getDataBuys = async () => {
-        try {
-            let buys = await axios(`${process.env.REACT_APP_DOMAIN}/admin/filterOrders/${stateBuys}`)
-            setDataBuys(buys.data)
-        } catch (error) {
-            console.log(error)
+  let getDataBuys = async () => {
+    try {
+      let buys = await axios(`${process.env.REACT_APP_DOMAIN}/admin/filterOrders/${stateBuys}`)
+      setDataBuys(buys.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const back = () => {
     setChangeSection(true);
     history.push("/admin/Buys");
   };
 
   let changeStateBuys = async (changeState) => {
-        try {
-            let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/admin/setOrderStatus`, {
-                orderStatus: changeState,
-                orderId: search.substring(1)
-            })
-            if (resp) {
-                history.push(`/admin/Buys`)
-                alertSuccess(t("adminBuys.confirmPurchase"))
-                setTimeout(() => {
-                    window.location.reload()
-                }, 2000);
-            }
-        } catch (error) {
-            console.log(error)
-        }
+    try {
+      let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/admin/setOrderStatus`, {
+        orderStatus: changeState,
+        orderId: search.substring(1)
+      })
+      if (resp) {
+        history.push(`/admin/Buys`)
+        alertSuccess(t("adminBuys.confirmPurchase"))
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error)
     }
-  };
+  }
+
   return (
     <>
       {changeSection ? (
@@ -135,4 +140,4 @@ export const Buys = () => {
       )}
     </>
   );
-};
+}

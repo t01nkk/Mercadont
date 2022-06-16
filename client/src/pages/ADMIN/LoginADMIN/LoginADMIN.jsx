@@ -4,7 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import { Formik } from "formik";
 import { useAuth } from "../../../context/authContext";
 import { useTranslation } from "react-i18next";
-import { alertWarning } from '../../helpers/toast'
+import { alertWarning } from '../../../helpers/toast'
 import { useStore } from "../../../context/store";
 export default function LoginADMIN() {
   const { t } = useTranslation();
