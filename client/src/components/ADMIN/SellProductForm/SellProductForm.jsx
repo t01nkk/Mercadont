@@ -4,16 +4,22 @@ import axios from "axios";
 import { fetchCategories } from "../../../redux/actions/actions";
 import { useStore } from "../../../context/store";
 import { useTranslation } from "react-i18next";
-import { alertInfo, alertSuccess, alertWarning } from "../../../helpers/toast.js";
+import {
+  alertInfo,
+  alertSuccess,
+  alertWarning,
+} from "../../../helpers/toast.js";
+import { useHistory } from "react-router-dom";
 
 export default function SellProductForm() {
   const { t } = useTranslation();
   const [state, dispatch] = useStore();
+  const history = useHistory();
   const [errors, setErrors] = useState({
     name: "",
     price: "",
     description: "",
-    stock: ""
+    stock: "",
   });
   const [data, setData] = useState({
     name: "",
@@ -27,8 +33,8 @@ export default function SellProductForm() {
   });
   const expression = {
     nameExpression: /^[\da-zA-ZÀ-ÿ\s]{1,40}$/,
-    priceExpression: /^\d{1,5}(\.\d{1,3})?$/,
-    descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,®'*¿?¡!\s]{30,200}$/,
+    priceExpression: /^\d{1,10}(\.\d{1,3})?$/,
+    descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,®'*¿?¡!\s]{1,200}$/,
     stockExpression: /^\d{1,14}$/,
   };
 
@@ -41,7 +47,10 @@ export default function SellProductForm() {
     if (!expression.priceExpression.test(input.price) && input.price !== "") {
       errors.price = `${t("adminSellProduct.errors_price")}`;
     }
-    if (!expression.descriptionExpression.test(input.description) && input.description !== "") {
+    if (
+      !expression.descriptionExpression.test(input.description) &&
+      input.description
+    ) {
       errors.description = `${t("adminSellProduct.errors_description")}`;
     }
     if (!expression.stockExpression.test(input.stock) && input.stock !== "") {
@@ -49,8 +58,6 @@ export default function SellProductForm() {
     }
     return errors;
   }
-
-
 
   const handleChangeName = (e) => {
     setErrors("");
@@ -93,8 +100,8 @@ export default function SellProductForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, price, description, image, status, stock, categories } = data;
+
     if (!errors.name && !errors.price && !errors.description && !errors.stock) {
-      console.log(name, price, description, stock, image, status, categories)
       try {
         await axios.post(`${process.env.REACT_APP_DOMAIN}/product/create`, {
           name: name,
@@ -107,14 +114,14 @@ export default function SellProductForm() {
         });
 
         alertSuccess(t("adminSellProduct.productSubmitted"));
+        history.push("/admin/home");
       } catch (err) {
         console.log(err);
       }
+    } else {
+      alertWarning(t("adminEditProduct.fixErrors"));
     }
-    else {
-      alertWarning(t("adminEditProduct.fixErrors"))
-    }
-  }
+  };
   useEffect(() => {
     fetchCategories(dispatch);
   }, []);
@@ -123,7 +130,11 @@ export default function SellProductForm() {
       <div className="sellProductCard">
         <p className="sellProduct-title">{t("adminSellProduct.postProduct")}</p>
 
-        <form onSubmit={handleSubmit} className="sellProductForm">
+        <form
+          autoComplete="off"
+          onSubmit={handleSubmit}
+          className="sellProductForm"
+        >
           <div className="sell-inputs-container">
             <input
               className="sell-input"

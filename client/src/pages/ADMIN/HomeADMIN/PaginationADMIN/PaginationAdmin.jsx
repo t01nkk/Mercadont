@@ -2,7 +2,7 @@ import React from "react";
 
 const PaginationAdmin = ({ productNum, page, productsInPage }) => {
   const division = productNum / productsInPage;
-  const pages = Math.round(division);
+  const pages = Math.ceil(division);
 
   const numPages = [];
   for (let i = 0; i < pages; i++) {

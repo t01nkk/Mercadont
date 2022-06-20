@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./SearchBar.css";
+import "./SearchBar.scss";
 import icon from "../../media/search.png";
 import axios from "axios";
 import { SEARCH_PRODUCT } from "../../redux/actions/actionTypes";
@@ -13,6 +13,7 @@ export default function SearchBar() {
   const [state, dispatch] = useStore();
   const [error, setError] = useState(false);
   const [input, setInput] = useState("");
+  const [suggested, setSuggested] = useState([]);
 
   function validate(value) {
     var expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
@@ -26,12 +27,19 @@ export default function SearchBar() {
   const handleLanguage = (lang) => {
     i18next.changeLanguage(lang);
   };
-  const handleChange = (e) => {
-    setError("");
-    const { name } = e.target;
-    if (name === "search") {
-      validate(input);
+
+  const handleSuggested = async () => {
+    if (input === "") {
+      setSuggested([]);
     }
+    if (input !== "") {
+      const res = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/product/search?name=${input}`
+      );
+      setSuggested(res.data);
+    }
+  };
+  const handleChange = (e) => {
     setInput(e.target.value);
   };
   const handleSearch = async (e) => {
@@ -53,21 +61,46 @@ export default function SearchBar() {
   useEffect(() => {
     setRedirect(false);
   }, []);
+  useEffect(() => {
+    handleSuggested();
+  }, [input]);
   return (
     <div className="nav-language-search nav-item">
       {redirect ? <Redirect push to="/search" /> : null}
-      <form role="search" className="d-flex" onSubmit={handleSearch}>
-        <input
-          id="search"
-          name="search"
-          value={input}
-          className="form-control search-bar "
-          type="search"
-          placeholder={t("searchBar.placeholder")}
-          aria-label="Search"
-          required
-          onChange={handleChange}
-        />
+      <form
+        autoComplete="off"
+        role="search"
+        className="d-flex"
+        onSubmit={handleSearch}
+      >
+        <div className="search-suggest-wrap">
+          <input
+            id="search"
+            name="search"
+            value={input}
+            className="form-control search-bar "
+            type="search"
+            placeholder={t("searchBar.placeholder")}
+            aria-label="Search"
+            required
+            onChange={handleChange}
+          />
+          {suggested.length ? (
+            <div className="search-suggestions">
+              <ul className="ul-suggestions">
+                {suggested.map((product) => {
+                  if (product.status === "active") {
+                    return (
+                      <Link key={product.id} to={`/home/${product.id}`}>
+                        <li className="li-suggestion ">{product.name}</li>
+                      </Link>
+                    );
+                  }
+                })}
+              </ul>
+            </div>
+          ) : null}
+        </div>
       </form>
       <li className="nav-item dropdown white-text-nav-language language-list">
         <Link

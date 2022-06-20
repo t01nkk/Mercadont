@@ -49,7 +49,7 @@ export default function LoggedNavBar() {
   return (
     <div className="navbar-space">
       <nav
-        className="navbar navbar-expand-lg navbar-light  fixed-top"
+        className="navbar navbar-expand-sm navbar-light  fixed-top"
         style={{ backgroundColor: "black" }}
       >
         <div className="container-fluid">

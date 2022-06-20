@@ -7,7 +7,7 @@ import { DetailsBuysHistory } from "./DetailsBuysHistory";
 import { useTranslation } from "react-i18next";
 import {alertSuccess} from '../../helpers/toast'
 export const History = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [history, setHistory] = useState([]);
   const [detailsProduct, setDetailsProduct] = useState([]);
   const [changeSection, setChangeSection] = useState(true);
@@ -17,8 +17,16 @@ export const History = () => {
 
   let redirect = useHistory();
   let myUser = JSON.parse(localStorage.getItem("myUser"));
+  const handleKick = async () => {
+    const check = await JSON.parse(localStorage?.getItem("myUser"));
+    if (check === null) {
+      redirect.push("/login");
+    }
+  };
+  useEffect(() => {
+    handleKick();
+  }, []);
   let { search } = useLocation();
-
   useEffect(() => {
     if (myUser) {
       getHistory();
@@ -61,6 +69,7 @@ export const History = () => {
       }
     }
   };
+
   return (
     <>
       <div className="history-list-container">

@@ -4,7 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store";
 import { fetchCategories } from "../../../redux/actions/actions.js";
 import { MdDeleteForever } from "react-icons/md";
-import "./CategoryCard.css";
+import "./CategoryCard.scss";
 import { alertInfo, alertSuccess } from "../../../helpers/toast";
 import { useTranslation } from "react-i18next";
 export default function EditProduct() {

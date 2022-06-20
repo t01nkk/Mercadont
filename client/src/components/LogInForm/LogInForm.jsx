@@ -16,13 +16,16 @@ export default function LogInForm() {
     try {
       const userCredentials = await login(values.email, values.password);
       if (userCredentials.user.emailVerified) {
-        await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+        const account = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
           id: userCredentials.user.uid,
           name: userCredentials.user.displayName,
           email: userCredentials.user.email,
           image: userCredentials.user.photoURL,
           isVerified: userCredentials.user.emailVerified,
         });
+        if(account.data[0].banned)
+          return alertError(t("logInForm.banned"))
+
 
         if (userCredentials.user.uid) {
           localStorage.setItem(
@@ -36,7 +39,7 @@ export default function LogInForm() {
         alertInfo(t("logInForm.checkEmailConfirmation"))
       }
     } catch (err) {
-      // console.log(err);
+
       if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
       if (err.code === "auth/user-not-found")
         errorMsg = "Email doesn't belong to a user";
@@ -48,13 +51,17 @@ export default function LogInForm() {
   const handleGoogleSignin = async () => {
     try {
       const userCredentials = await loginWithGoogle();
-      await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+      const account = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
         id: userCredentials.user.uid,
         name: userCredentials.user.displayName,
         email: userCredentials.user.email,
         image: userCredentials.user.photoURL,
         isVerified: userCredentials.user.emailVerified,
       });
+
+      if(account.data[0].banned)
+        return alertError("User is banned")
+
       if (userCredentials.user.uid)
         localStorage.setItem(
           "myUser",

@@ -20,6 +20,16 @@ export const Cart = () => {
   const [priceTotal, setPriceTotal] = useState(0);
   const [state, dispatch] = useStore();
 
+  const handleKick = async () => {
+    const check = await JSON.parse(localStorage?.getItem("myUser"));
+    if (check === null) {
+      history.push("/login");
+    }
+  };
+  useEffect(() => {
+    handleKick();
+  }, []);
+
   useEffect(() => {
     setPriceTotal(totalPrice());
   }, []);
@@ -31,9 +41,8 @@ export const Cart = () => {
     }
     if (search === "?buy=noStock") {
       alertWarning(t("cart.noStock"));
-      localStorage.removeItem(user);
-      setStorageCart([]);
       totalCount(dispatch);
+      history.push("/");
     }
     if (search === "?buy=true") {
       localStorage.removeItem(user);
@@ -41,8 +50,6 @@ export const Cart = () => {
       setStorageCart([]);
       totalCount(dispatch);
     }
-
-    
   }, [search]);
 
   const deleteDatatoStorage = (name) => {
@@ -82,20 +89,20 @@ export const Cart = () => {
 
   const makePurchase = async () => {
     try {
-      const userDetails = await axios.get(`${process.env.REACT_APP_DOMAIN}/user/details/${user}`)
-      const country = userDetails.data.country
-      const province = userDetails.data.province
-      const city = userDetails.data.city
-      const street = userDetails.data.street
-      const postalCode = userDetails.data.postalCode
+      const userDetails = await axios.get(
+        `${process.env.REACT_APP_DOMAIN}/user/details/${user}`
+      );
+      const country = userDetails.data.country;
+      const province = userDetails.data.province;
+      const city = userDetails.data.city;
+      const street = userDetails.data.street;
+      const postalCode = userDetails.data.postalCode;
 
       localStorage?.setItem("myPrice", JSON.stringify(priceTotal));
       history.push("/buysProducts");
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-
-
   };
 
   return (
@@ -212,20 +219,20 @@ export const Cart = () => {
                 </g>
               </svg>
             </button>
-            <button className="buy-btn-responsive">{t("cart.buy")}</button>
+            <button onClick={makePurchase} className="buy-btn-responsive">
+              {t("cart.buy")}
+            </button>
           </>
         ) : null}
-        {
-          storageCart?.length >= 1 ?
-           <button
-          className="button-danger"
-          onClick={() => clearCart()}
-          disabled={storageCart?.length < 1}
-        >
-          {t("cart.emptyTheCart")}
-        </button> : null
-        }
-       
+        {storageCart?.length >= 1 ? (
+          <button
+            className="button-danger"
+            onClick={() => clearCart()}
+            disabled={storageCart?.length < 1}
+          >
+            {t("cart.emptyTheCart")}
+          </button>
+        ) : null}
       </div>
     </section>
   );

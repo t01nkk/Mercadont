@@ -28,6 +28,7 @@ export default function AdminUsers() {
                       isAdmin={user.isAdmin}
                       name={user.name}
                       email={user.email}
+                      banned={user.banned}
                     />
                   </ul>
                 );

@@ -28,7 +28,7 @@ export const Buys = () => {
       let buys = await axios(`${process.env.REACT_APP_DOMAIN}/admin/filterOrders/${stateBuys}`)
       setDataBuys(buys.data)
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
   const back = () => {
@@ -100,9 +100,13 @@ export const Buys = () => {
           </div>
         </div>
       ) : (
-        <div>
-          <div>
-            <button onClick={() => back()}>{t("navigation.return")}</button>
+        <section className="history-container">
+          <div className="history-btn-goback-container">
+            <button className="history-btn-goback" onClick={() => back()}>
+              {t("navigation.return")}
+            </button>
+          </div>
+          <article className="history-cards">
             {detailsProduct.length &&
               detailsProduct.map((e, i) => (
                 <DetailsBuys
@@ -115,29 +119,31 @@ export const Buys = () => {
                   price={e.price}
                 />
               ))}
-            <>
-              {dataBuys[0].orderStatus === "pending" && (
-                <div>
-                  <button
-                    onClick={() => {
-                      changeStateBuys("accepted");
-                    }}
-                  >
-                    {t("adminBuys.acceptPurchase")}
-                  </button>
-                  <button
-                    onClick={() => {
-                      changeStateBuys("rejected");
-                    }}
-                  >
-                    {t("adminBuys.rejectPurchase")}
-                  </button>
-                </div>
-              )}
-            </>
-          </div>
-        </div>
+          </article>
+          <>
+            {dataBuys[0].orderStatus === "pending" && (
+              <div className="accept-reject-container">
+                <button
+                  className="accept-order"
+                  onClick={() => {
+                    changeStateBuys("accepted");
+                  }}
+                >
+                  {t("adminBuys.acceptPurchase")}
+                </button>
+                <button
+                  className="reject-order"
+                  onClick={() => {
+                    changeStateBuys("rejected");
+                  }}
+                >
+                  {t("adminBuys.rejectPurchase")}
+                </button>
+              </div>
+            )}
+          </>
+        </section>
       )}
     </>
   );
-}
+};

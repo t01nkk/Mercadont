@@ -279,8 +279,8 @@ i18n
           home: {
             promoCard: {
               cuotes: {
-                title: "3 Cuotas sin interés",
-                subTitle: "Con todos los bancos",
+                title: "Aceptamos Paypal",
+                subTitle: "Visa/Mastercard",
               },
               return: {
                 title: "Devolución gratis",
@@ -324,6 +324,7 @@ i18n
             newUser: "Crear un nuevo usuario",
             loggedIn: "¡Ingreso exitoso!",
             checkEmailConfirmation: "Revisa tu correo para la confirmación",
+            banned: "Tu cuenta ha sido baneada."
           },
           productDetailsInfo: {
             categories: "Categorías: ",
@@ -639,6 +640,20 @@ i18n
               "You need to be logged in to add products to your favorites list",
             logInProducts:
               "You need to be logged in to add products to your shopping cart",
+            promoCard:{
+              delivery: {
+                title: "Express Shipping",
+                subTitle: "CABA & GBA"
+              },
+              cuotes: {
+                title: "Pay with PayPal",
+                subTitle: "Visa/Mastercard"
+              },
+              return: {
+                title: "Free returns",
+                subTitle: "Change sizes for free"
+              }
+            }
           },
           history: {
             shoppingHistory: "Shopping history",
@@ -663,6 +678,7 @@ i18n
             newUser: "Create a new user",
             loggedIn: "Successfully logged in!",
             checkEmailConfirmation: "Check your email for confirmation",
+            banned: "Your account has been banned"
           },
           productDetailsInfo: {
             categories: "Categories: ",

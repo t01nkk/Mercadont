@@ -4,10 +4,14 @@ import { useParams, useHistory } from "react-router-dom";
 import { useStore } from "../../../context/store.js";
 import { fetchCategories } from "../../../redux/actions/actions.js";
 import "./EditProduct.scss";
-import { alertInfo, alertSuccess, alertWarning } from "../../../helpers/toast.js";
+import {
+  alertInfo,
+  alertSuccess,
+  alertWarning,
+} from "../../../helpers/toast.js";
 import { useTranslation } from "react-i18next";
 export default function EditProduct() {
-  const selectRef= useRef();
+  const selectRef = useRef();
   const { t } = useTranslation();
   const [state, dispatch] = useStore();
   const [errors, setErrors] = useState({});
@@ -26,7 +30,6 @@ export default function EditProduct() {
     priceExpression: /^\d{1,5}(\.\d{1,3})?$/,
     descriptionExpression: /^[0-9a-zA-ZÀ-ÿ.,®'*¿?¡!\s]{30,200}$/,
     stockExpression: /^\d{1,14}$/,
-
   };
 
   function validator(input) {
@@ -100,7 +103,7 @@ export default function EditProduct() {
       destructuringCats.push(name);
     }
     fetchedProduct.data.categories = destructuringCats;
-    selectRef.current.value = fetchedProduct.data.status
+    selectRef.current.value = fetchedProduct.data.status;
     setProduct(fetchedProduct.data);
   };
 
@@ -108,8 +111,6 @@ export default function EditProduct() {
     fetchProductById();
     fetchCategories(dispatch);
   }, []);
-
-  console.log(errors)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -129,23 +130,22 @@ export default function EditProduct() {
             categories,
           }
         );
-        alertSuccess(t("adminEditProduct.updated"))
+        alertSuccess(t("adminEditProduct.updated"));
         setTimeout(() => {
-          window.location.reload()
+          window.location.reload();
         }, 2000);
       } catch (err) {
         console.log(err);
       }
     } else {
-      alertWarning(t("adminEditProduct.fixErrors"))
+      alertWarning(t("adminEditProduct.fixErrors"));
     }
-
   };
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
   const handleDelete = async () => {
-    let executed = window.confirm(t("adminEditProduct.confirmDelete"))
+    let executed = window.confirm(t("adminEditProduct.confirmDelete"));
     if (executed) {
       try {
         await axios.delete(
@@ -157,9 +157,8 @@ export default function EditProduct() {
         console.log(err);
       }
     }
-
   };
-  console.log(product.status);
+
   return (
     <div className="container-edit-admin">
       <form onSubmit={handleSubmit} className="form-edit-admin">
@@ -175,12 +174,18 @@ export default function EditProduct() {
             onTouchStart={handleChangeName}
             onChange={handleChangeName}
           />
-          {errors.name && <p className="error-input-edit" id="error-edit">{errors.name}</p>}
+          {errors.name && (
+            <p className="error-input-edit" id="error-edit">
+              {errors.name}
+            </p>
+          )}
           <label className="title-details-info-description">
             {t("adminSellProduct.description")}
           </label>
           {errors.description && (
-            <p className="error-input-edit" id="error-edit">{errors.description}</p>
+            <p className="error-input-edit" id="error-edit">
+              {errors.description}
+            </p>
           )}
           <textarea
             name="description"
@@ -201,7 +206,7 @@ export default function EditProduct() {
               value={product.price}
               onChange={handleChangePrice}
             />
-            
+
             <label className="title-details-info">
               {t("adminSellProduct.stock")}
             </label>
@@ -211,12 +216,19 @@ export default function EditProduct() {
               value={product.stock}
               onChange={handleChangeStock}
             />
-          
           </div>
           <div className="edit-stock-price-error">
-            {errors.price && <p className="error-input-edit" id="error-edit" >{errors.price}</p>}
-            {errors.stock && <p className="error-input-edit" id="error-edit">{errors.stock}</p>}
-           </div>
+            {errors.price && (
+              <p className="error-input-edit" id="error-edit">
+                {errors.price}
+              </p>
+            )}
+            {errors.stock && (
+              <p className="error-input-edit" id="error-edit">
+                {errors.stock}
+              </p>
+            )}
+          </div>
           <div className="edit-status">
             <label className="title-details-info">
               {t("adminSellProduct.status")}
@@ -244,7 +256,7 @@ export default function EditProduct() {
             </select>
           </div>
           <div className="select-categories-del">
-            {product.categories.length ?
+            {product.categories.length ? (
               React.Children.toArray(
                 product.categories?.map((category) => (
                   <div className="edit-cat-delete">
@@ -257,7 +269,12 @@ export default function EditProduct() {
                     </button>
                   </div>
                 ))
-              ):<p className="error-input-edit">{t("adminSellProduct.errors_categories")}</p>}
+              )
+            ) : (
+              <p className="error-input-edit">
+                {t("adminSellProduct.errors_categories")}
+              </p>
+            )}
           </div>
           <input
             type="submit"

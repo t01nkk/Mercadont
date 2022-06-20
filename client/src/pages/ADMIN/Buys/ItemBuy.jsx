@@ -13,7 +13,6 @@ export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProdu
 
   useEffect(() => {
     sumarCount();
-    // console.log(count)
   }, [count.length]);
 
   const sumarCount = async () => {
@@ -42,23 +41,33 @@ export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProdu
       );
       history.push(`/admin/Buys?${orderId}`);
       await setDetailsProduct(foundProducts.data);
-      console.log(foundProducts.data);
+
       await setChangeSection(false);
     } catch (error) {
       console.log(error);
     }
   };
 
-    return (
-        <div className="list-group-item flex-fill history-list-direction" onClick={getDetailsBuys}>
-            <p>{t("dateHistory.dateOfPurchase")}<span>{date}</span></p>
-        <p>{t("dateHistory.email")}<span>{email}</span></p>
-            <p>{t("dateHistory.address")}{deliveryAddress}</p>
-            <div>
-                <p>{t("dateHistory.total")}<span>{amount}</span></p>
-            </div>
-            <br />
-        </div>
-    )
-
-}
+  return (
+    <li
+      className="list-group-item flex-fill history-list-direction"
+      onClick={getDetailsBuys}
+    >
+      <p className="purchase-labels">
+        {t("dateHistory.dateOfPurchase")}<span>{date}</span>
+      </p>
+      <p className="purchase-labels">
+        {t("dateHistory.email")} <span> {email}</span>
+      </p>
+      <p className="purchase-labels">
+        {t("dateHistory.email")} <span>{deliveryAddress}</span>{" "}
+      </p>
+      <div>
+        <p className="purchase-labels">
+          {t("dateHistory.total")}: U$D<span>{amount}</span>
+        </p>
+      </div>
+      <br />
+    </li>
+  );
+};

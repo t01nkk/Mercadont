@@ -10,6 +10,9 @@
   height: 50vh;
   overflow: hidden;
   margin-bottom: 100px;
+  @media only screen and (max-width: 900px) {
+    display: none;
+  }
 }
 .home-banner {
   width: 100vw;
