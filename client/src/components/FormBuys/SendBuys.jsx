@@ -57,77 +57,67 @@ export const SendBuys = () => {
     validateForm(address);
   };
 
-  const validateForm = () => {
-    let error = {};
-    if (!/^[A-Za-z0-9\s]+$/.test(address.country) && address.country !== "")
-      error.country =
-        "La dirección solo puede contener numero y caracteres alfabeticos";
-    if (!/^[A-Za-z0-9\s]+$/.test(address.province) && address.province !== "")
-      error.province =
-        "La dirección solo puede contener numero y caracteres alfabeticos";
-    if (!/^[A-Za-z0-9\s]+$/.test(address.city) && address.city !== "")
-      error.city =
-        "La dirección solo puede contener numero y caracteres alfabeticos";
-    if (!/^[A-Za-z0-9\s]+$/.test(address.street) && address.street !== "")
-      error.street =
-        "La dirección solo puede contener numero y caracteres alfabeticos";
-    if (
-      !/^[A-Za-z0-9\s]+$/.test(address.postalCode) &&
-      address.postalCode !== ""
-    )
-      error.postalCode =
-        "La dirección solo puede contener numero y caracteres alfabeticos";
+    const validateForm = () => {
+        let error = {}
+        if (!/^[A-Za-z\s]+$/.test(address.country) && address.country !== "") error.country = t("errors.error_addressForm_validate")
+        if (!/^[A-Za-z\s]+$/.test(address.province) && address.province !== "") error.province = t("errors.error_addressForm_validate")
+        if (!/^[A-Za-z\s]+$/.test(address.city) && address.city !== "") error.city = t("errors.error_addressForm_validate")
+        if (!/^[A-Za-z0-9\s]+$/.test(address.street) && address.street !== "") error.street =  t("errors.error_addressFormAlphaNumbers_validate")
+        if (!/^[A-Za-z0-9\s]+$/.test(address.postalCode) && address.postalCode !== "") error.postalCode =  t("errors.error_addressFormAlphaNumbers_validate")
 
-    setError(error);
-  };
+        setError(error)
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let el = elements.getElement(CardElement);
-    if (selectBuys === "card") {
-      const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: "card",
-        card: elements.getElement(CardElement),
-      });
-      alertInfo(t("sendBuys.processingCard"));
-      setLoadingBuys(true);
-      if (!error) {
-        const { id } = paymentMethod;
-
-        try {
-          await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
-            id,
-            amount: Math.round(priceTotal * 100),
-            local,
-            userId: user,
-            address,
-          });
-        } catch (error) {
-          if (error.message === "insuficientStock") {
-            alertWarning(t("sendBuys.insuficientQuantity"));
-            setLoadingBuys(false);
-            localStorage.removeItem(user);
-            return history.push("/cart?buy=false");
-          } else {
-            alertWarning(t("sendBuys.error"));
-            setLoadingBuys(false);
-            localStorage.removeItem(user);
-
-            return history.push("/cart?buy=false");
-          }
-        }
-      } else {
-        alertWarning(t("sendBuys.cardProblem"));
-        setLoadingBuys(false);
-      }
-      // loadingBuys()
-      if (paymentMethod) {
-        setLoadingBuys(false);
-        localStorage.removeItem(user);
-        history.push("/cart?buy=true");
-      }
     }
-  };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        let el = elements.getElement(CardElement)
+        if (selectBuys === "card") {
+            const { error, paymentMethod } = await stripe.createPaymentMethod({
+                type: "card",
+                card: elements.getElement(CardElement)
+            })
+            setLoadingBuys(true)
+            if (!error) {
+                alertInfo(t("sendBuys.processingCard"))
+                const { id } = paymentMethod
+                // console.log("address:",address)
+                try {
+                    await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
+                        id,
+                        amount: Math.round(priceTotal * 100),
+                        local,
+                        userId: user,
+                        address
+                    })
+                } catch (error) {
+                    if (error.message === 'insuficientStock') {
+                        alertWarning(t("sendBuys.insuficientQuantity"))
+                        setLoadingBuys(false)
+                        localStorage.removeItem(user)
+                        return history.push("/cart?buy=false")
+                    } else {
+                        alertWarning(t("sendBuys.error"))
+                        setLoadingBuys(false)
+                        localStorage.removeItem(user)
+                        console.log(error)
+                        return history.push("/cart?buy=false")
+
+                    }
+                }
+            } else {
+                alertWarning(t("sendBuys.cardProblem"))
+                setLoadingBuys(false)
+            }
+            // loadingBuys()
+            if (paymentMethod) {
+                setLoadingBuys(false)
+                localStorage.removeItem(user)
+                history.push("/cart?buy=true")
+            }
+        }
+    }
+
 
   const handleShipping = async (e) => {
     e.preventDefault();
@@ -255,10 +245,10 @@ export const SendBuys = () => {
             {selectShipping === "newAddress" ? (
               <>
                 <h3 className="cart-container-title-direction">
-                  Por favor completa el formulario de envio
+                    {t("sendBuys.fillShippingAddress")}
                 </h3>
                 <div>
-                  <label htmlFor="country">Country;</label>
+                  <label htmlFor="country">{t("accountDetails.country")}</label>
                   <input
                     type="text"
                     name="country"
@@ -270,7 +260,7 @@ export const SendBuys = () => {
                     <p className="error-style">{error.country}</p>
                   )}
 
-                  <label htmlFor="province">Province:</label>
+                  <label htmlFor="province">{t("accountDetails.province")}</label>
                   <input
                     type="text"
                     name="province"
@@ -283,7 +273,7 @@ export const SendBuys = () => {
                   )}
                 </div>
                 <div>
-                  <label htmlFor="city">City:</label>
+                  <label htmlFor="city">{t("accountDetails.city")}</label>
                   <input
                     type="text"
                     name="city"
@@ -293,7 +283,7 @@ export const SendBuys = () => {
                   />
                   {error.city && <p className="error-style">{error.city}</p>}
 
-                  <label htmlFor="street">Street:</label>
+                  <label htmlFor="street">{t("accountDetails.street")}</label>
                   <input
                     type="text"
                     name="street"
@@ -306,7 +296,7 @@ export const SendBuys = () => {
                   )}
                 </div>
                 <div>
-                  <label htmlFor="postalCode">PostalCode:</label>
+                  <label htmlFor="postalCode">{t("accountDetails.postalCode")}</label>
                   <input
                     type="text"
                     name="postalCode"
@@ -395,5 +385,6 @@ export const SendBuys = () => {
         ) : null}
       </form>
     </div>
-  );
-};
+)
+}
+

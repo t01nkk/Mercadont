@@ -17,7 +17,7 @@ export default function SearchBarAdmin() {
     var expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
 
     if (!expression.test(value)) {
-      setError("you can use letters spaces and accents");
+      setError(t("error_addressFormAlphaNumbers_validate"));
     } else if (value === "") {
       setError("");
     }

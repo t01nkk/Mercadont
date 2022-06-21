@@ -278,7 +278,7 @@ router.put("/:questionId/answer", async (req, res) => {
 router.get("/all/:resolved", async (req, res) => {
   const { resolved } = req.params;
   try {
-    if (resolved == "true") {
+    if (resolved === "true") {
       const allQuestions = await Qa.findAll({
         include: [
           {
@@ -295,7 +295,7 @@ router.get("/all/:resolved", async (req, res) => {
         where: { resolved: true }
       });
       return res.send(allQuestions);
-    } else if (resolved == "false") {
+    } else if (resolved === "false") {
       const unresolvedOnly = await Qa.findAll({
         where: { resolved: false },
         include: [

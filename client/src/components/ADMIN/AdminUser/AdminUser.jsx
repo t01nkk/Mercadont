@@ -35,13 +35,13 @@ export default function AdminUser({ id, name, email, isAdmin, banned }) {
   return (
     <li className="list-group-item flex-fill history-list-direction">
       <p className="adminSwitch-labels">
-        Name: <span>{name}</span>
+        {t("adminUser.username")} <span>{name}</span>
       </p>
       <p className="adminSwitch-labels">
-        Email: <span>{email}</span>
+        {t("adminUser.email")} <span>{email}</span>
       </p>
       <p className="adminSwitch-labels">
-        Admin: <span>{`${isAdmin}`}</span>
+        {t("adminUser.admin")} <span>{`${isAdmin}`}</span>
       </p>
 
       <p className="adminSwitch-labels">
@@ -66,9 +66,9 @@ export default function AdminUser({ id, name, email, isAdmin, banned }) {
         </button>
       )}
 
-      <button onClick={handleAdmin} className="history-btn-switch">
-        SWITCH ADMIN STATUS
-      </button>
+          <button onClick={handleAdmin} className="history-btn-switch">
+            {t("adminUser.setAdmin")}
+          </button>
     </li>
   );
 }

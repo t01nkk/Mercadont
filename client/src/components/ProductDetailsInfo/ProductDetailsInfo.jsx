@@ -194,12 +194,12 @@ export default function ProductDetailsInfo({
       </div>
 
       <div className="details-qua">
-        <p className="title-details-info-qua">Product Reviews</p>
-        {reviews && (
-          <div className="details-questions-list">
-            {React.Children.toArray(
-              reviews.map((e) => {
-                if (e.text) {
+        <p className="title-details-info-qua">{t("productDetailsInfo.productReviews")}</p>
+           {reviews && (
+            <div className="details-questions-list">
+              {React.Children.toArray(
+               reviews.map((e) => {
+                if(e.text){
                   return (
                     <div className="container-reviews">
                       <p className="questionText">{e.text}</p>

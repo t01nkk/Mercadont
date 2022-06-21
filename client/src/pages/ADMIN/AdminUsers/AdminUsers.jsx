@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import AdminUser from "../../../components/ADMIN/AdminUser/AdminUser.jsx";
 import { useStore } from "../../../context/store.js";
 import { fetchUsers } from "../../../redux/actions/actions.js";
-
+import { useTranslation } from "react-i18next";
 export default function AdminUsers() {
+  const { t } = useTranslation()
   const [state, dispatch] = useStore();
   useEffect(() => {
     fetchUsers(dispatch);
@@ -12,7 +13,7 @@ export default function AdminUsers() {
     <>
       <div className="history-list-container">
         <p className="history-list-title">
-          Administrar Roles: <br />
+          {t("adminUser.manageRoles")}<br />
         </p>
       </div>
       <div className="">

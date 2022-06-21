@@ -18,6 +18,16 @@ i18n
             returnToCart: "Volver al carrito",
             return: "Volver atrás",
           },
+          errors: {
+            error_name: "Se requiere un nombre",
+            error_country: "Se requiere un país",
+            error_city: "Se requiere una ciudad",
+            error_province: "Se requiere una provincia",
+            error_addressFormLetters_validate:
+              "Solo se aceptan caracteres alfabéticos",
+            error_addressFormAlphaNumbers_validate:
+              "Solo se aceptan caracteres alfanuméricos",
+          },
           accountDetails: {
             btnEditProfile: "Editar",
             info: "Información personal",
@@ -36,7 +46,7 @@ i18n
             askPasswordChange:
               "¿Estás seguro de querer modificar tu actual contraseña?",
             confirmPasswordChange:
-              "Contraseña actualiza. Por favor revise su casilla de correo.",
+              "Contraseña actualizada. Por favor revise su casilla de correo.",
             updateInfo: "Actualizar información",
             email: "Dirección de correo",
             name: "Nombre",
@@ -44,11 +54,11 @@ i18n
             password: "Contraseña",
             image: "Foto de perfil",
             address: "Dirección: ",
-            city: "Ciudad...",
-            country: "País...",
-            postalCode: "Código postal...",
-            province: "Provincia/Departamento...",
-            street: "Calle y altura...",
+            city: "Ciudad",
+            country: "País",
+            postalCode: "Código postal",
+            province: "Provincia",
+            street: "Calle y altura",
             submit: "Editar",
           },
           articleFavorites: {
@@ -89,6 +99,8 @@ i18n
             sortBy: "Orden",
             asc: "Ascendente",
             des: "Descendente",
+            noCats:
+              "No pudimos hallar ningún producto con las categorías seleccionadas",
           },
           createUserTest: {
             errors_mail_required: "Se requiere una dirección de correo.",
@@ -103,14 +115,16 @@ i18n
             errors_password_match: "Las contraseñas deben coincidir.",
             createAccount: "Crear una cuenta nueva",
             accountCreated:
-              "¡Cuenta registrada exitosamente! Por favor, chequea tu mail para confirmar tu cuenta",
-            name: "Primer nombre...",
-            email: "Dirección de correo...",
-            password: "Contraseña...",
-            confirmPassword: "Confirmar contraseña...",
+              "Por favor, chequea tu mail para confirmar tu cuenta",
+            name: "Primer nombre",
+            email: "Dirección de correo",
+            password: "Contraseña",
+            confirmPassword: "Confirmar contraseña",
           },
           dateHistory: {
             dateOfPurchase: "Fecha de la compra: ",
+            address: "Dirección",
+            email: "Correo",
             quantityOfProduct: "Cantidad de productos: ",
             total: "Monto total: ",
             review: "Compartir tu opinión",
@@ -151,7 +165,7 @@ i18n
           adminCreateCategory: {
             created: "¡Nueva categoría añadida!",
             postCategory: "Crear nueva categoría",
-            name: "Nombre de la categoría...",
+            name: "Nombre de la categoría",
             submit: "Añadir nueva categoría",
           },
           adminAddCategories: {
@@ -200,11 +214,14 @@ i18n
             stock: "Unidades disponibles:",
             submit: "¡Publicar!",
             select: "Seleccionar",
+            productSubmitted: "¡Producto añadido exitosamente!",
           },
           adminUser: {
+            manageRoles: "Administrar roles de usuario",
             setAdmin: "Convertir en administrador",
             username: "Nombre de usuario: ",
             email: "Dirección de correo: ",
+            admin: "Administrador: ",
           },
           adminQaS: {
             solvedQuestions: "Preguntas resueltas",
@@ -266,11 +283,14 @@ i18n
                 subTitle: "Visa/Mastercard",
               },
               return: {
-                title: "Devolucion gratis",
+                title: "Devolución gratis",
                 subTitle: "Cambios sin cargo",
               },
-              delivery: { title: "Envios Express", subTitle: "CABA y GBA" },
+              delivery: { title: "Envíos Express", subTitle: "CABA y GBA" },
             },
+            recommended: "Recomendados",
+            rating: "Mejor puntuados",
+            mostSold: "¡Más vendidos!",
             altAddToCart: "¡Añadido al carrito!",
             altAlreadyInCart: "El producto ya se encuentra en tu carrito",
             altAddToFavs: "¡Añadido a favoritos!",
@@ -283,9 +303,12 @@ i18n
           history: {
             shoppingHistory: "Historial de compras",
             instructions: "Haga click sobre las órdenes para ver los detalles",
+            submit: "Enviar",
+            sendReview: "¡Reseña enviada con éxito!",
           },
           loginAdmin: {
             login: "Ingreso a Administración",
+            wrongCredentials: "Credenciales incorrectas",
           },
           logInForm: {
             errors_mail_required: "Se requiere una dirección de correo.",
@@ -293,26 +316,32 @@ i18n
               "Dirección de correo inválida. Prueba con otra.",
             errors_password: "Se requiere una contraseña.",
             logIn: "¡Bienvenido!",
-            mail: "Dirección de correo...",
-            password: "Contraseña...",
+            mail: "Dirección de correo",
+            password: "Contraseña",
             submit: "Ingresar",
             logInGoogle: "Ingresar con Google",
             notUser: "¿No tienes una cuenta?",
             newUser: "Crear un nuevo usuario",
             loggedIn: "¡Ingreso exitoso!",
+            checkEmailConfirmation: "Revisa tu correo para la confirmación",
+            banned: "Tu cuenta ha sido baneada."
           },
           productDetailsInfo: {
             categories: "Categorías: ",
             description: "Detalles del producto: ",
             stock: "Unidades disponibles:",
             price: "Precio: ",
+            productReviews: "Reseñas acerca de este producto",
             qa: "Preguntas acerca de este producto: ",
             q: "P: ",
             a: "R: ",
           },
           searchBar: {
-            placeholder: "Buscar...",
+            placeholder: "Buscar",
             language: "Idioma",
+          },
+          searchedProducts: {
+            noValidInputs: "Por favor ingrese números válidos",
           },
           sendBuys: {
             price: "Precio: ",
@@ -330,11 +359,12 @@ i18n
             insuficientQuantity: "El stock actual es insuficiente.",
             error: "Hubo un problema con tu compra.",
             cardProblem: "Hubo un problema con tu tarjeta",
-            chooseAddress: "Elegir una direccion de envio",
-            accountAddress: "Mi direccion",
-            newAddress: "Agregar nueva direccion",
+            chooseAddress: "Elegir una dirección de envío",
+            accountAddress: "Mi dirección",
+            newAddress: "Agregar nueva dirección",
+            fillShippingAddress: "Por favor complete el formulario de envío",
             addressNotComplete:
-              "Informacion incompleta. Completar informacion en el perfil para continuar",
+              "Complete su información personal para continuar",
           },
         },
       },
@@ -344,6 +374,12 @@ i18n
             goBack: "Return to home",
             returnToCart: "Return to your cart",
             return: "Return",
+          },
+          errors: {
+            error_name: "Name is required",
+            error_country: "Country is required",
+            error_city: "City is required",
+            error_province: "State is required",
           },
           accountDetails: {
             btnEditProfile: "Edit",
@@ -371,11 +407,11 @@ i18n
             password: "Password",
             image: "Profile avatar",
             address: "Address: ",
-            city: "City...",
-            country: "Country...",
-            postalCode: "Postal code...",
-            province: "State...",
-            street: "Street...",
+            city: "City",
+            country: "Country",
+            postalCode: "Postal code",
+            province: "State",
+            street: "Street",
             submit: "Edit",
           },
           articleFavorites: {
@@ -411,10 +447,11 @@ i18n
             priceRange: "Price",
             minPrice: "$Min",
             maxPrice: "$Max",
-            search: "Searchr",
+            search: "Search",
             sortBy: "Order",
             asc: "Ascending",
             des: "Descending",
+            noCats: "We couldn't find any product with the chosen categories",
           },
           createUserTest: {
             errors_mail_required: "Email address is required.",
@@ -430,16 +467,18 @@ i18n
             createAccount: "Create a new account",
             accountCreated:
               "Account successfully registered! Please, check your email account to confirm your registration",
-            name: "Username...",
-            email: "Email address...",
-            password: "Password...",
-            confirmPassword: "Confirm password...",
+            name: "Username",
+            email: "Email address",
+            password: "Password",
+            confirmPassword: "Confirm password",
           },
           dateHistory: {
             dateOfPurchase: "Date of purchase: ",
+            address: "Address: ",
             quantityOfProduct: "Product amount: ",
+            email: "Email",
             total: "Total price: ",
-            review: "Share a review",
+            review: "Add review",
             price: "Price",
           },
           formQA: {
@@ -477,7 +516,7 @@ i18n
           adminCreateCategory: {
             created: "New category added!",
             postCategory: "Create a new category",
-            name: "Category name...",
+            name: "Category name",
             submit: "Add new category",
           },
           adminAddCategories: {
@@ -527,11 +566,14 @@ i18n
             stock: "Stock: ",
             submit: "Publish!",
             select: "Select",
+            productSubmitted: "Product added successfully!",
           },
           adminUser: {
+            manageRoles: "Manage user roles",
             setAdmin: "Set admin status",
             username: "Username: ",
             email: "Email addres: ",
+            admin: "Administrator: ",
           },
           adminQaS: {
             solvedQuestions: "Solved questions",
@@ -587,6 +629,9 @@ i18n
             reset: "Reset filters",
           },
           home: {
+            recommended: "Recommended",
+            rating: "Best rated",
+            mostSold: "Most sold!",
             altAddToCart: "Added to the cart",
             altAlreadyInCart: "Product is already in the cart",
             altAddToFavs: "Added to favorites!",
@@ -595,39 +640,62 @@ i18n
               "You need to be logged in to add products to your favorites list",
             logInProducts:
               "You need to be logged in to add products to your shopping cart",
+            promoCard:{
+              delivery: {
+                title: "Express Shipping",
+                subTitle: "CABA & GBA"
+              },
+              cuotes: {
+                title: "Pay with PayPal",
+                subTitle: "Visa/Mastercard"
+              },
+              return: {
+                title: "Free returns",
+                subTitle: "Change sizes for free"
+              }
+            }
           },
           history: {
             shoppingHistory: "Shopping history",
             instructions: "Click on the orders to see more info",
+            submit: "Send",
+            sendReview: "Review successfully sent!",
           },
           loginAdmin: {
             login: "Access to Administration",
+            wrongCredentials: "Wrong credentials",
           },
           logInForm: {
             errors_mail_required: "Email address is required.",
             errors_mail_invalid: "Email address is invalid. Try another one.",
             errors_password: "Password is required.",
             logIn: "Welcome!",
-            mail: "Email address...",
-            password: "Password...",
+            mail: "Email address",
+            password: "Password",
             submit: "Log in",
             logInGoogle: "Log in Google",
             notUser: "Don't have an account yet?",
             newUser: "Create a new user",
             loggedIn: "Successfully logged in!",
+            checkEmailConfirmation: "Check your email for confirmation",
+            banned: "Your account has been banned"
           },
           productDetailsInfo: {
             categories: "Categories: ",
             description: "Product details: ",
             stock: "Stock:",
             price: "Price: ",
+            productReviews: "Reviews about this product",
             qa: "Questions about this product: ",
             q: "Q: ",
             a: "A: ",
           },
           searchBar: {
-            placeholder: "Search...",
+            placeholder: "Search",
             language: "Language",
+          },
+          searchedProducts: {
+            noValidInputs: "Please use valid inputs",
           },
           sendBuys: {
             price: "Price: ",
@@ -648,6 +716,7 @@ i18n
             chooseAddress: "Choose a shipping address",
             accountAddress: "My address",
             newAddress: "Add a new shipping address",
+            fillShippingAddress: "Please fill the shipping form first",
             addressNotComplete:
               "Information incomplete. Please, complete your profile info first",
           },
