@@ -57,7 +57,7 @@ i18n
             city: "Ciudad",
             country: "País",
             postalCode: "Código postal",
-            province: "Provincia/Departamento",
+            province: "Provincia",
             street: "Calle y altura",
             submit: "Editar",
           },
@@ -337,7 +337,7 @@ i18n
             a: "R: ",
           },
           searchBar: {
-            placeholder: "Buscar...",
+            placeholder: "Buscar",
             language: "Idioma",
           },
           searchedProducts: {
@@ -447,7 +447,7 @@ i18n
             priceRange: "Price",
             minPrice: "$Min",
             maxPrice: "$Max",
-            search: "Searchr",
+            search: "Search",
             sortBy: "Order",
             asc: "Ascending",
             des: "Descending",
@@ -691,7 +691,7 @@ i18n
             a: "A: ",
           },
           searchBar: {
-            placeholder: "Search...",
+            placeholder: "Search",
             language: "Language",
           },
           searchedProducts: {

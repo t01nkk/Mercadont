@@ -7,15 +7,15 @@ import {
 } from "../../redux/actions/actionTypes";
 import { fetchCategories } from "../../redux/actions/actions.js";
 import axios from "axios";
-import { useTranslation } from 'react-i18next'
-import { alertInfo } from '../../helpers/toast'
+import { useTranslation } from "react-i18next";
+import { alertInfo } from "../../helpers/toast";
 import "./FilterCategories.scss";
 export default function FilerCategories() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [state, dispatch] = useStore();
   const [redirect, setRedirect] = useState(false);
   const [filter, setFilter] = useState({
-    categories:state.filter,
+    categories: state.filter,
   });
   const history = useHistory();
   const handleSearch = async (e) => {
@@ -29,7 +29,7 @@ export default function FilerCategories() {
         }
       );
       if (Array.isArray(res.data)) {
-        state.filter = categories
+        state.filter = categories;
         dispatch({
           type: CATEGORIES_PRODUCT,
           payload: res.data,
@@ -37,11 +37,9 @@ export default function FilerCategories() {
 
         setRedirect(true);
       } else {
-        document
-          .querySelectorAll("input[type=checkbox]")
-          .forEach((el) =>{
-            if(!state.filter.includes(el.value)) (el.checked = false)
-          } );
+        document.querySelectorAll("input[type=checkbox]").forEach((el) => {
+          if (!state.filter.includes(el.value)) el.checked = false;
+        });
         setFilter({
           categories: state.filter,
         });
@@ -106,7 +104,7 @@ export default function FilerCategories() {
         </div>
         <li className="dropdown-divider"></li>
         <button type="submit" className="filter-search-btn">
-          buscar
+          {t("searchBar.placeholder")}
         </button>
       </form>
     </section>

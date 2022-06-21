@@ -158,8 +158,8 @@ export default function Categories() {
             }}
             className="sortSelector"
           >
-            <option value="DESCENDING">{t("categoriesComp.des")}</option>
-            <option value="ASCENDING">{t("categoriesComp.asc")}</option>
+            <option value="DESCENDING">MAX-MIN</option>
+            <option value="ASCENDING">MIN-MAX</option>
           </select>
         </div>
       </div>
