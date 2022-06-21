@@ -41,10 +41,10 @@ export default function SellProductForm() {
   function validator(input) {
     let errors = {};
 
-    if (!expression.nameExpression.test(input.name) && input.name) {
+    if (!expression.nameExpression.test(input.name) && input.name !== "") {
       errors.name = `${t("adminSellProduct.errors_name")}`;
     }
-    if (!expression.priceExpression.test(input.price) && input.price) {
+    if (!expression.priceExpression.test(input.price) && input.price !== "") {
       errors.price = `${t("adminSellProduct.errors_price")}`;
     }
     if (
@@ -53,7 +53,7 @@ export default function SellProductForm() {
     ) {
       errors.description = `${t("adminSellProduct.errors_description")}`;
     }
-    if (!expression.stockExpression.test(input.stock) && input.stock) {
+    if (!expression.stockExpression.test(input.stock) && input.stock !== "") {
       errors.stock = `${t("adminSellProduct.errors_stock")}`;
     }
     return errors;
@@ -112,7 +112,7 @@ export default function SellProductForm() {
           categories: categories,
         });
 
-        alertSuccess("Se actualizo con exito!");
+        alertSuccess(t("adminSellProduct.productSubmitted"));
         history.push("/admin/home");
       } catch (err) {
         console.log(err);
@@ -183,8 +183,8 @@ export default function SellProductForm() {
             <div className="sellproduct-status">
               <label>{t("adminSellProduct.status")}</label>
               <select name="status" value={data.status} onChange={handleChange}>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
+                <option value="active">{t("adminEditProduct.active")}</option>
+                <option value="inactive">{t("adminEditProduct.inactive")}</option>
               </select>
             </div>
             <input

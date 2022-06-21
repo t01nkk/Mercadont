@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useStore } from "../../context/store";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import {
   SORT_BY_PRICE_CAT,
   FILTER_BY_PRICE_CATEGORY,
@@ -27,7 +27,7 @@ export default function Categories() {
   const [error, setError] = useState("");
   const [user, setUser] = useState([]);
   let person = JSON.parse(localStorage.getItem("myUser"));
-
+  const history = useHistory();
   const handleRedirect = () => {
     if (!state.products.length) {
       setRedirect(true);
@@ -39,14 +39,19 @@ export default function Categories() {
     let totalPrice = price;
     let products = { name, price, image, id, stock, quantity, totalPrice };
     let value = cart.find((e) => e.name === name);
-    if (value) {
-      setInCart(false);
-      alertInfo(t("home.altAlreadyInCart"));
-      return;
+    if (person) {
+      if (value) {
+        setInCart(false);
+        alertInfo(t("home.altAlreadyInCart"));
+        return;
+      } else {
+        setInCart(true);
+        setCart((cart) => [...cart, products]);
+        alertSuccess(t("home.altAddToCart"));
+      }
     } else {
-      setInCart(true);
-      setCart((cart) => [...cart, products]);
-      alertSuccess(t("home.altAddToCart"));
+      alertWarning(t("home.logInProducts"));
+      history.push("/login");
     }
   };
 

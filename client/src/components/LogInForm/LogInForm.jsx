@@ -5,7 +5,7 @@ import { useAuth } from "../../context/authContext";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Formik } from "formik";
-import { alertError, alertSuccess, alertWarning } from "../../helpers/toast";
+import { alertError, alertSuccess, alertInfo } from "../../helpers/toast";
 export default function LogInForm() {
   let errorMsg = "";
   const { t } = useTranslation();
@@ -23,8 +23,8 @@ export default function LogInForm() {
           image: userCredentials.user.photoURL,
           isVerified: userCredentials.user.emailVerified,
         });
-        if (account.data[0].banned)
-          return alertError("User is banned")
+        if(account.data[0].banned)
+          return alertError(t("logInForm.banned"))
 
 
         if (userCredentials.user.uid) {
@@ -32,12 +32,14 @@ export default function LogInForm() {
             "myUser",
             JSON.stringify(userCredentials.user.uid)
           );
+          alertSuccess(t("logInForm.loggedIn"))
           setRedirect(true);
         }
       } else {
-        alertWarning(`${t("createUserTest.errors_mail_checkemail")}`)
+        alertInfo(t("logInForm.checkEmailConfirmation"))
       }
     } catch (err) {
+
       if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
       if (err.code === "auth/user-not-found")
         errorMsg = "Email doesn't belong to a user";
@@ -56,7 +58,8 @@ export default function LogInForm() {
         image: userCredentials.user.photoURL,
         isVerified: userCredentials.user.emailVerified,
       });
-      if (account.data[0].banned)
+
+      if(account.data[0].banned)
         return alertError("User is banned")
 
       if (userCredentials.user.uid)

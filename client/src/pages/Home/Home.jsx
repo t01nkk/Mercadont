@@ -8,7 +8,7 @@ import "./Home.scss";
 import banner1 from "media/banner1.jpg";
 import banner2 from "media/banner2.jpg";
 import banner4 from "media/banner4.jpg";
-import PromoCard from "components/PromoCard.jsx/PromoCard.jsx";
+import PromoCard from '../../components/PromoCard.jsx/PromoCard.jsx';
 import { BsCreditCard2Back } from "react-icons/bs";
 // import { TbTruck } from "react-icons/tb";
 import { TiArrowSync } from "react-icons/ti";
@@ -58,11 +58,11 @@ export default function Home() {
           icon={<AiOutlineStar size={30} />}
         />
       </div>
-      <p className="home-title-carrusel">Recommended</p>
+      <p className="home-title-carrusel">{t("home.recommended")}</p>
       <SlideRecommended />
-      <p className="home-title-carrusel">Rating</p>
+      <p className="home-title-carrusel">{t("home.rating")}</p>
       <SlideRating />
-      <p className="home-title-carrusel">Most Sold</p>
+      <p className="home-title-carrusel">{t("home.mostSold")}</p>
       <SlideMostSold />
     </div>
   );

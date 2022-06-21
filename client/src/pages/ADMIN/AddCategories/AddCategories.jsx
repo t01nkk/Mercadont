@@ -21,7 +21,7 @@ export default function EditProduct() {
     var expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
 
     if (!expression.test(value)) {
-      setError("Name is necessary");
+      setError(t("errors.error_name"));
     } else if (value === "") {
       setError("");
     }
@@ -59,6 +59,9 @@ export default function EditProduct() {
     try {
       await axios.delete(`${process.env.REACT_APP_DOMAIN}/categories/${id}`);
       alertInfo(t("adminAddCategories.delete"));
+      setTimeout(() => {
+        history.push("/admin/home/addCategories")
+      }, 2000);
     } catch (err) {
       console.log(err);
     }

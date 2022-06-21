@@ -1,23 +1,15 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
-export const ItemBuy = ({
-  amount,
-  date,
-  count,
-  setChangeSection,
-  setDetailsProduct,
-  orderId,
-  deliveryAddress,
-  email,
-  setQuantity,
-  setCant,
-}) => {
-  date = date.slice(0, 10);
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useHistory } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+export const ItemBuy = ({ amount, date, count, setChangeSection, setDetailsProduct, orderId, deliveryAddress, email, setQuantity, setCant }) => {
+    date = date.slice(0, 10)
 
-  const [idProduct, setIdProduct] = useState([]);
-  const history = useHistory();
-  let total = 0;
+    const {t} = useTranslation()
+
+    const [idProduct, setIdProduct] = useState([])
+    const history = useHistory()
+    let total = 0
 
   useEffect(() => {
     sumarCount();
@@ -61,17 +53,17 @@ export const ItemBuy = ({
       onClick={getDetailsBuys}
     >
       <p className="purchase-labels">
-        Date: <span>{date}</span>
+        {t("dateHistory.dateOfPurchase")}<span>{date}</span>
       </p>
       <p className="purchase-labels">
-        Email <span> {email}</span>
+        {t("dateHistory.email")} <span> {email}</span>
       </p>
       <p className="purchase-labels">
-        Address: <span>{deliveryAddress}</span>{" "}
+        {t("dateHistory.email")} <span>{deliveryAddress}</span>{" "}
       </p>
       <div>
         <p className="purchase-labels">
-          Total: U$D<span>{amount}</span>
+          {t("dateHistory.total")}: U$D<span>{amount}</span>
         </p>
       </div>
       <br />

@@ -247,12 +247,12 @@ export default function EditProduct() {
                 {t("adminSellProduct.categories")}
               </option>
               {state.categories?.length &&
-                state.categories.sort((a, b) => a.name.localeCompare(b.name)) &&
+                state.categories.sort((a, b) => a.name.localeCompare(b.name)) && React.Children.toArray(
                 state.categories.map((category) => (
-                  <option key={category.id} value={category.name || category}>
+                  <option value={category.name || category}>
                     {category.name}
                   </option>
-                ))}
+                )))}
             </select>
           </div>
           <div className="select-categories-del">

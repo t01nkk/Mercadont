@@ -36,22 +36,22 @@ export default function AccountDetailsForm() {
     let errors = {};
 
     if (!expression.Expression.test(input.name)) {
-      errors.name = `Name is neccesary`;
+      errors.name = t("errors.error_name");
     } else if (input === "") {
       setErrors("");
     }
     if (!expression.Expression.test(input.country)) {
-      errors.country = `Country is neccesary`;
+      errors.country = t("errors.error_country");
     } else if (input === "") {
       setErrors("");
     }
     if (!expression.Expression.test(input.city)) {
-      errors.city = `City is neccesary`;
+      errors.city = t("errors.error_city");
     } else if (input === "") {
       setErrors("");
     }
     if (!expression.Expression.test(input.province)) {
-      errors.province = `Province is neccesary`;
+      errors.province = t("errors.error_province");
     } else if (input === "") {
       setErrors("");
     }
@@ -165,7 +165,7 @@ export default function AccountDetailsForm() {
               {errors.name && <p>{errors.name}</p>}{" "}
             </div>
             <div className="input-details">
-              <p>City</p>
+              <p>{t("accountDetailsForm.city")}</p>
               <input
                 className="input-line"
                 type="text"
@@ -178,7 +178,7 @@ export default function AccountDetailsForm() {
               {errors.city && <p>{errors.city}</p>}{" "}
             </div>
             <div className="input-details">
-              <p>Country</p>
+              <p>{t("accountDetailsForm.country")}</p>
               <input
                 className="input-line"
                 type="text"
@@ -191,7 +191,7 @@ export default function AccountDetailsForm() {
               {errors.country && <p>{errors.country}</p>}{" "}
             </div>
             <div className="input-details">
-              <p>PostalCode</p>
+              <p>{t("accountDetailsForm.postalCode")}</p>
               <input
                 className="input-line"
                 type="text"
@@ -204,7 +204,7 @@ export default function AccountDetailsForm() {
           </div>
           <div className="address-details2">
             <div className="input-details">
-              <p>Province</p>
+              <p>{t("accountDetailsForm.province")}</p>
               <input
                 className="input-line"
                 type="text"
@@ -216,7 +216,7 @@ export default function AccountDetailsForm() {
               {errors.province && <p>{errors.province}</p>}{" "}
             </div>
             <div className="input-details">
-              <p> Street</p>
+              <p> {t("accountDetailsForm.street")}</p>
               <input
                 className="input-line"
                 type="text"
@@ -248,7 +248,9 @@ export default function AccountDetailsForm() {
           >
             {t("accountDetailsForm.changePassword")}
           </button>
-          <button className="input-submit-editProfile">Actualizar</button>
+          <button className="input-submit-editProfile">
+            {t("accountDetailsForm.submit")}
+          </button>
         </div>
       </form>
     </div>

@@ -10,7 +10,7 @@ import imgDeleteFavorite from "../../media/heart-delete-cart.png";
 import shoppingCart from "../../media/shoppingCart.png";
 import { useStore } from "../../context/store.js";
 import { totalCount } from "../../redux/actions/actions";
-import { alertSuccess, alertInfo } from "../../helpers/toast";
+import { alertSuccess, alertInfo, alertWarning } from "../../helpers/toast";
 export default function ProductDetailsInfo({
   id,
   image,
@@ -73,17 +73,21 @@ export default function ProductDetailsInfo({
   const handleSaveCart = (name, price, image, id, stock) => {
     let quantity = 1;
     let totalPrice = price;
-
     let products = { name, price, image, id, stock, quantity, totalPrice };
     let value = cart.find((e) => e.name === name);
-    if (value) {
-      setInCart(false);
-      alertInfo(t("home.altAlreadyInCart"));
-      return;
+    if (person) {
+      if (value) {
+        setInCart(false);
+        alertInfo(t("home.altAlreadyInCart"));
+        return;
+      } else {
+        setInCart(true);
+        setCart((cart) => [...cart, products]);
+        alertSuccess(t("home.altAddToCart"));
+      }
     } else {
-      setInCart(true);
-      setCart((cart) => [...cart, products]);
-      alertSuccess(t("home.altAddToCart"));
+      alertWarning(t("home.logInProducts"));
+      history.push("/login");
     }
   };
 
@@ -194,7 +198,9 @@ export default function ProductDetailsInfo({
       </div>
 
       <div className="details-qua">
-        <p className="title-details-info-qua">Product Reviews</p>
+        <p className="title-details-info-qua">
+          {t("productDetailsInfo.productReviews")}
+        </p>
         {reviews && (
           <div className="details-questions-list">
             {React.Children.toArray(

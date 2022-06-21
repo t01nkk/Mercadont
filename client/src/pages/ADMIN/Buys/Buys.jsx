@@ -4,7 +4,10 @@ import { ItemBuy } from "./ItemBuy.jsx";
 import { DetailsBuys } from "./DetailsBuys.jsx";
 import { useHistory, useLocation } from "react-router-dom";
 import "./buys.scss";
+import { alertSuccess } from '../../../helpers/toast'
+import { useTranslation } from 'react-i18next'
 export const Buys = () => {
+  const { t } = useTranslation()
   const [stateBuys, setStateBuys] = useState("pending");
   const [dataBuys, setDataBuys] = useState("");
   const [detailsProduct, setDetailsProduct] = useState([]);
@@ -22,15 +25,12 @@ export const Buys = () => {
 
   let getDataBuys = async () => {
     try {
-      let buys = await axios(
-        `${process.env.REACT_APP_DOMAIN}/admin/filterOrders/${stateBuys}`
-      );
-      setDataBuys(buys.data);
+      let buys = await axios(`${process.env.REACT_APP_DOMAIN}/admin/filterOrders/${stateBuys}`)
+      setDataBuys(buys.data)
     } catch (error) {
       console.log(error);
     }
-  };
-
+  }
   const back = () => {
     setChangeSection(true);
     history.push("/admin/Buys");
@@ -38,21 +38,22 @@ export const Buys = () => {
 
   let changeStateBuys = async (changeState) => {
     try {
-      let resp = await axios.put(
-        `${process.env.REACT_APP_DOMAIN}/admin/setOrderStatus`,
-        {
-          orderStatus: changeState,
-          orderId: search.substring(1),
-        }
-      );
+      let resp = await axios.put(`${process.env.REACT_APP_DOMAIN}/admin/setOrderStatus`, {
+        orderStatus: changeState,
+        orderId: search.substring(1)
+      })
       if (resp) {
-        history.push(`/admin/Buys`);
-        window.location.reload();
+        history.push(`/admin/Buys`)
+        alertSuccess(t("adminBuys.confirmPurchase"))
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
+
   return (
     <>
       {changeSection ? (
@@ -62,19 +63,19 @@ export const Buys = () => {
               className="buys-btn-status"
               onClick={() => setStateBuys("pending")}
             >
-              Pendientes
+              {t("adminBuys.pending")}
             </button>
             <button
               className="buys-btn-status"
               onClick={() => setStateBuys("accepted")}
             >
-              Aceptadas
+              {t("adminBuys.accepted")}
             </button>
             <button
               className="buys-btn-status"
               onClick={() => setStateBuys("rejected")}
             >
-              Rechazadas
+              {t("adminBuys.rejected")}
             </button>
           </div>
           <div className="orders-list-container">
@@ -102,7 +103,7 @@ export const Buys = () => {
         <section className="history-container">
           <div className="history-btn-goback-container">
             <button className="history-btn-goback" onClick={() => back()}>
-              Back
+              {t("navigation.return")}
             </button>
           </div>
           <article className="history-cards">
@@ -128,7 +129,7 @@ export const Buys = () => {
                     changeStateBuys("accepted");
                   }}
                 >
-                  Aceptar pedido
+                  {t("adminBuys.acceptPurchase")}
                 </button>
                 <button
                   className="reject-order"
@@ -136,7 +137,7 @@ export const Buys = () => {
                     changeStateBuys("rejected");
                   }}
                 >
-                  Rechazar pedido
+                  {t("adminBuys.rejectPurchase")}
                 </button>
               </div>
             )}

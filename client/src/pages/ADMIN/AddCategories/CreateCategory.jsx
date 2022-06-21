@@ -4,7 +4,7 @@ import { fetchCategories } from "../../../redux/actions/actions";
 import { useStore } from "../../../context/store";
 import { useHistory } from "react-router-dom";
 import "./CategoryCard.scss";
-import { alertSuccess } from "../../../helpers/toast";
+import { alertSuccess, alertWarning } from "../../../helpers/toast";
 import { useTranslation } from "react-i18next";
 export default function CreateCategory() {
   const { t } = useTranslation();
@@ -24,7 +24,7 @@ export default function CreateCategory() {
     let errors = {};
 
     if (!expression.name.test(input.name)) {
-      errors.name = "Name is necessary";
+      errors.name = t("errors.error_name");
     }
 
     return errors;
