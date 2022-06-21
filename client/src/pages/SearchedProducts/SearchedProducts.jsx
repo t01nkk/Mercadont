@@ -2,21 +2,21 @@ import React, { useEffect, useState } from "react";
 import "./SearchedProducts.scss";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useStore } from "../../context/store";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import {
   ORDER_BY_ASCDESC_PRICE,
   FILTER_BY_PRICE,
 } from "../../redux/actions/actionTypes";
-import { alertSuccess, alertInfo } from "../../helpers/toast";
+import { alertSuccess, alertInfo, alertWarning } from "../../helpers/toast";
 import { getFavorites, totalCount } from "../../redux/actions/actions";
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from "react-i18next";
 import {
   handleDeleteFavorite,
   handleSaveFavorite,
 } from "../../components/Cart/actionsCart";
 import { IoSearchSharp } from "react-icons/io5";
 export default function SearchedProducts() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   let initialCart = JSON.parse(localStorage.getItem("myCart")) || [];
   const [redirect, setRedirect] = useState(false);
   const [state, dispatch] = useStore();
@@ -27,7 +27,7 @@ export default function SearchedProducts() {
   const [inCart, setInCart] = useState(false);
   const [user, setUser] = useState([]);
   let person = JSON.parse(localStorage.getItem("myUser"));
-
+  const history = useHistory();
   const handleRedirect = () => {
     if (!state.searchedProducts.length) {
       setRedirect(true);
@@ -39,14 +39,19 @@ export default function SearchedProducts() {
     let totalPrice = price;
     let products = { name, price, image, id, stock, quantity, totalPrice };
     let value = cart.find((e) => e.name === name);
-    if (value) {
-      setInCart(false);
-      alertInfo(t("home.altAlreadyInCart"));
-      return;
+    if (person) {
+      if (value) {
+        setInCart(false);
+        alertInfo(t("home.altAlreadyInCart"));
+        return;
+      } else {
+        setInCart(true);
+        setCart((cart) => [...cart, products]);
+        alertSuccess(t("home.altAddToCart"));
+      }
     } else {
-      setInCart(true);
-      setCart((cart) => [...cart, products]);
-      alertSuccess(t("home.altAddToCart"));
+      alertWarning(t("home.logInProducts"));
+      history.push("/login");
     }
   };
 
@@ -113,7 +118,7 @@ export default function SearchedProducts() {
     localStorage.setItem(user, JSON.stringify(cart));
     totalCount(dispatch);
   }, [cart]);
-  
+
   return (
     <div className="searched-container">
       <div className="SortAndReset">

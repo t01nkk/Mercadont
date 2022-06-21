@@ -634,6 +634,7 @@ i18n
             mostSold: "Most sold!",
             altAddToCart: "Added to the cart",
             altAlreadyInCart: "Product is already in the cart",
+            
             altAddToFavs: "Added to favorites!",
             altRemoveFromFavorites: "Product removed from favorites",
             mustBeLoggedIn:
