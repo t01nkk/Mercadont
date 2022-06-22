@@ -91,7 +91,7 @@ export default function LoginADMIN() {
             >
               <div className="divInputUser">
                 <input
-                  type="text"
+                  type="password"
                   required
                   placeholder="Email ..."
                   name="email"
