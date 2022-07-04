@@ -380,6 +380,10 @@ i18n
             error_country: "Country is required",
             error_city: "City is required",
             error_province: "State is required",
+            error_addressFormLetters_validate:
+              "Letters only",
+            error_addressFormAlphaNumbers_validate:
+              "Incorect characters",
           },
           accountDetails: {
             btnEditProfile: "Edit",
@@ -634,14 +638,14 @@ i18n
             mostSold: "Most sold!",
             altAddToCart: "Added to the cart",
             altAlreadyInCart: "Product is already in the cart",
-            
+
             altAddToFavs: "Added to favorites!",
             altRemoveFromFavorites: "Product removed from favorites",
             mustBeLoggedIn:
               "You need to be logged in to add products to your favorites list",
             logInProducts:
               "You need to be logged in to add products to your shopping cart",
-            promoCard:{
+            promoCard: {
               delivery: {
                 title: "Express Shipping",
                 subTitle: "CABA & GBA"

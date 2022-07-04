@@ -57,66 +57,66 @@ export const SendBuys = () => {
     validateForm(address);
   };
 
-    const validateForm = () => {
-        let error = {}
-        if (!/^[A-Za-z\s]+$/.test(address.country) && address.country !== "") error.country = t("errors.error_addressForm_validate")
-        if (!/^[A-Za-z\s]+$/.test(address.province) && address.province !== "") error.province = t("errors.error_addressForm_validate")
-        if (!/^[A-Za-z\s]+$/.test(address.city) && address.city !== "") error.city = t("errors.error_addressForm_validate")
-        if (!/^[A-Za-z0-9\s]+$/.test(address.street) && address.street !== "") error.street =  t("errors.error_addressFormAlphaNumbers_validate")
-        if (!/^[A-Za-z0-9\s]+$/.test(address.postalCode) && address.postalCode !== "") error.postalCode =  t("errors.error_addressFormAlphaNumbers_validate")
+  const validateForm = () => {
+    let error = {}
+    if (!/^[A-Za-z\s]+$/.test(address.country) && address.country !== "") error.country = t("errors.error_addressFormLetters_validate")
+    if (!/^[A-Za-z\s]+$/.test(address.province) && address.province !== "") error.province = t("errors.error_addressFormLetters_validate")
+    if (!/^[A-Za-z\s]+$/.test(address.city) && address.city !== "") error.city = t("errors.error_addressFormLetters_validate")
+    if (!/^[A-Za-z0-9\s]+$/.test(address.street) && address.street !== "") error.street = t("errors.error_addressFormAlphaNumbers_validate")
+    if (!/^[A-Za-z0-9\s]+$/.test(address.postalCode) && address.postalCode !== "") error.postalCode = t("errors.error_addressFormAlphaNumbers_validate")
 
-        setError(error)
+    setError(error)
 
-    }
+  }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        let el = elements.getElement(CardElement)
-        if (selectBuys === "card") {
-            const { error, paymentMethod } = await stripe.createPaymentMethod({
-                type: "card",
-                card: elements.getElement(CardElement)
-            })
-            setLoadingBuys(true)
-            if (!error) {
-                alertInfo(t("sendBuys.processingCard"))
-                const { id } = paymentMethod
-                // console.log("address:",address)
-                try {
-                    await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
-                        id,
-                        amount: Math.round(priceTotal * 100),
-                        local,
-                        userId: user,
-                        address
-                    })
-                } catch (error) {
-                    if (error.message === 'insuficientStock') {
-                        alertWarning(t("sendBuys.insuficientQuantity"))
-                        setLoadingBuys(false)
-                        localStorage.removeItem(user)
-                        return history.push("/cart?buy=false")
-                    } else {
-                        alertWarning(t("sendBuys.error"))
-                        setLoadingBuys(false)
-                        localStorage.removeItem(user)
-                        console.log(error)
-                        return history.push("/cart?buy=false")
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    let el = elements.getElement(CardElement)
+    if (selectBuys === "card") {
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card: elements.getElement(CardElement)
+      })
+      setLoadingBuys(true)
+      if (!error) {
+        alertInfo(t("sendBuys.processingCard"))
+        const { id } = paymentMethod
+        // console.log("address:",address)
+        try {
+          await axios.post(`${process.env.REACT_APP_DOMAIN}/buying/card`, {
+            id,
+            amount: Math.round(priceTotal * 100),
+            local,
+            userId: user,
+            address
+          })
+        } catch (error) {
+          if (error.message === 'insuficientStock') {
+            alertWarning(t("sendBuys.insuficientQuantity"))
+            setLoadingBuys(false)
+            localStorage.removeItem(user)
+            return history.push("/cart?buy=false")
+          } else {
+            alertWarning(t("sendBuys.error"))
+            setLoadingBuys(false)
+            localStorage.removeItem(user)
+            console.log(error)
+            return history.push("/cart?buy=false")
 
-                    }
-                }
-            } else {
-                alertWarning(t("sendBuys.cardProblem"))
-                setLoadingBuys(false)
-            }
-            // loadingBuys()
-            if (paymentMethod) {
-                setLoadingBuys(false)
-                localStorage.removeItem(user)
-                history.push("/cart?buy=true")
-            }
+          }
         }
+      } else {
+        alertWarning(t("sendBuys.cardProblem"))
+        setLoadingBuys(false)
+      }
+      // loadingBuys()
+      if (paymentMethod) {
+        setLoadingBuys(false)
+        localStorage.removeItem(user)
+        history.push("/cart?buy=true")
+      }
     }
+  }
 
 
   const handleShipping = async (e) => {
@@ -210,15 +210,15 @@ export const SendBuys = () => {
           <div className="list-group container-fluid ">
             {React.Children.toArray(
               products &&
-                products.map((el) => (
-                  <ListProductsBuys
-                    name={el.name}
-                    price={el.price}
-                    totalPrice={el.totalPrice}
-                    image={el.image}
-                    amount={el.quantity}
-                  />
-                ))
+              products.map((el) => (
+                <ListProductsBuys
+                  name={el.name}
+                  price={el.price}
+                  totalPrice={el.totalPrice}
+                  image={el.image}
+                  amount={el.quantity}
+                />
+              ))
             )}
           </div>
           {amountTotal && (
@@ -245,7 +245,7 @@ export const SendBuys = () => {
             {selectShipping === "newAddress" ? (
               <>
                 <h3 className="cart-container-title-direction">
-                    {t("sendBuys.fillShippingAddress")}
+                  {t("sendBuys.fillShippingAddress")}
                 </h3>
                 <div>
                   <label htmlFor="country">{t("accountDetails.country")}</label>
@@ -385,5 +385,5 @@ export const SendBuys = () => {
         ) : null}
       </form>
     </div>
-)
+  )
 }
