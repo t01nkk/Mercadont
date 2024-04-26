@@ -31,12 +31,14 @@ const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
 const { Product, Category } = require("./src/db");
 const { getProducts, getUsers } = require("./src/middlewares/middlewares");
+const PORT = process.env.PORT || 3001;
 
-// Syncing all the models at once.
+
+
 conn.sync({ force: true }).then(() => {
-  server.listen(3001, async () => {
+  server.listen(PORT, async () => {
     await getProducts();
     // await getUsers();
-    console.log("%s Y U NO COMPILE"); // eslint-disable-line no-console
+    console.log(`Listening on port ${PORT}`);
   });
 });

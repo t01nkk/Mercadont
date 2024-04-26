@@ -1,49 +1,45 @@
-# SoyHenry Final-Project
 <p align="left">
   <img height="150" src="./client/src/media/logonavbar.png" />
 </p>
 
+**DEPLOY LINK**: **https://mercadont.vercel.app**
 
-__DEPLOY LINK__: __https://mercadont.vercel.app__
+## Team Members:
 
-## Team Members: 
+**Front-End**:
 
-__Front-End__:
 - Rodrigo Molina
 - Pablo Marrero
 - Tatiana Pachon
 
-__Back-End__:
+**Back-End**:
+
 - Lautaro Gutierrez
 - Ignacio Williams
 - Mateo Miniati
 - Emmanuel Cuello
 
-
 ## Objective:
 
-This is our FullStack Web Developer bootcamp Soyhenry's Final Project. Where we developed an E-commerce web app where we had to apply all that we had learnt in the course of four months.
+This is a project where we developed an E-commerce web app
 
 The E-commerce is oriented towards the fashion industry, but the idea is that we've made it flexible enough so as to it being able to adapt to whatever trade that is required.
 
 ## Technologies and Tools
 
-- JavaScript 
-- NodeJS 
+- JavaScript
+- NodeJS
 - ExpressJS
 - PostgreSQL
 - Sequelize ORM
-- PassportJS
-- NodeMailer
-- PayPAL API
 - ReactJS
-- Firebase
 - CSS
 - SASS
 - Bootstrap
 
-__Deployment__:
-- __Vercel__ & __Heroku__
+**Deployment**:
+
+- **Vercel**
 
 ## Features
 
@@ -52,7 +48,6 @@ __Deployment__:
 - User Authentication
 - Google Authentication
 - Buying Cart
-- Paypal payment
 - Buying History
 - Reviews
 - Q&A
@@ -60,12 +55,3 @@ __Deployment__:
 - Email Notifications
 - Persistent session & cart
 - Form validations
-
-
-
-
-
-
-
-
-
