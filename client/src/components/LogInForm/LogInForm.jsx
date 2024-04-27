@@ -1,78 +1,77 @@
 import React, { useState } from "react";
 import "./LoginForm.scss";
-import { Link, Redirect } from "react-router-dom";
-import { useAuth } from "../../context/authContext";
-import axios from "axios";
+// import { Link, Redirect } from "react-router-dom";
+// import { useAuth } from "../../context/authContext";
+// import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Formik } from "formik";
-import { alertError, alertSuccess, alertInfo } from "../../helpers/toast";
+// import { alertError, alertSuccess, alertInfo } from "../../helpers/toast";
 export default function LogInForm() {
   let errorMsg = "";
   const { t } = useTranslation();
   const [redirect, setRedirect] = useState(false);
-  const { login, loginWithGoogle, resetPassword } = useAuth();
+  // const { login, loginWithGoogle, resetPassword } = useAuth();
 
-  const handleLogin = async (values) => {
-    try {
-      const userCredentials = await login(values.email, values.password);
-      if (userCredentials.user.emailVerified) {
-        const account = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
-          id: userCredentials.user.uid,
-          name: userCredentials.user.displayName,
-          email: userCredentials.user.email,
-          image: userCredentials.user.photoURL,
-          isVerified: userCredentials.user.emailVerified,
-        });
-        if(account.data[0].banned)
-          return alertError(t("logInForm.banned"))
+  // const handleLogin = async (values) => {
+  //   try {
+  //     const userCredentials = await login(values.email, values.password);
+  //     if (userCredentials.user.emailVerified) {
+  //       const account = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+  //         id: userCredentials.user.uid,
+  //         name: userCredentials.user.displayName,
+  //         email: userCredentials.user.email,
+  //         image: userCredentials.user.photoURL,
+  //         isVerified: userCredentials.user.emailVerified,
+  //       });
+  //       if(account.data[0].banned)
+  //         return alertError(t("logInForm.banned"))
 
+  //       if (userCredentials.user.uid) {
+  //         localStorage.setItem(
+  //           "myUser",
+  //           JSON.stringify(userCredentials.user.uid)
+  //         );
+  //         alertSuccess(t("logInForm.loggedIn"))
+  //         setRedirect(true);
+  //       }
+  //     } else {
+  //       alertInfo(t("logInForm.checkEmailConfirmation"))
+  //     }
+  //   } catch (err) {
 
-        if (userCredentials.user.uid) {
-          localStorage.setItem(
-            "myUser",
-            JSON.stringify(userCredentials.user.uid)
-          );
-          alertSuccess(t("logInForm.loggedIn"))
-          setRedirect(true);
-        }
-      } else {
-        alertInfo(t("logInForm.checkEmailConfirmation"))
-      }
-    } catch (err) {
+  //     if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
+  //     if (err.code === "auth/user-not-found")
+  //       errorMsg = "Email doesn't belong to a user";
+  //     if (err.code === "auth/wrong-password") errorMsg = "Wrong Password";
+  //     alertError(errorMsg);
+  //   }
+  // };
 
-      if (err.code === "auth/internal-error") errorMsg = "Invalid Email";
-      if (err.code === "auth/user-not-found")
-        errorMsg = "Email doesn't belong to a user";
-      if (err.code === "auth/wrong-password") errorMsg = "Wrong Password";
-      alertError(errorMsg);
-    }
-  };
+  // const handleGoogleSignin = async () => {
+  //   try {
+  //     const userCredentials = await loginWithGoogle();
+  //     const account = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
+  //       id: userCredentials.user.uid,
+  //       name: userCredentials.user.displayName,
+  //       email: userCredentials.user.email,
+  //       image: userCredentials.user.photoURL,
+  //       isVerified: userCredentials.user.emailVerified,
+  //     });
 
-  const handleGoogleSignin = async () => {
-    try {
-      const userCredentials = await loginWithGoogle();
-      const account = await axios.post(`${process.env.REACT_APP_DOMAIN}/user/login`, {
-        id: userCredentials.user.uid,
-        name: userCredentials.user.displayName,
-        email: userCredentials.user.email,
-        image: userCredentials.user.photoURL,
-        isVerified: userCredentials.user.emailVerified,
-      });
+  //     if(account.data[0].banned)
+  //       return alertError("User is banned")
 
-      if(account.data[0].banned)
-        return alertError("User is banned")
-
-      if (userCredentials.user.uid)
-        localStorage.setItem(
-          "myUser",
-          JSON.stringify(userCredentials.user.uid)
-        );
-      alertSuccess(t("logInForm.loggedIn"))
-      setRedirect(true);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     if (userCredentials.user.uid)
+  //       localStorage.setItem(
+  //         "myUser",
+  //         JSON.stringify(userCredentials.user.uid)
+  //       );
+  //     alertSuccess(t("logInForm.loggedIn"))
+  //     setRedirect(true);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div className="container-login">
@@ -81,28 +80,31 @@ export default function LogInForm() {
           email: "",
           password: "",
         }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.email) {
-            errors.email = `${t("logInForm.errors_mail_required")}`;
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-          ) {
-            errors.email = `$${t("logInForm.errors_mail_invalid")}`;
-          }
-          if (!values.password) {
-            errors.password = `$${t("logInForm.errors_password")}`;
-          }
+        // validate={
+        //   (values) => {
+        //   const errors = {};
+        //   if (!values.email) {
+        //     errors.email = `${t("logInForm.errors_mail_required")}`;
+        //   } else if (
+        //     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+        //   ) {
+        //     errors.email = `$${t("logInForm.errors_mail_invalid")}`;
+        //   }
+        //   if (!values.password) {
+        //     errors.password = `$${t("logInForm.errors_password")}`;
+        //   }
 
-          return errors;
-        }}
-        onSubmit={(values, { setErrors }) => {
-          return handleLogin(values).catch(() => {
-            setErrors("email", "This email is not valid");
-          });
-        }}
+        //   return errors;
+        // }
+        // }
+
+        // onSubmit={(values, { setErrors }) => {
+        //   return handleLogin(values).catch(() => {
+        //     setErrors("email", "This email is not valid");
+        //   });
+        // }}
       >
-        {({ errors, handleSubmit, handleChange, isSubmitting, touched }) => (
+        {/* {({ errors, handleSubmit, handleChange, isSubmitting, touched }) => (
           <div className="loginCard">
             {redirect ? <Redirect push to="/home" /> : null}
             <p className="login-welcome">{t("logInForm.logIn")}</p>
@@ -146,9 +148,6 @@ export default function LogInForm() {
                   className="input-submit-login"
                 />
               </div>
-              {/*<div>
-                <input type="submit" value="Forgot Your Password?"/>
-              </div>*/}
             </form>
             <div className="createUser-container">
               <div>
@@ -172,7 +171,7 @@ export default function LogInForm() {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </Formik>
     </div>
   );

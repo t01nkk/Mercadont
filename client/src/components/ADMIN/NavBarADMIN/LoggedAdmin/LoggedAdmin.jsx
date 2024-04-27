@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { useStore } from "../../../../context/store";
 import { useTranslation } from "react-i18next";
 import logo from "../../../../media/logonavbar.png";
-import SearchBar from "../../../SearchBar/SearchBar";
+// import SearchBar from "../../../SearchBar/SearchBar";
 import SearchBarAdmin from "../../SearchBarADMIN/SearchBarAdmin";
-import {
-  fetchCategories,
-  fetchProducts,
-} from "../../../../redux/actions/actions";
+// import {
+//   fetchCategories,
+//   fetchProducts,
+// } from "../../../../redux/actions/actions";
 export default function LoggedAdmin() {
   const { t } = useTranslation();
   const [state, dispatch] = useStore();
@@ -16,7 +16,7 @@ export default function LoggedAdmin() {
     localStorage.clear();
   };
 
-  const adminName = state.admin.data.name;
+  // const adminName = state.admin.data.name;
   return (
     <div className="navbar-space">
       <nav

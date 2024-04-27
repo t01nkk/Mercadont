@@ -25,7 +25,7 @@ export const fetchRating = async (dispatch) => {
   const fetchedrating = await axios.get(
     `${process.env.REACT_APP_DOMAIN}/product/recommendation/byRating`
   );
-  
+
   dispatch({
     type: FETCH_RATING,
     payload: fetchedrating.data,
@@ -36,7 +36,7 @@ export const fetchMostSold = async (dispatch) => {
   const fetchedMostSold = await axios.get(
     `${process.env.REACT_APP_DOMAIN}/product/recommendation/mostSold`
   );
-  
+
   dispatch({
     type: FETCH_MOST_SOLD,
     payload: fetchedMostSold.data,
@@ -61,27 +61,27 @@ export const fetchCategories = async (dispatch) => {
     payload: fetchedProducts.data,
   });
 };
-export const checkSession = (dispatch) => {
-  let logged = false;
-  let loggedUser = JSON.parse(localStorage.getItem("myUser"));
-  if (loggedUser) {
-    logged = true;
-    dispatch({
-      type: USER_SESSION,
-      payload: {
-        data: loggedUser,
-        session: logged,
-      },
-    });
-  } else {
-    dispatch({
-      type: USER_SESSION,
-      payload: {
-        session: logged,
-      },
-    });
-  }
-};
+// export const checkSession = (dispatch) => {
+//   let logged = false;
+//   let loggedUser = JSON.parse(localStorage.getItem("myUser"));
+//   if (loggedUser) {
+//     logged = true;
+//     dispatch({
+//       type: USER_SESSION,
+//       payload: {
+//         data: loggedUser,
+//         session: logged,
+//       },
+//     });
+//   } else {
+//     dispatch({
+//       type: USER_SESSION,
+//       payload: {
+//         session: logged,
+//       },
+//     });
+//   }
+// };
 // export const checkSessionADMIN = async (dispatch) => {
 //   let loggedAdmin = false;
 //   let loggedAdminInfo = JSON.parse(localStorage.getItem("myAdmin"));
