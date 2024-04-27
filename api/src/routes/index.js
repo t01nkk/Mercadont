@@ -6,7 +6,9 @@ const qaRoutes = require("./questionanswerroutes");
 const reviewRoutes = require("./reviewroutes");
 const adminRoutes = require("./adminroutes");
 const payRoutes = require("./payroutes");
+const authRoutes = require("./authroutes");
 
+router.use("/auth", authRoutes);
 router.use("/product", productRoutes);
 router.use("/user", userRoutes);
 router.use("/categories", categoryRoutes);

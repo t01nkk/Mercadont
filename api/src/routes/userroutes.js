@@ -3,67 +3,6 @@ const router = Router();
 const { User, Product, PurchaseOrder } = require("../db");
 const { groupPurchaseOrders } = require("../middlewares/middlewares");
 
-
-router.post("/register", async (req, res, next) => {
-  const { name, lastname, email, address, image, payment, id } = req.body;
-  try {
-    const userExist = await User.findOne({ where: { email: email } });
-    if (!userExist) {
-      await User.create({
-        email: email,
-        name: name,
-        lastname: lastname,
-        address: JSON.stringify(address),
-        image: image,
-        payment: payment,
-        id: id,
-      });
-
-      return res.send({ msg: "User Registered" });
-    } else {
-      await User.update(
-        {
-          name: name,
-          lastname: lastname,
-          email: email,
-          address: address,
-          image: image,
-          id: id
-        },
-        { where: { email: email } }
-      );
-
-      return res.status(200).send("Existing user updated");
-    }
-  } catch (err) {
-    next(err);
-  }
-});
-
-//CURRENT LOGIN 
-
-router.post("/login", async (req, res, next) => {
-  // const { email, password } = req.body;
-  const { name, email, image, id } = req.body;
-  try {
-    const userExist = await User.findOrCreate({
-      where: { id: id }, defaults: {
-        email: email,
-        name: name,
-        image: image,
-        id: id,
-      }
-    }
-    )
-    res.status(200).send(userExist);
-  }
-  catch (err) {
-    console.log(err)
-  }
-});
-
-
-
 /*-------------------------------------------------------------- */
 /*-------------------------UserInfo------------------------------- */
 

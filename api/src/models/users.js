@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
       },
       country: {
         type: DataTypes.STRING,
-        defaultValue: ""         
+        defaultValue: ""
       },
       province: {
         type: DataTypes.STRING,
@@ -61,6 +61,9 @@ module.exports = (sequelize) => {
       isAdmin: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+      },
+      cart: {
+        type: DataTypes.ARRAY(DataTypes.STRING)
       },
       userCreated: {
         type: DataTypes.BOOLEAN,
