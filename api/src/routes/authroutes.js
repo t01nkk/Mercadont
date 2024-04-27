@@ -1,24 +1,31 @@
 const { Router } = require("express");
 const router = Router();
-const { User, Product, PurchaseOrder } = require("../db");
+const { User } = require("../db");
+const bcrypt = require("bcrypt");
+const sequelize = require('sequelize')
+const { generateAccessToken } = require("../helpers/jwt");
 // const { groupPurchaseOrders } = require("../middlewares/middlewares");
 
 
 router.post("/register", async (req, res) => {
-    const { name, lastname, email, address, image, payment, id } = req.body;
+    const { name, lastname, password, email, cart } = req.body;
     try {
         const userExist = await User.findOne({ where: { email: email } });
-        if (userExist) res.status(304).send({ message: "User exists" });
-        await User.create({
+        if (userExist) throw new Error("Email in use")
+        const salt = 10;
+        const passwordHash = bcrypt.hashSync(password[0], salt);
+
+        const createdUser = await User.create({
             email: email,
+            password: [passwordHash],
             name: name,
             lastname: lastname,
-            address: JSON.stringify(address),
-            image: image,
-            payment: payment,
-            id: id,
+            cart: cart?.length ? cart : []
         });
-        return res.send({ msg: "User Registered" });
+
+        const token = await generateAccessToken(createdUser.id);
+
+        return res.send({ message: "User Registered", token, createdUser });
 
     } catch (err) {
         res.status(500).send({ message: err.message });

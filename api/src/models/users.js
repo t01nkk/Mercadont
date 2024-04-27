@@ -1,13 +1,18 @@
-const { DataTypes, UUIDV4, INTEGER } = require("sequelize");
+const { DataTypes, UUIDV4, } = require("sequelize");
 module.exports = (sequelize) => {
   sequelize.define(
     "user",
     {
       id: {
         type: DataTypes.STRING,
-        // allowNull: false,
+        allowNull: false,
         unique: true,
         primaryKey: true,
+        defaultValue: DataTypes.UUIDV4
+
+      },
+      password: {
+        type: DataTypes.ARRAY(DataTypes.STRING)
       },
       name: {
         type: DataTypes.STRING,
