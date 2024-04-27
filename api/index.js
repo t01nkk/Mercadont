@@ -37,6 +37,7 @@ const PORT = process.env.PORT || 3001;
 
 conn.sync({ force: true }).then(() => {
   server.listen(PORT, async () => {
+    console.log(PORT)
     await getProducts();
     // await getUsers();
     console.log(`Listening on port ${PORT}`);
