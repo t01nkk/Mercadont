@@ -27,18 +27,14 @@
 // ░░░░░░▌░░░▐░░░░▐░░▀▀█░░░░░░░▀
 // ░░░░░░▐░░░░▌░░░▐░░░░░▌░░░░░░░
 
-const server = require("./src/app.js");
-const { conn } = require("./src/db.js");
-const { Product, Category } = require("./src/db");
-const { getProducts, getUsers } = require("./src/middlewares/middlewares");
+const server = require('./src/app.js');
+const { conn } = require('./src/db.js');
+const { getProducts } = require('./src/helpers/dummyData.js');
 const PORT = process.env.PORT || 3001;
 
-
-
 conn.sync({ force: true }).then(() => {
-  server.listen(PORT, async () => {
-    await getProducts();
-    // await getUsers();
-    console.log(`Listening on port ${PORT}`);
-  });
+    server.listen(PORT, async () => {
+        await getProducts();
+        console.log(`Listening on port ${PORT}`);
+    });
 });
