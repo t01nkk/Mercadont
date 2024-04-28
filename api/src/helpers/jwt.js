@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
-const generateAccessToken = (id = '') => {
+const generateAccessToken = (id = '', role = '') => {
     return new Promise((resolve, reject) => {
-        const payload = { id };
+        const payload = { id, role };
         jwt.sign(
             payload,
             process.env.ACCESS_TOKEN_SECRET,
             {
-                expiresIn: '60s',
+                expiresIn: '1h',
             },
             (err, token) => {
                 if (err) {

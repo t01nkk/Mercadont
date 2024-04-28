@@ -2,8 +2,7 @@
     {
         "name": "Owner",
         "email": "mercadont.libre@gmail.com",
-        "password": "Admin123",
-        "banned": false,
-        "isAdmin": true
+        "password": "$2b$10$.Ka2whMiKuO6kuu2Po1dV.7tuPc07Eo328nXHPCADwfESoLl.HrXC",
+        "role": "2"
     }
 ]

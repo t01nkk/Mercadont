@@ -13,14 +13,18 @@ const register = async (req, res) => {
 
         const createdUser = await User.create({
             email: email,
-            password: [passwordHash],
+            password: passwordHash,
             name: name,
             lastname: lastname,
             cart: cart?.length ? cart : [],
+            role: '0',
         });
 
-        const token = await generateAccessToken(createdUser.id);
-
+        const token = await generateAccessToken(
+            createdUser.id,
+            createdUser.role
+        );
+        console.log(token);
         return res.status(201).send({ message: 'User Registered', token });
     } catch (err) {
         res.status(500).send({ message: err.message });
@@ -34,21 +38,16 @@ const login = async (req, res) => {
             where: { email: email },
         });
         if (!userExist) res.status(404).send({ message: 'User not found' });
-
-        const validPassword = bcrypt.compareSync(
-            password,
-            userExist.password[0]
-        );
+        const validPassword = bcrypt.compareSync(password, userExist.password);
         if (!validPassword) res.status(403).send({ message: 'Wrong Password' });
-
-        const token = await generateAccessToken(userExist.id);
-
+        console.log(userExist.role);
+        const token = await generateAccessToken(userExist.id, userExist.role);
         res.status(200).send({
             message: 'Login successful',
             token,
         });
-    } catch (err) {
-        res.status(500).send({ message: err.message });
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 };
 
