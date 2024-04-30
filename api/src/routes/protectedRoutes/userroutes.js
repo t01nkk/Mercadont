@@ -8,33 +8,37 @@ const {
     findOneFavorite,
     getPurchaseHistoryById,
     getUserPurchasingHistory,
-} = require('../controllers/userController');
-
+} = require('../../controllers/userController');
+const { authenticateNormalUser } = require('../../middlewares/auth');
 /*-------------------------------------------------------------- */
 /*-------------------------UserInfo------------------------------- */
 
 // Get User
-router.get('/details/:id', getUser);
+router.get('/details/:id', authenticateNormalUser, getUser);
 
 // Update User
-router.put('/details/:id', updateUser);
+router.put('/details/:id', authenticateNormalUser, updateUser);
 
 /*-------------------------------------------------------------- */
 /*-------------------------Favorites-----------------------------*/
 
-router.post('/addFavorite', addFavorite);
+router.post('/addFavorite', authenticateNormalUser, addFavorite);
 
-router.delete('/removeFavorite', removeFavorite);
+router.delete('/removeFavorite', authenticateNormalUser, removeFavorite);
 
 // Get User's favorites
-router.get('/favorite/:id', findOneFavorite);
+router.get('/favorite/:id', authenticateNormalUser, findOneFavorite);
 
 /*-------------------------------------------------------------- */
 /*---------------------Purchase History--------------------------*/
 
 // Get User's purchase history
-router.get('/history/:id', getPurchaseHistoryById);
+router.get('/history/:id', authenticateNormalUser, getPurchaseHistoryById);
 
-router.post('/product/history', getUserPurchasingHistory);
+router.post(
+    '/product/history',
+    authenticateNormalUser,
+    getUserPurchasingHistory
+);
 
 module.exports = router;

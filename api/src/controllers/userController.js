@@ -1,11 +1,6 @@
 const { User, Product, PurchaseOrder } = require('../db');
 const { groupPurchaseOrders } = require('../middlewares/middlewares');
 
-/*-------------------------------------------------------------- */
-/*-------------------------UserInfo------------------------------- */
-
-// Get User
-// router.get("/details/:id", async (req, res) => {
 const getUser = async (req, res) => {
     const { id } = req.params;
     try {
@@ -15,23 +10,19 @@ const getUser = async (req, res) => {
         });
 
         if (!user) {
-            return res.status(404).send('User Not Found');
+            res.status(404).send('User Not Found');
         }
 
-        return res.status(200).send(user);
+        res.status(200).send({ message: 'User found', data: user });
     } catch (error) {
-        console.log('error:', error);
-        res.status(404).send(error);
+        res.status(404).send({ message: error.message });
     }
 };
 
-// Update User
-// router.put("/details/:id", async (req, res) => {
 const updateUser = async (req, res) => {
     const { id } = req.params;
     const {
         name,
-        email,
         lastname,
         image,
         country,
@@ -40,15 +31,11 @@ const updateUser = async (req, res) => {
         street,
         postalCode,
     } = req.body;
-    // let errors = validateInputUser(name,email);
-    // if (errors.length) return res.status(400).send({ msg: errors });
-
     try {
         const updatedUser = await User.update(
             {
                 name: name,
                 lastname: lastname,
-                email: email,
                 country: country,
                 province: province,
                 city: city,
@@ -58,14 +45,11 @@ const updateUser = async (req, res) => {
             },
             { where: { id: id } }
         );
-        return res.status(202).send(updatedUser);
+        res.status(202).send({ message: `User updated`, data: updatedUser });
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).send({ message: error.message });
     }
 };
-
-/*-------------------------------------------------------------- */
-/*-------------------------Favorites-----------------------------*/
 
 const addFavorite = async (req, res) => {
     const { idUser, idProduct } = req.body;
@@ -75,10 +59,9 @@ const addFavorite = async (req, res) => {
             where: { id: idProduct },
         });
         const favorite = await user.addProduct(favoriteProduct);
-        return res.status(200).send(favorite);
+        res.status(201).send({ message: 'Favorite created', data: favorite });
     } catch (error) {
-        console.log('error:', error);
-        return res.status(404).send({ msg: error });
+        res.status(404).send({ message: error });
     }
 };
 
@@ -89,10 +72,16 @@ const removeFavorite = async (req, res) => {
         const favoriteProduct = await Product.findOne({
             where: { id: idProduct },
         });
+        if (!user || !favoriteProduct)
+            res.status(404).send({
+                message: 'data not found',
+                user: user?.length,
+                product: favoriteProduct?.length,
+            });
         await user.removeProduct(favoriteProduct);
-        return res.status(200).send('Favorite removed');
+        res.status(200).send('Favorite removed');
     } catch (error) {
-        return res.status(404).send({ msg: error });
+        res.status(404).send({ message: error });
     }
 };
 
@@ -111,11 +100,11 @@ const findOneFavorite = async (req, res) => {
             where: { id: id },
         });
         if (!userFavorites) {
-            return res.status(404).send('User Not Found');
+            res.status(404).send('User Not Found');
         }
-        return res.status(200).send(userFavorites.products);
+        res.status(200).send({ data: userFavorites.products });
     } catch (error) {
-        return res.status(404).send(error);
+        res.status(404).send({ message: error.message });
     }
 };
 
@@ -136,13 +125,13 @@ const getPurchaseHistoryById = async (req, res) => {
             },
         });
         if (!userHistory.length) {
-            return res.status(200).send([]);
+            res.status(200).send([]);
         }
 
         let userPurchaseOrders = groupPurchaseOrders(userHistory);
-        return res.status(200).send(userPurchaseOrders);
+        res.status(200).send(userPurchaseOrders);
     } catch (error) {
-        return res.status(404).send(error);
+        res.status(404).send(error);
     }
 };
 
@@ -156,7 +145,7 @@ const getUserPurchasingHistory = async (req, res) => {
                 console.log({
                     msg: `The product id:  ${order[i]}  doesn't exist`,
                 });
-                return res.status(404).send({
+                res.status(404).send({
                     msg: `The product id:  ${order[i]}  doesn't exist`,
                 });
             }
