@@ -29,7 +29,7 @@
 
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const { getProducts } = require('./src/helpers/dummyData.js');
+const { getProducts } = require('./src/helpers/dummyDataLoader.js');
 const PORT = process.env.PORT || 3001;
 
 conn.sync({ force: true }).then(() => {

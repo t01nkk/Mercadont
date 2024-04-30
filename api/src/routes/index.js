@@ -5,7 +5,7 @@ const categoryRoutes = require('./categoryroutes');
 const qaRoutes = require('./questionanswerroutes');
 const reviewRoutes = require('./reviewroutes');
 const adminRoutes = require('./protectedRoutes/adminroutes');
-const payRoutes = require('./payroutes');
+const payRoutes = require('./protectedRoutes/payroutes');
 const authRoutes = require('./authroutes');
 
 router.use('/auth', authRoutes);
