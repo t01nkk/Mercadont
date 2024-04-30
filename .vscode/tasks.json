@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        /// ...other tasks...
+        {
+            "label": "runDevelopment",
+            "dependsOn": ["API", "CLI", "GIT"],
+            // Mark as the default build task so cmd/ctrl+shift+b will create them
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "dependsOrder": "parallel"
+        },
+        {
+            "label": "API",
+            "type": "shell",
+            "command": "cd ./client && npm start",
+            "presentation": {
+                "group": "server"
+            }
+        },
+        {
+            "label": "CLI",
+            "type": "shell",
+            "command": "cd ./api && npm start",
+            "presentation": {
+                "group": "server"
+            }
+        }
+    ]
+}
