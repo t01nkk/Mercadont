@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../context/store';
-import { useAuth } from '../../context/authContext';
+// import { useAuth } from '../../context/authContext';
 import { useTranslation } from 'react-i18next';
 import './accountDetails.scss';
 import { alertInfo } from '../../helpers/toast';
@@ -11,7 +11,7 @@ export default function AccountDetailsForm() {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
-    const { resetPassword } = useAuth();
+    // const { resetPassword } = useAuth();
     const [state, dispatch] = useStore();
     const [errors, setErrors] = useState({});
     const [user, setUser] = useState({
@@ -131,7 +131,7 @@ export default function AccountDetailsForm() {
         );
         if (answer) {
             try {
-                await resetPassword(user.email);
+                // await resetPassword(user.email);
                 alert(t('accountDetailsForm.confirmPasswordChange'));
             } catch (err) {
                 alert(err.message);

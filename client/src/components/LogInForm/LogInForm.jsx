@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './LoginForm.scss';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';

@@ -158,8 +158,7 @@ function App() {
                     path="/admin"
                     element={
                         <>
-                            <NavBarADMIN />,
-                            <LoginADMIN />
+                            <NavBarADMIN />,{/* <LoginADMIN /> */}
                         </>
                     }
                 />
@@ -168,7 +167,7 @@ function App() {
                     path="/admin/login"
                     element={
                         <>
-                            <NavBarADMIN />,<LoginADMIN />
+                            <NavBarADMIN />,{/* <LoginADMIN /> */}
                         </>
                     }
                 />

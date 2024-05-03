@@ -3,7 +3,7 @@ import './SearchBar.scss';
 import icon from '../../media/search.png';
 import axios from 'axios';
 import { SEARCH_PRODUCT } from '../../redux/actions/actionTypes';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate, Redirect } from 'react-router-dom';
 import { useStore } from '../../context/store';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';

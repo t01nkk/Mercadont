@@ -28,7 +28,6 @@ export default function Home() {
         <div className="color">
             <div className="div-slide-vertical">
                 <Swiper
-                    loop={true}
                     modules={[Navigation]}
                     navigation={true}
                     pagination={{
